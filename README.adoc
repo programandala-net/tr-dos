@@ -1,0 +1,18 @@
+= TR-DOS _Disassembled_
+:author: Marcos Cruz (programandala.net)
+:revdate: 2016-08-14
+
+// This file is written in AsciDoc/Asciidoctor format
+// (see <http://asciidoctor.org>).
+
+// Project webpage:
+
+// http://programandala.net/en.program.abersoft_forth.html
+
+== Description
+
+The goal of this project is to disassemble TR-DOS 5.03, in order to
+fix some problems found during the development of its support for
+http://programandala.net/en.program.solo_forth.html[Solo Forth].
+
+The project started on 2016-08-14.
