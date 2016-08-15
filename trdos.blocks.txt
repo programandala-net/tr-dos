@@ -1,0 +1,37 @@
+; This file is part of TR-DOS disassembled
+; By Marcos Cruz (programandala.net), 2016
+
+rst20_0102: unlabeled start 0x0103 unlabeled last 0x0104 type worddata
+rst20_014C: unlabeled start 0x014D unlabeled last 0x014E type worddata
+rst20_0163: unlabeled start 0x0164 unlabeled last 0x0165 type worddata
+rst20_1056: unlabeled start 0x1057 unlabeled last 0x1058 type worddata
+rst20_105D: unlabeled start 0x105E unlabeled last 0x105F type worddata
+rst20_1064: unlabeled start 0x1065 unlabeled last 0x1066 type worddata
+rst20_1080: unlabeled start 0x1081 unlabeled last 0x1082 type worddata
+rst20_19D1: unlabeled start 0x19D2 unlabeled last 0x19D3 type worddata
+rst20_19EC: unlabeled start 0x19ED unlabeled last 0x19EF type worddata
+rst20_19FD: unlabeled start 0x19FE unlabeled last 0x19FF type worddata
+rst20_1A38: unlabeled start 0x1A39 unlabeled last 0x1A3A type worddata
+rst20_1D6C: unlabeled start 0x1D6D unlabeled last 0x1D6E type worddata
+rst20_1D84: unlabeled start 0x1D85 unlabeled last 0x1D86 type worddata
+rst20_1D8C: unlabeled start 0x1D8D unlabeled last 0x1D8E type worddata
+rst20_1D93: unlabeled start 0x1D94 unlabeled last 0x1D95 type worddata
+rst20_1D97: unlabeled start 0x1D98 unlabeled last 0x1D99 type worddata
+rst20_1D9B: unlabeled start 0x1D9C unlabeled last 0x1D9D type worddata
+rst20_1D9F: unlabeled start 0x1DA0 unlabeled last 0x1DA1 type worddata
+rst20_1DAE: unlabeled start 0x1DAF unlabeled last 0x1DB0 type worddata
+rst20_1DB5: unlabeled start 0x1DB6 unlabeled last 0x1DB7 type worddata
+rst20_1DB9: unlabeled start 0x1DBA unlabeled last 0x1DBB type worddata
+; XXX TODO -- finish RST 20
+
+not_used_0033: start 0x0033 unlabeled last 0x0039 type bytedata
+trdos_title: start 0x0360 unlabeled last 0x03AB type bytedata
+not_used_0805: start 0x0805 unlabeled last 0x0FF0 type bytedata
+message_interface_1: start 0x1000 unlabeled last 0x1017 type bytedata
+messages_1015: start 0x10A5 unlabeled last 0x1151 type bytedata
+not_used_16F9: start 0x16F9 unlabeled last 0x0170F type bytedata
+messages_2766: start 0x2766 unlabeled last 0x283B type bytedata
+messages_29B2: start 0x29B2 unlabeled last 0x2A34 type bytedata
+tokens: start 0x30FD unlabeled last 0x31C5 type bytedata
+not_used_31FD: start 0x31FD unlabeled last 0x3CF9 type bytedata
+not_used_3FF0: start 0x3FF0 unlabeled last 0x3FFF type bytedata

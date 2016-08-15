@@ -1,6 +1,6 @@
 # TR-DOS disassembled Makefile
 
-# Author: Marcos Cruz (programandala.net)
+# Author: Marcos Cruz (programandala.net), 2016
 
 # This file is part of
 # TR-DOS disassembled

@@ -1,5 +1,6 @@
 ; Symbol file
 
+include "inc/zx_spectrum_system_variables.z80s"
 
 l0000h:	equ 0x0000
 ; Used at following locations:
@@ -66,7 +67,7 @@ l000fh:	equ 0x000f
 ; Used at following locations:
 ; 0x26ce	(immediate value)
 
-l0010h:	equ 0x0010
+rst_10:	equ 0x0010
 ; Used at following locations:
 ; 0x2cd2	(immediate value)
 ; 0x2c01	(immediate value)
@@ -95,6 +96,9 @@ l0015h:	equ 0x0015
 ; Used at following locations:
 ; 0x00ae	(immediate value)
 
+rst_18:	equ 0x0018
+; Used at following locations:
+
 l001bh:	equ 0x001b
 ; Used at following locations:
 ; 0x0015	(jp destination)
@@ -103,11 +107,10 @@ l001eh:	equ 0x001e
 ; Used at following locations:
 ; 0x2426	(immediate value)
 
-l0020h:	equ 0x0020
+rst_20:	equ 0x0020
 ; Used at following locations:
 ; 0x2a3b	(immediate value)
 ; 0x1232	(immediate value)
-; 0x10c7	(byte load pointer)
 
 l0024h:	equ 0x0024
 ; Used at following locations:
@@ -119,9 +122,10 @@ l002bh:	equ 0x002b
 ; 0x002f	(jr destination)
 ; 0x0026	(jr destination)
 
-l0038h:	equ 0x0038
+
+; BLOCK 'not_used_0033' (start 0x0033 end 0x003a)
+not_used_0033_start:	equ 0x0033
 ; Used at following locations:
-; 0x03a9	(byte load pointer)
 
 l003ah:	equ 0x003a
 ; Used at following locations:
@@ -321,22 +325,15 @@ l0359h:	equ 0x0359
 ; Used at following locations:
 ; 0x0354	(immediate value)
 
-l0360h:	equ 0x0360
+
+; BLOCK 'trdos_title' (start 0x0360 end 0x03ac)
+trdos_title_start:	equ 0x0360
 ; Used at following locations:
 ; 0x025f	(immediate value)
-
-l03a0h:	equ 0x03a0
-; Used at following locations:
-; 0x0374	(jr destination)
-
-l03a6h:	equ 0x03a6
-; Used at following locations:
-; 0x036f	(jr destination)
 
 l03ach:	equ 0x03ac
 ; Used at following locations:
 ; 0x2fcb	(jp destination)
-; 0x0379	(jr destination)
 
 l03b5h:	equ 0x03b5
 ; Used at following locations:
@@ -346,19 +343,14 @@ l03c0h:	equ 0x03c0
 ; Used at following locations:
 ; 0x0413	(jr destination)
 
-l03c3h:	equ 0x03c3
+print_message_number_A_of_table_at_HL:	equ 0x03c3
 ; Used at following locations:
 ; 0x1d29	(call destination)
 ; 0x1c4a	(call destination)
-; 0x036b	(jr destination)
 
 l03cdh:	equ 0x03cd
 ; Used at following locations:
 ; 0x03c9	(jr destination)
-
-l03d4h:	equ 0x03d4
-; Used at following locations:
-; 0x037e	(jr destination)
 
 l03d9h:	equ 0x03d9
 ; Used at following locations:
@@ -519,7 +511,7 @@ l0523h:	equ 0x0523
 ; Used at following locations:
 ; 0x00e1	(immediate value)
 
-sub_0524h:	equ 0x0524
+check_drive_letter:	equ 0x0524
 ; Used at following locations:
 ; 0x1c89	(call destination)
 ; 0x1022	(call destination)
@@ -630,6 +622,11 @@ l0800h:	equ 0x0800
 ; 0x3e58	(call destination)
 ; 0x3e49	(jp destination)
 
+
+; BLOCK 'not_used_0805' (start 0x0805 end 0x0ff1)
+not_used_0805_start:	equ 0x0805
+; Used at following locations:
+
 l09f0h:	equ 0x09f0
 ; Used at following locations:
 ; 0x1f52	(immediate value)
@@ -643,15 +640,9 @@ l0d28h:	equ 0x0d28
 ; Used at following locations:
 ; 0x28b1	(jp destination)
 
-l0d8dh:	equ 0x0d8d
-; Used at following locations:
-; 0x29b9	(word load pointer)
 
-l0da0h:	equ 0x0da0
-; Used at following locations:
-; 0x29fc	(byte load pointer)
-
-l1000h:	equ 0x1000
+; BLOCK 'message_interface_1' (start 0x1000 end 0x1018)
+message_interface_1_start:	equ 0x1000
 ; Used at following locations:
 ; 0x229a	(immediate value)
 ; 0x176f	(immediate value)
@@ -700,14 +691,6 @@ l1073h:	equ 0x1073
 ; Used at following locations:
 ; 0x1076	(djnz destination)
 
-l1078h:	equ 0x1078
-; Used at following locations:
-; 0x1010	(jr destination)
-
-l107dh:	equ 0x107d
-; Used at following locations:
-; 0x100c	(jr destination)
-
 l108fh:	equ 0x108f
 ; Used at following locations:
 ; 0x10a1	(djnz destination)
@@ -716,13 +699,23 @@ l1096h:	equ 0x1096
 ; Used at following locations:
 ; 0x1098	(djnz destination)
 
-l10a5h:	equ 0x10a5
+
+; BLOCK 'messages_1015' (start 0x10a5 end 0x1152)
+messages_1015_start:	equ 0x10a5
 ; Used at following locations:
 ; 0x1298	(immediate value)
+
+l10aah:	equ 0x10aa
+; Used at following locations:
+; 0x126e	(immediate value)
 
 l10b3h:	equ 0x10b3
 ; Used at following locations:
 ; 0x123e	(immediate value)
+
+l10bah:	equ 0x10ba
+; Used at following locations:
+; 0x124b	(immediate value)
 
 l10cah:	equ 0x10ca
 ; Used at following locations:
@@ -736,101 +729,34 @@ l10e2h:	equ 0x10e2
 ; Used at following locations:
 ; 0x1281	(immediate value)
 
-l10ebh:	equ 0x10eb
-; Used at following locations:
-; 0x10a5	(jr destination)
-
-l10edh:	equ 0x10ed
-; Used at following locations:
-; 0x10cb	(djnz destination)
-
-l10f1h:	equ 0x10f1
-; Used at following locations:
-; 0x10cf	(djnz destination)
-
-l10f4h:	equ 0x10f4
-; Used at following locations:
-; 0x10d2	(jr destination)
-
 l10f6h:	equ 0x10f6
 ; Used at following locations:
 ; 0x1288	(immediate value)
-
-l1105h:	equ 0x1105
-; Used at following locations:
-; 0x10e3	(djnz destination)
-
-l1107h:	equ 0x1107
-; Used at following locations:
-; 0x10c1	(jr destination)
 
 l110ah:	equ 0x110a
 ; Used at following locations:
 ; 0x128f	(immediate value)
 
-l1117h:	equ 0x1117
-; Used at following locations:
-; 0x10e5	(jr destination)
-
-l1119h:	equ 0x1119
-; Used at following locations:
-; 0x10f7	(djnz destination)
-
-l111ch:	equ 0x111c
-; Used at following locations:
-; 0x10fa	(jr destination)
-
 l111eh:	equ 0x111e
 ; Used at following locations:
 ; 0x129c	(immediate value)
 
-l1124h:	equ 0x1124
-; Used at following locations:
-; 0x10af	(jr destination)
-
 l112eh:	equ 0x112e
 ; Used at following locations:
 ; 0x12ad	(immediate value)
-; 0x112c	(jr destination)
-; 0x10d9	(jr destination)
-
-l113dh:	equ 0x113d
-; Used at following locations:
-; 0x10e7	(jr destination)
-
-l113fh:	equ 0x113f
-; Used at following locations:
-; 0x110d	(jr destination)
-
-l1141h:	equ 0x1141
-; Used at following locations:
-; 0x111f	(djnz destination)
-
-l1142h:	equ 0x1142
-; Used at following locations:
-; 0x10ed	(jr destination)
-
-l1147h:	equ 0x1147
-; Used at following locations:
-; 0x1101	(jr destination)
 
 sub_1151h:	equ 0x1151
 ; Used at following locations:
 ; 0x1228	(call destination)
 
-l115dh:	equ 0x115d
+sub_115dh:	equ 0x115d
 ; Used at following locations:
 ; 0x12fa	(call destination)
 ; 0x12ec	(call destination)
-; 0x113b	(jr destination)
 
 l1161h:	equ 0x1161
 ; Used at following locations:
 ; 0x1166	(jr destination)
-
-l1165h:	equ 0x1165
-; Used at following locations:
-; 0x110f	(jr destination)
 
 l1168h:	equ 0x1168
 ; Used at following locations:
@@ -855,10 +781,6 @@ l118ah:	equ 0x118a
 l1194h:	equ 0x1194
 ; Used at following locations:
 ; 0x1199	(jr destination)
-
-l1199h:	equ 0x1199
-; Used at following locations:
-; 0x114b	(jr destination)
 
 l119bh:	equ 0x119b
 ; Used at following locations:
@@ -1133,6 +1055,11 @@ l16d6h:	equ 0x16d6
 l16e5h:	equ 0x16e5
 ; Used at following locations:
 ; 0x16f7	(jr destination)
+
+
+; BLOCK 'not_used_16F9' (start 0x16f9 end 0x1710)
+not_used_16F9_start:	equ 0x16f9
+; Used at following locations:
 
 l1710h:	equ 0x1710
 ; Used at following locations:
@@ -1541,7 +1468,7 @@ l1d19h:	equ 0x1d19
 ; Used at following locations:
 ; 0x1d13	(jr destination)
 
-l1d1ah:	equ 0x1d1a
+error.wrong_drive_letter:	equ 0x1d1a
 ; Used at following locations:
 ; 0x29a1	(jp destination)
 ; 0x21ab	(jp destination)
@@ -1660,10 +1587,6 @@ sub_1d8ch:	equ 0x1d8c
 ; 0x1036	(call destination)
 ; 0x0449	(call destination)
 ; 0x0212	(call destination)
-
-l1d8fh:	equ 0x1d8f
-; Used at following locations:
-; 0x1d8d	(jr destination)
 
 l1d90h:	equ 0x1d90
 ; Used at following locations:
@@ -2465,7 +2388,7 @@ sub_26e1h:	equ 0x26e1
 ; 0x26db	(call destination)
 ; 0x234f	(call destination)
 
-l2707h:	equ 0x2707
+print_message_at_HL:	equ 0x2707
 ; Used at following locations:
 ; 0x2711	(jr destination)
 ; 0x161a	(call destination)
@@ -2500,6 +2423,9 @@ l2723h:	equ 0x2723
 ; 0x1acc	(jp destination)
 ; 0x141e	(jp destination)
 
+message.insert_destination_disk:	equ 0x2725
+; Used at following locations:
+
 sub_272bh:	equ 0x272b
 ; Used at following locations:
 ; 0x3f89	(call destination)
@@ -2510,15 +2436,17 @@ l2731h:	equ 0x2731
 ; 0x2737	(jr destination)
 ; 0x272d	(jr destination)
 
-l2766h:	equ 0x2766
+
+; BLOCK 'messages_2766' (start 0x2766 end 0x283c)
+messages_2766_start:	equ 0x2766
 ; Used at following locations:
 ; 0x03e1	(immediate value)
 
-l276bh:	equ 0x276b
+message.verify_error:	equ 0x276b
 ; Used at following locations:
 ; 0x199d	(immediate value)
 
-l2779h:	equ 0x2779
+message.backup_disk:	equ 0x2779
 ; Used at following locations:
 ; 0x1611	(immediate value)
 ; 0x15c5	(immediate value)
@@ -2529,7 +2457,7 @@ l2785h:	equ 0x2785
 ; 0x1617	(immediate value)
 ; 0x149f	(immediate value)
 
-l27aah:	equ 0x27aa
+message.insert_source_disk:	equ 0x27aa
 ; Used at following locations:
 ; 0x15cb	(immediate value)
 ; 0x1538	(immediate value)
@@ -2537,82 +2465,42 @@ l27aah:	equ 0x27aa
 ; 0x139f	(immediate value)
 ; 0x136f	(immediate value)
 
-l27c5h:	equ 0x27c5
-; Used at following locations:
-; 0x277f	(jr destination)
-
-l27cah:	equ 0x27ca
+message.break:	equ 0x27ca
 ; Used at following locations:
 ; 0x1d32	(immediate value)
 
-l27ddh:	equ 0x27dd
+message.out_of_ram:	equ 0x27d2
+; Used at following locations:
+; 0x1d3d	(immediate value)
+
+message.array_not_found:	equ 0x27dd
 ; Used at following locations:
 ; 0x1d44	(immediate value)
 ; 0x1c15	(immediate value)
 
-l27edh:	equ 0x27ed
+message.directory_full:	equ 0x27ed
 ; Used at following locations:
 ; 0x2723	(immediate value)
 
-l27fch:	equ 0x27fc
+message.no_disk:	equ 0x27fc
 ; Used at following locations:
 ; 0x271b	(immediate value)
 
-l27fdh:	equ 0x27fd
-; Used at following locations:
-; 0x2797	(jr destination)
-
-l2802h:	equ 0x2802
-; Used at following locations:
-; 0x27a7	(jr destination)
-
-l2804h:	equ 0x2804
+message.stream_opened:	equ 0x2804
 ; Used at following locations:
 ; 0x2220	(immediate value)
 
-l2805h:	equ 0x2805
-; Used at following locations:
-; 0x27b0	(jr destination)
-
-l2812h:	equ 0x2812
+message.not_disk_file:	equ 0x2812
 ; Used at following locations:
 ; 0x222a	(immediate value)
 
-l2813h:	equ 0x2813
-; Used at following locations:
-; 0x27a1	(jr destination)
-
-l281dh:	equ 0x281d
-; Used at following locations:
-; 0x27b7	(jr destination)
-
-l2820h:	equ 0x2820
+message.file_exists:	equ 0x2820
 ; Used at following locations:
 ; 0x0598	(immediate value)
-
-l2822h:	equ 0x2822
-; Used at following locations:
-; 0x27c7	(jr destination)
-
-l282ch:	equ 0x282c
-; Used at following locations:
-; 0x27d8	(jr destination)
-
-l2832h:	equ 0x2832
-; Used at following locations:
-; 0x27bc	(jr destination)
-
-l2833h:	equ 0x2833
-; Used at following locations:
-; 0x27c1	(jr destination)
 
 l283ch:	equ 0x283c
 ; Used at following locations:
 ; 0x3cfd	(jp destination)
-
-l2852h:	equ 0x2852
-; Used at following locations:
-; 0x27e2	(jr destination)
 
 l2869h:	equ 0x2869
 ; Used at following locations:
@@ -2629,14 +2517,6 @@ l2887h:	equ 0x2887
 l288ch:	equ 0x288c
 ; Used at following locations:
 ; 0x2866	(immediate value)
-
-l2892h:	equ 0x2892
-; Used at following locations:
-; 0x2837	(jr destination)
-
-l28a9h:	equ 0x28a9
-; Used at following locations:
-; 0x2830	(jr destination)
 
 l28adh:	equ 0x28ad
 ; Used at following locations:
@@ -2701,60 +2581,68 @@ l2998h:	equ 0x2998
 ; Used at following locations:
 ; 0x29b0	(jr destination)
 
-l29b2h:	equ 0x29b2
+
+; BLOCK 'messages_29B2' (start 0x29b2 end 0x2a35)
+messages_29B2_start:	equ 0x29b2
 ; Used at following locations:
 ; 0x1d26	(immediate value)
 
-l29c5h:	equ 0x29c5
+message.cr.no_space:	equ 0x29bb
+; Used at following locations:
+; 0x1c45	(immediate value)
+
+message.cr.file_exists:	equ 0x29c5
 ; Used at following locations:
 ; 0x1c50	(immediate value)
 
-l29d2h:	equ 0x29d2
+message.cr.free:	equ 0x29d2
 ; Used at following locations:
 ; 0x03bc	(immediate value)
 
-l29d8h:	equ 0x29d8
+message.cr.read_only:	equ 0x29d8
 ; Used at following locations:
 ; 0x3f39	(immediate value)
 ; 0x1e5a	(immediate value)
 
-l29e2h:	equ 0x29e2
+message.cr.disc_error:	equ 0x29e2
 ; Used at following locations:
 ; 0x3f48	(immediate value)
 ; 0x040f	(immediate value)
 
-l2a13h:	equ 0x2a13
+message.cr.rec_overflow:	equ 0x29ed
+; Used at following locations:
+; 0x1ab6	(immediate value)
+
+message.cr.title:	equ 0x29f7
+; Used at following locations:
+; 0x048d	(immediate value)
+
+message.cr.retry_abort_ignore:	equ 0x29fe
+; Used at following locations:
+; 0x3f77	(immediate value)
+
+message.cr.trk:	equ 0x2a13
 ; Used at following locations:
 ; 0x3f65	(immediate value)
 
-l2a18h:	equ 0x2a18
+message.sec:	equ 0x2a18
 ; Used at following locations:
 ; 0x3f6e	(immediate value)
 
-l2a1ah:	equ 0x2a1a
-; Used at following locations:
-; 0x29d2	(jr destination)
-
-l2a1dh:	equ 0x2a1d
+message.del_file:	equ 0x2a1d
 ; Used at following locations:
 ; 0x04ac	(immediate value)
 
-l2a28h:	equ 0x2a28
+message.cr.no_files:	equ 0x2a28
 ; Used at following locations:
 ; 0x03d9	(immediate value)
+
+message.files:	equ 0x2a28
+; Used at following locations:
 
 l2a2bh:	equ 0x2a2b
 ; Used at following locations:
 ; 0x04a3	(immediate value)
-
-l2a2eh:	equ 0x2a2e
-; Used at following locations:
-; 0x29e7	(jr destination)
-; 0x29dd	(jr destination)
-
-l2a33h:	equ 0x2a33
-; Used at following locations:
-; 0x29be	(jr destination)
 
 sub_2a35h:	equ 0x2a35
 ; Used at following locations:
@@ -2764,10 +2652,6 @@ l2a41h:	equ 0x2a41
 ; Used at following locations:
 ; 0x2a35	(immediate value)
 
-l2a44h:	equ 0x2a44
-; Used at following locations:
-; 0x29f3	(jr destination)
-
 l2a4bh:	equ 0x2a4b
 ; Used at following locations:
 ; 0x2a48	(jr destination)
@@ -2775,22 +2659,6 @@ l2a4bh:	equ 0x2a4b
 l2a56h:	equ 0x2a56
 ; Used at following locations:
 ; 0x0066	(jp destination)
-
-l2a63h:	equ 0x2a63
-; Used at following locations:
-; 0x2a1d	(jr destination)
-
-l2a73h:	equ 0x2a73
-; Used at following locations:
-; 0x2a2b	(jr destination)
-
-l2a8dh:	equ 0x2a8d
-; Used at following locations:
-; 0x2a18	(jr destination)
-
-l2aa5h:	equ 0x2aa5
-; Used at following locations:
-; 0x2a30	(jr destination)
 
 l2b09h:	equ 0x2b09
 ; Used at following locations:
@@ -3050,7 +2918,7 @@ l2f69h:	equ 0x2f69
 ; Used at following locations:
 ; 0x3d17	(jp destination)
 
-l2f72h:	equ 0x2f72
+call_zx_spectrum_rom:	equ 0x2f72
 ; Used at following locations:
 ; 0x0020	(jp destination)
 
@@ -3137,7 +3005,9 @@ l30f4h:	equ 0x30f4
 ; Used at following locations:
 ; 0x30e8	(jr destination)
 
-l30fdh:	equ 0x30fd
+
+; BLOCK 'tokens' (start 0x30fd end 0x31c6)
+tokens_start:	equ 0x30fd
 ; Used at following locations:
 ; 0x30ac	(immediate value)
 
@@ -3149,33 +3019,28 @@ sub_31f3h:	equ 0x31f3
 ; Used at following locations:
 ; 0x3d21	(call destination)
 
+
+; BLOCK 'not_used_31FD' (start 0x31fd end 0x3cfa)
+not_used_31FD_start:	equ 0x31fd
+; Used at following locations:
+
 l3c00h:	equ 0x3c00
 ; Used at following locations:
 ; 0x0089	(immediate value)
-
-l3c06h:	equ 0x3c06
-; Used at following locations:
-; 0x3c01	(jr destination)
-
-l3c09h:	equ 0x3c09
-; Used at following locations:
-; 0x3c04	(jr destination)
 
 l3cfah:	equ 0x3cfa
 ; Used at following locations:
 ; 0x3d11	(jr destination)
 
-l3cfdh:	equ 0x3cfd
+execute_command_in_C:	equ 0x3cfd
 ; Used at following locations:
 ; 0x3d14	(jr destination)
 
-l3d00h:	equ 0x3d00
+entry.enter_trdos_from_basic:	equ 0x3d00
 ; Used at following locations:
-; 0x3c06	(jp destination)
 
-l3d03h:	equ 0x3d03
+entry.interpret_rem_command_in_basic:	equ 0x3d03
 ; Used at following locations:
-; 0x3c09	(jp destination)
 
 l3d06h:	equ 0x3d06
 ; Used at following locations:
@@ -3190,11 +3055,14 @@ l3d0eh:	equ 0x3d0e
 ; 0x2673	(immediate value)
 ; 0x22ca	(immediate value)
 
+entry.execute_command_in_C:	equ 0x3d13
+; Used at following locations:
+
 l3d16h:	equ 0x3d16
 ; Used at following locations:
 ; 0x022b	(immediate value)
 
-l3d1ah:	equ 0x3d1a
+interpret_rem_command_in_basic:	equ 0x3d1a
 ; Used at following locations:
 ; 0x3d04	(jr destination)
 
@@ -3203,7 +3071,7 @@ sub_3d21h:	equ 0x3d21
 ; 0x3d31	(call destination)
 ; 0x3d1a	(call destination)
 
-l3d2fh:	equ 0x3d2f
+entry.call_pushed_address:	equ 0x3d2f
 ; Used at following locations:
 ; 0x3d6b	(immediate value)
 ; 0x3d60	(immediate value)
@@ -3212,7 +3080,7 @@ l3d2fh:	equ 0x3d2f
 ; 0x011a	(immediate value)
 ; 0x005d	(immediate value)
 
-l3d31h:	equ 0x3d31
+enter_trdos_from_basic:	equ 0x3d31
 ; Used at following locations:
 ; 0x3d01	(jr destination)
 ; 0x0114	(jp destination)
@@ -3245,7 +3113,7 @@ sub_3d80h:	equ 0x3d80
 ; 0x03b2	(call destination)
 ; 0x03af	(call destination)
 
-l3d82h:	equ 0x3d82
+print_character_in_A:	equ 0x3d82
 ; Used at following locations:
 ; 0x1358	(call destination)
 ; 0x12f1	(call destination)
@@ -3341,7 +3209,7 @@ l3e01h:	equ 0x3e01
 ; Used at following locations:
 ; 0x3e02	(jr destination)
 
-sub_3e08h:	equ 0x3e08
+step_rate_of_temporary_drive:	equ 0x3e08
 ; Used at following locations:
 ; 0x3fa5	(call destination)
 ; 0x3e83	(call destination)
@@ -3557,4 +3425,914 @@ sub_3fe5h:	equ 0x3fe5
 l3fech:	equ 0x3fec
 ; Used at following locations:
 ; 0x3fdb	(jr destination)
+
+
+; BLOCK 'not_used_3FF0' (start 0x3ff0 end 0x4000)
+not_used_3FF0_start:	equ 0x3ff0
+; Used at following locations:
+
+variable.interface_1_zone:	equ 0x5cb6
+; Used at following locations:
+; 0x2482	(immediate value)
+; 0x20f2	(byte load pointer)
+; 0x0266	(byte load pointer)
+; 0x00a5	(immediate value)
+
+variable.0xc9:	equ 0x5cc2
+; Used at following locations:
+; 0x3d29	(immediate value)
+; 0x2fbe	(byte load pointer)
+; 0x2f84	(immediate value)
+; 0x2614	(immediate value)
+; 0x244a	(immediate value)
+; 0x0209	(immediate value)
+; 0x0167	(immediate value)
+; 0x00fd	(immediate value)
+
+variable.unknown_23747:	equ 0x5cc3
+; Used at following locations:
+; 0x2106	(immediate value)
+
+variable.drive_a_mode:	equ 0x5cc8
+; Used at following locations:
+; 0x3e11	(immediate value)
+; 0x2f99	(word load pointer)
+
+variable.drive_b_mode:	equ 0x5cc9
+; Used at following locations:
+
+variable.drive_c_mode:	equ 0x5cca
+; Used at following locations:
+; 0x2f9c	(word load pointer)
+
+variable.drive_d_mode:	equ 0x5ccb
+; Used at following locations:
+
+variable.cat_current_sector:	equ 0x5ccc
+; Used at following locations:
+; 0x17ea	(immediate value)
+; 0x0517	(immediate value)
+; 0x03ec	(word load pointer)
+; 0x03e9	(byte load pointer)
+
+variable.disk_drive_ready:	equ 0x5ccd
+; Used at following locations:
+; 0x3eb9	(byte load pointer)
+; 0x3e9d	(byte load pointer)
+; 0x3e97	(byte load pointer)
+; 0x274f	(byte load pointer)
+; 0x2742	(byte load pointer)
+
+variable.sector_reading_or_writting:	equ 0x5cce
+; Used at following locations:
+; 0x1e86	(byte load pointer)
+; 0x1e64	(byte load pointer)
+; 0x1485	(byte load pointer)
+
+variable.stack_sp_copy:	equ 0x5ccf
+; Used at following locations:
+; 0x251f	(word load pointer)
+; 0x250c	(word load pointer)
+; 0x24fb	(word load pointer)
+; 0x24c5	(word load pointer)
+; 0x17bb	(word load pointer)
+; 0x176c	(word load pointer)
+; 0x167a	(word load pointer)
+; 0x15f9	(word load pointer)
+; 0x1488	(word load pointer)
+; 0x1335	(word load pointer)
+; 0x12a0	(word load pointer)
+; 0x1272	(word load pointer)
+; 0x1262	(word load pointer)
+; 0x125a	(word load pointer)
+; 0x1243	(word load pointer)
+; 0x122e	(word load pointer)
+; 0x1154	(word load pointer)
+; 0x074d	(word load pointer)
+
+variable.basic_program_autostart:	equ 0x5cd1
+; Used at following locations:
+; 0x3ee1	(byte load pointer)
+; 0x1ecb	(word load pointer)
+; 0x1b83	(word load pointer)
+; 0x1af0	(word load pointer)
+; 0x1ad6	(word load pointer)
+; 0x174b	(byte load pointer)
+; 0x1716	(byte load pointer)
+
+variable.basic_program_autostart.high:	equ 0x5cd2
+; Used at following locations:
+; 0x1c24	(byte load pointer)
+; 0x1a89	(byte load pointer)
+
+variable.unknown_23763:	equ 0x5cd3
+; Used at following locations:
+; 0x17dd	(byte load pointer)
+; 0x17b7	(byte load pointer)
+; 0x17b2	(byte load pointer)
+; 0x17a5	(byte load pointer)
+; 0x1713	(byte load pointer)
+
+variable.move_command_deleted_files:	equ 0x5cd4
+; Used at following locations:
+; 0x1765	(byte load pointer)
+; 0x1754	(byte load pointer)
+; 0x1741	(byte load pointer)
+; 0x16e1	(byte load pointer)
+; 0x16ca	(byte load pointer)
+
+variable.move_command_first_sector:	equ 0x5cd5
+; Used at following locations:
+; 0x17c9	(word load pointer)
+; 0x17bf	(word load pointer)
+; 0x178f	(word load pointer)
+; 0x175c	(word load pointer)
+; 0x1727	(word load pointer)
+; 0x171c	(word load pointer)
+; 0x16d0	(word load pointer)
+
+variable.move_command_first_track:	equ 0x5cd6
+; Used at following locations:
+; 0x30f6	(byte load pointer)
+; 0x30eb	(byte load pointer)
+; 0x3073	(byte load pointer)
+; 0x303d	(byte load pointer)
+; 0x2910	(byte load pointer)
+; 0x275b	(byte load pointer)
+; 0x273d	(byte load pointer)
+; 0x20a2	(immediate value)
+; 0x1f8b	(byte load pointer)
+; 0x1ebd	(byte load pointer)
+; 0x1e18	(byte load pointer)
+; 0x1937	(byte load pointer)
+; 0x191d	(byte load pointer)
+; 0x18ea	(byte load pointer)
+; 0x18e1	(byte load pointer)
+; 0x18ab	(byte load pointer)
+; 0x1876	(byte load pointer)
+; 0x184c	(byte load pointer)
+; 0x1030	(byte load pointer)
+; 0x033b	(byte load pointer)
+
+variable.start_file_parameter_or_number_of_tracks:	equ 0x5cd7
+; Used at following locations:
+; 0x3079	(word load pointer)
+; 0x3054	(word load pointer)
+; 0x3043	(word load pointer)
+; 0x29a7	(byte load pointer)
+; 0x2998	(byte load pointer)
+; 0x28fb	(word load pointer)
+; 0x26d5	(word load pointer)
+; 0x268f	(word load pointer)
+; 0x2689	(word load pointer)
+; 0x25d7	(word load pointer)
+; 0x2556	(word load pointer)
+; 0x2509	(word load pointer)
+; 0x237d	(word load pointer)
+; 0x2373	(word load pointer)
+; 0x2296	(word load pointer)
+; 0x228f	(word load pointer)
+; 0x2288	(word load pointer)
+; 0x2233	(byte load pointer)
+; 0x2178	(word load pointer)
+; 0x20bd	(immediate value)
+; 0x1fe7	(byte load pointer)
+; 0x1fa0	(word load pointer)
+; 0x1f96	(word load pointer)
+; 0x1f2b	(immediate value)
+; 0x1ee8	(byte load pointer)
+; 0x1ec5	(word load pointer)
+; 0x1c32	(word load pointer)
+; 0x1bed	(word load pointer)
+; 0x1b59	(word load pointer)
+; 0x1b3f	(word load pointer)
+; 0x1aff	(word load pointer)
+; 0x1ab2	(word load pointer)
+; 0x1a69	(word load pointer)
+; 0x1a54	(word load pointer)
+; 0x1997	(word load pointer)
+; 0x1988	(word load pointer)
+; 0x196d	(word load pointer)
+; 0x186c	(word load pointer)
+; 0x17d8	(word load pointer)
+; 0x17ce	(word load pointer)
+; 0x1697	(word load pointer)
+
+variable.start_file_parameter:	equ 0x5cd7
+; Used at following locations:
+
+variable.start_file_parameter.high:	equ 0x5cd8
+; Used at following locations:
+; 0x273a	(byte load pointer)
+; 0x207d	(byte load pointer)
+
+variable.ch_add:	equ 0x5cd9
+; Used at following locations:
+; 0x30ce	(word load pointer)
+; 0x30a9	(word load pointer)
+; 0x30a4	(word load pointer)
+; 0x308f	(word load pointer)
+; 0x3087	(word load pointer)
+; 0x3065	(word load pointer)
+; 0x304b	(word load pointer)
+; 0x3038	(word load pointer)
+; 0x2913	(word load pointer)
+; 0x28fe	(word load pointer)
+; 0x269e	(word load pointer)
+; 0x2680	(word load pointer)
+; 0x25ea	(word load pointer)
+; 0x25da	(word load pointer)
+; 0x25bd	(byte load pointer)
+; 0x257f	(byte load pointer)
+; 0x2546	(word load pointer)
+; 0x229d	(word load pointer)
+; 0x217b	(word load pointer)
+; 0x2166	(word load pointer)
+; 0x1ec8	(word load pointer)
+; 0x1df3	(word load pointer)
+; 0x1c39	(word load pointer)
+; 0x1c03	(word load pointer)
+; 0x1bf8	(word load pointer)
+; 0x1b60	(word load pointer)
+; 0x1b45	(word load pointer)
+; 0x1b3c	(word load pointer)
+; 0x1b05	(word load pointer)
+; 0x1a94	(byte load pointer)
+; 0x1a6f	(word load pointer)
+; 0x1a5d	(word load pointer)
+; 0x1984	(word load pointer)
+; 0x1977	(word load pointer)
+; 0x1970	(word load pointer)
+; 0x18b4	(word load pointer)
+; 0x1872	(word load pointer)
+; 0x1869	(word load pointer)
+; 0x177b	(word load pointer)
+; 0x16be	(word load pointer)
+; 0x16a7	(word load pointer)
+; 0x16a1	(word load pointer)
+; 0x1553	(byte load pointer)
+; 0x14dd	(byte load pointer)
+; 0x13d1	(byte load pointer)
+
+variable.ch_add.high:	equ 0x5cda
+; Used at following locations:
+; 0x25d2	(word load pointer)
+; 0x258a	(byte load pointer)
+; 0x256b	(byte load pointer)
+; 0x254c	(immediate value)
+; 0x20d4	(byte load pointer)
+; 0x1f2e	(immediate value)
+; 0x1f18	(byte load pointer)
+; 0x14fa	(byte load pointer)
+; 0x14e9	(byte load pointer)
+; 0x140d	(byte load pointer)
+
+variable.file_size:	equ 0x5cdb
+; Used at following locations:
+; 0x3040	(immediate value)
+; 0x2fe6	(byte load pointer)
+; 0x2916	(word load pointer)
+; 0x2902	(word load pointer)
+; 0x2662	(byte load pointer)
+; 0x25e6	(word load pointer)
+; 0x25de	(word load pointer)
+; 0x25ad	(byte load pointer)
+; 0x2575	(byte load pointer)
+; 0x2553	(byte load pointer)
+; 0x2549	(byte load pointer)
+; 0x2540	(word load pointer)
+; 0x253c	(word load pointer)
+; 0x2535	(word load pointer)
+; 0x220f	(byte load pointer)
+; 0x217e	(word load pointer)
+; 0x216f	(word load pointer)
+; 0x2163	(word load pointer)
+; 0x1e12	(word load pointer)
+; 0x1df7	(word load pointer)
+; 0x1c35	(word load pointer)
+; 0x1be7	(word load pointer)
+; 0x1b8a	(word load pointer)
+; 0x1b42	(word load pointer)
+; 0x1b08	(word load pointer)
+; 0x1aed	(word load pointer)
+; 0x1a50	(word load pointer)
+; 0x1a21	(word load pointer)
+; 0x19c8	(word load pointer)
+; 0x194e	(byte load pointer)
+; 0x18f0	(word load pointer)
+; 0x18cc	(word load pointer)
+; 0x18c7	(word load pointer)
+; 0x186f	(word load pointer)
+; 0x1745	(word load pointer)
+; 0x169a	(word load pointer)
+; 0x1211	(byte load pointer)
+; 0x11d4	(word load pointer)
+; 0x0476	(byte load pointer)
+; 0x0439	(word load pointer)
+
+variable.file_size.high:	equ 0x5cdc
+; Used at following locations:
+; 0x19dd	(byte load pointer)
+; 0x1915	(byte load pointer)
+
+variable.filename:	equ 0x5cdd
+; Used at following locations:
+; 0x2e39	(byte load pointer)
+; 0x2e0a	(immediate value)
+; 0x2df1	(immediate value)
+; 0x2dbf	(immediate value)
+; 0x28e5	(immediate value)
+; 0x26f2	(immediate value)
+; 0x2594	(immediate value)
+; 0x23eb	(immediate value)
+; 0x23d8	(immediate value)
+; 0x238b	(immediate value)
+; 0x230d	(immediate value)
+; 0x1f99	(immediate value)
+; 0x1f72	(immediate value)
+; 0x1f01	(byte load pointer)
+; 0x1ccd	(immediate value)
+; 0x1c79	(immediate value)
+; 0x1c57	(immediate value)
+; 0x1803	(immediate value)
+; 0x179f	(byte load pointer)
+; 0x173e	(byte load pointer)
+; 0x1737	(byte load pointer)
+; 0x1731	(byte load pointer)
+; 0x16ee	(byte load pointer)
+; 0x1656	(byte load pointer)
+; 0x1596	(word load pointer)
+; 0x151f	(word load pointer)
+; 0x07dc	(byte load pointer)
+; 0x07d2	(byte load pointer)
+; 0x07a0	(byte load pointer)
+; 0x0608	(byte load pointer)
+; 0x05cb	(byte load pointer)
+; 0x0592	(immediate value)
+
+variable.filename.1:	equ 0x5cde
+; Used at following locations:
+
+variable.filename.2:	equ 0x5cdf
+; Used at following locations:
+; 0x1599	(word load pointer)
+; 0x157e	(word load pointer)
+; 0x1522	(word load pointer)
+
+variable.filename.3:	equ 0x5ce0
+; Used at following locations:
+
+variable.filename.4:	equ 0x5ce1
+; Used at following locations:
+; 0x160b	(word load pointer)
+; 0x1600	(word load pointer)
+; 0x1584	(word load pointer)
+
+variable.filename.5:	equ 0x5ce2
+; Used at following locations:
+
+variable.filename.6:	equ 0x5ce3
+; Used at following locations:
+; 0x163e	(word load pointer)
+; 0x1630	(word load pointer)
+; 0x1587	(word load pointer)
+
+variable.filename.7:	equ 0x5ce4
+; Used at following locations:
+
+variable.file_type:	equ 0x5ce5
+; Used at following locations:
+; 0x21b6	(byte load pointer)
+; 0x1f90	(byte load pointer)
+; 0x1d59	(byte load pointer)
+; 0x1bbf	(byte load pointer)
+; 0x1b4d	(byte load pointer)
+; 0x1b13	(immediate value)
+; 0x1af3	(immediate value)
+; 0x19bc	(byte load pointer)
+; 0x18fe	(byte load pointer)
+; 0x18d0	(byte load pointer)
+; 0x182b	(byte load pointer)
+; 0x1644	(word load pointer)
+; 0x15f5	(word load pointer)
+; 0x15ee	(word load pointer)
+; 0x15b2	(word load pointer)
+; 0x157b	(word load pointer)
+; 0x138b	(byte load pointer)
+; 0x104d	(immediate value)
+; 0x06f9	(byte load pointer)
+; 0x05b4	(byte load pointer)
+
+variable.file_start:	equ 0x5ce6
+; Used at following locations:
+; 0x2e52	(word load pointer)
+; 0x2d92	(word load pointer)
+; 0x21fa	(immediate value)
+; 0x21f1	(immediate value)
+; 0x21bb	(byte load pointer)
+; 0x1d56	(word load pointer)
+; 0x1bd2	(word load pointer)
+; 0x1b97	(word load pointer)
+; 0x1b5c	(word load pointer)
+; 0x1a0d	(word load pointer)
+; 0x19c4	(word load pointer)
+; 0x18af	(word load pointer)
+; 0x1424	(immediate value)
+; 0x13ba	(immediate value)
+; 0x1398	(immediate value)
+; 0x0719	(immediate value)
+; 0x0706	(immediate value)
+; 0x06bc	(immediate value)
+; 0x064a	(immediate value)
+; 0x0614	(immediate value)
+
+variable.file_start.high:	equ 0x5ce7
+; Used at following locations:
+; 0x1590	(byte load pointer)
+; 0x1500	(byte load pointer)
+
+variable.file_length_in_bytes:	equ 0x5ce8
+; Used at following locations:
+; 0x22f8	(byte load pointer)
+; 0x22a9	(word load pointer)
+; 0x1bda	(word load pointer)
+; 0x1b8d	(word load pointer)
+; 0x1a7d	(word load pointer)
+; 0x1a4c	(word load pointer)
+; 0x1a40	(word load pointer)
+; 0x18c1	(word load pointer)
+
+variable.file_length_in_bytes.high:	equ 0x5ce9
+; Used at following locations:
+; 0x2300	(byte load pointer)
+
+variable.file_length_in_sectors:	equ 0x5cea
+; Used at following locations:
+; 0x2d99	(byte load pointer)
+; 0x1b9a	(byte load pointer)
+; 0x1b6e	(byte load pointer)
+; 0x18bd	(byte load pointer)
+; 0x174e	(byte load pointer)
+; 0x172e	(byte load pointer)
+; 0x1710	(byte load pointer)
+; 0x169d	(word load pointer)
+; 0x1435	(word load pointer)
+; 0x1432	(byte load pointer)
+; 0x07f0	(word load pointer)
+; 0x0652	(word load pointer)
+
+variable.file_first_sector:	equ 0x5ceb
+; Used at following locations:
+; 0x2e56	(word load pointer)
+; 0x2d95	(word load pointer)
+; 0x1b93	(word load pointer)
+; 0x19d6	(word load pointer)
+; 0x18b7	(word load pointer)
+; 0x175f	(word load pointer)
+; 0x1748	(word load pointer)
+; 0x172a	(word load pointer)
+; 0x1719	(word load pointer)
+; 0x16cd	(word load pointer)
+; 0x14c5	(word load pointer)
+; 0x14b8	(word load pointer)
+; 0x144a	(word load pointer)
+; 0x13df	(word load pointer)
+; 0x07ea	(word load pointer)
+; 0x0770	(word load pointer)
+; 0x0766	(word load pointer)
+; 0x066f	(word load pointer)
+; 0x0667	(word load pointer)
+
+variable.file_first_track:	equ 0x5cec
+; Used at following locations:
+
+variable.c_file_start_or_b_file_size:	equ 0x5ced
+; Used at following locations:
+; 0x1421	(immediate value)
+; 0x13bd	(immediate value)
+; 0x071c	(immediate value)
+; 0x06bf	(immediate value)
+; 0x0647	(immediate value)
+; 0x0617	(immediate value)
+
+variable.file_2_length_in_bytes:	equ 0x5cef
+; Used at following locations:
+; 0x3d48	(byte load pointer)
+
+variable.file_2_length_in_sectors:	equ 0x5cf1
+; Used at following locations:
+; 0x14cb	(byte load pointer)
+; 0x1481	(byte load pointer)
+; 0x147c	(byte load pointer)
+; 0x146f	(byte load pointer)
+; 0x1451	(byte load pointer)
+; 0x13c5	(byte load pointer)
+; 0x0775	(byte load pointer)
+; 0x0741	(byte load pointer)
+; 0x073c	(byte load pointer)
+; 0x072f	(byte load pointer)
+
+variable.file_2_first_sector:	equ 0x5cf2
+; Used at following locations:
+; 0x1499	(word load pointer)
+; 0x148c	(word load pointer)
+; 0x075b	(word load pointer)
+; 0x0751	(word load pointer)
+
+variable.file_2_first_track:	equ 0x5cf3
+; Used at following locations:
+
+variable.current_sector:	equ 0x5cf4
+; Used at following locations:
+; 0x2fdf	(word load pointer)
+; 0x1e9a	(immediate value)
+; 0x1e7a	(byte load pointer)
+; 0x1e67	(word load pointer)
+; 0x1e43	(word load pointer)
+; 0x1ba1	(word load pointer)
+; 0x1981	(word load pointer)
+; 0x1964	(word load pointer)
+; 0x1956	(word load pointer)
+; 0x17d5	(word load pointer)
+; 0x17c6	(word load pointer)
+; 0x1724	(word load pointer)
+; 0x163b	(word load pointer)
+; 0x1608	(word load pointer)
+; 0x15a8	(word load pointer)
+; 0x14c2	(word load pointer)
+; 0x1496	(word load pointer)
+; 0x13f4	(word load pointer)
+; 0x13e2	(word load pointer)
+; 0x076d	(word load pointer)
+; 0x0758	(word load pointer)
+; 0x0684	(word load pointer)
+; 0x0672	(word load pointer)
+
+variable.current_track:	equ 0x5cf5
+; Used at following locations:
+; 0x3fb0	(byte load pointer)
+; 0x3f94	(byte load pointer)
+; 0x1ea3	(immediate value)
+; 0x1e80	(byte load pointer)
+
+variable.temporary_drive:	equ 0x5cf6
+; Used at following locations:
+; 0x3e0b	(word load pointer)
+; 0x3dcb	(byte load pointer)
+; 0x22e5	(byte load pointer)
+; 0x124f	(byte load pointer)
+; 0x1208	(byte load pointer)
+; 0x11b5	(immediate value)
+; 0x06cc	(byte load pointer)
+; 0x06b0	(byte load pointer)
+; 0x05e0	(byte load pointer)
+; 0x0585	(byte load pointer)
+; 0x055a	(immediate value)
+; 0x0546	(byte load pointer)
+; 0x04fb	(immediate value)
+; 0x04bc	(byte load pointer)
+; 0x046d	(byte load pointer)
+
+variable.cleared:	equ 0x5cf7
+; Used at following locations:
+; 0x023c	(word load pointer)
+; 0x0178	(byte load pointer)
+
+variable.two_files_drive:	equ 0x5cf8
+; Used at following locations:
+; 0x20e6	(byte load pointer)
+; 0x1225	(byte load pointer)
+; 0x0745	(byte load pointer)
+; 0x070a	(byte load pointer)
+; 0x06d2	(byte load pointer)
+; 0x06b3	(byte load pointer)
+; 0x05f4	(byte load pointer)
+; 0x0557	(byte load pointer)
+; 0x0549	(byte load pointer)
+; 0x048a	(byte load pointer)
+; 0x01d6	(word load pointer)
+
+variable.cat_drive_or_read_verify_flag:	equ 0x5cf9
+; Used at following locations:
+; 0x1c06	(byte load pointer)
+; 0x1a57	(byte load pointer)
+; 0x1a25	(byte load pointer)
+; 0x1a16	(byte load pointer)
+; 0x195c	(byte load pointer)
+; 0x1946	(byte load pointer)
+; 0x1823	(byte load pointer)
+; 0x1812	(byte load pointer)
+; 0x120b	(byte load pointer)
+; 0x11b2	(byte load pointer)
+; 0x075e	(byte load pointer)
+; 0x0724	(byte load pointer)
+; 0x06db	(byte load pointer)
+; 0x06cf	(byte load pointer)
+; 0x061f	(byte load pointer)
+; 0x05e6	(byte load pointer)
+; 0x05e3	(byte load pointer)
+; 0x04f8	(byte load pointer)
+; 0x0470	(byte load pointer)
+
+variable.a_drive_step_rate:	equ 0x5cfa
+; Used at following locations:
+; 0x3e08	(immediate value)
+; 0x2f93	(word load pointer)
+
+variable.b_drive_step_rate:	equ 0x5cfb
+; Used at following locations:
+
+variable.c_drive_step_rate:	equ 0x5cfc
+; Used at following locations:
+; 0x2f96	(word load pointer)
+
+variable.d_drive_step_rate:	equ 0x5cfd
+; Used at following locations:
+
+variable.last_fdc_command:	equ 0x5cfe
+; Used at following locations:
+; 0x3f22	(byte load pointer)
+; 0x3f10	(byte load pointer)
+
+variable.sector:	equ 0x5cff
+; Used at following locations:
+; 0x3f17	(byte load pointer)
+; 0x3f02	(byte load pointer)
+
+variable.buffer:	equ 0x5d00
+; Used at following locations:
+; 0x3f1d	(word load pointer)
+; 0x3f06	(word load pointer)
+
+variable.hl_copy:	equ 0x5d02
+; Used at following locations:
+; 0x2f88	(word load pointer)
+; 0x2f72	(word load pointer)
+; 0x2877	(word load pointer)
+; 0x2842	(word load pointer)
+
+variable.de_copy:	equ 0x5d04
+; Used at following locations:
+; 0x2f8b	(word load pointer)
+; 0x2f75	(word load pointer)
+; 0x287a	(word load pointer)
+; 0x283e	(word load pointer)
+
+variable.find_command_symbols:	equ 0x5d06
+; Used at following locations:
+; 0x262d	(byte load pointer)
+; 0x2458	(byte load pointer)
+; 0x21dd	(byte load pointer)
+; 0x1cd0	(byte load pointer)
+; 0x1395	(byte load pointer)
+; 0x0703	(byte load pointer)
+; 0x05c7	(byte load pointer)
+; 0x05bf	(byte load pointer)
+; 0x0334	(byte load pointer)
+
+variable.deleted_files:	equ 0x5d07
+; Used at following locations:
+; 0x07a7	(immediate value)
+; 0x0791	(byte load pointer)
+; 0x0782	(byte load pointer)
+; 0x0577	(byte load pointer)
+
+variable.filename_first_char:	equ 0x5d08
+; Used at following locations:
+; 0x07d9	(byte load pointer)
+; 0x07a3	(byte load pointer)
+
+variable.buffer_flag:	equ 0x5d0c
+; Used at following locations:
+; 0x2fb9	(byte load pointer)
+; 0x2974	(immediate value)
+; 0x294e	(immediate value)
+; 0x2102	(byte load pointer)
+
+variable.file_number_for_copying:	equ 0x5d0d
+; Used at following locations:
+; 0x0601	(byte load pointer)
+; 0x05fd	(byte load pointer)
+; 0x05f1	(byte load pointer)
+
+variable.command_mode:	equ 0x5d0e
+; Used at following locations:
+; 0x1d63	(immediate value)
+; 0x1671	(byte load pointer)
+; 0x03c4	(byte load pointer)
+; 0x0280	(byte load pointer)
+
+variable.error_code:	equ 0x5d0f
+; Used at following locations:
+; 0x3f8e	(byte load pointer)
+; 0x2fa9	(byte load pointer)
+; 0x2762	(byte load pointer)
+; 0x2135	(byte load pointer)
+; 0x1cf3	(immediate value)
+; 0x03ce	(byte load pointer)
+; 0x0338	(byte load pointer)
+; 0x02f9	(byte load pointer)
+; 0x0251	(byte load pointer)
+; 0x01fa	(word load pointer)
+
+variable.error_code_msb:	equ 0x5d10
+; Used at following locations:
+; 0x19ab	(byte load pointer)
+; 0x1853	(byte load pointer)
+; 0x1820	(byte load pointer)
+; 0x142f	(byte load pointer)
+; 0x13c8	(byte load pointer)
+; 0x0572	(byte load pointer)
+; 0x033e	(byte load pointer)
+; 0x015a	(byte load pointer)
+; 0x013d	(byte load pointer)
+
+variable.command_line_address:	equ 0x5d11
+; Used at following locations:
+; 0x3048	(word load pointer)
+; 0x3035	(word load pointer)
+; 0x298f	(word load pointer)
+; 0x298a	(word load pointer)
+; 0x2967	(word load pointer)
+; 0x26c8	(word load pointer)
+; 0x26c0	(word load pointer)
+; 0x2656	(word load pointer)
+; 0x21d5	(word load pointer)
+; 0x21ce	(word load pointer)
+; 0x2182	(word load pointer)
+; 0x1e1c	(word load pointer)
+; 0x1dc5	(word load pointer)
+; 0x0690	(word load pointer)
+; 0x042b	(word load pointer)
+; 0x0307	(word load pointer)
+; 0x01c1	(word load pointer)
+
+variable.err_sp_copy:	equ 0x5d13
+; Used at following locations:
+; 0x0232	(word load pointer)
+; 0x0220	(word load pointer)
+
+variable.show_screen_flag:	equ 0x5d15
+; Used at following locations:
+; 0x284a	(byte load pointer)
+; 0x03d1	(byte load pointer)
+; 0x02e6	(byte load pointer)
+; 0x0174	(byte load pointer)
+
+variable.system_register:	equ 0x5d16
+; Used at following locations:
+; 0x3dce	(immediate value)
+; 0x2fb6	(byte load pointer)
+; 0x2e4c	(byte load pointer)
+; 0x1ff6	(byte load pointer)
+; 0x1ff0	(byte load pointer)
+; 0x1feb	(byte load pointer)
+; 0x02df	(byte load pointer)
+; 0x02d7	(byte load pointer)
+
+variable.show_title_flag:	equ 0x5d17
+; Used at following locations:
+; 0x3eec	(byte load pointer)
+; 0x2fa0	(byte load pointer)
+; 0x0249	(immediate value)
+; 0x01df	(immediate value)
+; 0x017d	(byte load pointer)
+
+variable.interface_1_flag:	equ 0x5d18
+; Used at following locations:
+; 0x2fa6	(byte load pointer)
+; 0x20fa	(immediate value)
+
+variable.default_drive:	equ 0x5d19
+; Used at following locations:
+; 0x3dc8	(byte load pointer)
+; 0x2fa3	(byte load pointer)
+; 0x2147	(byte load pointer)
+; 0x1c99	(byte load pointer)
+; 0x1025	(byte load pointer)
+
+variable.internal_address_of_finishing_proc:	equ 0x5d1a
+; Used at following locations:
+; 0x2855	(word load pointer)
+; 0x02f5	(word load pointer)
+; 0x01f7	(word load pointer)
+; 0x0183	(word load pointer)
+
+variable.sp_copy:	equ 0x5d1c
+; Used at following locations:
+; 0x2f69	(word load pointer)
+; 0x285c	(word load pointer)
+; 0x1d08	(word load pointer)
+; 0x02cb	(word load pointer)
+; 0x0240	(word load pointer)
+; 0x0223	(word load pointer)
+; 0x01f3	(word load pointer)
+; 0x018a	(word load pointer)
+
+variable.find_command_found_file:	equ 0x5d1e
+; Used at following locations:
+; 0x23f6	(byte load pointer)
+; 0x2396	(byte load pointer)
+; 0x22ea	(byte load pointer)
+; 0x1ceb	(byte load pointer)
+; 0x1bb4	(byte load pointer)
+
+variable.unknown_23839:	equ 0x5d1f
+; Used at following locations:
+; 0x2fac	(byte load pointer)
+; 0x284d	(byte load pointer)
+; 0x19b3	(byte load pointer)
+; 0x144d	(word load pointer)
+; 0x13dc	(word load pointer)
+; 0x01e4	(immediate value)
+
+variable.entered_line_3_first_chars:	equ 0x5d20
+; Used at following locations:
+; 0x212e	(immediate value)
+; 0x0300	(immediate value)
+
+variable.entered_line_3_first_chars.1:	equ 0x5d21
+; Used at following locations:
+; 0x1627	(byte load pointer)
+; 0x15bc	(byte load pointer)
+; 0x154a	(byte load pointer)
+; 0x14f1	(byte load pointer)
+; 0x14af	(byte load pointer)
+; 0x1456	(byte load pointer)
+; 0x1404	(byte load pointer)
+; 0x13d6	(byte load pointer)
+
+variable.entered_line_3_first_chars.2:	equ 0x5d22
+; Used at following locations:
+
+variable.move_command_blocks:	equ 0x5d23
+; Used at following locations:
+; 0x17e1	(immediate value)
+; 0x17ab	(immediate value)
+; 0x1690	(byte load pointer)
+; 0x1648	(immediate value)
+; 0x15e1	(immediate value)
+; 0x14cf	(immediate value)
+; 0x1475	(immediate value)
+; 0x0779	(immediate value)
+; 0x0735	(immediate value)
+
+variable.tmp_buffer_address:	equ 0x5d25
+; Used at following locations:
+; 0x31f7	(immediate value)
+; 0x2fed	(immediate value)
+; 0x2fd8	(immediate value)
+; 0x297d	(immediate value)
+; 0x2961	(immediate value)
+; 0x1f85	(immediate value)
+; 0x1f1e	(immediate value)
+; 0x1e4a	(immediate value)
+; 0x1cab	(immediate value)
+; 0x198b	(immediate value)
+; 0x197b	(immediate value)
+; 0x123a	(immediate value)
+; 0x0520	(immediate value)
+; 0x04b3	(immediate value)
+; 0x03f5	(immediate value)
+
+variable.k_channel.output:	equ 0x5d26
+; Used at following locations:
+; 0x1f23	(immediate value)
+
+variable.k_channel.input:	equ 0x5d28
+; Used at following locations:
+
+variable.k_channel.id:	equ 0x5d2a
+; Used at following locations:
+
+variable.s_channel.output:	equ 0x5d2b
+; Used at following locations:
+
+variable.s_channel.input:	equ 0x5d2d
+; Used at following locations:
+
+variable.s_channel.id:	equ 0x5d2f
+; Used at following locations:
+
+variable.r_channel.output:	equ 0x5d30
+; Used at following locations:
+
+variable.r_channel.input:	equ 0x5d32
+; Used at following locations:
+
+variable.r_channel.input.high:	equ 0x5d33
+; Used at following locations:
+; 0x2109	(immediate value)
+
+variable.r_channel.id:	equ 0x5d34
+; Used at following locations:
+
+variable.p_channel.output:	equ 0x5d35
+; Used at following locations:
+
+variable.p_channel.input:	equ 0x5d37
+; Used at following locations:
+
+variable.p_channel.id:	equ 0x5d39
+; Used at following locations:
 
