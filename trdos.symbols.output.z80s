@@ -1727,9 +1727,11 @@ sub_1e1ch:	equ 0x1e1c
 ; 0x1b24	(call destination)
 ; 0x01ed	(call destination)
 
-l1e29h:	equ 0x1e29
+l1e23h:	equ 0x1e23
 ; Used at following locations:
-; 0x1e27	(jr destination)
+; 0x2501	(jp destination)
+; 0x167d	(jp destination)
+; 0x115a	(jp destination)
 
 sub_1e2ah:	equ 0x1e2a
 ; Used at following locations:
@@ -1743,10 +1745,6 @@ sub_1e2ah:	equ 0x1e2a
 ; 0x11f0	(call destination)
 ; 0x0455	(call destination)
 ; 0x0218	(call destination)
-
-l1e2dh:	equ 0x1e2d
-; Used at following locations:
-; 0x1e2b	(jr destination)
 
 sub_1e2eh:	equ 0x1e2e
 ; Used at following locations:
@@ -3126,10 +3124,6 @@ print_character_in_A:	equ 0x3d82
 sub_3d94h:	equ 0x3d94
 ; Used at following locations:
 ; 0x3d8a	(call destination)
-
-l3d97h:	equ 0x3d97
-; Used at following locations:
-; 0x3d95	(djnz destination)
 
 sub_3d98h:	equ 0x3d98
 ; Used at following locations:

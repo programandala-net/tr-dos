@@ -3567,7 +3567,7 @@ sub_1151h:
 	ld e,h			;1153	5c 	\ 
 	ld (variable.stack_sp_copy),hl		;1154	22 cf 5c 	" . \ 
 	ld bc,00222h		;1157	01 22 02 	. " . 
-	jp 01e23h		;115a	c3 23 1e 	. # . 
+	jp l1e23h		;115a	c3 23 1e 	. # . 
 sub_115dh:
 	xor a			;115d	af 	. 
 	ld de,l2710h		;115e	11 10 27 	. . ' 
@@ -4222,7 +4222,7 @@ sub_166fh:
 	call sub_1680h		;1674	cd 80 16 	. . . 
 	ld hl,(sys_worksp)		;1677	2a 61 5c 	* a \ 
 	ld (variable.stack_sp_copy),hl		;167a	22 cf 5c 	" . \ 
-	jp 01e23h		;167d	c3 23 1e 	. # . 
+	jp l1e23h		;167d	c3 23 1e 	. # . 
 sub_1680h:
 	rst 20h			;1680	e7 	. 
 	ld a,(de)			;1681	1a 	. 
@@ -5236,13 +5236,11 @@ sub_1db9h:
 	ret			;1dbc	c9 	. 
 sub_1dbdh:
 	rst 20h			;1dbd	e7 	. 
-	adc a,h			;1dbe	8c 	. 
-	inc e			;1dbf	1c 	. 
+	defw 01c8ch		;1dbe	8c 1c 	. . 
 	ret			;1dc0	c9 	. 
 sub_1dc1h:
 	rst 20h			;1dc1	e7 	. 
-	add a,d			;1dc2	82 	. 
-	inc e			;1dc3	1c 	. 
+	defw 01c82h		;1dc2	82 1c 	. . 
 	ret			;1dc4	c9 	. 
 sub_1dc5h:
 	ld hl,(variable.command_line_address)		;1dc5	2a 11 5d 	* . ] 
@@ -5290,28 +5288,25 @@ sub_1e0bh:
 sub_1e1ch:
 	ld hl,(variable.command_line_address)		;1e1c	2a 11 5d 	* . ] 
 	rst 20h			;1e1f	e7 	. 
-	and a			;1e20	a7 	. 
-	ld de,02ac9h		;1e21	11 c9 2a 	. . * 
-	ld h,c			;1e24	61 	a 
-	ld e,h			;1e25	5c 	\ 
+	defw 011a7h		;1e20	a7 11 	. . 
+	ret			;1e22	c9 	. 
+l1e23h:
+	ld hl,(sys_worksp)		;1e23	2a 61 5c 	* a \ 
 	rst 20h			;1e26	e7 	. 
-	jr nc,l1e29h		;1e27	30 00 	0 . 
-l1e29h:
+	defw 00030h		;1e27	30 00 	0 . 
 	ret			;1e29	c9 	. 
 sub_1e2ah:
 	rst 20h			;1e2a	e7 	. 
-	jr nz,l1e2dh		;1e2b	20 00 	  . 
-l1e2dh:
+	defw 00020h		;1e2b	20 00 	  . 
 	ret			;1e2d	c9 	. 
 sub_1e2eh:
 	rst 20h			;1e2e	e7 	. 
-	ret pe			;1e2f	e8 	. 
-	add hl,de			;1e30	19 	. 
+	defw 019e8h		;1e2f	e8 19 	. . 
 	ret			;1e31	c9 	. 
 sub_1e32h:
 	rst 20h			;1e32	e7 	. 
-	ld d,l			;1e33	55 	U 
-	ld d,0c9h		;1e34	16 c9 	. . 
+	defw 01655h		;1e33	55 16 	U . 
+	ret			;1e35	c9 	. 
 sub_1e36h:
 	call sub_3eb2h		;1e36	cd b2 3e 	. . > 
 	ld a,h			;1e39	7c 	| 
@@ -5839,8 +5834,7 @@ l2206h:
 sub_220fh:
 	ld a,(variable.file_size)		;220f	3a db 5c 	: . \ 
 	rst 20h			;2212	e7 	. 
-	daa			;2213	27 	' 
-	rla			;2214	17 	. 
+	defw 01727h		;2213	27 17 	' . 
 	ld a,b			;2215	78 	x 
 	or c			;2216	b1 	. 
 	jp nz,l221bh		;2217	c2 1b 22 	. . " 
@@ -6242,8 +6236,7 @@ l2494h:
 	ld (sys_err_nr),a		;2494	32 3a 5c 	2 : \ 
 	call sub_20e5h		;2497	cd e5 20 	. .   
 	rst 20h			;249a	e7 	. 
-	ld e,b			;249b	58 	X 
-	nop			;249c	00 	. 
+	defw 00058h		;249b	58 00 	X . 
 	ret			;249d	c9 	. 
 l249eh:
 	ld a,017h		;249e	3e 17 	> . 
@@ -6323,7 +6316,7 @@ sub_24f8h:
 	ld hl,(sys_worksp)		;24f8	2a 61 5c 	* a \ 
 	ld (variable.stack_sp_copy),hl		;24fb	22 cf 5c 	" . \ 
 	ld bc,rst_10		;24fe	01 10 00 	. . . 
-	jp 01e23h		;2501	c3 23 1e 	. # . 
+	jp l1e23h		;2501	c3 23 1e 	. # . 
 sub_2504h:
 	ld (hl),00dh		;2504	36 0d 	6 . 
 	ld hl,(sys_ch_add)		;2506	2a 5d 5c 	* ] \ 
@@ -6477,8 +6470,7 @@ l261dh:
 	cp 00dh		;261d	fe 0d 	. . 
 	jr z,l2614h		;261f	28 f3 	( . 
 	rst 20h			;2621	e7 	. 
-	add a,l			;2622	85 	. 
-	rrca			;2623	0f 	. 
+	defw 00f85h		;2622	85 0f 	. . 
 	jr l260fh		;2624	18 e9 	. . 
 l2626h:
 	call sub_262bh		;2626	cd 2b 26 	. + & 
@@ -6517,8 +6509,7 @@ l2656h:
 	call sub_1d75h		;265f	cd 75 1d 	. u . 
 	ld a,(variable.file_size)		;2662	3a db 5c 	: . \ 
 	rst 20h			;2665	e7 	. 
-	daa			;2666	27 	' 
-	rla			;2667	17 	. 
+	defw 01727h		;2666	27 17 	' . 
 	ld a,b			;2668	78 	x 
 	or c			;2669	b1 	. 
 	jp z,l01d3h		;266a	ca d3 01 	. . . 
@@ -8138,11 +8129,10 @@ l3057h:
 	inc hl			;3069	23 	# 
 	ex de,hl			;306a	eb 	. 
 	rst 20h			;306b	e7 	. 
-	add ix,de		;306c	dd 19 	. . 
+	defw 019ddh		;306c	dd 19 	. . 
 	push bc			;306e	c5 	. 
 	rst 20h			;306f	e7 	. 
-	ret pe			;3070	e8 	. 
-	add hl,de			;3071	19 	. 
+	defw 019e8h		;3070	e8 19 	. . 
 	pop bc			;3072	c1 	. 
 	ld a,(variable.move_command_first_track)		;3073	3a d6 5c 	: . \ 
 	or a			;3076	b7 	. 
@@ -8234,8 +8224,7 @@ sub_30e1h:
 	dec hl			;30ee	2b 	+ 
 	dec hl			;30ef	2b 	+ 
 	rst 20h			;30f0	e7 	. 
-	ld l,(hl)			;30f1	6e 	n 
-	add hl,de			;30f2	19 	. 
+	defw 0196eh		;30f1	6e 19 	n . 
 	ret			;30f3	c9 	. 
 l30f4h:
 	ld a,0ffh		;30f4	3e ff 	> . 
@@ -11402,8 +11391,7 @@ print_character_in_A:
 	ret			;3d93	c9 	. 
 sub_3d94h:
 	rst 20h			;3d94	e7 	. 
-	djnz l3d97h		;3d95	10 00 	. . 
-l3d97h:
+	defw 00010h		;3d95	10 00 	. . 
 	ret			;3d97	c9 	. 
 sub_3d98h:
 	ld a,008h		;3d98	3e 08 	> . 
@@ -11412,12 +11400,10 @@ l3d9ah:
 l3d9ch:
 	push hl			;3d9c	e5 	. 
 	rst 20h			;3d9d	e7 	. 
-	ld d,h			;3d9e	54 	T 
-	rra			;3d9f	1f 	. 
+	defw 01f54h		;3d9e	54 1f 	T . 
 	jr c,l3da5h		;3da0	38 03 	8 . 
 	rst 20h			;3da2	e7 	. 
-	ld a,e			;3da3	7b 	{ 
-	dec de			;3da4	1b 	. 
+	defw 01b7bh		;3da3	7b 1b 	{ . 
 l3da5h:
 	pop hl			;3da5	e1 	. 
 	in a,(0ffh)		;3da6	db ff 	. . 

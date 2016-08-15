@@ -22,7 +22,23 @@ rst20_1D9F: unlabeled start 0x1DA0 unlabeled last 0x1DA1 type worddata
 rst20_1DAE: unlabeled start 0x1DAF unlabeled last 0x1DB0 type worddata
 rst20_1DB5: unlabeled start 0x1DB6 unlabeled last 0x1DB7 type worddata
 rst20_1DB9: unlabeled start 0x1DBA unlabeled last 0x1DBB type worddata
-; XXX TODO -- finish RST 20
+rst20_1DBD: unlabeled start 0x1DBE unlabeled last 0x1DBF type worddata
+rst20_1DC1: unlabeled start 0x1DC2 unlabeled last 0x1DC3 type worddata
+rst20_1E1F: unlabeled start 0x1E20 unlabeled last 0x1E21 type worddata
+rst20_1E26: unlabeled start 0x1E27 unlabeled last 0x1E28 type worddata
+rst20_1E2A: unlabeled start 0x1E2B unlabeled last 0x1E2C type worddata
+rst20_1E2E: unlabeled start 0x1E2F unlabeled last 0x1E30 type worddata
+rst20_1E32: unlabeled start 0x1E33 unlabeled last 0x1E34 type worddata
+rst20_2212: unlabeled start 0x2213 unlabeled last 0x2214 type worddata
+rst20_249A: unlabeled start 0x249B unlabeled last 0x249C type worddata
+rst20_2621: unlabeled start 0x2622 unlabeled last 0x2623 type worddata
+rst20_2665: unlabeled start 0x2666 unlabeled last 0x2667 type worddata
+rst20_306B: unlabeled start 0x306C unlabeled last 0x306D type worddata
+rst20_306F: unlabeled start 0x3070 unlabeled last 0x3071 type worddata
+rst20_30F0: unlabeled start 0x30F1 unlabeled last 0x30F2 type worddata
+rst20_3D94: unlabeled start 0x3D95 unlabeled last 0x3D96 type worddata
+rst20_3D9D: unlabeled start 0x3D9E unlabeled last 0x3D9F type worddata
+rst20_3DA2: unlabeled start 0x3DA3 unlabeled last 0x3DA4 type worddata
 
 not_used_0033: start 0x0033 unlabeled last 0x0039 type bytedata
 trdos_title: start 0x0360 unlabeled last 0x03AB type bytedata
