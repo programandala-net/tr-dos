@@ -501,7 +501,7 @@ rom_ln:                              equ 0x3713
 rom_ln_fetch:                        equ 0x190f
 rom_ln_store:                        equ 0x191c
 rom_loc_mem:                         equ 0x3406
-rom_log(2^a):                        equ 0x2dc1
+rom_log_paren_2_power_a_paren:       equ 0x2dc1
 rom_look_p_1:                        equ 0x1d8b
 rom_look_p_2:                        equ 0x1da3
 rom_look_prog:                       equ 0x1d86
