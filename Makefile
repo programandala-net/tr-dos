@@ -18,6 +18,9 @@
 # https://www.tablix.org/~avian/z80dasm/
 # http://www.tablix.org/~avian/git/#z80dasm
 
+# Vim by Bram Moolenaar
+# http://vim.org
+
 ################################################################
 # Change history
 
@@ -37,9 +40,9 @@ all: trdos.z80s
 
 .PHONY : clean
 clean:
-	rm -f trdos.z80s
+	rm -f trdos.raw.z80s trdos.z80s
 
-trdos.z80s: trdos.symbols.input.z80s trdos.blocks.txt
+trdos.raw.z80s: trdos.symbols.input.z80s trdos.blocks.txt
 	z80dasm \
 	  --origin=0x0000 \
 	  --address \
@@ -48,10 +51,14 @@ trdos.z80s: trdos.symbols.input.z80s trdos.blocks.txt
 	  --block-def=trdos.blocks.txt \
 	  --sym-input=trdos.symbols.input.z80s \
 	  --sym-output=trdos.symbols.output.z80s \
-	  --output=trdos.z80s \
+	  --output=$@ \
 	  trdos.rom
+
+trdos.z80s: trdos.raw.z80s tools/tidier.vim
+	vim -e -R -n -S tools/tidier.vim $<
 
 ################################################################
 # Change history
 
-# 2016-08-14 Start.
+# 2016-08-14: Start.
+# 2016-08-19: Add after-processing with Vim.
