@@ -8,6 +8,8 @@ rst20_1056: unlabeled start 0x1057 unlabeled last 0x1058 type worddata
 rst20_105D: unlabeled start 0x105E unlabeled last 0x105F type worddata
 rst20_1064: unlabeled start 0x1065 unlabeled last 0x1066 type worddata
 rst20_1080: unlabeled start 0x1081 unlabeled last 0x1082 type worddata
+rst20_1680: unlabeled start 0x1681 unlabeled last 0x1682 type worddata
+rst20_19CE: unlabeled start 0x19CF unlabeled last 0x19D0 type worddata
 rst20_19D1: unlabeled start 0x19D2 unlabeled last 0x19D3 type worddata
 rst20_19EC: unlabeled start 0x19ED unlabeled last 0x19EF type worddata
 rst20_19FD: unlabeled start 0x19FE unlabeled last 0x19FF type worddata

@@ -1210,10 +1210,6 @@ l19abh:	equ 0x19ab
 ; Used at following locations:
 ; 0x19a7	(jr destination)
 
-l19d1h:	equ 0x19d1
-; Used at following locations:
-; 0x19cf	(jr destination)
-
 sub_19f2h:	equ 0x19f2
 ; Used at following locations:
 ; 0x1a61	(call destination)
@@ -2496,7 +2492,7 @@ message.file_exists:	equ 0x2820
 ; Used at following locations:
 ; 0x0598	(immediate value)
 
-l283ch:	equ 0x283c
+execute_command_in_C:	equ 0x283c
 ; Used at following locations:
 ; 0x3cfd	(jp destination)
 
@@ -3030,7 +3026,7 @@ l3cfah:	equ 0x3cfa
 ; Used at following locations:
 ; 0x3d11	(jr destination)
 
-execute_command_in_C:	equ 0x3cfd
+jp_execute_command_in_C:	equ 0x3cfd
 ; Used at following locations:
 ; 0x3d14	(jr destination)
 

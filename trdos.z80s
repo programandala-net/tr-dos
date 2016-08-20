@@ -4227,8 +4227,7 @@ sub_166fh:
   jp l1e23h
 sub_1680h:
   rst 20h
-  ld a,(de)
-  rra
+  defw rom_free_mem
   ld hl,0ffffh
   sbc hl,bc
   ld a,h
@@ -4660,8 +4659,7 @@ l19abh:
   push bc
   inc bc
   rst 20h
-  jr nc,l19d1h
-l19d1h:
+  defw rom_bc_spaces
   defb 036h
   defw 0eb80h
   pop de
@@ -5201,7 +5199,7 @@ sub_1d8ch:
 l1d90h:
   call sub_1d83h
   rst 20h
-  defw 00f2ch
+  defw rom_editor
   ret
 sub_1d97h:
   rst 20h
@@ -6238,7 +6236,7 @@ l2494h:
   ld (sys_err_nr),a
   call sub_20e5h
   rst 20h
-  defw 00058h
+  defw rom_0058
   ret
 l249eh:
   ld a,017h
@@ -6472,7 +6470,7 @@ l261dh:
   cp 00dh
   jr z,l2614h
   rst 20h
-  defw 00f85h
+  defw rom_add_char_0F85
   jr l260fh
 l2626h:
   call sub_262bh
@@ -6889,7 +6887,7 @@ message.file_exists:
   defb 02fh
   defb 04eh
   defb 0a9h
-l283ch:
+execute_command_in_C:
   push af
   push bc
   ld (variable.de_copy),de
@@ -11293,8 +11291,8 @@ l3c00h:
   defb 0ffh
 l3cfah:
   jp sub_20f1h
-execute_command_in_C:
-  jp l283ch
+jp_execute_command_in_C:
+  jp execute_command_in_C
 entry.enter_trdos_from_basic:
   nop
   jr enter_trdos_from_basic
@@ -11313,7 +11311,7 @@ l3d0eh:
   jr l3cfah
 entry.execute_command_in_C:
   nop
-  jr execute_command_in_C
+  jr jp_execute_command_in_C
 l3d16h:
   nop
   jp l2f69h

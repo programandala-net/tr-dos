@@ -4225,8 +4225,7 @@ sub_166fh:
 	jp l1e23h		;167d	c3 23 1e 	. # . 
 sub_1680h:
 	rst 20h			;1680	e7 	. 
-	ld a,(de)			;1681	1a 	. 
-	rra			;1682	1f 	. 
+	defw 01f1ah		;1681	1a 1f 	. . 
 	ld hl,0ffffh		;1683	21 ff ff 	! . . 
 	sbc hl,bc		;1686	ed 42 	. B 
 	ld a,h			;1688	7c 	| 
@@ -4658,8 +4657,7 @@ l19abh:
 	push bc			;19cc	c5 	. 
 	inc bc			;19cd	03 	. 
 	rst 20h			;19ce	e7 	. 
-	jr nc,l19d1h		;19cf	30 00 	0 . 
-l19d1h:
+	defw 00030h		;19cf	30 00 	0 . 
 	defb 036h		;19d1	36 	6 
 	defw 0eb80h		;19d2	80 eb 	. . 
 	pop de			;19d4	d1 	. 
@@ -6887,7 +6885,7 @@ message.file_exists:
 	defb 02fh		;2839	2f 	/ 
 	defb 04eh		;283a	4e 	N 
 	defb 0a9h		;283b	a9 	. 
-l283ch:
+execute_command_in_C:
 	push af			;283c	f5 	. 
 	push bc			;283d	c5 	. 
 	ld (variable.de_copy),de		;283e	ed 53 04 5d 	. S . ] 
@@ -11291,8 +11289,8 @@ l3c00h:
 	defb 0ffh		;3cf9	ff 	. 
 l3cfah:
 	jp sub_20f1h		;3cfa	c3 f1 20 	. .   
-execute_command_in_C:
-	jp l283ch		;3cfd	c3 3c 28 	. < ( 
+jp_execute_command_in_C:
+	jp execute_command_in_C		;3cfd	c3 3c 28 	. < ( 
 entry.enter_trdos_from_basic:
 	nop			;3d00	00 	. 
 	jr enter_trdos_from_basic		;3d01	18 2e 	. . 
@@ -11311,7 +11309,7 @@ l3d0eh:
 	jr l3cfah		;3d11	18 e7 	. . 
 entry.execute_command_in_C:
 	nop			;3d13	00 	. 
-	jr execute_command_in_C		;3d14	18 e7 	. . 
+	jr jp_execute_command_in_C		;3d14	18 e7 	. . 
 l3d16h:
 	nop			;3d16	00 	. 
 	jp l2f69h		;3d17	c3 69 2f 	. i / 
