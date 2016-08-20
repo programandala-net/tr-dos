@@ -3,14 +3,20 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201608201121
+" Last modified 201608201128
 
 " 2016-08-19: Start.
-" 2016-08-20: Remove unused ROM routines.
+" 2016-08-20: Remove unused ROM routines. Add `include` for ROM routines.
 
 function! ChangeHeader()
   :1,2delete
   call append(0,['; trdos.z80s','','; This file is part of TR-DOS disassembled','; By Marcos Cruz (programandala.net), 2016'])
+endfunction
+
+function! AddInclude()
+  call cursor(1,1)
+  call search('^  org ')
+  call append('.',['','  include inc/zx_spectrum_rom_routines.z80s',''])
 endfunction
 
 function! RemoveComments()
@@ -64,6 +70,7 @@ function! Tidier()
   call AddRst20Labels()
   call RemoveComments()
   call ChangeHeader()
+  call AddInclude()
 endfunction
 
 call Tidier()

@@ -4,6 +4,9 @@
 ; By Marcos Cruz (programandala.net), 2016
 
   org 00000h
+
+  include inc/zx_spectrum_rom_routines.z80s
+
 sys_swap: equ 0x5b00
 sys_bankm:  equ 0x5b5c
 sys_tstack: equ 0x5bff
