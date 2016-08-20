@@ -3,10 +3,17 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201608201128
+" Last modified 201608201228
+
+" ==============================================================
+" History
 
 " 2016-08-19: Start.
+"
 " 2016-08-20: Remove unused ROM routines. Add `include` for ROM routines.
+" Clear the messages.
+
+" ==============================================================
 
 function! ChangeHeader()
   :1,2delete
@@ -20,7 +27,38 @@ function! AddInclude()
 endfunction
 
 function! RemoveComments()
-  silent! %substitute@\s\+;[a-f0-9]\{4} .\+$@@
+  silent! %substitute@\s\+;[0-9a-f]\{4} .\+$@@
+endfunction
+
+function ClearControlChar(char)
+  let l:hexByte=printf('%02x',a:char)
+  execute 'silent! %substitute@\(\s\+defb 0'.l:hexByte.'h\)\s\+;[0-9a-f]\{4}\s[0-9a-f]\{2}\s\+\.\s$@\1@e'
+endfunction
+
+function! ClearControlChars()
+  let l:char = 0
+  while l:char<32
+    call ClearControlChar(l:char)
+    let l:char += 1
+  endwhile
+endfunction
+
+function ClearPrintableChar(char)
+  let l:hexByte=printf('%02x',a:char)
+  execute 'silent! %substitute@\(\s\+defb \)0'.l:hexByte.'h\s\+;[0-9a-f]\{4}\s[0-9a-f]\{2}\s\+\(.\)\s$@\1"\2"@e'
+endfunction
+
+function! ClearPrintableChars()
+  let l:char = 32
+  while l:char<127
+    call ClearPrintableChar(l:char)
+    let l:char += 1
+  endwhile
+endfunction
+
+function! ClearMessages()
+  call ClearControlChars()
+  call ClearPrintableChars()
 endfunction
 
 function! AddRst20Label(label,address)
@@ -68,6 +106,7 @@ endfunction
 
 function! Tidier()
   call AddRst20Labels()
+  call ClearMessages()
   call RemoveComments()
   call ChangeHeader()
   call AddInclude()
