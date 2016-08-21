@@ -6,9 +6,7 @@
 # TR-DOS disassembled
 # http://programandala.net/
 
-# Copying and distribution of this file, with or without modification, are
-# permitted in any medium without royalty provided the copyright notice and
-# this notice are preserved.  This file is offered as-is, without any warranty.
+# Last modified 201608202117
 
 ################################################################
 # Requirements
@@ -21,8 +19,11 @@
 # Vim by Bram Moolenaar
 # http://vim.org
 
+# Pasmo by Julián Albo
+# http://pasmo.speccy.org
+
 ################################################################
-# Change history
+# History
 
 # See at the end of the file.
 
@@ -38,9 +39,12 @@ MAKEFLAGS = --no-print-directory
 .PHONY: all
 all: trdos.z80s
 
-.PHONY : clean
+.PHONY: clean
 clean:
-	rm -f trdos.raw.z80s trdos.z80s
+	rm -f trdos.raw.z80s trdos.z80s trdos.reassembled.rom
+
+.PHONY: back
+back: trdos.reassembled.rom
 
 trdos.raw.z80s: trdos.symbols.input.z80s trdos.blocks.txt
 	z80dasm \
@@ -57,8 +61,12 @@ trdos.raw.z80s: trdos.symbols.input.z80s trdos.blocks.txt
 trdos.z80s: trdos.raw.z80s tools/tidier.vim
 	vim -e -R -n -S tools/tidier.vim $<
 
+trdos.reassembled.rom: trdos.z80s
+	pasmo $< $@
+
 ################################################################
 # Change history
 
 # 2016-08-14: Start.
 # 2016-08-19: Add after-processing with Vim.
+# 2016-08-20: Add assembling of the disassembled source, as a check.
