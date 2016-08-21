@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201608202223
+; Last modified 201608211502
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -167,3 +167,28 @@ message.files:                                     equ 0x2A28
 ; Tables
 
 table.c_commands:                                  equ 0x288C
+
+; Routines associated to C commands
+
+init_interface:                                    equ 0x3D98
+init_disk_drive:                                   equ 0x3DCB
+seek_track:                                        equ 0x3E63
+set_sector_number:                                 equ 0x3F02
+define_buffer_address:                             equ 0x3F06
+read_sectors:                                      equ 0x1E3D
+write_sectors:                                     equ 0x1E4D
+print_catalogue:                                   equ 0x28D8
+read_file_descriptor:                              equ 0x165C
+write_file_descriptor:                             equ 0x1664
+find_file:                                         equ 0x1CF0
+save_code_file:                                    equ 0x28FB
+save_basic_program:                                equ 0x28F2
+load_or_verify:                                    equ 0x290F
+exit_dos:                                          equ 0x01D3
+delete_file:                                       equ 0x2926
+copy_from_hl_to_file_descriptor:                   equ 0x28E0
+copy_from_file_descriptor_to_hl:                   equ 0x28E3
+test_track:                                        equ 0x2739
+select_bottom_side:                                equ 0x1FEB
+select_top_side:                                   equ 0x1FF6
+read_system_track:                                 equ 0x0405

@@ -356,14 +356,14 @@ l01a5h:
 l01a8h:
   call sub_01c7h
 l01abh:
-  jp z,l01d3h
+  jp z,exit_dos
   cp 0eah
   inc hl
   jr nz,l01a8h
   call sub_01c7h
   jr z,l01abh
   cp 03ah
-  jp nz,l01d3h
+  jp nz,exit_dos
   inc hl
   call sub_3048h
   ld hl,(variable.command_line_address)
@@ -377,7 +377,7 @@ sub_01c7h:
   or a
   ret
   call sub_1e43h
-l01d3h:
+exit_dos:
   ld hl,l0000h
   ld (variable.two_files_drive),hl
   call sub_20e5h
@@ -560,7 +560,7 @@ l0320h:
   ld d,a
   ld a,015h
   cp c
-  jp c,l01d3h
+  jp c,exit_dos
   ld a,d
   inc hl
   cp (hl)
@@ -682,7 +682,7 @@ l03b5h:
   ld hl,message.cr.free
   rst 18h
 l03c0h:
-  jp l01d3h
+  jp exit_dos
 print_error_number_A_whose_message_is_at_HL:
   push af
   ld a,(variable.command_mode)
@@ -715,12 +715,12 @@ l03f2h:
   call sub_294ah
   ld hl,variable.tmp_buffer_address
   ld b,001h
-  jp l1e3dh
+  jp read_sectors
 sub_03fdh:
   call sub_294ah
   ld de,l0008h
   jr l03f2h
-sub_0405h:
+read_system_track:
   call sub_03fdh
   ld a,(05e0ch)
   cp 010h
@@ -774,7 +774,7 @@ l046ah:
   call sub_1d75h
   ld a,(variable.temporary_drive)
   ld (variable.cat_drive_or_read_verify_flag),a
-  call sub_0405h
+  call read_system_track
   ld a,(variable.file_size)
 l0479h:
   cp 002h
@@ -852,7 +852,7 @@ sub_04f6h:
   ld a,(variable.cat_drive_or_read_verify_flag)
   ld hl,variable.temporary_drive
   cp (hl)
-  call nz,sub_3dcbh
+  call nz,init_disk_drive
   pop bc
   pop hl
   jp l2fc6h
@@ -906,7 +906,7 @@ sub_0531h:
   ld hl,variable.temporary_drive
   cp (hl)
   jp nz,error.wrong_drive_letter
-  call sub_0405h
+  call read_system_track
   pop af
   jp z,error.file_exists
   pop bc
@@ -974,14 +974,14 @@ l05cbh:
   ld a,(variable.temporary_drive)
   ld (variable.cat_drive_or_read_verify_flag),a
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call sub_3dcbh
-  call sub_0405h
+  call init_disk_drive
+  call read_system_track
   ld a,0ffh
   ld (variable.file_number_for_copying),a
 l05f4h:
   ld a,(variable.two_files_drive)
-  call sub_3dcbh
-  call sub_0405h
+  call init_disk_drive
+  call read_system_track
   ld a,(variable.file_number_for_copying)
   inc a
   ld (variable.file_number_for_copying),a
@@ -997,7 +997,7 @@ l05f4h:
   ld bc,00007h
   ldir
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call sub_3dcbh
+  call init_disk_drive
   call sub_1cb3h
   jr nz,l0634h
   call sub_05b4h
@@ -1071,11 +1071,11 @@ sub_063ch:
   ld a,(variable.temporary_drive)
   ld (variable.cat_drive_or_read_verify_flag),a
   ld a,(variable.two_files_drive)
-  call sub_3dcbh
-  call sub_0405h
+  call init_disk_drive
+  call read_system_track
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call sub_3dcbh
-  call sub_0405h
+  call init_disk_drive
+  call read_system_track
   pop bc
   pop af
   jr nz,l06f3h
@@ -1094,7 +1094,7 @@ l06f3h:
   ld hl,variable.file_start
   inc (hl)
   ld a,(variable.two_files_drive)
-  call sub_3dcbh
+  call init_disk_drive
   call sub_05b4h
   jp nz,l03e1h
   call sub_165dh
@@ -1103,8 +1103,8 @@ l06f3h:
   ld bc,00007h
   ldir
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call sub_3dcbh
-  call sub_0405h
+  call init_disk_drive
+  call read_system_track
   jr l06f3h
 sub_072fh:
   ld a,(variable.file_2_length_in_sectors)
@@ -1122,21 +1122,21 @@ sub_072fh:
 l0744h:
   push bc
   ld a,(variable.two_files_drive)
-  call sub_3dcbh
+  call init_disk_drive
   pop bc
   push bc
   ld hl,(variable.stack_sp_copy)
   push hl
   ld de,(variable.file_2_first_sector)
-  call l1e3dh
+  call read_sectors
   ld hl,(variable.current_sector)
   ld (variable.file_2_first_sector),hl
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call sub_3dcbh
+  call init_disk_drive
   pop hl
   pop bc
   ld de,(variable.file_first_sector)
-  call sub_1e4dh
+  call write_sectors
   ld hl,(variable.current_sector)
   ld (variable.file_first_sector),hl
   jr sub_072fh
@@ -3295,7 +3295,7 @@ message_interface_1_start:
   ld a,(de)
   call check_drive_letter
   ld (variable.default_drive),a
-  call sub_3dcbh
+  call init_disk_drive
   jp l03e1h
 sub_102eh:
   ld b,043h
@@ -3634,13 +3634,13 @@ l11b0h:
   ld a,(variable.cat_drive_or_read_verify_flag)
   ld hl,variable.temporary_drive
   cp (hl)
-  call nz,sub_3dcbh
+  call nz,init_disk_drive
   pop bc
   pop hl
   call sub_050ch
   ld a,(hl)
   or a
-  jp z,l01d3h
+  jp z,exit_dos
   cp 001h
   call z,sub_0507h
   ret nz
@@ -3672,7 +3672,7 @@ l1205h:
   call sub_1d75h
   ld a,(variable.temporary_drive)
   ld (variable.cat_drive_or_read_verify_flag),a
-  call sub_0405h
+  call read_system_track
   ld a,(variable.file_size)
   cp 002h
   push af
@@ -3845,7 +3845,7 @@ l1335h:
   add hl,bc
   ld b,002h
   push hl
-  call l1e3dh
+  call read_sectors
   ld a,080h
   pop hl
   ld bc,l0200h
@@ -3910,7 +3910,7 @@ sub_13b7h:
   ldir
   ld a,(variable.file_2_length_in_sectors)
   ld (variable.error_code_msb),a
-  call sub_0405h
+  call read_system_track
   call sub_3e11h
   ld (variable.ch_add),a
   ld a,0ffh
@@ -3936,7 +3936,7 @@ sub_13b7h:
 sub_1403h:
   xor a
   ld (variable.entered_line_3_first_chars.1),a
-  call sub_0405h
+  call read_system_track
   call sub_3e11h
   ld (variable.ch_add.high),a
   call sub_1cb3h
@@ -3998,7 +3998,7 @@ l1484h:
   push hl
   ld de,(variable.file_2_first_sector)
   call sub_14d8h
-  call l1e3dh
+  call read_sectors
   ld hl,(variable.current_sector)
   ld (variable.file_2_first_sector),hl
   call sub_1d97h
@@ -4016,7 +4016,7 @@ l14a5h:
   pop bc
   ld de,(variable.file_first_sector)
   call sub_14e4h
-  call sub_1e4dh
+  call write_sectors
   ld hl,(variable.current_sector)
   ld (variable.file_first_sector),hl
   jp sub_1451h
@@ -4049,7 +4049,7 @@ sub_14e4h:
 sub_14f0h:
   xor a
   ld (variable.entered_line_3_first_chars.1),a
-  call sub_0405h
+  call read_system_track
   call sub_3e11h
   ld (variable.ch_add.high),a
   ld a,(05e08h)
@@ -4086,7 +4086,7 @@ l153eh:
   call sub_1d9fh
   ld a,0ffh
   ld (variable.entered_line_3_first_chars.1),a
-  call sub_0405h
+  call read_system_track
   call sub_3e11h
   ld (variable.ch_add),a
   ld a,(05e08h)
@@ -4111,7 +4111,7 @@ l1575h:
   ld (variable.filename.4),hl
   ld (variable.filename.6),hl
   call sub_15b8h
-  call sub_0405h
+  call read_system_track
   ld a,(variable.file_start.high)
   ld (05e08h),a
   ld hl,(variable.filename)
@@ -4167,7 +4167,7 @@ l15f8h:
   call sub_14d8h
   ld de,(variable.filename.4)
   ld b,c
-  call l1e3dh
+  call read_sectors
   ld hl,(variable.current_sector)
   ld (variable.filename.4),hl
   call sub_1d97h
@@ -4188,7 +4188,7 @@ l161dh:
   ld de,(variable.filename.6)
   ld b,c
   call sub_14e4h
-  call sub_1e4dh
+  call write_sectors
   ld hl,(variable.current_sector)
   ld (variable.filename.6),hl
   jp sub_15b8h
@@ -4206,7 +4206,7 @@ sub_1653h:
   ld a,(variable.filename)
   cp 001h
   ret
-l165ch:
+read_file_descriptor:
   ld c,a
 sub_165dh:
   xor a
@@ -4215,7 +4215,7 @@ l165eh:
   call sub_17e9h
   pop bc
   ret
-l1664h:
+write_file_descriptor:
   ld c,a
   call sub_166bh
   jp sub_1e43h
@@ -4255,7 +4255,7 @@ sub_1697h:
   ret
   call sub_1d75h
   call sub_166fh
-  call sub_0405h
+  call read_system_track
   ld a,(05e19h)
   or a
   jp z,l03e1h
@@ -4395,13 +4395,13 @@ l17bah:
   ld hl,(variable.stack_sp_copy)
   push hl
   ld de,(variable.move_command_first_sector)
-  call l1e3dh
+  call read_sectors
   ld hl,(variable.current_sector)
   ld (variable.move_command_first_sector),hl
   pop hl
   pop bc
   ld de,(variable.start_file_parameter_or_number_of_tracks)
-  call sub_1e4dh
+  call write_sectors
   ld hl,(variable.current_sector)
   ld (variable.start_file_parameter_or_number_of_tracks),hl
   jr sub_17a5h
@@ -4587,7 +4587,7 @@ l192dh:
   call z,sub_195ch
   pop af
   jr z,l1937h
-  jp sub_1e4dh
+  jp write_sectors
 l1937h:
   ld a,(variable.move_command_first_track)
   cp 003h
@@ -4610,7 +4610,7 @@ sub_1946h:
 sub_195ch:
   ld a,(variable.cat_drive_or_read_verify_flag)
   cp 0ffh
-  jp nz,l1e3dh
+  jp nz,read_sectors
   ld (variable.current_sector),de
   ld c,000h
 l196ah:
@@ -4624,7 +4624,7 @@ l1974h:
   ld b,001h
   ld de,(variable.ch_add)
   ld hl,variable.tmp_buffer_address
-  call l1e3dh
+  call read_sectors
   ld hl,(variable.current_sector)
   ld (variable.ch_add),hl
   pop bc
@@ -4910,7 +4910,7 @@ l1b6dh:
   ld hl,(variable.file_start)
   ld a,(variable.file_length_in_sectors)
   ld b,a
-  call sub_1e4dh
+  call write_sectors
   ld hl,(variable.current_sector)
   push hl
   call sub_03fdh
@@ -5000,7 +5000,7 @@ error.no_space:
   ld a,003h
 l1c4ah:
   call print_error_number_A_whose_message_is_at_HL
-  jp l01d3h
+  jp exit_dos
 error.file_exists:
   ld hl,message.cr.file_exists
   ld a,002h
@@ -5040,7 +5040,7 @@ sub_1c81h:
   call check_drive_letter
   push bc
   push hl
-  call sub_3dcbh
+  call init_disk_drive
   pop hl
   pop bc
   dec bc
@@ -5053,7 +5053,7 @@ l1c98h:
   ld a,(variable.default_drive)
   push bc
   push hl
-  call sub_3dcbh
+  call init_disk_drive
   pop hl
   pop bc
   ret
@@ -5110,7 +5110,7 @@ l1ce7h:
   ld (variable.find_command_found_file),a
   xor a
   ret z
-l1cf0h:
+find_file:
   call sub_1cb3h
   ld hl,variable.error_code
   ld (hl),c
@@ -5141,7 +5141,7 @@ l1d25h:
   ld hl,messages_29B2_start
 l1d29h:
   call print_error_number_A_whose_message_is_at_HL
-  jp l01d3h
+  jp exit_dos
 l1d2fh:
   ld a,(sys_err_nr)
   ld hl,message.break
@@ -5315,7 +5315,7 @@ sub_1e36h:
   ld a,h
   out (03fh),a
   ret
-l1e3dh:
+read_sectors:
   xor a
   jr l1e64h
 l1e40h:
@@ -5325,7 +5325,7 @@ sub_1e43h:
   dec de
   ld b,001h
   ld hl,variable.tmp_buffer_address
-sub_1e4dh:
+write_sectors:
   push hl
   push de
   call sub_3e11h
@@ -5355,11 +5355,11 @@ l1e67h:
 l1e75h:
   push bc
   push hl
-  call sub_3f06h
+  call define_buffer_address
   ld a,(variable.current_sector)
-  call sub_3f02h
+  call set_sector_number
   ld a,(variable.current_track)
-  call sub_3e63h
+  call seek_track
   ld a,(variable.sector_reading_or_writting)
   or a
   push af
@@ -5417,18 +5417,18 @@ sub_1ebch:
   ld a,050h
 l1ee8h:
   ld (variable.start_file_parameter_or_number_of_tracks),a
-  call sub_3d98h
-  call sub_1ff6h
+  call init_interface
+  call select_top_side
   call sub_3ea0h
   ld e,001h
   call sub_1ffdh
-  call sub_1febh
+  call select_bottom_side
   ld e,000h
   call sub_1ffdh
   ld a,(variable.filename)
   cp 024h
   jr z,l1f1bh
-  call sub_1ff6h
+  call select_top_side
   call sub_3ea0h
   call sub_3eb5h
   ld a,h
@@ -5482,7 +5482,7 @@ l1f55h:
   ld de,05e1ah
   ld bc,l0008h
   ldir
-  call sub_1febh
+  call select_bottom_side
   ld b,001h
   ld de,l0008h
   ld hl,variable.tmp_buffer_address
@@ -5510,7 +5510,7 @@ l1f55h:
   rst 10h
   pop bc
   call sub_1da9h
-  jp l01d3h
+  jp exit_dos
 l1fb9h:
   ld bc,l0209h
   ld a,(bc)
@@ -5542,14 +5542,14 @@ sub_1fcah:
 l1fe7h:
   ld (variable.start_file_parameter_or_number_of_tracks),a
   ret
-sub_1febh:
+select_bottom_side:
   ld a,(variable.system_register)
   or 03ch
 l1ff0h:
   ld (variable.system_register),a
   out (0ffh),a
   ret
-sub_1ff6h:
+select_top_side:
   ld a,(variable.system_register)
   and 06fh
   jr l1ff0h
@@ -5670,12 +5670,12 @@ l20c6h:
   ld a,e
   ld b,01bh
   call sub_3e44h
-  call sub_1febh
+  call select_bottom_side
   call sub_1ffdh
   ld a,(variable.ch_add.high)
   cp 080h
   jr nz,l20e1h
-  call sub_1ff6h
+  call select_top_side
   call sub_1ffdh
 l20e1h:
   pop bc
@@ -5805,13 +5805,13 @@ l21aeh:
   ld bc,l0124h
   add hl,bc
   ld (variable.command_line_address),hl
-  jp l01d3h
+  jp exit_dos
 sub_21dbh:
   ld a,00ah
   ld (variable.find_command_symbols),a
   call sub_1cb0h
   push af
-  call sub_0405h
+  call read_system_track
   pop af
   jr nz,l2206h
   ld a,(05d09h)
@@ -5906,9 +5906,9 @@ l2270h:
   pop af
   or a
   push af
-  call nz,sub_1e4dh
+  call nz,write_sectors
   pop af
-  call z,l1e3dh
+  call z,read_sectors
   ret
 sub_2288h:
   ld hl,(variable.start_file_parameter_or_number_of_tracks)
@@ -6141,7 +6141,7 @@ sub_23fch:
   call sub_2423h
   call sub_2321h
   ld b,001h
-  call sub_1e4dh
+  call write_sectors
   ld c,00fh
   rst 28h
   ld a,(hl)
@@ -6159,7 +6159,7 @@ sub_2418h:
   call sub_2423h
   call sub_2321h
   ld b,001h
-  jp l1e3dh
+  jp read_sectors
 sub_2423h:
   ld hl,(sys_curchl)
   ld bc,l001eh
@@ -6190,7 +6190,7 @@ sub_2443h:
   ld c,00bh
   rst 28h
   ld a,(hl)
-  jp sub_3dcbh
+  jp init_disk_drive
 l244ah:
   ld hl,variable.0xc9
   push hl
@@ -6514,7 +6514,7 @@ l2656h:
   defw rom_str_data1
   ld a,b
   or c
-  jp z,l01d3h
+  jp z,exit_dos
   push hl
   ld hl,(sys_chans)
   add hl,bc
@@ -6569,7 +6569,7 @@ l26bch:
   ld bc,l0124h
   sbc hl,bc
   ld (variable.command_line_address),hl
-  jp l01d3h
+  jp exit_dos
 sub_26ceh:
   ld bc,l000fh
   add hl,bc
@@ -6638,7 +6638,7 @@ l2731h:
   ret
   ld a,003h
   jr l2731h
-l2739h:
+test_track:
   xor a
   ld (variable.start_file_parameter.high),a
   ld (variable.move_command_first_track),a
@@ -6921,7 +6921,7 @@ l2869h:
   ld e,(hl)
   inc hl
   ld d,(hl)
-  ld hl,l01d3h
+  ld hl,exit_dos
   push hl
   push de
   ld hl,(variable.hl_copy)
@@ -6931,7 +6931,7 @@ l287fh:
   cp 0ffh
   jr nz,l2887h
   pop af
-  jp l01d3h
+  jp exit_dos
 l2887h:
   inc hl
   inc hl
@@ -6939,65 +6939,65 @@ l2887h:
   jr l2869h
 table.c_commands:
   defb 000h
-  defw sub_3d98h
+  defw init_interface
   defb 001h
-  defw sub_3dcbh
+  defw init_disk_drive
   defb 002h
-  defw sub_3e63h
+  defw seek_track
   defb 003h
-  defw sub_3f02h
+  defw set_sector_number
   defb 004h
-  defw sub_3f06h
+  defw define_buffer_address
   defb 005h
-  defw l1e3dh
+  defw read_sectors
   defb 006h
-  defw sub_1e4dh
+  defw write_sectors
   defb 007h
-  defw l28d8h
+  defw print_catalogue
   defb 008h
-  defw l165ch
+  defw read_file_descriptor
   defb 009h
-  defw l1664h
+  defw write_file_descriptor
   defb 00ah
-  defw l1cf0h
+  defw find_file
   defb 00bh
-  defw l28fbh
+  defw save_code_file
   defb 00ch
-  defw l28f2h
+  defw save_basic_program
   defb 00dh
-  defw l01d3h
+  defw exit_dos
   defb 00eh
-  defw l290fh
+  defw load_or_verify
   defb 00fh
-  defw l01d3h
+  defw exit_dos
   defb 010h
-  defw l01d3h
+  defw exit_dos
   defb 011h
-  defw l01d3h
+  defw exit_dos
   defb 012h
-  defw l2926h
+  defw delete_file
   defb 013h
-  defw l28e0h
+  defw copy_from_hl_to_file_descriptor
   defb 014h
-  defw l28e3h
+  defw copy_from_file_descriptor_to_hl
   defb 015h
-  defw l2739h
+  defw test_track
   defb 016h
-  defw sub_1febh
+  defw select_bottom_side
   defb 017h
-  defw sub_1ff6h
+  defw select_top_side
   defb 018h
-  defw sub_0405h
+  defw read_system_track
   defb 0ffh
-l28d8h:
+print_catalogue:
   push af
-  call sub_0405h
+  call read_system_track
   pop af
   jp l0479h
-l28e0h:
+copy_from_hl_to_file_descriptor:
   xor a
   jr l28e5h
-l28e3h:
+copy_from_file_descriptor_to_hl:
   ld a,0ffh
 l28e5h:
   ld de,variable.filename
@@ -7008,18 +7008,18 @@ l28e5h:
 l28efh:
   ldir
   ret
-l28f2h:
-  call sub_0405h
+save_basic_program:
+  call read_system_track
   call sub_1ac4h
   jp l1b27h
-l28fbh:
+save_code_file:
   ld (variable.start_file_parameter_or_number_of_tracks),hl
   ld (variable.ch_add),de
   ld (variable.file_size),de
-  call sub_0405h
+  call read_system_track
   call sub_1ac4h
   jp l1b53h
-l290fh:
+load_or_verify:
   or a
   ld (variable.move_command_first_track),a
   ld (variable.ch_add),hl
@@ -7028,13 +7028,13 @@ l290fh:
   call sub_18a4h
   call sub_18abh
   jp l1921h
-l2926h:
-  call sub_0405h
+delete_file:
+  call read_system_track
   call sub_1cb3h
   jp l07a0h
 sub_292fh:
   call sub_1c57h
-  call sub_0405h
+  call read_system_track
   jp sub_1cb3h
 sub_2938h:
   push bc
@@ -7730,7 +7730,7 @@ sub_2d92h:
   ld de,(variable.file_first_sector)
   ld a,(variable.file_length_in_sectors)
   ld b,a
-  call l1e3dh
+  call read_sectors
   ret
   call sub_1ddfh
   call sub_1d75h
@@ -7740,7 +7740,7 @@ sub_2d92h:
   ld a,c
   cp 008h
   jr nc,l2dd2h
-  call sub_0405h
+  call read_system_track
   call sub_1cb3h
   jp nz,l03d9h
   ld hl,variable.filename
@@ -11400,7 +11400,7 @@ sub_3d94h:
   rst 20h
   defw rom_print_a
   ret
-sub_3d98h:
+init_interface:
   ld a,008h
 l3d9ah:
   out (01fh),a
@@ -11436,7 +11436,7 @@ l3dbah:
   jp l3ee7h
 sub_3dc8h:
   ld a,(variable.default_drive)
-sub_3dcbh:
+init_disk_drive:
   ld (variable.temporary_drive),a
   ld hl,variable.system_register
   ld c,a
@@ -11532,9 +11532,9 @@ sub_3e4ch:
   call sub_3dfdh
   pop bc
   ret
-sub_3e63h:
+seek_track:
   ld c,a
-  call sub_1febh
+  call select_bottom_side
   call sub_3e11h
   and 002h
   call nz,sub_3eaah
@@ -11584,9 +11584,9 @@ sub_3eaah:
   ld c,a
   ret nc
 l3eafh:
-  jp sub_1ff6h
+  jp select_top_side
 sub_3eb2h:
-  call sub_1febh
+  call select_bottom_side
 sub_3eb5h:
   in a,(01fh)
   and 080h
@@ -11634,10 +11634,10 @@ l3ef5h:
   di
   in a,(07fh)
   jr l3ef5h
-sub_3f02h:
+set_sector_number:
   ld (variable.sector),a
   ret
-sub_3f06h:
+define_buffer_address:
   ld (variable.buffer),hl
   ret
 sub_3f0ah:
@@ -11719,10 +11719,10 @@ l3f7bh:
   call sub_272bh
   ld a,007h
   ld (variable.error_code),a
-  jp l01d3h
+  jp exit_dos
 l3f94h:
   ld a,(variable.current_track)
-  call sub_3e63h
+  call seek_track
   call sub_3ea0h
   jp l3f13h
 l3fa0h:
@@ -11734,9 +11734,9 @@ l3fa0h:
   jr nz,l3fadh
   inc (hl)
 l3fadh:
-  call sub_3d98h
+  call init_interface
   ld a,(variable.current_track)
-  call sub_3e63h
+  call seek_track
   pop de
   jp l3f15h
 sub_3fbah:

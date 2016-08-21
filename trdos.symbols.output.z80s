@@ -208,7 +208,7 @@ sub_01c7h:	equ 0x01c7
 ; 0x01b3	(call destination)
 ; 0x01a8	(call destination)
 
-l01d3h:	equ 0x01d3
+exit_dos:	equ 0x01d3
 ; Used at following locations:
 ; 0x3f91	(jp destination)
 ; 0x28c0	(defw directive)
@@ -415,7 +415,7 @@ sub_03fdh:	equ 0x03fd
 ; 0x0405	(call destination)
 ; 0x03ac	(call destination)
 
-sub_0405h:	equ 0x0405
+read_system_track:	equ 0x0405
 ; Used at following locations:
 ; 0x2db6	(call destination)
 ; 0x2932	(call destination)
@@ -992,7 +992,7 @@ sub_1653h:	equ 0x1653
 ; 0x16d7	(call destination)
 ; 0x16c4	(call destination)
 
-l165ch:	equ 0x165c
+read_file_descriptor:	equ 0x165c
 ; Used at following locations:
 ; 0x28a5	(defw directive)
 
@@ -1019,7 +1019,7 @@ l165eh:	equ 0x165e
 ; Used at following locations:
 ; 0x166d	(jr destination)
 
-l1664h:	equ 0x1664
+write_file_descriptor:	equ 0x1664
 ; Used at following locations:
 ; 0x28a8	(defw directive)
 
@@ -1470,7 +1470,7 @@ l1ce7h:	equ 0x1ce7
 ; Used at following locations:
 ; 0x1cdf	(jr destination)
 
-l1cf0h:	equ 0x1cf0
+find_file:	equ 0x1cf0
 ; Used at following locations:
 ; 0x28ab	(defw directive)
 
@@ -1775,7 +1775,7 @@ sub_1e36h:	equ 0x1e36
 ; 0x3dfa	(call destination)
 ; 0x1e6d	(call destination)
 
-l1e3dh:	equ 0x1e3d
+read_sectors:	equ 0x1e3d
 ; Used at following locations:
 ; 0x2d9d	(call destination)
 ; 0x289c	(defw directive)
@@ -1817,7 +1817,7 @@ sub_1e43h:	equ 0x1e43
 ; 0x056c	(call destination)
 ; 0x01d0	(call destination)
 
-sub_1e4dh:	equ 0x1e4d
+write_sectors:	equ 0x1e4d
 ; Used at following locations:
 ; 0x289f	(defw directive)
 ; 0x2404	(call destination)
@@ -1900,7 +1900,7 @@ l1fe7h:	equ 0x1fe7
 ; Used at following locations:
 ; 0x1fe3	(jr destination)
 
-sub_1febh:	equ 0x1feb
+select_bottom_side:	equ 0x1feb
 ; Used at following locations:
 ; 0x3eb2	(call destination)
 ; 0x3e64	(call destination)
@@ -1913,7 +1913,7 @@ l1ff0h:	equ 0x1ff0
 ; Used at following locations:
 ; 0x1ffb	(jr destination)
 
-sub_1ff6h:	equ 0x1ff6
+select_top_side:	equ 0x1ff6
 ; Used at following locations:
 ; 0x3eaf	(jp destination)
 ; 0x28d2	(defw directive)
@@ -2444,7 +2444,7 @@ l2731h:	equ 0x2731
 ; 0x2737	(jr destination)
 ; 0x272d	(jr destination)
 
-l2739h:	equ 0x2739
+test_track:	equ 0x2739
 ; Used at following locations:
 ; 0x28cc	(defw directive)
 
@@ -2530,15 +2530,15 @@ table.c_commands:	equ 0x288c
 ; Used at following locations:
 ; 0x2866	(immediate value)
 
-l28d8h:	equ 0x28d8
+print_catalogue:	equ 0x28d8
 ; Used at following locations:
 ; 0x28a2	(defw directive)
 
-l28e0h:	equ 0x28e0
+copy_from_hl_to_file_descriptor:	equ 0x28e0
 ; Used at following locations:
 ; 0x28c6	(defw directive)
 
-l28e3h:	equ 0x28e3
+copy_from_file_descriptor_to_hl:	equ 0x28e3
 ; Used at following locations:
 ; 0x28c9	(defw directive)
 
@@ -2550,19 +2550,19 @@ l28efh:	equ 0x28ef
 ; Used at following locations:
 ; 0x28ec	(jr destination)
 
-l28f2h:	equ 0x28f2
+save_basic_program:	equ 0x28f2
 ; Used at following locations:
 ; 0x28b1	(defw directive)
 
-l28fbh:	equ 0x28fb
+save_code_file:	equ 0x28fb
 ; Used at following locations:
 ; 0x28ae	(defw directive)
 
-l290fh:	equ 0x290f
+load_or_verify:	equ 0x290f
 ; Used at following locations:
 ; 0x28b7	(defw directive)
 
-l2926h:	equ 0x2926
+delete_file:	equ 0x2926
 ; Used at following locations:
 ; 0x28c3	(defw directive)
 
@@ -3155,7 +3155,7 @@ sub_3d94h:	equ 0x3d94
 ; Used at following locations:
 ; 0x3d8a	(call destination)
 
-sub_3d98h:	equ 0x3d98
+init_interface:	equ 0x3d98
 ; Used at following locations:
 ; 0x3fad	(call destination)
 ; 0x288d	(defw directive)
@@ -3188,7 +3188,7 @@ sub_3dc8h:	equ 0x3dc8
 ; Used at following locations:
 ; 0x0316	(call destination)
 
-sub_3dcbh:	equ 0x3dcb
+init_disk_drive:	equ 0x3dcb
 ; Used at following locations:
 ; 0x2890	(defw directive)
 ; 0x2447	(jp destination)
@@ -3288,7 +3288,7 @@ sub_3e4ch:	equ 0x3e4c
 ; Used at following locations:
 ; 0x3e90	(call destination)
 
-sub_3e63h:	equ 0x3e63
+seek_track:	equ 0x3e63
 ; Used at following locations:
 ; 0x3fb3	(call destination)
 ; 0x3f97	(call destination)
@@ -3352,12 +3352,12 @@ l3ef5h:	equ 0x3ef5
 ; 0x3f00	(jr destination)
 ; 0x3ef9	(jr destination)
 
-sub_3f02h:	equ 0x3f02
+set_sector_number:	equ 0x3f02
 ; Used at following locations:
 ; 0x2896	(defw directive)
 ; 0x1e7d	(call destination)
 
-sub_3f06h:	equ 0x3f06
+define_buffer_address:	equ 0x3f06
 ; Used at following locations:
 ; 0x2899	(defw directive)
 ; 0x1e77	(call destination)

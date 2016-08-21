@@ -351,14 +351,14 @@ l01a5h:
 l01a8h:
 	call sub_01c7h		;01a8	cd c7 01 	. . . 
 l01abh:
-	jp z,l01d3h		;01ab	ca d3 01 	. . . 
+	jp z,exit_dos		;01ab	ca d3 01 	. . . 
 	cp 0eah		;01ae	fe ea 	. . 
 	inc hl			;01b0	23 	# 
 	jr nz,l01a8h		;01b1	20 f5 	  . 
 	call sub_01c7h		;01b3	cd c7 01 	. . . 
 	jr z,l01abh		;01b6	28 f3 	( . 
 	cp 03ah		;01b8	fe 3a 	. : 
-	jp nz,l01d3h		;01ba	c2 d3 01 	. . . 
+	jp nz,exit_dos		;01ba	c2 d3 01 	. . . 
 	inc hl			;01bd	23 	# 
 	call sub_3048h		;01be	cd 48 30 	. H 0 
 	ld hl,(variable.command_line_address)		;01c1	2a 11 5d 	* . ] 
@@ -372,7 +372,7 @@ sub_01c7h:
 	or a			;01ce	b7 	. 
 	ret			;01cf	c9 	. 
 	call sub_1e43h		;01d0	cd 43 1e 	. C . 
-l01d3h:
+exit_dos:
 	ld hl,l0000h		;01d3	21 00 00 	! . . 
 	ld (variable.two_files_drive),hl		;01d6	22 f8 5c 	" . \ 
 	call sub_20e5h		;01d9	cd e5 20 	. .   
@@ -555,7 +555,7 @@ l0320h:
 	ld d,a			;0321	57 	W 
 	ld a,015h		;0322	3e 15 	> . 
 	cp c			;0324	b9 	. 
-	jp c,l01d3h		;0325	da d3 01 	. . . 
+	jp c,exit_dos		;0325	da d3 01 	. . . 
 	ld a,d			;0328	7a 	z 
 	inc hl			;0329	23 	# 
 	cp (hl)			;032a	be 	. 
@@ -677,7 +677,7 @@ l03b5h:
 	ld hl,message.cr.free		;03bc	21 d2 29 	! . ) 
 	rst 18h			;03bf	df 	. 
 l03c0h:
-	jp l01d3h		;03c0	c3 d3 01 	. . . 
+	jp exit_dos		;03c0	c3 d3 01 	. . . 
 print_error_number_A_whose_message_is_at_HL:
 	push af			;03c3	f5 	. 
 	ld a,(variable.command_mode)		;03c4	3a 0e 5d 	: . ] 
@@ -710,12 +710,12 @@ l03f2h:
 	call sub_294ah		;03f2	cd 4a 29 	. J ) 
 	ld hl,variable.tmp_buffer_address		;03f5	21 25 5d 	! % ] 
 	ld b,001h		;03f8	06 01 	. . 
-	jp l1e3dh		;03fa	c3 3d 1e 	. = . 
+	jp read_sectors		;03fa	c3 3d 1e 	. = . 
 sub_03fdh:
 	call sub_294ah		;03fd	cd 4a 29 	. J ) 
 	ld de,l0008h		;0400	11 08 00 	. . . 
 	jr l03f2h		;0403	18 ed 	. . 
-sub_0405h:
+read_system_track:
 	call sub_03fdh		;0405	cd fd 03 	. . . 
 	ld a,(05e0ch)		;0408	3a 0c 5e 	: . ^ 
 	cp 010h		;040b	fe 10 	. . 
@@ -769,7 +769,7 @@ l046ah:
 	call sub_1d75h		;046a	cd 75 1d 	. u . 
 	ld a,(variable.temporary_drive)		;046d	3a f6 5c 	: . \ 
 	ld (variable.cat_drive_or_read_verify_flag),a		;0470	32 f9 5c 	2 . \ 
-	call sub_0405h		;0473	cd 05 04 	. . . 
+	call read_system_track		;0473	cd 05 04 	. . . 
 	ld a,(variable.file_size)		;0476	3a db 5c 	: . \ 
 l0479h:
 	cp 002h		;0479	fe 02 	. . 
@@ -847,7 +847,7 @@ sub_04f6h:
 	ld a,(variable.cat_drive_or_read_verify_flag)		;04f8	3a f9 5c 	: . \ 
 	ld hl,variable.temporary_drive		;04fb	21 f6 5c 	! . \ 
 	cp (hl)			;04fe	be 	. 
-	call nz,sub_3dcbh		;04ff	c4 cb 3d 	. . = 
+	call nz,init_disk_drive		;04ff	c4 cb 3d 	. . = 
 	pop bc			;0502	c1 	. 
 	pop hl			;0503	e1 	. 
 	jp l2fc6h		;0504	c3 c6 2f 	. . / 
@@ -901,7 +901,7 @@ sub_0531h:
 	ld hl,variable.temporary_drive		;055a	21 f6 5c 	! . \ 
 	cp (hl)			;055d	be 	. 
 	jp nz,error.wrong_drive_letter		;055e	c2 1a 1d 	. . . 
-	call sub_0405h		;0561	cd 05 04 	. . . 
+	call read_system_track		;0561	cd 05 04 	. . . 
 	pop af			;0564	f1 	. 
 	jp z,error.file_exists		;0565	ca 50 1c 	. P . 
 	pop bc			;0568	c1 	. 
@@ -969,14 +969,14 @@ l05cbh:
 	ld a,(variable.temporary_drive)		;05e0	3a f6 5c 	: . \ 
 	ld (variable.cat_drive_or_read_verify_flag),a		;05e3	32 f9 5c 	2 . \ 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;05e6	3a f9 5c 	: . \ 
-	call sub_3dcbh		;05e9	cd cb 3d 	. . = 
-	call sub_0405h		;05ec	cd 05 04 	. . . 
+	call init_disk_drive		;05e9	cd cb 3d 	. . = 
+	call read_system_track		;05ec	cd 05 04 	. . . 
 	ld a,0ffh		;05ef	3e ff 	> . 
 	ld (variable.file_number_for_copying),a		;05f1	32 0d 5d 	2 . ] 
 l05f4h:
 	ld a,(variable.two_files_drive)		;05f4	3a f8 5c 	: . \ 
-	call sub_3dcbh		;05f7	cd cb 3d 	. . = 
-	call sub_0405h		;05fa	cd 05 04 	. . . 
+	call init_disk_drive		;05f7	cd cb 3d 	. . = 
+	call read_system_track		;05fa	cd 05 04 	. . . 
 	ld a,(variable.file_number_for_copying)		;05fd	3a 0d 5d 	: . ] 
 	inc a			;0600	3c 	< 
 	ld (variable.file_number_for_copying),a		;0601	32 0d 5d 	2 . ] 
@@ -992,7 +992,7 @@ l05f4h:
 	ld bc,00007h		;061a	01 07 00 	. . . 
 	ldir		;061d	ed b0 	. . 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;061f	3a f9 5c 	: . \ 
-	call sub_3dcbh		;0622	cd cb 3d 	. . = 
+	call init_disk_drive		;0622	cd cb 3d 	. . = 
 	call sub_1cb3h		;0625	cd b3 1c 	. . . 
 	jr nz,l0634h		;0628	20 0a 	  . 
 	call sub_05b4h		;062a	cd b4 05 	. . . 
@@ -1066,11 +1066,11 @@ sub_063ch:
 	ld a,(variable.temporary_drive)		;06cc	3a f6 5c 	: . \ 
 	ld (variable.cat_drive_or_read_verify_flag),a		;06cf	32 f9 5c 	2 . \ 
 	ld a,(variable.two_files_drive)		;06d2	3a f8 5c 	: . \ 
-	call sub_3dcbh		;06d5	cd cb 3d 	. . = 
-	call sub_0405h		;06d8	cd 05 04 	. . . 
+	call init_disk_drive		;06d5	cd cb 3d 	. . = 
+	call read_system_track		;06d8	cd 05 04 	. . . 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;06db	3a f9 5c 	: . \ 
-	call sub_3dcbh		;06de	cd cb 3d 	. . = 
-	call sub_0405h		;06e1	cd 05 04 	. . . 
+	call init_disk_drive		;06de	cd cb 3d 	. . = 
+	call read_system_track		;06e1	cd 05 04 	. . . 
 	pop bc			;06e4	c1 	. 
 	pop af			;06e5	f1 	. 
 	jr nz,l06f3h		;06e6	20 0b 	  . 
@@ -1089,7 +1089,7 @@ l06f3h:
 	ld hl,variable.file_start		;0706	21 e6 5c 	! . \ 
 	inc (hl)			;0709	34 	4 
 	ld a,(variable.two_files_drive)		;070a	3a f8 5c 	: . \ 
-	call sub_3dcbh		;070d	cd cb 3d 	. . = 
+	call init_disk_drive		;070d	cd cb 3d 	. . = 
 	call sub_05b4h		;0710	cd b4 05 	. . . 
 	jp nz,l03e1h		;0713	c2 e1 03 	. . . 
 	call sub_165dh		;0716	cd 5d 16 	. ] . 
@@ -1098,8 +1098,8 @@ l06f3h:
 	ld bc,00007h		;071f	01 07 00 	. . . 
 	ldir		;0722	ed b0 	. . 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;0724	3a f9 5c 	: . \ 
-	call sub_3dcbh		;0727	cd cb 3d 	. . = 
-	call sub_0405h		;072a	cd 05 04 	. . . 
+	call init_disk_drive		;0727	cd cb 3d 	. . = 
+	call read_system_track		;072a	cd 05 04 	. . . 
 	jr l06f3h		;072d	18 c4 	. . 
 sub_072fh:
 	ld a,(variable.file_2_length_in_sectors)		;072f	3a f1 5c 	: . \ 
@@ -1117,21 +1117,21 @@ sub_072fh:
 l0744h:
 	push bc			;0744	c5 	. 
 	ld a,(variable.two_files_drive)		;0745	3a f8 5c 	: . \ 
-	call sub_3dcbh		;0748	cd cb 3d 	. . = 
+	call init_disk_drive		;0748	cd cb 3d 	. . = 
 	pop bc			;074b	c1 	. 
 	push bc			;074c	c5 	. 
 	ld hl,(variable.stack_sp_copy)		;074d	2a cf 5c 	* . \ 
 	push hl			;0750	e5 	. 
 	ld de,(variable.file_2_first_sector)		;0751	ed 5b f2 5c 	. [ . \ 
-	call l1e3dh		;0755	cd 3d 1e 	. = . 
+	call read_sectors		;0755	cd 3d 1e 	. = . 
 	ld hl,(variable.current_sector)		;0758	2a f4 5c 	* . \ 
 	ld (variable.file_2_first_sector),hl		;075b	22 f2 5c 	" . \ 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;075e	3a f9 5c 	: . \ 
-	call sub_3dcbh		;0761	cd cb 3d 	. . = 
+	call init_disk_drive		;0761	cd cb 3d 	. . = 
 	pop hl			;0764	e1 	. 
 	pop bc			;0765	c1 	. 
 	ld de,(variable.file_first_sector)		;0766	ed 5b eb 5c 	. [ . \ 
-	call sub_1e4dh		;076a	cd 4d 1e 	. M . 
+	call write_sectors		;076a	cd 4d 1e 	. M . 
 	ld hl,(variable.current_sector)		;076d	2a f4 5c 	* . \ 
 	ld (variable.file_first_sector),hl		;0770	22 eb 5c 	" . \ 
 	jr sub_072fh		;0773	18 ba 	. . 
@@ -3290,7 +3290,7 @@ message_interface_1_start:
 	ld a,(de)			;1021	1a 	. 
 	call check_drive_letter		;1022	cd 24 05 	. $ . 
 	ld (variable.default_drive),a		;1025	32 19 5d 	2 . ] 
-	call sub_3dcbh		;1028	cd cb 3d 	. . = 
+	call init_disk_drive		;1028	cd cb 3d 	. . = 
 	jp l03e1h		;102b	c3 e1 03 	. . . 
 sub_102eh:
 	ld b,043h		;102e	06 43 	. C 
@@ -3629,13 +3629,13 @@ l11b0h:
 	ld a,(variable.cat_drive_or_read_verify_flag)		;11b2	3a f9 5c 	: . \ 
 	ld hl,variable.temporary_drive		;11b5	21 f6 5c 	! . \ 
 	cp (hl)			;11b8	be 	. 
-	call nz,sub_3dcbh		;11b9	c4 cb 3d 	. . = 
+	call nz,init_disk_drive		;11b9	c4 cb 3d 	. . = 
 	pop bc			;11bc	c1 	. 
 	pop hl			;11bd	e1 	. 
 	call sub_050ch		;11be	cd 0c 05 	. . . 
 	ld a,(hl)			;11c1	7e 	~ 
 	or a			;11c2	b7 	. 
-	jp z,l01d3h		;11c3	ca d3 01 	. . . 
+	jp z,exit_dos		;11c3	ca d3 01 	. . . 
 	cp 001h		;11c6	fe 01 	. . 
 	call z,sub_0507h		;11c8	cc 07 05 	. . . 
 	ret nz			;11cb	c0 	. 
@@ -3667,7 +3667,7 @@ l1205h:
 	call sub_1d75h		;1205	cd 75 1d 	. u . 
 	ld a,(variable.temporary_drive)		;1208	3a f6 5c 	: . \ 
 	ld (variable.cat_drive_or_read_verify_flag),a		;120b	32 f9 5c 	2 . \ 
-	call sub_0405h		;120e	cd 05 04 	. . . 
+	call read_system_track		;120e	cd 05 04 	. . . 
 	ld a,(variable.file_size)		;1211	3a db 5c 	: . \ 
 	cp 002h		;1214	fe 02 	. . 
 	push af			;1216	f5 	. 
@@ -3840,7 +3840,7 @@ l1335h:
 	add hl,bc			;133b	09 	. 
 	ld b,002h		;133c	06 02 	. . 
 	push hl			;133e	e5 	. 
-	call l1e3dh		;133f	cd 3d 1e 	. = . 
+	call read_sectors		;133f	cd 3d 1e 	. = . 
 	ld a,080h		;1342	3e 80 	> . 
 	pop hl			;1344	e1 	. 
 	ld bc,l0200h		;1345	01 00 02 	. . . 
@@ -3905,7 +3905,7 @@ sub_13b7h:
 	ldir		;13c3	ed b0 	. . 
 	ld a,(variable.file_2_length_in_sectors)		;13c5	3a f1 5c 	: . \ 
 	ld (variable.error_code_msb),a		;13c8	32 10 5d 	2 . ] 
-	call sub_0405h		;13cb	cd 05 04 	. . . 
+	call read_system_track		;13cb	cd 05 04 	. . . 
 	call sub_3e11h		;13ce	cd 11 3e 	. . > 
 	ld (variable.ch_add),a		;13d1	32 d9 5c 	2 . \ 
 	ld a,0ffh		;13d4	3e ff 	> . 
@@ -3931,7 +3931,7 @@ sub_13b7h:
 sub_1403h:
 	xor a			;1403	af 	. 
 	ld (variable.entered_line_3_first_chars.1),a		;1404	32 21 5d 	2 ! ] 
-	call sub_0405h		;1407	cd 05 04 	. . . 
+	call read_system_track		;1407	cd 05 04 	. . . 
 	call sub_3e11h		;140a	cd 11 3e 	. . > 
 	ld (variable.ch_add.high),a		;140d	32 da 5c 	2 . \ 
 	call sub_1cb3h		;1410	cd b3 1c 	. . . 
@@ -3993,7 +3993,7 @@ l1484h:
 	push hl			;148b	e5 	. 
 	ld de,(variable.file_2_first_sector)		;148c	ed 5b f2 5c 	. [ . \ 
 	call sub_14d8h		;1490	cd d8 14 	. . . 
-	call l1e3dh		;1493	cd 3d 1e 	. = . 
+	call read_sectors		;1493	cd 3d 1e 	. = . 
 	ld hl,(variable.current_sector)		;1496	2a f4 5c 	* . \ 
 	ld (variable.file_2_first_sector),hl		;1499	22 f2 5c 	" . \ 
 	call sub_1d97h		;149c	cd 97 1d 	. . . 
@@ -4011,7 +4011,7 @@ l14a5h:
 	pop bc			;14b7	c1 	. 
 	ld de,(variable.file_first_sector)		;14b8	ed 5b eb 5c 	. [ . \ 
 	call sub_14e4h		;14bc	cd e4 14 	. . . 
-	call sub_1e4dh		;14bf	cd 4d 1e 	. M . 
+	call write_sectors		;14bf	cd 4d 1e 	. M . 
 	ld hl,(variable.current_sector)		;14c2	2a f4 5c 	* . \ 
 	ld (variable.file_first_sector),hl		;14c5	22 eb 5c 	" . \ 
 	jp sub_1451h		;14c8	c3 51 14 	. Q . 
@@ -4044,7 +4044,7 @@ sub_14e4h:
 sub_14f0h:
 	xor a			;14f0	af 	. 
 	ld (variable.entered_line_3_first_chars.1),a		;14f1	32 21 5d 	2 ! ] 
-	call sub_0405h		;14f4	cd 05 04 	. . . 
+	call read_system_track		;14f4	cd 05 04 	. . . 
 	call sub_3e11h		;14f7	cd 11 3e 	. . > 
 	ld (variable.ch_add.high),a		;14fa	32 da 5c 	2 . \ 
 	ld a,(05e08h)		;14fd	3a 08 5e 	: . ^ 
@@ -4081,7 +4081,7 @@ l153eh:
 	call sub_1d9fh		;1545	cd 9f 1d 	. . . 
 	ld a,0ffh		;1548	3e ff 	> . 
 	ld (variable.entered_line_3_first_chars.1),a		;154a	32 21 5d 	2 ! ] 
-	call sub_0405h		;154d	cd 05 04 	. . . 
+	call read_system_track		;154d	cd 05 04 	. . . 
 	call sub_3e11h		;1550	cd 11 3e 	. . > 
 	ld (variable.ch_add),a		;1553	32 d9 5c 	2 . \ 
 	ld a,(05e08h)		;1556	3a 08 5e 	: . ^ 
@@ -4106,7 +4106,7 @@ l1575h:
 	ld (variable.filename.4),hl		;1584	22 e1 5c 	" . \ 
 	ld (variable.filename.6),hl		;1587	22 e3 5c 	" . \ 
 	call sub_15b8h		;158a	cd b8 15 	. . . 
-	call sub_0405h		;158d	cd 05 04 	. . . 
+	call read_system_track		;158d	cd 05 04 	. . . 
 	ld a,(variable.file_start.high)		;1590	3a e7 5c 	: . \ 
 	ld (05e08h),a		;1593	32 08 5e 	2 . ^ 
 	ld hl,(variable.filename)		;1596	2a dd 5c 	* . \ 
@@ -4162,7 +4162,7 @@ l15f8h:
 	call sub_14d8h		;15fd	cd d8 14 	. . . 
 	ld de,(variable.filename.4)		;1600	ed 5b e1 5c 	. [ . \ 
 	ld b,c			;1604	41 	A 
-	call l1e3dh		;1605	cd 3d 1e 	. = . 
+	call read_sectors		;1605	cd 3d 1e 	. = . 
 	ld hl,(variable.current_sector)		;1608	2a f4 5c 	* . \ 
 	ld (variable.filename.4),hl		;160b	22 e1 5c 	" . \ 
 	call sub_1d97h		;160e	cd 97 1d 	. . . 
@@ -4183,7 +4183,7 @@ l161dh:
 	ld de,(variable.filename.6)		;1630	ed 5b e3 5c 	. [ . \ 
 	ld b,c			;1634	41 	A 
 	call sub_14e4h		;1635	cd e4 14 	. . . 
-	call sub_1e4dh		;1638	cd 4d 1e 	. M . 
+	call write_sectors		;1638	cd 4d 1e 	. M . 
 	ld hl,(variable.current_sector)		;163b	2a f4 5c 	* . \ 
 	ld (variable.filename.6),hl		;163e	22 e3 5c 	" . \ 
 	jp sub_15b8h		;1641	c3 b8 15 	. . . 
@@ -4201,7 +4201,7 @@ sub_1653h:
 	ld a,(variable.filename)		;1656	3a dd 5c 	: . \ 
 	cp 001h		;1659	fe 01 	. . 
 	ret			;165b	c9 	. 
-l165ch:
+read_file_descriptor:
 	ld c,a			;165c	4f 	O 
 sub_165dh:
 	xor a			;165d	af 	. 
@@ -4210,7 +4210,7 @@ l165eh:
 	call sub_17e9h		;165f	cd e9 17 	. . . 
 	pop bc			;1662	c1 	. 
 	ret			;1663	c9 	. 
-l1664h:
+write_file_descriptor:
 	ld c,a			;1664	4f 	O 
 	call sub_166bh		;1665	cd 6b 16 	. k . 
 	jp sub_1e43h		;1668	c3 43 1e 	. C . 
@@ -4250,7 +4250,7 @@ sub_1697h:
 	ret			;16aa	c9 	. 
 	call sub_1d75h		;16ab	cd 75 1d 	. u . 
 	call sub_166fh		;16ae	cd 6f 16 	. o . 
-	call sub_0405h		;16b1	cd 05 04 	. . . 
+	call read_system_track		;16b1	cd 05 04 	. . . 
 	ld a,(05e19h)		;16b4	3a 19 5e 	: . ^ 
 	or a			;16b7	b7 	. 
 	jp z,l03e1h		;16b8	ca e1 03 	. . . 
@@ -4390,13 +4390,13 @@ l17bah:
 	ld hl,(variable.stack_sp_copy)		;17bb	2a cf 5c 	* . \ 
 	push hl			;17be	e5 	. 
 	ld de,(variable.move_command_first_sector)		;17bf	ed 5b d5 5c 	. [ . \ 
-	call l1e3dh		;17c3	cd 3d 1e 	. = . 
+	call read_sectors		;17c3	cd 3d 1e 	. = . 
 	ld hl,(variable.current_sector)		;17c6	2a f4 5c 	* . \ 
 	ld (variable.move_command_first_sector),hl		;17c9	22 d5 5c 	" . \ 
 	pop hl			;17cc	e1 	. 
 	pop bc			;17cd	c1 	. 
 	ld de,(variable.start_file_parameter_or_number_of_tracks)		;17ce	ed 5b d7 5c 	. [ . \ 
-	call sub_1e4dh		;17d2	cd 4d 1e 	. M . 
+	call write_sectors		;17d2	cd 4d 1e 	. M . 
 	ld hl,(variable.current_sector)		;17d5	2a f4 5c 	* . \ 
 	ld (variable.start_file_parameter_or_number_of_tracks),hl		;17d8	22 d7 5c 	" . \ 
 	jr sub_17a5h		;17db	18 c8 	. . 
@@ -4582,7 +4582,7 @@ l192dh:
 	call z,sub_195ch		;192e	cc 5c 19 	. \ . 
 	pop af			;1931	f1 	. 
 	jr z,l1937h		;1932	28 03 	( . 
-	jp sub_1e4dh		;1934	c3 4d 1e 	. M . 
+	jp write_sectors		;1934	c3 4d 1e 	. M . 
 l1937h:
 	ld a,(variable.move_command_first_track)		;1937	3a d6 5c 	: . \ 
 	cp 003h		;193a	fe 03 	. . 
@@ -4605,7 +4605,7 @@ sub_1946h:
 sub_195ch:
 	ld a,(variable.cat_drive_or_read_verify_flag)		;195c	3a f9 5c 	: . \ 
 	cp 0ffh		;195f	fe ff 	. . 
-	jp nz,l1e3dh		;1961	c2 3d 1e 	. = . 
+	jp nz,read_sectors		;1961	c2 3d 1e 	. = . 
 	ld (variable.current_sector),de		;1964	ed 53 f4 5c 	. S . \ 
 	ld c,000h		;1968	0e 00 	. . 
 l196ah:
@@ -4619,7 +4619,7 @@ l1974h:
 	ld b,001h		;1975	06 01 	. . 
 	ld de,(variable.ch_add)		;1977	ed 5b d9 5c 	. [ . \ 
 	ld hl,variable.tmp_buffer_address		;197b	21 25 5d 	! % ] 
-	call l1e3dh		;197e	cd 3d 1e 	. = . 
+	call read_sectors		;197e	cd 3d 1e 	. = . 
 	ld hl,(variable.current_sector)		;1981	2a f4 5c 	* . \ 
 	ld (variable.ch_add),hl		;1984	22 d9 5c 	" . \ 
 	pop bc			;1987	c1 	. 
@@ -4905,7 +4905,7 @@ l1b6dh:
 	ld hl,(variable.file_start)		;1b97	2a e6 5c 	* . \ 
 	ld a,(variable.file_length_in_sectors)		;1b9a	3a ea 5c 	: . \ 
 	ld b,a			;1b9d	47 	G 
-	call sub_1e4dh		;1b9e	cd 4d 1e 	. M . 
+	call write_sectors		;1b9e	cd 4d 1e 	. M . 
 	ld hl,(variable.current_sector)		;1ba1	2a f4 5c 	* . \ 
 	push hl			;1ba4	e5 	. 
 	call sub_03fdh		;1ba5	cd fd 03 	. . . 
@@ -4995,7 +4995,7 @@ error.no_space:
 	ld a,003h		;1c48	3e 03 	> . 
 l1c4ah:
 	call print_error_number_A_whose_message_is_at_HL		;1c4a	cd c3 03 	. . . 
-	jp l01d3h		;1c4d	c3 d3 01 	. . . 
+	jp exit_dos		;1c4d	c3 d3 01 	. . . 
 error.file_exists:
 	ld hl,message.cr.file_exists		;1c50	21 c5 29 	! . ) 
 	ld a,002h		;1c53	3e 02 	> . 
@@ -5035,7 +5035,7 @@ sub_1c81h:
 	call check_drive_letter		;1c89	cd 24 05 	. $ . 
 	push bc			;1c8c	c5 	. 
 	push hl			;1c8d	e5 	. 
-	call sub_3dcbh		;1c8e	cd cb 3d 	. . = 
+	call init_disk_drive		;1c8e	cd cb 3d 	. . = 
 	pop hl			;1c91	e1 	. 
 	pop bc			;1c92	c1 	. 
 	dec bc			;1c93	0b 	. 
@@ -5048,7 +5048,7 @@ l1c98h:
 	ld a,(variable.default_drive)		;1c99	3a 19 5d 	: . ] 
 	push bc			;1c9c	c5 	. 
 	push hl			;1c9d	e5 	. 
-	call sub_3dcbh		;1c9e	cd cb 3d 	. . = 
+	call init_disk_drive		;1c9e	cd cb 3d 	. . = 
 	pop hl			;1ca1	e1 	. 
 	pop bc			;1ca2	c1 	. 
 	ret			;1ca3	c9 	. 
@@ -5105,7 +5105,7 @@ l1ce7h:
 	ld (variable.find_command_found_file),a		;1ceb	32 1e 5d 	2 . ] 
 	xor a			;1cee	af 	. 
 	ret z			;1cef	c8 	. 
-l1cf0h:
+find_file:
 	call sub_1cb3h		;1cf0	cd b3 1c 	. . . 
 	ld hl,variable.error_code		;1cf3	21 0f 5d 	! . ] 
 	ld (hl),c			;1cf6	71 	q 
@@ -5136,7 +5136,7 @@ l1d25h:
 	ld hl,messages_29B2_start		;1d26	21 b2 29 	! . ) 
 l1d29h:
 	call print_error_number_A_whose_message_is_at_HL		;1d29	cd c3 03 	. . . 
-	jp l01d3h		;1d2c	c3 d3 01 	. . . 
+	jp exit_dos		;1d2c	c3 d3 01 	. . . 
 l1d2fh:
 	ld a,(sys_err_nr)		;1d2f	3a 3a 5c 	: : \ 
 	ld hl,message.break		;1d32	21 ca 27 	! . ' 
@@ -5310,7 +5310,7 @@ sub_1e36h:
 	ld a,h			;1e39	7c 	| 
 	out (03fh),a		;1e3a	d3 3f 	. ? 
 	ret			;1e3c	c9 	. 
-l1e3dh:
+read_sectors:
 	xor a			;1e3d	af 	. 
 	jr l1e64h		;1e3e	18 24 	. $ 
 l1e40h:
@@ -5320,7 +5320,7 @@ sub_1e43h:
 	dec de			;1e47	1b 	. 
 	ld b,001h		;1e48	06 01 	. . 
 	ld hl,variable.tmp_buffer_address		;1e4a	21 25 5d 	! % ] 
-sub_1e4dh:
+write_sectors:
 	push hl			;1e4d	e5 	. 
 	push de			;1e4e	d5 	. 
 	call sub_3e11h		;1e4f	cd 11 3e 	. . > 
@@ -5350,11 +5350,11 @@ l1e67h:
 l1e75h:
 	push bc			;1e75	c5 	. 
 	push hl			;1e76	e5 	. 
-	call sub_3f06h		;1e77	cd 06 3f 	. . ? 
+	call define_buffer_address		;1e77	cd 06 3f 	. . ? 
 	ld a,(variable.current_sector)		;1e7a	3a f4 5c 	: . \ 
-	call sub_3f02h		;1e7d	cd 02 3f 	. . ? 
+	call set_sector_number		;1e7d	cd 02 3f 	. . ? 
 	ld a,(variable.current_track)		;1e80	3a f5 5c 	: . \ 
-	call sub_3e63h		;1e83	cd 63 3e 	. c > 
+	call seek_track		;1e83	cd 63 3e 	. c > 
 	ld a,(variable.sector_reading_or_writting)		;1e86	3a ce 5c 	: . \ 
 	or a			;1e89	b7 	. 
 	push af			;1e8a	f5 	. 
@@ -5412,18 +5412,18 @@ sub_1ebch:
 	ld a,050h		;1ee6	3e 50 	> P 
 l1ee8h:
 	ld (variable.start_file_parameter_or_number_of_tracks),a		;1ee8	32 d7 5c 	2 . \ 
-	call sub_3d98h		;1eeb	cd 98 3d 	. . = 
-	call sub_1ff6h		;1eee	cd f6 1f 	. . . 
+	call init_interface		;1eeb	cd 98 3d 	. . = 
+	call select_top_side		;1eee	cd f6 1f 	. . . 
 	call sub_3ea0h		;1ef1	cd a0 3e 	. . > 
 	ld e,001h		;1ef4	1e 01 	. . 
 	call sub_1ffdh		;1ef6	cd fd 1f 	. . . 
-	call sub_1febh		;1ef9	cd eb 1f 	. . . 
+	call select_bottom_side		;1ef9	cd eb 1f 	. . . 
 	ld e,000h		;1efc	1e 00 	. . 
 	call sub_1ffdh		;1efe	cd fd 1f 	. . . 
 	ld a,(variable.filename)		;1f01	3a dd 5c 	: . \ 
 	cp 024h		;1f04	fe 24 	. $ 
 	jr z,l1f1bh		;1f06	28 13 	( . 
-	call sub_1ff6h		;1f08	cd f6 1f 	. . . 
+	call select_top_side		;1f08	cd f6 1f 	. . . 
 	call sub_3ea0h		;1f0b	cd a0 3e 	. . > 
 	call sub_3eb5h		;1f0e	cd b5 3e 	. . > 
 	ld a,h			;1f11	7c 	| 
@@ -5477,7 +5477,7 @@ l1f55h:
 	ld de,05e1ah		;1f75	11 1a 5e 	. . ^ 
 	ld bc,l0008h		;1f78	01 08 00 	. . . 
 	ldir		;1f7b	ed b0 	. . 
-	call sub_1febh		;1f7d	cd eb 1f 	. . . 
+	call select_bottom_side		;1f7d	cd eb 1f 	. . . 
 	ld b,001h		;1f80	06 01 	. . 
 	ld de,l0008h		;1f82	11 08 00 	. . . 
 	ld hl,variable.tmp_buffer_address		;1f85	21 25 5d 	! % ] 
@@ -5505,7 +5505,7 @@ l1f55h:
 	rst 10h			;1fb1	d7 	. 
 	pop bc			;1fb2	c1 	. 
 	call sub_1da9h		;1fb3	cd a9 1d 	. . . 
-	jp l01d3h		;1fb6	c3 d3 01 	. . . 
+	jp exit_dos		;1fb6	c3 d3 01 	. . . 
 l1fb9h:
 	ld bc,l0209h		;1fb9	01 09 02 	. . . 
 	ld a,(bc)			;1fbc	0a 	. 
@@ -5537,14 +5537,14 @@ sub_1fcah:
 l1fe7h:
 	ld (variable.start_file_parameter_or_number_of_tracks),a		;1fe7	32 d7 5c 	2 . \ 
 	ret			;1fea	c9 	. 
-sub_1febh:
+select_bottom_side:
 	ld a,(variable.system_register)		;1feb	3a 16 5d 	: . ] 
 	or 03ch		;1fee	f6 3c 	. < 
 l1ff0h:
 	ld (variable.system_register),a		;1ff0	32 16 5d 	2 . ] 
 	out (0ffh),a		;1ff3	d3 ff 	. . 
 	ret			;1ff5	c9 	. 
-sub_1ff6h:
+select_top_side:
 	ld a,(variable.system_register)		;1ff6	3a 16 5d 	: . ] 
 	and 06fh		;1ff9	e6 6f 	. o 
 	jr l1ff0h		;1ffb	18 f3 	. . 
@@ -5665,12 +5665,12 @@ l20c6h:
 	ld a,e			;20c8	7b 	{ 
 	ld b,01bh		;20c9	06 1b 	. . 
 	call sub_3e44h		;20cb	cd 44 3e 	. D > 
-	call sub_1febh		;20ce	cd eb 1f 	. . . 
+	call select_bottom_side		;20ce	cd eb 1f 	. . . 
 	call sub_1ffdh		;20d1	cd fd 1f 	. . . 
 	ld a,(variable.ch_add.high)		;20d4	3a da 5c 	: . \ 
 	cp 080h		;20d7	fe 80 	. . 
 	jr nz,l20e1h		;20d9	20 06 	  . 
-	call sub_1ff6h		;20db	cd f6 1f 	. . . 
+	call select_top_side		;20db	cd f6 1f 	. . . 
 	call sub_1ffdh		;20de	cd fd 1f 	. . . 
 l20e1h:
 	pop bc			;20e1	c1 	. 
@@ -5800,13 +5800,13 @@ l21aeh:
 	ld bc,l0124h		;21d1	01 24 01 	. $ . 
 	add hl,bc			;21d4	09 	. 
 	ld (variable.command_line_address),hl		;21d5	22 11 5d 	" . ] 
-	jp l01d3h		;21d8	c3 d3 01 	. . . 
+	jp exit_dos		;21d8	c3 d3 01 	. . . 
 sub_21dbh:
 	ld a,00ah		;21db	3e 0a 	> . 
 	ld (variable.find_command_symbols),a		;21dd	32 06 5d 	2 . ] 
 	call sub_1cb0h		;21e0	cd b0 1c 	. . . 
 	push af			;21e3	f5 	. 
-	call sub_0405h		;21e4	cd 05 04 	. . . 
+	call read_system_track		;21e4	cd 05 04 	. . . 
 	pop af			;21e7	f1 	. 
 	jr nz,l2206h		;21e8	20 1c 	  . 
 	ld a,(05d09h)		;21ea	3a 09 5d 	: . ] 
@@ -5901,9 +5901,9 @@ l2270h:
 	pop af			;227d	f1 	. 
 	or a			;227e	b7 	. 
 	push af			;227f	f5 	. 
-	call nz,sub_1e4dh		;2280	c4 4d 1e 	. M . 
+	call nz,write_sectors		;2280	c4 4d 1e 	. M . 
 	pop af			;2283	f1 	. 
-	call z,l1e3dh		;2284	cc 3d 1e 	. = . 
+	call z,read_sectors		;2284	cc 3d 1e 	. = . 
 	ret			;2287	c9 	. 
 sub_2288h:
 	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;2288	2a d7 5c 	* . \ 
@@ -6136,7 +6136,7 @@ sub_23fch:
 	call sub_2423h		;23fc	cd 23 24 	. # $ 
 	call sub_2321h		;23ff	cd 21 23 	. ! # 
 	ld b,001h		;2402	06 01 	. . 
-	call sub_1e4dh		;2404	cd 4d 1e 	. M . 
+	call write_sectors		;2404	cd 4d 1e 	. M . 
 	ld c,00fh		;2407	0e 0f 	. . 
 	rst 28h			;2409	ef 	. 
 	ld a,(hl)			;240a	7e 	~ 
@@ -6154,7 +6154,7 @@ sub_2418h:
 	call sub_2423h		;2418	cd 23 24 	. # $ 
 	call sub_2321h		;241b	cd 21 23 	. ! # 
 	ld b,001h		;241e	06 01 	. . 
-	jp l1e3dh		;2420	c3 3d 1e 	. = . 
+	jp read_sectors		;2420	c3 3d 1e 	. = . 
 sub_2423h:
 	ld hl,(sys_curchl)		;2423	2a 51 5c 	* Q \ 
 	ld bc,l001eh		;2426	01 1e 00 	. . . 
@@ -6185,7 +6185,7 @@ sub_2443h:
 	ld c,00bh		;2443	0e 0b 	. . 
 	rst 28h			;2445	ef 	. 
 	ld a,(hl)			;2446	7e 	~ 
-	jp sub_3dcbh		;2447	c3 cb 3d 	. . = 
+	jp init_disk_drive		;2447	c3 cb 3d 	. . = 
 l244ah:
 	ld hl,variable.0xc9		;244a	21 c2 5c 	! . \ 
 	push hl			;244d	e5 	. 
@@ -6509,7 +6509,7 @@ l2656h:
 	defw 01727h		;2666	27 17 	' . 
 	ld a,b			;2668	78 	x 
 	or c			;2669	b1 	. 
-	jp z,l01d3h		;266a	ca d3 01 	. . . 
+	jp z,exit_dos		;266a	ca d3 01 	. . . 
 	push hl			;266d	e5 	. 
 	ld hl,(sys_chans)		;266e	2a 4f 5c 	* O \ 
 	add hl,bc			;2671	09 	. 
@@ -6564,7 +6564,7 @@ l26bch:
 	ld bc,l0124h		;26c3	01 24 01 	. $ . 
 	sbc hl,bc		;26c6	ed 42 	. B 
 	ld (variable.command_line_address),hl		;26c8	22 11 5d 	" . ] 
-	jp l01d3h		;26cb	c3 d3 01 	. . . 
+	jp exit_dos		;26cb	c3 d3 01 	. . . 
 sub_26ceh:
 	ld bc,l000fh		;26ce	01 0f 00 	. . . 
 	add hl,bc			;26d1	09 	. 
@@ -6633,7 +6633,7 @@ l2731h:
 	ret			;2734	c9 	. 
 	ld a,003h		;2735	3e 03 	> . 
 	jr l2731h		;2737	18 f8 	. . 
-l2739h:
+test_track:
 	xor a			;2739	af 	. 
 	ld (variable.start_file_parameter.high),a		;273a	32 d8 5c 	2 . \ 
 	ld (variable.move_command_first_track),a		;273d	32 d6 5c 	2 . \ 
@@ -6916,7 +6916,7 @@ l2869h:
 	ld e,(hl)			;286f	5e 	^ 
 	inc hl			;2870	23 	# 
 	ld d,(hl)			;2871	56 	V 
-	ld hl,l01d3h		;2872	21 d3 01 	! . . 
+	ld hl,exit_dos		;2872	21 d3 01 	! . . 
 	push hl			;2875	e5 	. 
 	push de			;2876	d5 	. 
 	ld hl,(variable.hl_copy)		;2877	2a 02 5d 	* . ] 
@@ -6926,7 +6926,7 @@ l287fh:
 	cp 0ffh		;287f	fe ff 	. . 
 	jr nz,l2887h		;2881	20 04 	  . 
 	pop af			;2883	f1 	. 
-	jp l01d3h		;2884	c3 d3 01 	. . . 
+	jp exit_dos		;2884	c3 d3 01 	. . . 
 l2887h:
 	inc hl			;2887	23 	# 
 	inc hl			;2888	23 	# 
@@ -6934,65 +6934,65 @@ l2887h:
 	jr l2869h		;288a	18 dd 	. . 
 table.c_commands:
 	defb 000h		;288c	00 	. 
-	defw sub_3d98h		;288d	98 3d 	. = 
+	defw init_interface		;288d	98 3d 	. = 
 	defb 001h		;288f	01 	. 
-	defw sub_3dcbh		;2890	cb 3d 	. = 
+	defw init_disk_drive		;2890	cb 3d 	. = 
 	defb 002h		;2892	02 	. 
-	defw sub_3e63h		;2893	63 3e 	c > 
+	defw seek_track		;2893	63 3e 	c > 
 	defb 003h		;2895	03 	. 
-	defw sub_3f02h		;2896	02 3f 	. ? 
+	defw set_sector_number		;2896	02 3f 	. ? 
 	defb 004h		;2898	04 	. 
-	defw sub_3f06h		;2899	06 3f 	. ? 
+	defw define_buffer_address		;2899	06 3f 	. ? 
 	defb 005h		;289b	05 	. 
-	defw l1e3dh		;289c	3d 1e 	= . 
+	defw read_sectors		;289c	3d 1e 	= . 
 	defb 006h		;289e	06 	. 
-	defw sub_1e4dh		;289f	4d 1e 	M . 
+	defw write_sectors		;289f	4d 1e 	M . 
 	defb 007h		;28a1	07 	. 
-	defw l28d8h		;28a2	d8 28 	. ( 
+	defw print_catalogue		;28a2	d8 28 	. ( 
 	defb 008h		;28a4	08 	. 
-	defw l165ch		;28a5	5c 16 	\ . 
+	defw read_file_descriptor		;28a5	5c 16 	\ . 
 	defb 009h		;28a7	09 	. 
-	defw l1664h		;28a8	64 16 	d . 
+	defw write_file_descriptor		;28a8	64 16 	d . 
 	defb 00ah		;28aa	0a 	. 
-	defw l1cf0h		;28ab	f0 1c 	. . 
+	defw find_file		;28ab	f0 1c 	. . 
 	defb 00bh		;28ad	0b 	. 
-	defw l28fbh		;28ae	fb 28 	. ( 
+	defw save_code_file		;28ae	fb 28 	. ( 
 	defb 00ch		;28b0	0c 	. 
-	defw l28f2h		;28b1	f2 28 	. ( 
+	defw save_basic_program		;28b1	f2 28 	. ( 
 	defb 00dh		;28b3	0d 	. 
-	defw l01d3h		;28b4	d3 01 	. . 
+	defw exit_dos		;28b4	d3 01 	. . 
 	defb 00eh		;28b6	0e 	. 
-	defw l290fh		;28b7	0f 29 	. ) 
+	defw load_or_verify		;28b7	0f 29 	. ) 
 	defb 00fh		;28b9	0f 	. 
-	defw l01d3h		;28ba	d3 01 	. . 
+	defw exit_dos		;28ba	d3 01 	. . 
 	defb 010h		;28bc	10 	. 
-	defw l01d3h		;28bd	d3 01 	. . 
+	defw exit_dos		;28bd	d3 01 	. . 
 	defb 011h		;28bf	11 	. 
-	defw l01d3h		;28c0	d3 01 	. . 
+	defw exit_dos		;28c0	d3 01 	. . 
 	defb 012h		;28c2	12 	. 
-	defw l2926h		;28c3	26 29 	& ) 
+	defw delete_file		;28c3	26 29 	& ) 
 	defb 013h		;28c5	13 	. 
-	defw l28e0h		;28c6	e0 28 	. ( 
+	defw copy_from_hl_to_file_descriptor		;28c6	e0 28 	. ( 
 	defb 014h		;28c8	14 	. 
-	defw l28e3h		;28c9	e3 28 	. ( 
+	defw copy_from_file_descriptor_to_hl		;28c9	e3 28 	. ( 
 	defb 015h		;28cb	15 	. 
-	defw l2739h		;28cc	39 27 	9 ' 
+	defw test_track		;28cc	39 27 	9 ' 
 	defb 016h		;28ce	16 	. 
-	defw sub_1febh		;28cf	eb 1f 	. . 
+	defw select_bottom_side		;28cf	eb 1f 	. . 
 	defb 017h		;28d1	17 	. 
-	defw sub_1ff6h		;28d2	f6 1f 	. . 
+	defw select_top_side		;28d2	f6 1f 	. . 
 	defb 018h		;28d4	18 	. 
-	defw sub_0405h		;28d5	05 04 	. . 
+	defw read_system_track		;28d5	05 04 	. . 
 	defb 0ffh		;28d7	ff 	. 
-l28d8h:
+print_catalogue:
 	push af			;28d8	f5 	. 
-	call sub_0405h		;28d9	cd 05 04 	. . . 
+	call read_system_track		;28d9	cd 05 04 	. . . 
 	pop af			;28dc	f1 	. 
 	jp l0479h		;28dd	c3 79 04 	. y . 
-l28e0h:
+copy_from_hl_to_file_descriptor:
 	xor a			;28e0	af 	. 
 	jr l28e5h		;28e1	18 02 	. . 
-l28e3h:
+copy_from_file_descriptor_to_hl:
 	ld a,0ffh		;28e3	3e ff 	> . 
 l28e5h:
 	ld de,variable.filename		;28e5	11 dd 5c 	. . \ 
@@ -7003,18 +7003,18 @@ l28e5h:
 l28efh:
 	ldir		;28ef	ed b0 	. . 
 	ret			;28f1	c9 	. 
-l28f2h:
-	call sub_0405h		;28f2	cd 05 04 	. . . 
+save_basic_program:
+	call read_system_track		;28f2	cd 05 04 	. . . 
 	call sub_1ac4h		;28f5	cd c4 1a 	. . . 
 	jp l1b27h		;28f8	c3 27 1b 	. ' . 
-l28fbh:
+save_code_file:
 	ld (variable.start_file_parameter_or_number_of_tracks),hl		;28fb	22 d7 5c 	" . \ 
 	ld (variable.ch_add),de		;28fe	ed 53 d9 5c 	. S . \ 
 	ld (variable.file_size),de		;2902	ed 53 db 5c 	. S . \ 
-	call sub_0405h		;2906	cd 05 04 	. . . 
+	call read_system_track		;2906	cd 05 04 	. . . 
 	call sub_1ac4h		;2909	cd c4 1a 	. . . 
 	jp l1b53h		;290c	c3 53 1b 	. S . 
-l290fh:
+load_or_verify:
 	or a			;290f	b7 	. 
 	ld (variable.move_command_first_track),a		;2910	32 d6 5c 	2 . \ 
 	ld (variable.ch_add),hl		;2913	22 d9 5c 	" . \ 
@@ -7023,13 +7023,13 @@ l290fh:
 	call sub_18a4h		;291d	cd a4 18 	. . . 
 	call sub_18abh		;2920	cd ab 18 	. . . 
 	jp l1921h		;2923	c3 21 19 	. ! . 
-l2926h:
-	call sub_0405h		;2926	cd 05 04 	. . . 
+delete_file:
+	call read_system_track		;2926	cd 05 04 	. . . 
 	call sub_1cb3h		;2929	cd b3 1c 	. . . 
 	jp l07a0h		;292c	c3 a0 07 	. . . 
 sub_292fh:
 	call sub_1c57h		;292f	cd 57 1c 	. W . 
-	call sub_0405h		;2932	cd 05 04 	. . . 
+	call read_system_track		;2932	cd 05 04 	. . . 
 	jp sub_1cb3h		;2935	c3 b3 1c 	. . . 
 sub_2938h:
 	push bc			;2938	c5 	. 
@@ -7725,7 +7725,7 @@ sub_2d92h:
 	ld de,(variable.file_first_sector)		;2d95	ed 5b eb 5c 	. [ . \ 
 	ld a,(variable.file_length_in_sectors)		;2d99	3a ea 5c 	: . \ 
 	ld b,a			;2d9c	47 	G 
-	call l1e3dh		;2d9d	cd 3d 1e 	. = . 
+	call read_sectors		;2d9d	cd 3d 1e 	. = . 
 	ret			;2da0	c9 	. 
 	call sub_1ddfh		;2da1	cd df 1d 	. . . 
 	call sub_1d75h		;2da4	cd 75 1d 	. u . 
@@ -7735,7 +7735,7 @@ sub_2d92h:
 	ld a,c			;2db1	79 	y 
 	cp 008h		;2db2	fe 08 	. . 
 	jr nc,l2dd2h		;2db4	30 1c 	0 . 
-	call sub_0405h		;2db6	cd 05 04 	. . . 
+	call read_system_track		;2db6	cd 05 04 	. . . 
 	call sub_1cb3h		;2db9	cd b3 1c 	. . . 
 	jp nz,l03d9h		;2dbc	c2 d9 03 	. . . 
 	ld hl,variable.filename		;2dbf	21 dd 5c 	! . \ 
@@ -11395,7 +11395,7 @@ sub_3d94h:
 	rst 20h			;3d94	e7 	. 
 	defw 00010h		;3d95	10 00 	. . 
 	ret			;3d97	c9 	. 
-sub_3d98h:
+init_interface:
 	ld a,008h		;3d98	3e 08 	> . 
 l3d9ah:
 	out (01fh),a		;3d9a	d3 1f 	. . 
@@ -11431,7 +11431,7 @@ l3dbah:
 	jp l3ee7h		;3dc5	c3 e7 3e 	. . > 
 sub_3dc8h:
 	ld a,(variable.default_drive)		;3dc8	3a 19 5d 	: . ] 
-sub_3dcbh:
+init_disk_drive:
 	ld (variable.temporary_drive),a		;3dcb	32 f6 5c 	2 . \ 
 	ld hl,variable.system_register		;3dce	21 16 5d 	! . ] 
 	ld c,a			;3dd1	4f 	O 
@@ -11527,9 +11527,9 @@ sub_3e4ch:
 	call sub_3dfdh		;3e5e	cd fd 3d 	. . = 
 	pop bc			;3e61	c1 	. 
 	ret			;3e62	c9 	. 
-sub_3e63h:
+seek_track:
 	ld c,a			;3e63	4f 	O 
-	call sub_1febh		;3e64	cd eb 1f 	. . . 
+	call select_bottom_side		;3e64	cd eb 1f 	. . . 
 	call sub_3e11h		;3e67	cd 11 3e 	. . > 
 	and 002h		;3e6a	e6 02 	. . 
 	call nz,sub_3eaah		;3e6c	c4 aa 3e 	. . > 
@@ -11579,9 +11579,9 @@ sub_3eaah:
 	ld c,a			;3ead	4f 	O 
 	ret nc			;3eae	d0 	. 
 l3eafh:
-	jp sub_1ff6h		;3eaf	c3 f6 1f 	. . . 
+	jp select_top_side		;3eaf	c3 f6 1f 	. . . 
 sub_3eb2h:
-	call sub_1febh		;3eb2	cd eb 1f 	. . . 
+	call select_bottom_side		;3eb2	cd eb 1f 	. . . 
 sub_3eb5h:
 	in a,(01fh)		;3eb5	db 1f 	. . 
 	and 080h		;3eb7	e6 80 	. . 
@@ -11629,10 +11629,10 @@ l3ef5h:
 	di			;3efd	f3 	. 
 	in a,(07fh)		;3efe	db 7f 	.  
 	jr l3ef5h		;3f00	18 f3 	. . 
-sub_3f02h:
+set_sector_number:
 	ld (variable.sector),a		;3f02	32 ff 5c 	2 . \ 
 	ret			;3f05	c9 	. 
-sub_3f06h:
+define_buffer_address:
 	ld (variable.buffer),hl		;3f06	22 00 5d 	" . ] 
 	ret			;3f09	c9 	. 
 sub_3f0ah:
@@ -11714,10 +11714,10 @@ l3f7bh:
 	call sub_272bh		;3f89	cd 2b 27 	. + ' 
 	ld a,007h		;3f8c	3e 07 	> . 
 	ld (variable.error_code),a		;3f8e	32 0f 5d 	2 . ] 
-	jp l01d3h		;3f91	c3 d3 01 	. . . 
+	jp exit_dos		;3f91	c3 d3 01 	. . . 
 l3f94h:
 	ld a,(variable.current_track)		;3f94	3a f5 5c 	: . \ 
-	call sub_3e63h		;3f97	cd 63 3e 	. c > 
+	call seek_track		;3f97	cd 63 3e 	. c > 
 	call sub_3ea0h		;3f9a	cd a0 3e 	. . > 
 	jp l3f13h		;3f9d	c3 13 3f 	. . ? 
 l3fa0h:
@@ -11729,9 +11729,9 @@ l3fa0h:
 	jr nz,l3fadh		;3faa	20 01 	  . 
 	inc (hl)			;3fac	34 	4 
 l3fadh:
-	call sub_3d98h		;3fad	cd 98 3d 	. . = 
+	call init_interface		;3fad	cd 98 3d 	. . = 
 	ld a,(variable.current_track)		;3fb0	3a f5 5c 	: . \ 
-	call sub_3e63h		;3fb3	cd 63 3e 	. c > 
+	call seek_track		;3fb3	cd 63 3e 	. c > 
 	pop de			;3fb6	d1 	. 
 	jp l3f15h		;3fb7	c3 15 3f 	. . ? 
 sub_3fbah:
