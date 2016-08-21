@@ -678,7 +678,7 @@ l03b5h:
 	rst 18h			;03bf	df 	. 
 l03c0h:
 	jp l01d3h		;03c0	c3 d3 01 	. . . 
-print_message_number_A_of_table_at_HL:
+print_error_number_A_whose_message_is_at_HL:
 	push af			;03c3	f5 	. 
 	ld a,(variable.command_mode)		;03c4	3a 0e 5d 	: . ] 
 	cp 0feh		;03c7	fe fe 	. . 
@@ -903,7 +903,7 @@ sub_0531h:
 	jp nz,error.wrong_drive_letter		;055e	c2 1a 1d 	. . . 
 	call sub_0405h		;0561	cd 05 04 	. . . 
 	pop af			;0564	f1 	. 
-	jp z,l1c50h		;0565	ca 50 1c 	. P . 
+	jp z,error.file_exists		;0565	ca 50 1c 	. P . 
 	pop bc			;0568	c1 	. 
 l0569h:
 	call sub_166bh		;0569	cd 6b 16 	. k . 
@@ -1007,7 +1007,7 @@ sub_063ch:
 	call sub_03fdh		;063c	cd fd 03 	. . . 
 	ld a,(05e09h)		;063f	3a 09 5e 	: . ^ 
 	cp 080h		;0642	fe 80 	. . 
-	jp z,l1c45h		;0644	ca 45 1c 	. E . 
+	jp z,error.no_space		;0644	ca 45 1c 	. E . 
 	ld hl,variable.c_file_start_or_b_file_size		;0647	21 ed 5c 	! . \ 
 	ld de,variable.file_start		;064a	11 e6 5c 	. . \ 
 	ld bc,00007h		;064d	01 07 00 	. . . 
@@ -1017,7 +1017,7 @@ sub_063ch:
 	or a			;0658	b7 	. 
 	ld hl,(05e0ah)		;0659	2a 0a 5e 	* . ^ 
 	sbc hl,de		;065c	ed 52 	. R 
-	jp c,l1c45h		;065e	da 45 1c 	. E . 
+	jp c,error.no_space		;065e	da 45 1c 	. E . 
 	ld (05e0ah),hl		;0661	22 0a 5e 	" . ^ 
 	ld hl,(05e06h)		;0664	2a 06 5e 	* . ^ 
 	ld (variable.file_first_sector),hl		;0667	22 eb 5c 	" . \ 
@@ -1210,7 +1210,7 @@ l0800h:
 	and 0fch		;0800	e6 fc 	. . 
 	jp l3d9ah		;0802	c3 9a 3d 	. . = 
 
-; BLOCK 'not_used_0805' (start 0x0805 end 0x0ff1)
+; BLOCK 'not_used_0805' (start 0x0805 end 0x1000)
 not_used_0805_start:
 	defb 0ffh		;0805	ff 	. 
 	defb 0ffh		;0806	ff 	. 
@@ -2529,7 +2529,6 @@ l0a00h:
 	defb 0ffh		;0d25	ff 	. 
 	defb 0ffh		;0d26	ff 	. 
 	defb 0ffh		;0d27	ff 	. 
-l0d28h:
 	defb 0ffh		;0d28	ff 	. 
 	defb 0ffh		;0d29	ff 	. 
 	defb 0ffh		;0d2a	ff 	. 
@@ -3243,21 +3242,21 @@ l0d28h:
 	defb 0ffh		;0fee	ff 	. 
 	defb 0ffh		;0fef	ff 	. 
 	defb 0ffh		;0ff0	ff 	. 
-	rst 38h			;0ff1	ff 	. 
-	rst 38h			;0ff2	ff 	. 
-	rst 38h			;0ff3	ff 	. 
-	rst 38h			;0ff4	ff 	. 
-	rst 38h			;0ff5	ff 	. 
-	rst 38h			;0ff6	ff 	. 
-	rst 38h			;0ff7	ff 	. 
-	rst 38h			;0ff8	ff 	. 
-	rst 38h			;0ff9	ff 	. 
-	rst 38h			;0ffa	ff 	. 
-	rst 38h			;0ffb	ff 	. 
-	rst 38h			;0ffc	ff 	. 
-	rst 38h			;0ffd	ff 	. 
-	rst 38h			;0ffe	ff 	. 
-	rst 38h			;0fff	ff 	. 
+	defb 0ffh		;0ff1	ff 	. 
+	defb 0ffh		;0ff2	ff 	. 
+	defb 0ffh		;0ff3	ff 	. 
+	defb 0ffh		;0ff4	ff 	. 
+	defb 0ffh		;0ff5	ff 	. 
+	defb 0ffh		;0ff6	ff 	. 
+	defb 0ffh		;0ff7	ff 	. 
+	defb 0ffh		;0ff8	ff 	. 
+	defb 0ffh		;0ff9	ff 	. 
+	defb 0ffh		;0ffa	ff 	. 
+	defb 0ffh		;0ffb	ff 	. 
+	defb 0ffh		;0ffc	ff 	. 
+	defb 0ffh		;0ffd	ff 	. 
+	defb 0ffh		;0ffe	ff 	. 
+	defb 0ffh		;0fff	ff 	. 
 
 ; BLOCK 'message_interface_1' (start 0x1000 end 0x1018)
 message_interface_1_start:
@@ -3936,11 +3935,11 @@ sub_1403h:
 	call sub_3e11h		;140a	cd 11 3e 	. . > 
 	ld (variable.ch_add.high),a		;140d	32 da 5c 	2 . \ 
 	call sub_1cb3h		;1410	cd b3 1c 	. . . 
-	jp z,l1c50h		;1413	ca 50 1c 	. P . 
+	jp z,error.file_exists		;1413	ca 50 1c 	. P . 
 	call sub_03fdh		;1416	cd fd 03 	. . . 
 	ld a,(05e09h)		;1419	3a 09 5e 	: . ^ 
 	cp 080h		;141c	fe 80 	. . 
-	jp z,l2723h		;141e	ca 23 27 	. # ' 
+	jp z,error.directory_full		;141e	ca 23 27 	. # ' 
 	ld hl,variable.c_file_start_or_b_file_size		;1421	21 ed 5c 	! . \ 
 	ld de,variable.file_start		;1424	11 e6 5c 	. . \ 
 	ld bc,00007h		;1427	01 07 00 	. . . 
@@ -3953,7 +3952,7 @@ sub_1403h:
 	or a			;143b	b7 	. 
 	ld hl,(05e0ah)		;143c	2a 0a 5e 	* . ^ 
 	sbc hl,de		;143f	ed 52 	. R 
-	jp c,l1c45h		;1441	da 45 1c 	. E . 
+	jp c,error.no_space		;1441	da 45 1c 	. E . 
 	ld (05e0ah),hl		;1444	22 0a 5e 	" . ^ 
 	ld hl,(05e06h)		;1447	2a 06 5e 	* . ^ 
 	ld (variable.file_first_sector),hl		;144a	22 eb 5c 	" . \ 
@@ -4066,7 +4065,7 @@ l151fh:
 	ld (variable.filename),hl		;151f	22 dd 5c 	" . \ 
 	ld bc,(variable.filename.2)		;1522	ed 4b df 5c 	. K . \ 
 	sbc hl,bc		;1526	ed 42 	. B 
-	jp c,l1c45h		;1528	da 45 1c 	. E . 
+	jp c,error.no_space		;1528	da 45 1c 	. E . 
 	ret			;152b	c9 	. 
 l152ch:
 	call sub_1d75h		;152c	cd 75 1d 	. u . 
@@ -4202,6 +4201,7 @@ sub_1653h:
 	ld a,(variable.filename)		;1656	3a dd 5c 	: . \ 
 	cp 001h		;1659	fe 01 	. . 
 	ret			;165b	c9 	. 
+l165ch:
 	ld c,a			;165c	4f 	O 
 sub_165dh:
 	xor a			;165d	af 	. 
@@ -4210,6 +4210,7 @@ l165eh:
 	call sub_17e9h		;165f	cd e9 17 	. . . 
 	pop bc			;1662	c1 	. 
 	ret			;1663	c9 	. 
+l1664h:
 	ld c,a			;1664	4f 	O 
 	call sub_166bh		;1665	cd 6b 16 	. k . 
 	jp sub_1e43h		;1668	c3 43 1e 	. C . 
@@ -4672,9 +4673,7 @@ l19abh:
 	ld de,(sys_prog)		;19e8	ed 5b 53 5c 	. [ S \ 
 	rst 20h			;19ec	e7 	. 
 	defw 008d2h		;19ed	d2 08 	. . 
-	defb 0c3h		;19ef	c3 	. 
-	pop hl			;19f0	e1 	. 
-	inc bc			;19f1	03 	. 
+	jp l03e1h		;19ef	c3 e1 03 	. . . 
 sub_19f2h:
 	ex de,hl			;19f2	eb 	. 
 	scf			;19f3	37 	7 
@@ -4804,12 +4803,12 @@ l1ab6h:
 	jp l1c4ah		;1abb	c3 4a 1c 	. J . 
 sub_1abeh:
 	call sub_292fh		;1abe	cd 2f 29 	. / ) 
-	jp z,l1c50h		;1ac1	ca 50 1c 	. P . 
+	jp z,error.file_exists		;1ac1	ca 50 1c 	. P . 
 sub_1ac4h:
 	call sub_03fdh		;1ac4	cd fd 03 	. . . 
 	ld a,(05e09h)		;1ac7	3a 09 5e 	: . ^ 
 	cp 080h		;1aca	fe 80 	. . 
-	jp z,l2723h		;1acc	ca 23 27 	. # ' 
+	jp z,error.directory_full		;1acc	ca 23 27 	. # ' 
 	ret			;1acf	c9 	. 
 	call sub_1852h		;1ad0	cd 52 18 	. R . 
 	ld hl,l0000h		;1ad3	21 00 00 	! . . 
@@ -4889,7 +4888,7 @@ l1b6dh:
 	ld d,000h		;1b72	16 00 	. . 
 	ld hl,(05e0ah)		;1b74	2a 0a 5e 	* . ^ 
 	sbc hl,de		;1b77	ed 52 	. R 
-	jp c,l1c45h		;1b79	da 45 1c 	. E . 
+	jp c,error.no_space		;1b79	da 45 1c 	. E . 
 	push hl			;1b7c	e5 	. 
 	ld hl,(sys_e_line)		;1b7d	2a 59 5c 	* Y \ 
 	ld (hl),0aah		;1b80	36 aa 	6 . 
@@ -4991,13 +4990,13 @@ l1c2bh:
 	cp 029h		;1c40	fe 29 	. ) 
 	jr nz,l1c2bh		;1c42	20 e7 	  . 
 	ret			;1c44	c9 	. 
-l1c45h:
+error.no_space:
 	ld hl,message.cr.no_space		;1c45	21 bb 29 	! . ) 
 	ld a,003h		;1c48	3e 03 	> . 
 l1c4ah:
-	call print_message_number_A_of_table_at_HL		;1c4a	cd c3 03 	. . . 
+	call print_error_number_A_whose_message_is_at_HL		;1c4a	cd c3 03 	. . . 
 	jp l01d3h		;1c4d	c3 d3 01 	. . . 
-l1c50h:
+error.file_exists:
 	ld hl,message.cr.file_exists		;1c50	21 c5 29 	! . ) 
 	ld a,002h		;1c53	3e 02 	> . 
 	jr l1c4ah		;1c55	18 f3 	. . 
@@ -5106,6 +5105,7 @@ l1ce7h:
 	ld (variable.find_command_found_file),a		;1ceb	32 1e 5d 	2 . ] 
 	xor a			;1cee	af 	. 
 	ret z			;1cef	c8 	. 
+l1cf0h:
 	call sub_1cb3h		;1cf0	cd b3 1c 	. . . 
 	ld hl,variable.error_code		;1cf3	21 0f 5d 	! . ] 
 	ld (hl),c			;1cf6	71 	q 
@@ -5135,7 +5135,7 @@ l1d25h:
 	inc a			;1d25	3c 	< 
 	ld hl,messages_29B2_start		;1d26	21 b2 29 	! . ) 
 l1d29h:
-	call print_message_number_A_of_table_at_HL		;1d29	cd c3 03 	. . . 
+	call print_error_number_A_whose_message_is_at_HL		;1d29	cd c3 03 	. . . 
 	jp l01d3h		;1d2c	c3 d3 01 	. . . 
 l1d2fh:
 	ld a,(sys_err_nr)		;1d2f	3a 3a 5c 	: : \ 
@@ -6456,7 +6456,6 @@ l25efh:
 	ld (sys_err_sp),de		;260b	ed 53 3d 5c 	. S = \ 
 l260fh:
 	call sub_262bh		;260f	cd 2b 26 	. + & 
-l2612h:
 	jr c,l261dh		;2612	38 09 	8 . 
 l2614h:
 	ld hl,variable.0xc9		;2614	21 c2 5c 	! . \ 
@@ -6617,11 +6616,11 @@ sub_2713h:
 	inc hl			;2717	23 	# 
 	djnz sub_2713h		;2718	10 f9 	. . 
 	ret			;271a	c9 	. 
-l271bh:
+error.no_disk:
 	ld hl,message.no_disk		;271b	21 fc 27 	! . ' 
 	ld a,006h		;271e	3e 06 	> . 
 	jp l1c4ah		;2720	c3 4a 1c 	. J . 
-l2723h:
+error.directory_full:
 	ld hl,message.directory_full		;2723	21 ed 27 	! . ' 
 	ld a,004h		;2726	3e 04 	> . 
 	jp l1c4ah		;2728	c3 4a 1c 	. J . 
@@ -6634,6 +6633,7 @@ l2731h:
 	ret			;2734	c9 	. 
 	ld a,003h		;2735	3e 03 	> . 
 	jr l2731h		;2737	18 f8 	. . 
+l2739h:
 	xor a			;2739	af 	. 
 	ld (variable.start_file_parameter.high),a		;273a	32 d8 5c 	2 . \ 
 	ld (variable.move_command_first_track),a		;273d	32 d6 5c 	2 . \ 
@@ -6906,7 +6906,7 @@ execute_command_in_C:
 	ld sp,hl			;2861	f9 	. 
 	push af			;2862	f5 	. 
 	call sub_021dh		;2863	cd 1d 02 	. . . 
-	ld hl,l288ch		;2866	21 8c 28 	! . ( 
+	ld hl,table.c_commands		;2866	21 8c 28 	! . ( 
 l2869h:
 	ld a,(hl)			;2869	7e 	~ 
 	cp c			;286a	b9 	. 
@@ -6932,67 +6932,67 @@ l2887h:
 	inc hl			;2888	23 	# 
 	inc hl			;2889	23 	# 
 	jr l2869h		;288a	18 dd 	. . 
-l288ch:
-	nop			;288c	00 	. 
-	sbc a,b			;288d	98 	. 
-	dec a			;288e	3d 	= 
-	ld bc,sub_3dcbh		;288f	01 cb 3d 	. . = 
-	ld (bc),a			;2892	02 	. 
-	ld h,e			;2893	63 	c 
-	ld a,003h		;2894	3e 03 	> . 
-	ld (bc),a			;2896	02 	. 
-	ccf			;2897	3f 	? 
-	inc b			;2898	04 	. 
-	ld b,03fh		;2899	06 3f 	. ? 
-	dec b			;289b	05 	. 
-	dec a			;289c	3d 	= 
-	ld e,006h		;289d	1e 06 	. . 
-	ld c,l			;289f	4d 	M 
-	ld e,007h		;28a0	1e 07 	. . 
-	ret c			;28a2	d8 	. 
-	jr z,l28adh		;28a3	28 08 	( . 
-	ld e,h			;28a5	5c 	\ 
-	ld d,009h		;28a6	16 09 	. . 
-	ld h,h			;28a8	64 	d 
-	ld d,00ah		;28a9	16 0a 	. . 
-	ret p			;28ab	f0 	. 
-	inc e			;28ac	1c 	. 
-l28adh:
-	dec bc			;28ad	0b 	. 
-	ei			;28ae	fb 	. 
-	jr z,$+14		;28af	28 0c 	( . 
-	jp p,l0d28h		;28b1	f2 28 0d 	. ( . 
-	out (001h),a		;28b4	d3 01 	. . 
-	ld c,00fh		;28b6	0e 0f 	. . 
-	add hl,hl			;28b8	29 	) 
-	rrca			;28b9	0f 	. 
-	out (001h),a		;28ba	d3 01 	. . 
-	djnz $-43		;28bc	10 d3 	. . 
-	ld bc,0d311h		;28be	01 11 d3 	. . . 
-	ld bc,l2612h		;28c1	01 12 26 	. . & 
-	add hl,hl			;28c4	29 	) 
-	inc de			;28c5	13 	. 
-	ret po			;28c6	e0 	. 
-	jr z,l28ddh		;28c7	28 14 	( . 
-	ex (sp),hl			;28c9	e3 	. 
-	jr z,l28e1h		;28ca	28 15 	( . 
-	add hl,sp			;28cc	39 	9 
-	daa			;28cd	27 	' 
-	ld d,0ebh		;28ce	16 eb 	. . 
-	rra			;28d0	1f 	. 
-	rla			;28d1	17 	. 
-	or 01fh		;28d2	f6 1f 	. . 
-	jr $+7		;28d4	18 05 	. . 
-	inc b			;28d6	04 	. 
-	rst 38h			;28d7	ff 	. 
+table.c_commands:
+	defb 000h		;288c	00 	. 
+	defw sub_3d98h		;288d	98 3d 	. = 
+	defb 001h		;288f	01 	. 
+	defw sub_3dcbh		;2890	cb 3d 	. = 
+	defb 002h		;2892	02 	. 
+	defw sub_3e63h		;2893	63 3e 	c > 
+	defb 003h		;2895	03 	. 
+	defw sub_3f02h		;2896	02 3f 	. ? 
+	defb 004h		;2898	04 	. 
+	defw sub_3f06h		;2899	06 3f 	. ? 
+	defb 005h		;289b	05 	. 
+	defw l1e3dh		;289c	3d 1e 	= . 
+	defb 006h		;289e	06 	. 
+	defw sub_1e4dh		;289f	4d 1e 	M . 
+	defb 007h		;28a1	07 	. 
+	defw l28d8h		;28a2	d8 28 	. ( 
+	defb 008h		;28a4	08 	. 
+	defw l165ch		;28a5	5c 16 	\ . 
+	defb 009h		;28a7	09 	. 
+	defw l1664h		;28a8	64 16 	d . 
+	defb 00ah		;28aa	0a 	. 
+	defw l1cf0h		;28ab	f0 1c 	. . 
+	defb 00bh		;28ad	0b 	. 
+	defw l28fbh		;28ae	fb 28 	. ( 
+	defb 00ch		;28b0	0c 	. 
+	defw l28f2h		;28b1	f2 28 	. ( 
+	defb 00dh		;28b3	0d 	. 
+	defw l01d3h		;28b4	d3 01 	. . 
+	defb 00eh		;28b6	0e 	. 
+	defw l290fh		;28b7	0f 29 	. ) 
+	defb 00fh		;28b9	0f 	. 
+	defw l01d3h		;28ba	d3 01 	. . 
+	defb 010h		;28bc	10 	. 
+	defw l01d3h		;28bd	d3 01 	. . 
+	defb 011h		;28bf	11 	. 
+	defw l01d3h		;28c0	d3 01 	. . 
+	defb 012h		;28c2	12 	. 
+	defw l2926h		;28c3	26 29 	& ) 
+	defb 013h		;28c5	13 	. 
+	defw l28e0h		;28c6	e0 28 	. ( 
+	defb 014h		;28c8	14 	. 
+	defw l28e3h		;28c9	e3 28 	. ( 
+	defb 015h		;28cb	15 	. 
+	defw l2739h		;28cc	39 27 	9 ' 
+	defb 016h		;28ce	16 	. 
+	defw sub_1febh		;28cf	eb 1f 	. . 
+	defb 017h		;28d1	17 	. 
+	defw sub_1ff6h		;28d2	f6 1f 	. . 
+	defb 018h		;28d4	18 	. 
+	defw sub_0405h		;28d5	05 04 	. . 
+	defb 0ffh		;28d7	ff 	. 
+l28d8h:
 	push af			;28d8	f5 	. 
 	call sub_0405h		;28d9	cd 05 04 	. . . 
 	pop af			;28dc	f1 	. 
-l28ddh:
 	jp l0479h		;28dd	c3 79 04 	. y . 
+l28e0h:
 	xor a			;28e0	af 	. 
-l28e1h:
 	jr l28e5h		;28e1	18 02 	. . 
+l28e3h:
 	ld a,0ffh		;28e3	3e ff 	> . 
 l28e5h:
 	ld de,variable.filename		;28e5	11 dd 5c 	. . \ 
@@ -7003,15 +7003,18 @@ l28e5h:
 l28efh:
 	ldir		;28ef	ed b0 	. . 
 	ret			;28f1	c9 	. 
+l28f2h:
 	call sub_0405h		;28f2	cd 05 04 	. . . 
 	call sub_1ac4h		;28f5	cd c4 1a 	. . . 
 	jp l1b27h		;28f8	c3 27 1b 	. ' . 
+l28fbh:
 	ld (variable.start_file_parameter_or_number_of_tracks),hl		;28fb	22 d7 5c 	" . \ 
 	ld (variable.ch_add),de		;28fe	ed 53 d9 5c 	. S . \ 
 	ld (variable.file_size),de		;2902	ed 53 db 5c 	. S . \ 
 	call sub_0405h		;2906	cd 05 04 	. . . 
 	call sub_1ac4h		;2909	cd c4 1a 	. . . 
 	jp l1b53h		;290c	c3 53 1b 	. S . 
+l290fh:
 	or a			;290f	b7 	. 
 	ld (variable.move_command_first_track),a		;2910	32 d6 5c 	2 . \ 
 	ld (variable.ch_add),hl		;2913	22 d9 5c 	" . \ 
@@ -7020,6 +7023,7 @@ l28efh:
 	call sub_18a4h		;291d	cd a4 18 	. . . 
 	call sub_18abh		;2920	cd ab 18 	. . . 
 	jp l1921h		;2923	c3 21 19 	. ! . 
+l2926h:
 	call sub_0405h		;2926	cd 05 04 	. . . 
 	call sub_1cb3h		;2929	cd b3 1c 	. . . 
 	jp l07a0h		;292c	c3 a0 07 	. . . 
@@ -11612,7 +11616,7 @@ l3ee7h:
 	call sub_272bh		;3ee7	cd 2b 27 	. + ' 
 	ld a,0ffh		;3eea	3e ff 	> . 
 	ld (variable.show_title_flag),a		;3eec	32 17 5d 	2 . ] 
-	jp l271bh		;3eef	c3 1b 27 	. . ' 
+	jp error.no_disk		;3eef	c3 1b 27 	. . ' 
 l3ef2h:
 	pop bc			;3ef2	c1 	. 
 	in h,(c)		;3ef3	ed 60 	. ` 

@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201608202217
+; Last modified 201608202223
 
 rst20_0102: unlabeled start 0x0103 unlabeled last 0x0104 type worddata
 rst20_014C: unlabeled start 0x014D unlabeled last 0x014E type worddata
@@ -56,3 +56,54 @@ tokens: start 0x30FD unlabeled last 0x31C5 type bytedata
 not_used_31FD: start 0x31FD unlabeled last 0x3CF9 type bytedata
 not_used_3FF0: start 0x3FF0 unlabeled last 0x3FFF type bytedata
 
+c_commands_table_00_index: unlabeled start 0x288C unlabeled last 0x288C type bytedata
+c_commands_table_00_pointer: unlabeled start 0x288D unlabeled last 0x288E type pointers
+c_commands_table_01_index: unlabeled start 0x288F unlabeled last 0x288F type bytedata
+c_commands_table_01_pointer: unlabeled start 0x2890 unlabeled last 0x2891 type pointers
+c_commands_table_02_index: unlabeled start 0x2892 unlabeled last 0x2892 type bytedata
+c_commands_table_02_pointer: unlabeled start 0x2893 unlabeled last 0x2894 type pointers
+c_commands_table_03_index: unlabeled start 0x2895 unlabeled last 0x2895 type bytedata
+c_commands_table_03_pointer: unlabeled start 0x2896 unlabeled last 0x2897 type pointers
+c_commands_table_04_index: unlabeled start 0x2898 unlabeled last 0x2898 type bytedata
+c_commands_table_04_pointer: unlabeled start 0x2899 unlabeled last 0x289A type pointers
+c_commands_table_05_index: unlabeled start 0x289B unlabeled last 0x289B type bytedata
+c_commands_table_05_pointer: unlabeled start 0x289C unlabeled last 0x289D type pointers
+c_commands_table_06_index: unlabeled start 0x289E unlabeled last 0x289E type bytedata
+c_commands_table_06_pointer: unlabeled start 0x289F unlabeled last 0x28A0 type pointers
+c_commands_table_07_index: unlabeled start 0x28A1 unlabeled last 0x28A1 type bytedata
+c_commands_table_07_pointer: unlabeled start 0x28A2 unlabeled last 0x28A3 type pointers
+c_commands_table_08_index: unlabeled start 0x28A4 unlabeled last 0x28A4 type bytedata
+c_commands_table_08_pointer: unlabeled start 0x28A5 unlabeled last 0x28A6 type pointers
+c_commands_table_09_index: unlabeled start 0x28A7 unlabeled last 0x28A7 type bytedata
+c_commands_table_09_pointer: unlabeled start 0x28A8 unlabeled last 0x28A9 type pointers
+c_commands_table_0A_index: unlabeled start 0x28AA unlabeled last 0x28AA type bytedata
+c_commands_table_0A_pointer: unlabeled start 0x28AB unlabeled last 0x28AC type pointers
+c_commands_table_0B_index: unlabeled start 0x28AD unlabeled last 0x28AD type bytedata
+c_commands_table_0B_pointer: unlabeled start 0x28AE unlabeled last 0x28AF type pointers
+c_commands_table_0C_index: unlabeled start 0x28B0 unlabeled last 0x28B0 type bytedata
+c_commands_table_0C_pointer: unlabeled start 0x28B1 unlabeled last 0x28B2 type pointers
+c_commands_table_0D_index: unlabeled start 0x28B3 unlabeled last 0x28B3 type bytedata
+c_commands_table_0D_pointer: unlabeled start 0x28B4 unlabeled last 0x28B5 type pointers
+c_commands_table_0E_index: unlabeled start 0x28B6 unlabeled last 0x28B6 type bytedata
+c_commands_table_0E_pointer: unlabeled start 0x28B7 unlabeled last 0x28B8 type pointers
+c_commands_table_0F_index: unlabeled start 0x28B9 unlabeled last 0x28B9 type bytedata
+c_commands_table_0F_pointer: unlabeled start 0x28BA unlabeled last 0x28BB type pointers
+c_commands_table_10_index: unlabeled start 0x28BC unlabeled last 0x28BC type bytedata
+c_commands_table_10_pointer: unlabeled start 0x28BD unlabeled last 0x28BE type pointers
+c_commands_table_11_index: unlabeled start 0x28BF unlabeled last 0x28BF type bytedata
+c_commands_table_11_pointer: unlabeled start 0x28C0 unlabeled last 0x28C1 type pointers
+c_commands_table_12_index: unlabeled start 0x28C2 unlabeled last 0x28C2 type bytedata
+c_commands_table_12_pointer: unlabeled start 0x28C3 unlabeled last 0x28C4 type pointers
+c_commands_table_13_index: unlabeled start 0x28C5 unlabeled last 0x28C5 type bytedata
+c_commands_table_13_pointer: unlabeled start 0x28C6 unlabeled last 0x28C7 type pointers
+c_commands_table_14_index: unlabeled start 0x28C8 unlabeled last 0x28C8 type bytedata
+c_commands_table_14_pointer: unlabeled start 0x28C9 unlabeled last 0x28CA type pointers
+c_commands_table_15_index: unlabeled start 0x28CB unlabeled last 0x28CB type bytedata
+c_commands_table_15_pointer: unlabeled start 0x28CC unlabeled last 0x28CD type pointers
+c_commands_table_16_index: unlabeled start 0x28CE unlabeled last 0x28CE type bytedata
+c_commands_table_16_pointer: unlabeled start 0x28CF unlabeled last 0x28D0 type pointers
+c_commands_table_17_index: unlabeled start 0x28D1 unlabeled last 0x28D1 type bytedata
+c_commands_table_17_pointer: unlabeled start 0x28D2 unlabeled last 0x28D3 type pointers
+c_commands_table_18_index: unlabeled start 0x28D4 unlabeled last 0x28D4 type bytedata
+c_commands_table_18_pointer: unlabeled start 0x28D5 unlabeled last 0x28D6 type pointers
+c_commands_table_19_index: unlabeled start 0x28D7 unlabeled last 0x28D7 type bytedata

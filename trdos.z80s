@@ -599,78 +599,78 @@ trdos_title_start:
   defb 016h
   defb 001h
   defb 005h
-  defb 02ah
-  defb 020h
-  defb 054h
-  defb 052h
-  defb 02dh
-  defb 044h
-  defb 04fh
-  defb 053h
-  defb 020h
-  defb 056h
-  defb 065h
-  defb 072h
-  defb 020h
-  defb 035h
-  defb 02eh
-  defb 030h
-  defb 033h
-  defb 020h
-  defb 02ah
+  defb "*"
+  defb " "
+  defb "T"
+  defb "R"
+  defb "-"
+  defb "D"
+  defb "O"
+  defb "S"
+  defb " "
+  defb "V"
+  defb "e"
+  defb "r"
+  defb " "
+  defb "5"
+  defb "."
+  defb "0"
+  defb "3"
+  defb " "
+  defb "*"
   defb 00dh
   defb 00dh
   defb 07fh
-  defb 020h
-  defb 031h
-  defb 039h
-  defb 038h
-  defb 036h
-  defb 020h
-  defb 054h
-  defb 065h
-  defb 063h
-  defb 068h
-  defb 06eh
-  defb 06fh
-  defb 06ch
-  defb 06fh
-  defb 067h
-  defb 079h
-  defb 020h
-  defb 052h
-  defb 065h
-  defb 073h
-  defb 065h
-  defb 061h
-  defb 072h
-  defb 063h
-  defb 068h
-  defb 020h
-  defb 04ch
-  defb 074h
-  defb 064h
-  defb 02eh
+  defb " "
+  defb "1"
+  defb "9"
+  defb "8"
+  defb "6"
+  defb " "
+  defb "T"
+  defb "e"
+  defb "c"
+  defb "h"
+  defb "n"
+  defb "o"
+  defb "l"
+  defb "o"
+  defb "g"
+  defb "y"
+  defb " "
+  defb "R"
+  defb "e"
+  defb "s"
+  defb "e"
+  defb "a"
+  defb "r"
+  defb "c"
+  defb "h"
+  defb " "
+  defb "L"
+  defb "t"
+  defb "d"
+  defb "."
   defb 016h
   defb 005h
   defb 00bh
-  defb 028h
-  defb 055h
-  defb 02eh
-  defb 04bh
-  defb 02eh
-  defb 029h
+  defb "("
+  defb "U"
+  defb "."
+  defb "K"
+  defb "."
+  defb ")"
   defb 016h
   defb 007h
   defb 005h
-  defb 042h
-  defb 045h
-  defb 054h
-  defb 041h
-  defb 020h
-  defb 031h
-  defb 032h
-  defb 038h
+  defb "B"
+  defb "E"
+  defb "T"
+  defb "A"
+  defb " "
+  defb "1"
+  defb "2"
+  defb "8"
   defb 000h
 l03ach:
   call sub_03fdh
@@ -683,7 +683,7 @@ l03b5h:
   rst 18h
 l03c0h:
   jp l01d3h
-print_message_number_A_of_table_at_HL:
+print_error_number_A_whose_message_is_at_HL:
   push af
   ld a,(variable.command_mode)
   cp 0feh
@@ -908,7 +908,7 @@ sub_0531h:
   jp nz,error.wrong_drive_letter
   call sub_0405h
   pop af
-  jp z,l1c50h
+  jp z,error.file_exists
   pop bc
 l0569h:
   call sub_166bh
@@ -1012,7 +1012,7 @@ sub_063ch:
   call sub_03fdh
   ld a,(05e09h)
   cp 080h
-  jp z,l1c45h
+  jp z,error.no_space
   ld hl,variable.c_file_start_or_b_file_size
   ld de,variable.file_start
   ld bc,00007h
@@ -1022,7 +1022,7 @@ sub_063ch:
   or a
   ld hl,(05e0ah)
   sbc hl,de
-  jp c,l1c45h
+  jp c,error.no_space
   ld (05e0ah),hl
   ld hl,(05e06h)
   ld (variable.file_first_sector),hl
@@ -1215,7 +1215,7 @@ l0800h:
   and 0fch
   jp l3d9ah
 
-; BLOCK 'not_used_0805' (start 0x0805 end 0x0ff1)
+; BLOCK 'not_used_0805' (start 0x0805 end 0x1000)
 not_used_0805_start:
   defb 0ffh
   defb 0ffh
@@ -2534,7 +2534,6 @@ l0a00h:
   defb 0ffh
   defb 0ffh
   defb 0ffh
-l0d28h:
   defb 0ffh
   defb 0ffh
   defb 0ffh
@@ -3248,47 +3247,47 @@ l0d28h:
   defb 0ffh
   defb 0ffh
   defb 0ffh
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
-  rst 38h
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
+  defb 0ffh
 
 ; BLOCK 'message_interface_1' (start 0x1000 end 0x1018)
 message_interface_1_start:
   defb 016h
   defb 009h
   defb 005h
-  defb 049h
-  defb 06eh
-  defb 074h
-  defb 065h
-  defb 072h
-  defb 066h
-  defb 061h
-  defb 063h
-  defb 065h
-  defb 020h
-  defb 06fh
-  defb 06eh
-  defb 065h
-  defb 020h
-  defb 066h
-  defb 069h
-  defb 074h
-  defb 074h
-  defb 065h
-  defb 064h
+  defb "I"
+  defb "n"
+  defb "t"
+  defb "e"
+  defb "r"
+  defb "f"
+  defb "a"
+  defb "c"
+  defb "e"
+  defb " "
+  defb "o"
+  defb "n"
+  defb "e"
+  defb " "
+  defb "f"
+  defb "i"
+  defb "t"
+  defb "t"
+  defb "e"
+  defb "d"
   defb 000h
   call sub_1ddfh
   call sub_1d75h
@@ -3384,190 +3383,190 @@ l1096h:
 
 ; BLOCK 'messages_1015' (start 0x10a5 end 0x1152)
 messages_1015_start:
-  defb 020h
-  defb 044h
-  defb 065h
-  defb 06ch
-  defb 02eh
+  defb " "
+  defb "D"
+  defb "e"
+  defb "l"
+  defb "."
 l10aah:
-  defb 020h
-  defb 046h
-  defb 069h
-  defb 06ch
-  defb 065h
-  defb 028h
-  defb 073h
-  defb 029h
+  defb " "
+  defb "F"
+  defb "i"
+  defb "l"
+  defb "e"
+  defb "("
+  defb "s"
+  defb ")"
   defb 000h
 l10b3h:
-  defb 054h
-  defb 069h
-  defb 074h
-  defb 06ch
-  defb 065h
-  defb 03ah
+  defb "T"
+  defb "i"
+  defb "t"
+  defb "l"
+  defb "e"
+  defb ":"
   defb 0a0h
 l10bah:
   defb 017h
   defb 011h
-  defb 020h
-  defb 044h
-  defb 069h
-  defb 073h
-  defb 06bh
-  defb 020h
-  defb 044h
-  defb 072h
-  defb 069h
-  defb 076h
-  defb 065h
-  defb 03ah
-  defb 020h
+  defb " "
+  defb "D"
+  defb "i"
+  defb "s"
+  defb "k"
+  defb " "
+  defb "D"
+  defb "r"
+  defb "i"
+  defb "v"
+  defb "e"
+  defb ":"
+  defb " "
   defb 000h
 l10cah:
   defb 017h
   defb 010h
-  defb 020h
+  defb " "
   defb 000h
 l10ceh:
   defb 017h
   defb 010h
-  defb 020h
-  defb 034h
-  defb 030h
-  defb 020h
-  defb 054h
-  defb 072h
-  defb 061h
-  defb 063h
-  defb 06bh
-  defb 020h
-  defb 053h
-  defb 02eh
-  defb 020h
-  defb 053h
-  defb 069h
-  defb 064h
-  defb 065h
+  defb " "
+  defb "4"
+  defb "0"
+  defb " "
+  defb "T"
+  defb "r"
+  defb "a"
+  defb "c"
+  defb "k"
+  defb " "
+  defb "S"
+  defb "."
+  defb " "
+  defb "S"
+  defb "i"
+  defb "d"
+  defb "e"
   defb 000h
 l10e2h:
   defb 017h
   defb 010h
-  defb 020h
-  defb 038h
-  defb 030h
-  defb 020h
-  defb 054h
-  defb 072h
-  defb 061h
-  defb 063h
-  defb 06bh
-  defb 020h
-  defb 053h
-  defb 02eh
-  defb 020h
-  defb 053h
-  defb 069h
-  defb 064h
-  defb 065h
+  defb " "
+  defb "8"
+  defb "0"
+  defb " "
+  defb "T"
+  defb "r"
+  defb "a"
+  defb "c"
+  defb "k"
+  defb " "
+  defb "S"
+  defb "."
+  defb " "
+  defb "S"
+  defb "i"
+  defb "d"
+  defb "e"
   defb 000h
 l10f6h:
   defb 017h
   defb 010h
-  defb 020h
-  defb 034h
-  defb 030h
-  defb 020h
-  defb 054h
-  defb 072h
-  defb 061h
-  defb 063h
-  defb 06bh
-  defb 020h
-  defb 044h
-  defb 02eh
-  defb 020h
-  defb 053h
-  defb 069h
-  defb 064h
-  defb 065h
+  defb " "
+  defb "4"
+  defb "0"
+  defb " "
+  defb "T"
+  defb "r"
+  defb "a"
+  defb "c"
+  defb "k"
+  defb " "
+  defb "D"
+  defb "."
+  defb " "
+  defb "S"
+  defb "i"
+  defb "d"
+  defb "e"
   defb 000h
 l110ah:
   defb 017h
   defb 010h
-  defb 020h
-  defb 038h
-  defb 030h
-  defb 020h
-  defb 054h
-  defb 072h
-  defb 061h
-  defb 063h
-  defb 06bh
-  defb 020h
-  defb 044h
-  defb 02eh
-  defb 020h
-  defb 053h
-  defb 069h
-  defb 064h
-  defb 065h
+  defb " "
+  defb "8"
+  defb "0"
+  defb " "
+  defb "T"
+  defb "r"
+  defb "a"
+  defb "c"
+  defb "k"
+  defb " "
+  defb "D"
+  defb "."
+  defb " "
+  defb "S"
+  defb "i"
+  defb "d"
+  defb "e"
   defb 000h
 l111eh:
   defb 017h
   defb 010h
-  defb 020h
-  defb 046h
-  defb 072h
-  defb 065h
-  defb 065h
-  defb 020h
-  defb 053h
-  defb 065h
-  defb 063h
-  defb 074h
-  defb 06fh
-  defb 072h
-  defb 020h
+  defb " "
+  defb "F"
+  defb "r"
+  defb "e"
+  defb "e"
+  defb " "
+  defb "S"
+  defb "e"
+  defb "c"
+  defb "t"
+  defb "o"
+  defb "r"
+  defb " "
   defb 000h
 l112eh:
   defb 00dh
   defb 00dh
-  defb 020h
-  defb 020h
-  defb 046h
-  defb 069h
-  defb 06ch
-  defb 065h
-  defb 020h
-  defb 04eh
-  defb 061h
-  defb 06dh
-  defb 065h
-  defb 020h
-  defb 020h
-  defb 020h
-  defb 020h
-  defb 053h
-  defb 074h
-  defb 061h
-  defb 072h
-  defb 074h
-  defb 020h
-  defb 04ch
-  defb 065h
-  defb 06eh
-  defb 067h
-  defb 074h
-  defb 068h
-  defb 020h
-  defb 04ch
-  defb 069h
-  defb 06eh
-  defb 065h
+  defb " "
+  defb " "
+  defb "F"
+  defb "i"
+  defb "l"
+  defb "e"
+  defb " "
+  defb "N"
+  defb "a"
+  defb "m"
+  defb "e"
+  defb " "
+  defb " "
+  defb " "
+  defb " "
+  defb "S"
+  defb "t"
+  defb "a"
+  defb "r"
+  defb "t"
+  defb " "
+  defb "L"
+  defb "e"
+  defb "n"
+  defb "g"
+  defb "t"
+  defb "h"
+  defb " "
+  defb "L"
+  defb "i"
+  defb "n"
+  defb "e"
   defb 000h
 sub_1151h:
-  defb 02ah
+  defb "*"
   ld h,c
   ld e,h
   ld (variable.stack_sp_copy),hl
@@ -3941,11 +3940,11 @@ sub_1403h:
   call sub_3e11h
   ld (variable.ch_add.high),a
   call sub_1cb3h
-  jp z,l1c50h
+  jp z,error.file_exists
   call sub_03fdh
   ld a,(05e09h)
   cp 080h
-  jp z,l2723h
+  jp z,error.directory_full
   ld hl,variable.c_file_start_or_b_file_size
   ld de,variable.file_start
   ld bc,00007h
@@ -3958,7 +3957,7 @@ sub_1403h:
   or a
   ld hl,(05e0ah)
   sbc hl,de
-  jp c,l1c45h
+  jp c,error.no_space
   ld (05e0ah),hl
   ld hl,(05e06h)
   ld (variable.file_first_sector),hl
@@ -4071,7 +4070,7 @@ l151fh:
   ld (variable.filename),hl
   ld bc,(variable.filename.2)
   sbc hl,bc
-  jp c,l1c45h
+  jp c,error.no_space
   ret
 l152ch:
   call sub_1d75h
@@ -4207,6 +4206,7 @@ sub_1653h:
   ld a,(variable.filename)
   cp 001h
   ret
+l165ch:
   ld c,a
 sub_165dh:
   xor a
@@ -4215,6 +4215,7 @@ l165eh:
   call sub_17e9h
   pop bc
   ret
+l1664h:
   ld c,a
   call sub_166bh
   jp sub_1e43h
@@ -4663,7 +4664,7 @@ l19abh:
   inc bc
   rst 20h
   defw rom_bc_spaces
-  defb 036h
+  defb "6"
   defw 0eb80h
   pop de
   push hl
@@ -4677,9 +4678,7 @@ l19abh:
   ld de,(sys_prog)
   rst 20h
   defw rom_me_new_lp
-  defb 0c3h
-  pop hl
-  inc bc
+  jp l03e1h
 sub_19f2h:
   ex de,hl
   scf
@@ -4809,12 +4808,12 @@ l1ab6h:
   jp l1c4ah
 sub_1abeh:
   call sub_292fh
-  jp z,l1c50h
+  jp z,error.file_exists
 sub_1ac4h:
   call sub_03fdh
   ld a,(05e09h)
   cp 080h
-  jp z,l2723h
+  jp z,error.directory_full
   ret
   call sub_1852h
   ld hl,l0000h
@@ -4894,7 +4893,7 @@ l1b6dh:
   ld d,000h
   ld hl,(05e0ah)
   sbc hl,de
-  jp c,l1c45h
+  jp c,error.no_space
   push hl
   ld hl,(sys_e_line)
   ld (hl),0aah
@@ -4996,13 +4995,13 @@ l1c2bh:
   cp 029h
   jr nz,l1c2bh
   ret
-l1c45h:
+error.no_space:
   ld hl,message.cr.no_space
   ld a,003h
 l1c4ah:
-  call print_message_number_A_of_table_at_HL
+  call print_error_number_A_whose_message_is_at_HL
   jp l01d3h
-l1c50h:
+error.file_exists:
   ld hl,message.cr.file_exists
   ld a,002h
   jr l1c4ah
@@ -5111,6 +5110,7 @@ l1ce7h:
   ld (variable.find_command_found_file),a
   xor a
   ret z
+l1cf0h:
   call sub_1cb3h
   ld hl,variable.error_code
   ld (hl),c
@@ -5140,7 +5140,7 @@ l1d25h:
   inc a
   ld hl,messages_29B2_start
 l1d29h:
-  call print_message_number_A_of_table_at_HL
+  call print_error_number_A_whose_message_is_at_HL
   jp l01d3h
 l1d2fh:
   ld a,(sys_err_nr)
@@ -6461,7 +6461,6 @@ l25efh:
   ld (sys_err_sp),de
 l260fh:
   call sub_262bh
-l2612h:
   jr c,l261dh
 l2614h:
   ld hl,variable.0xc9
@@ -6622,11 +6621,11 @@ sub_2713h:
   inc hl
   djnz sub_2713h
   ret
-l271bh:
+error.no_disk:
   ld hl,message.no_disk
   ld a,006h
   jp l1c4ah
-l2723h:
+error.directory_full:
   ld hl,message.directory_full
   ld a,004h
   jp l1c4ah
@@ -6639,6 +6638,7 @@ l2731h:
   ret
   ld a,003h
   jr l2731h
+l2739h:
   xor a
   ld (variable.start_file_parameter.high),a
   ld (variable.move_command_first_track),a
@@ -6664,231 +6664,231 @@ l2731h:
 
 ; BLOCK 'messages_2766' (start 0x2766 end 0x283c)
 messages_2766_start:
-  defb 04fh
-  defb 02eh
-  defb 04bh
-  defb 02eh
+  defb "O"
+  defb "."
+  defb "K"
+  defb "."
   defb 000h
 message.verify_error:
-  defb 056h
-  defb 065h
-  defb 072h
-  defb 069h
-  defb 066h
-  defb 079h
-  defb 020h
-  defb 045h
-  defb 072h
-  defb 072h
-  defb 06fh
-  defb 072h
-  defb 02eh
+  defb "V"
+  defb "e"
+  defb "r"
+  defb "i"
+  defb "f"
+  defb "y"
+  defb " "
+  defb "E"
+  defb "r"
+  defb "r"
+  defb "o"
+  defb "r"
+  defb "."
   defb 08dh
 message.backup_disk:
-  defb 042h
-  defb 041h
-  defb 043h
-  defb 04bh
-  defb 055h
-  defb 050h
-  defb 020h
-  defb 044h
-  defb 049h
-  defb 053h
-  defb 04bh
+  defb "B"
+  defb "A"
+  defb "C"
+  defb "K"
+  defb "U"
+  defb "P"
+  defb " "
+  defb "D"
+  defb "I"
+  defb "S"
+  defb "K"
   defb 08dh
 l2785h:
-  defb 049h
-  defb 06eh
-  defb 073h
-  defb 065h
-  defb 072h
-  defb 074h
-  defb 020h
-  defb 044h
-  defb 065h
-  defb 073h
-  defb 074h
-  defb 069h
-  defb 06eh
-  defb 061h
-  defb 074h
-  defb 069h
-  defb 06fh
-  defb 06eh
-  defb 020h
-  defb 064h
-  defb 069h
-  defb 073h
-  defb 06bh
+  defb "I"
+  defb "n"
+  defb "s"
+  defb "e"
+  defb "r"
+  defb "t"
+  defb " "
+  defb "D"
+  defb "e"
+  defb "s"
+  defb "t"
+  defb "i"
+  defb "n"
+  defb "a"
+  defb "t"
+  defb "i"
+  defb "o"
+  defb "n"
+  defb " "
+  defb "d"
+  defb "i"
+  defb "s"
+  defb "k"
   defb 00dh
-  defb 074h
-  defb 068h
-  defb 065h
-  defb 06eh
-  defb 020h
-  defb 070h
-  defb 072h
-  defb 065h
-  defb 073h
-  defb 073h
-  defb 020h
-  defb 059h
+  defb "t"
+  defb "h"
+  defb "e"
+  defb "n"
+  defb " "
+  defb "p"
+  defb "r"
+  defb "e"
+  defb "s"
+  defb "s"
+  defb " "
+  defb "Y"
   defb 000h
 message.insert_source_disk:
-  defb 049h
-  defb 06eh
-  defb 073h
-  defb 065h
-  defb 072h
-  defb 074h
-  defb 020h
-  defb 053h
-  defb 06fh
-  defb 075h
-  defb 072h
-  defb 063h
-  defb 065h
-  defb 020h
-  defb 064h
-  defb 069h
-  defb 073h
-  defb 06bh
-  defb 020h
-  defb 074h
-  defb 068h
-  defb 065h
-  defb 06eh
-  defb 020h
-  defb 070h
-  defb 072h
-  defb 065h
-  defb 073h
-  defb 073h
-  defb 020h
-  defb 059h
+  defb "I"
+  defb "n"
+  defb "s"
+  defb "e"
+  defb "r"
+  defb "t"
+  defb " "
+  defb "S"
+  defb "o"
+  defb "u"
+  defb "r"
+  defb "c"
+  defb "e"
+  defb " "
+  defb "d"
+  defb "i"
+  defb "s"
+  defb "k"
+  defb " "
+  defb "t"
+  defb "h"
+  defb "e"
+  defb "n"
+  defb " "
+  defb "p"
+  defb "r"
+  defb "e"
+  defb "s"
+  defb "s"
+  defb " "
+  defb "Y"
   defb 000h
 message.break:
-  defb 02ah
-  defb 042h
-  defb 052h
-  defb 045h
-  defb 041h
-  defb 04bh
-  defb 02ah
+  defb "*"
+  defb "B"
+  defb "R"
+  defb "E"
+  defb "A"
+  defb "K"
+  defb "*"
   defb 08dh
 message.out_of_ram:
-  defb 04fh
-  defb 075h
-  defb 074h
-  defb 020h
-  defb 06fh
-  defb 066h
-  defb 020h
-  defb 052h
-  defb 041h
-  defb 04dh
+  defb "O"
+  defb "u"
+  defb "t"
+  defb " "
+  defb "o"
+  defb "f"
+  defb " "
+  defb "R"
+  defb "A"
+  defb "M"
   defb 08dh
 message.array_not_found:
-  defb 041h
-  defb 072h
-  defb 072h
-  defb 061h
-  defb 079h
-  defb 020h
-  defb 06eh
-  defb 06fh
-  defb 074h
-  defb 020h
-  defb 066h
-  defb 06fh
-  defb 075h
-  defb 06eh
-  defb 064h
+  defb "A"
+  defb "r"
+  defb "r"
+  defb "a"
+  defb "y"
+  defb " "
+  defb "n"
+  defb "o"
+  defb "t"
+  defb " "
+  defb "f"
+  defb "o"
+  defb "u"
+  defb "n"
+  defb "d"
   defb 08dh
 message.directory_full:
-  defb 044h
-  defb 069h
-  defb 072h
-  defb 065h
-  defb 063h
-  defb 074h
-  defb 06fh
-  defb 072h
-  defb 079h
-  defb 020h
-  defb 066h
-  defb 075h
-  defb 06ch
-  defb 06ch
+  defb "D"
+  defb "i"
+  defb "r"
+  defb "e"
+  defb "c"
+  defb "t"
+  defb "o"
+  defb "r"
+  defb "y"
+  defb " "
+  defb "f"
+  defb "u"
+  defb "l"
+  defb "l"
   defb 08dh
 message.no_disk:
-  defb 04eh
-  defb 06fh
-  defb 020h
-  defb 064h
-  defb 069h
-  defb 073h
-  defb 06bh
+  defb "N"
+  defb "o"
+  defb " "
+  defb "d"
+  defb "i"
+  defb "s"
+  defb "k"
   defb 08dh
 message.stream_opened:
-  defb 053h
-  defb 074h
-  defb 072h
-  defb 065h
-  defb 061h
-  defb 06dh
-  defb 020h
-  defb 06fh
-  defb 070h
-  defb 065h
-  defb 06eh
-  defb 065h
-  defb 064h
+  defb "S"
+  defb "t"
+  defb "r"
+  defb "e"
+  defb "a"
+  defb "m"
+  defb " "
+  defb "o"
+  defb "p"
+  defb "e"
+  defb "n"
+  defb "e"
+  defb "d"
   defb 08dh
 message.not_disk_file:
-  defb 04eh
-  defb 06fh
-  defb 074h
-  defb 020h
-  defb 064h
-  defb 069h
-  defb 073h
-  defb 06bh
-  defb 020h
-  defb 066h
-  defb 069h
-  defb 06ch
-  defb 065h
+  defb "N"
+  defb "o"
+  defb "t"
+  defb " "
+  defb "d"
+  defb "i"
+  defb "s"
+  defb "k"
+  defb " "
+  defb "f"
+  defb "i"
+  defb "l"
+  defb "e"
   defb 08dh
 message.file_exists:
-  defb 046h
-  defb 069h
-  defb 06ch
-  defb 065h
-  defb 020h
-  defb 065h
-  defb 078h
-  defb 069h
-  defb 073h
-  defb 074h
-  defb 073h
+  defb "F"
+  defb "i"
+  defb "l"
+  defb "e"
+  defb " "
+  defb "e"
+  defb "x"
+  defb "i"
+  defb "s"
+  defb "t"
+  defb "s"
   defb 00dh
-  defb 04fh
-  defb 076h
-  defb 065h
-  defb 072h
-  defb 020h
-  defb 077h
-  defb 072h
-  defb 069h
-  defb 074h
-  defb 065h
-  defb 03fh
-  defb 028h
-  defb 059h
-  defb 02fh
-  defb 04eh
+  defb "O"
+  defb "v"
+  defb "e"
+  defb "r"
+  defb " "
+  defb "w"
+  defb "r"
+  defb "i"
+  defb "t"
+  defb "e"
+  defb "?"
+  defb "("
+  defb "Y"
+  defb "/"
+  defb "N"
   defb 0a9h
 execute_command_in_C:
   push af
@@ -6911,7 +6911,7 @@ execute_command_in_C:
   ld sp,hl
   push af
   call sub_021dh
-  ld hl,l288ch
+  ld hl,table.c_commands
 l2869h:
   ld a,(hl)
   cp c
@@ -6937,67 +6937,67 @@ l2887h:
   inc hl
   inc hl
   jr l2869h
-l288ch:
-  nop
-  sbc a,b
-  dec a
-  ld bc,sub_3dcbh
-  ld (bc),a
-  ld h,e
-  ld a,003h
-  ld (bc),a
-  ccf
-  inc b
-  ld b,03fh
-  dec b
-  dec a
-  ld e,006h
-  ld c,l
-  ld e,007h
-  ret c
-  jr z,l28adh
-  ld e,h
-  ld d,009h
-  ld h,h
-  ld d,00ah
-  ret p
-  inc e
-l28adh:
-  dec bc
-  ei
-  jr z,$+14
-  jp p,l0d28h
-  out (001h),a
-  ld c,00fh
-  add hl,hl
-  rrca
-  out (001h),a
-  djnz $-43
-  ld bc,0d311h
-  ld bc,l2612h
-  add hl,hl
-  inc de
-  ret po
-  jr z,l28ddh
-  ex (sp),hl
-  jr z,l28e1h
-  add hl,sp
-  daa
-  ld d,0ebh
-  rra
-  rla
-  or 01fh
-  jr $+7
-  inc b
-  rst 38h
+table.c_commands:
+  defb 000h
+  defw sub_3d98h
+  defb 001h
+  defw sub_3dcbh
+  defb 002h
+  defw sub_3e63h
+  defb 003h
+  defw sub_3f02h
+  defb 004h
+  defw sub_3f06h
+  defb 005h
+  defw l1e3dh
+  defb 006h
+  defw sub_1e4dh
+  defb 007h
+  defw l28d8h
+  defb 008h
+  defw l165ch
+  defb 009h
+  defw l1664h
+  defb 00ah
+  defw l1cf0h
+  defb 00bh
+  defw l28fbh
+  defb 00ch
+  defw l28f2h
+  defb 00dh
+  defw l01d3h
+  defb 00eh
+  defw l290fh
+  defb 00fh
+  defw l01d3h
+  defb 010h
+  defw l01d3h
+  defb 011h
+  defw l01d3h
+  defb 012h
+  defw l2926h
+  defb 013h
+  defw l28e0h
+  defb 014h
+  defw l28e3h
+  defb 015h
+  defw l2739h
+  defb 016h
+  defw sub_1febh
+  defb 017h
+  defw sub_1ff6h
+  defb 018h
+  defw sub_0405h
+  defb 0ffh
+l28d8h:
   push af
   call sub_0405h
   pop af
-l28ddh:
   jp l0479h
+l28e0h:
   xor a
-l28e1h:
   jr l28e5h
+l28e3h:
   ld a,0ffh
 l28e5h:
   ld de,variable.filename
@@ -7008,15 +7008,18 @@ l28e5h:
 l28efh:
   ldir
   ret
+l28f2h:
   call sub_0405h
   call sub_1ac4h
   jp l1b27h
+l28fbh:
   ld (variable.start_file_parameter_or_number_of_tracks),hl
   ld (variable.ch_add),de
   ld (variable.file_size),de
   call sub_0405h
   call sub_1ac4h
   jp l1b53h
+l290fh:
   or a
   ld (variable.move_command_first_track),a
   ld (variable.ch_add),hl
@@ -7025,6 +7028,7 @@ l28efh:
   call sub_18a4h
   call sub_18abh
   jp l1921h
+l2926h:
   call sub_0405h
   call sub_1cb3h
   jp l07a0h
@@ -7111,148 +7115,148 @@ l2998h:
 ; BLOCK 'messages_29B2' (start 0x29b2 end 0x2a35)
 messages_29B2_start:
   defb 00dh
-  defb 02ah
-  defb 045h
-  defb 052h
-  defb 052h
-  defb 04fh
-  defb 052h
-  defb 02ah
+  defb "*"
+  defb "E"
+  defb "R"
+  defb "R"
+  defb "O"
+  defb "R"
+  defb "*"
   defb 08dh
 message.cr.no_space:
   defb 00dh
-  defb 04eh
-  defb 06fh
-  defb 020h
-  defb 073h
-  defb 070h
-  defb 061h
-  defb 063h
-  defb 065h
+  defb "N"
+  defb "o"
+  defb " "
+  defb "s"
+  defb "p"
+  defb "a"
+  defb "c"
+  defb "e"
   defb 08dh
 message.cr.file_exists:
   defb 00dh
-  defb 046h
-  defb 069h
-  defb 06ch
-  defb 065h
-  defb 020h
-  defb 065h
-  defb 078h
-  defb 069h
-  defb 073h
-  defb 074h
-  defb 073h
+  defb "F"
+  defb "i"
+  defb "l"
+  defb "e"
+  defb " "
+  defb "e"
+  defb "x"
+  defb "i"
+  defb "s"
+  defb "t"
+  defb "s"
   defb 08dh
 message.cr.free:
-  defb 020h
-  defb 046h
-  defb 072h
-  defb 065h
-  defb 065h
+  defb " "
+  defb "F"
+  defb "r"
+  defb "e"
+  defb "e"
   defb 08dh
 message.cr.read_only:
   defb 00dh
-  defb 052h
-  defb 065h
-  defb 061h
-  defb 064h
-  defb 020h
-  defb 04fh
-  defb 06eh
-  defb 06ch
+  defb "R"
+  defb "e"
+  defb "a"
+  defb "d"
+  defb " "
+  defb "O"
+  defb "n"
+  defb "l"
   defb 0f9h
 message.cr.disc_error:
   defb 00dh
-  defb 044h
-  defb 069h
-  defb 073h
-  defb 063h
-  defb 020h
-  defb 045h
-  defb 072h
-  defb 072h
-  defb 06fh
+  defb "D"
+  defb "i"
+  defb "s"
+  defb "c"
+  defb " "
+  defb "E"
+  defb "r"
+  defb "r"
+  defb "o"
   defb 0f2h
 message.cr.rec_overflow:
   defb 00dh
-  defb 052h
-  defb 065h
-  defb 063h
-  defb 02eh
-  defb 020h
-  defb 020h
-  defb 04fh
-  defb 02fh
+  defb "R"
+  defb "e"
+  defb "c"
+  defb "."
+  defb " "
+  defb " "
+  defb "O"
+  defb "/"
   defb 0c6h
 message.cr.title:
-  defb 054h
-  defb 069h
-  defb 074h
-  defb 06ch
-  defb 065h
-  defb 03ah
+  defb "T"
+  defb "i"
+  defb "t"
+  defb "l"
+  defb "e"
+  defb ":"
   defb 0a0h
 message.cr.retry_abort_ignore:
   defb 00dh
-  defb 052h
-  defb 065h
-  defb 074h
-  defb 072h
-  defb 079h
-  defb 02ch
-  defb 041h
-  defb 062h
-  defb 06fh
-  defb 072h
-  defb 074h
-  defb 02ch
-  defb 049h
-  defb 067h
-  defb 06eh
-  defb 06fh
-  defb 072h
-  defb 065h
-  defb 03fh
+  defb "R"
+  defb "e"
+  defb "t"
+  defb "r"
+  defb "y"
+  defb ","
+  defb "A"
+  defb "b"
+  defb "o"
+  defb "r"
+  defb "t"
+  defb ","
+  defb "I"
+  defb "g"
+  defb "n"
+  defb "o"
+  defb "r"
+  defb "e"
+  defb "?"
   defb 000h
 message.cr.trk:
   defb 00dh
-  defb 054h
-  defb 072h
-  defb 06bh
+  defb "T"
+  defb "r"
+  defb "k"
   defb 0a0h
 message.sec:
-  defb 020h
-  defb 073h
-  defb 065h
-  defb 063h
+  defb " "
+  defb "s"
+  defb "e"
+  defb "c"
   defb 0a0h
 message.del_file:
-  defb 020h
-  defb 044h
-  defb 065h
-  defb 06ch
-  defb 02eh
-  defb 020h
-  defb 046h
-  defb 069h
-  defb 06ch
-  defb 065h
+  defb " "
+  defb "D"
+  defb "e"
+  defb "l"
+  defb "."
+  defb " "
+  defb "F"
+  defb "i"
+  defb "l"
+  defb "e"
   defb 08dh
 message.cr.no_files:
 message.files:
   defb 00dh
-  defb 04eh
-  defb 06fh
+  defb "N"
+  defb "o"
 l2a2bh:
-  defb 020h
-  defb 046h
-  defb 069h
-  defb 06ch
-  defb 065h
-  defb 028h
-  defb 073h
-  defb 029h
+  defb " "
+  defb "F"
+  defb "i"
+  defb "l"
+  defb "e"
+  defb "("
+  defb "s"
+  defb ")"
   defb 08dh
   defb 000h
 sub_2a35h:
@@ -8237,206 +8241,206 @@ l30f4h:
 
 ; BLOCK 'tokens' (start 0x30fd end 0x31c6)
 tokens_start:
-  defb 053h
-  defb 041h
-  defb 056h
-  defb 045h
+  defb "S"
+  defb "A"
+  defb "V"
+  defb "E"
   defb 080h
-  defb 053h
-  defb 041h
-  defb 056h
+  defb "S"
+  defb "A"
+  defb "V"
   defb 0c5h
-  defb 04ch
-  defb 04fh
-  defb 041h
-  defb 044h
+  defb "L"
+  defb "O"
+  defb "A"
+  defb "D"
   defb 080h
-  defb 04ch
-  defb 04fh
-  defb 041h
+  defb "L"
+  defb "O"
+  defb "A"
   defb 0c4h
-  defb 052h
-  defb 055h
-  defb 04eh
+  defb "R"
+  defb "U"
+  defb "N"
   defb 080h
-  defb 052h
-  defb 055h
+  defb "R"
+  defb "U"
   defb 0ceh
-  defb 043h
-  defb 041h
-  defb 054h
+  defb "C"
+  defb "A"
+  defb "T"
   defb 080h
-  defb 043h
-  defb 041h
+  defb "C"
+  defb "A"
   defb 0d4h
-  defb 045h
-  defb 052h
-  defb 041h
-  defb 053h
-  defb 045h
+  defb "E"
+  defb "R"
+  defb "A"
+  defb "S"
+  defb "E"
   defb 080h
-  defb 045h
-  defb 052h
-  defb 041h
-  defb 053h
+  defb "E"
+  defb "R"
+  defb "A"
+  defb "S"
   defb 0c5h
-  defb 04eh
-  defb 045h
-  defb 057h
+  defb "N"
+  defb "E"
+  defb "W"
   defb 080h
-  defb 04eh
-  defb 045h
+  defb "N"
+  defb "E"
   defb 0d7h
-  defb 04dh
-  defb 04fh
-  defb 056h
-  defb 045h
+  defb "M"
+  defb "O"
+  defb "V"
+  defb "E"
   defb 080h
-  defb 04dh
-  defb 04fh
-  defb 056h
+  defb "M"
+  defb "O"
+  defb "V"
   defb 0c5h
-  defb 04dh
-  defb 045h
-  defb 052h
-  defb 047h
-  defb 045h
+  defb "M"
+  defb "E"
+  defb "R"
+  defb "G"
+  defb "E"
   defb 080h
-  defb 04dh
-  defb 045h
-  defb 052h
-  defb 047h
+  defb "M"
+  defb "E"
+  defb "R"
+  defb "G"
   defb 0c5h
-  defb 050h
-  defb 045h
-  defb 045h
-  defb 04bh
+  defb "P"
+  defb "E"
+  defb "E"
+  defb "K"
   defb 080h
-  defb 050h
-  defb 045h
-  defb 045h
+  defb "P"
+  defb "E"
+  defb "E"
   defb 0cbh
-  defb 050h
-  defb 04fh
-  defb 04bh
-  defb 045h
+  defb "P"
+  defb "O"
+  defb "K"
+  defb "E"
   defb 080h
-  defb 050h
-  defb 04fh
-  defb 04bh
+  defb "P"
+  defb "O"
+  defb "K"
   defb 0c5h
-  defb 04fh
-  defb 050h
-  defb 045h
-  defb 04eh
+  defb "O"
+  defb "P"
+  defb "E"
+  defb "N"
   defb 083h
-  defb 043h
-  defb 04ch
-  defb 04fh
-  defb 053h
-  defb 045h
+  defb "C"
+  defb "L"
+  defb "O"
+  defb "S"
+  defb "E"
   defb 083h
-  defb 043h
-  defb 04fh
-  defb 044h
-  defb 045h
+  defb "C"
+  defb "O"
+  defb "D"
+  defb "E"
   defb 080h
-  defb 043h
-  defb 04fh
-  defb 044h
+  defb "C"
+  defb "O"
+  defb "D"
   defb 0c5h
-  defb 052h
-  defb 04eh
-  defb 044h
+  defb "R"
+  defb "N"
+  defb "D"
   defb 080h
-  defb 052h
-  defb 04eh
+  defb "R"
+  defb "N"
   defb 0c4h
-  defb 044h
-  defb 041h
-  defb 054h
-  defb 041h
+  defb "D"
+  defb "A"
+  defb "T"
+  defb "A"
   defb 080h
-  defb 044h
-  defb 041h
-  defb 054h
+  defb "D"
+  defb "A"
+  defb "T"
   defb 0c1h
-  defb 053h
-  defb 043h
-  defb 052h
-  defb 045h
-  defb 045h
-  defb 04eh
+  defb "S"
+  defb "C"
+  defb "R"
+  defb "E"
+  defb "E"
+  defb "N"
   defb 004h
   defb 084h
-  defb 053h
-  defb 043h
-  defb 052h
-  defb 045h
-  defb 045h
-  defb 04eh
+  defb "S"
+  defb "C"
+  defb "R"
+  defb "E"
+  defb "E"
+  defb "N"
   defb 084h
-  defb 043h
-  defb 04fh
-  defb 050h
-  defb 059h
+  defb "C"
+  defb "O"
+  defb "P"
+  defb "Y"
   defb 080h
-  defb 043h
-  defb 04fh
-  defb 050h
+  defb "C"
+  defb "O"
+  defb "P"
   defb 0d9h
-  defb 046h
-  defb 04fh
-  defb 052h
-  defb 04dh
-  defb 041h
-  defb 054h
+  defb "F"
+  defb "O"
+  defb "R"
+  defb "M"
+  defb "A"
+  defb "T"
   defb 080h
-  defb 046h
-  defb 04fh
-  defb 052h
-  defb 04dh
-  defb 041h
+  defb "F"
+  defb "O"
+  defb "R"
+  defb "M"
+  defb "A"
   defb 0d4h
-  defb 047h
-  defb 04fh
-  defb 054h
-  defb 04fh
+  defb "G"
+  defb "O"
+  defb "T"
+  defb "O"
   defb 080h
-  defb 047h
-  defb 04fh
-  defb 054h
+  defb "G"
+  defb "O"
+  defb "T"
   defb 0cfh
-  defb 04ch
-  defb 049h
-  defb 053h
-  defb 054h
+  defb "L"
+  defb "I"
+  defb "S"
+  defb "T"
   defb 080h
-  defb 04ch
-  defb 049h
-  defb 053h
+  defb "L"
+  defb "I"
+  defb "S"
   defb 0d4h
-  defb 04ch
-  defb 049h
-  defb 04eh
-  defb 045h
+  defb "L"
+  defb "I"
+  defb "N"
+  defb "E"
   defb 080h
-  defb 04ch
-  defb 049h
-  defb 04eh
+  defb "L"
+  defb "I"
+  defb "N"
   defb 0c5h
-  defb 056h
-  defb 045h
-  defb 052h
-  defb 049h
-  defb 046h
-  defb 059h
+  defb "V"
+  defb "E"
+  defb "R"
+  defb "I"
+  defb "F"
+  defb "Y"
   defb 080h
-  defb 056h
-  defb 045h
-  defb 052h
-  defb 049h
-  defb 046h
+  defb "V"
+  defb "E"
+  defb "R"
+  defb "I"
+  defb "F"
   defb 0d9h
   rst 38h
   rst 38h
@@ -11050,10 +11054,10 @@ l3c00h:
   defb 003h
   defb 0c3h
   defb 000h
-  defb 03dh
+  defb "="
   defb 0c3h
   defb 003h
-  defb 03dh
+  defb "="
   defb 0ffh
   defb 0ffh
   defb 0ffh
@@ -11617,7 +11621,7 @@ l3ee7h:
   call sub_272bh
   ld a,0ffh
   ld (variable.show_title_flag),a
-  jp l271bh
+  jp error.no_disk
 l3ef2h:
   pop bc
   in h,(c)

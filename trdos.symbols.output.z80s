@@ -211,6 +211,10 @@ sub_01c7h:	equ 0x01c7
 l01d3h:	equ 0x01d3
 ; Used at following locations:
 ; 0x3f91	(jp destination)
+; 0x28c0	(defw directive)
+; 0x28bd	(defw directive)
+; 0x28ba	(defw directive)
+; 0x28b4	(defw directive)
 ; 0x2884	(jp destination)
 ; 0x2872	(immediate value)
 ; 0x26cb	(jp destination)
@@ -343,7 +347,7 @@ l03c0h:	equ 0x03c0
 ; Used at following locations:
 ; 0x0413	(jr destination)
 
-print_message_number_A_of_table_at_HL:	equ 0x03c3
+print_error_number_A_whose_message_is_at_HL:	equ 0x03c3
 ; Used at following locations:
 ; 0x1d29	(call destination)
 ; 0x1c4a	(call destination)
@@ -366,6 +370,7 @@ l03d9h:	equ 0x03d9
 l03e1h:	equ 0x03e1
 ; Used at following locations:
 ; 0x29ab	(jp destination)
+; 0x19ef	(jp destination)
 ; 0x1833	(jp destination)
 ; 0x1828	(jp destination)
 ; 0x16b8	(jp destination)
@@ -418,6 +423,7 @@ sub_0405h:	equ 0x0405
 ; 0x2906	(call destination)
 ; 0x28f2	(call destination)
 ; 0x28d9	(call destination)
+; 0x28d5	(defw directive)
 ; 0x21e4	(call destination)
 ; 0x16b1	(call destination)
 ; 0x158d	(call destination)
@@ -623,7 +629,7 @@ l0800h:	equ 0x0800
 ; 0x3e49	(jp destination)
 
 
-; BLOCK 'not_used_0805' (start 0x0805 end 0x0ff1)
+; BLOCK 'not_used_0805' (start 0x0805 end 0x1000)
 not_used_0805_start:	equ 0x0805
 ; Used at following locations:
 
@@ -635,10 +641,6 @@ l0a00h:	equ 0x0a00
 ; Used at following locations:
 ; 0x156b	(immediate value)
 ; 0x1515	(immediate value)
-
-l0d28h:	equ 0x0d28
-; Used at following locations:
-; 0x28b1	(jp destination)
 
 
 ; BLOCK 'message_interface_1' (start 0x1000 end 0x1018)
@@ -990,6 +992,10 @@ sub_1653h:	equ 0x1653
 ; 0x16d7	(call destination)
 ; 0x16c4	(call destination)
 
+l165ch:	equ 0x165c
+; Used at following locations:
+; 0x28a5	(defw directive)
+
 sub_165dh:	equ 0x165d
 ; Used at following locations:
 ; 0x2e36	(call destination)
@@ -1012,6 +1018,10 @@ sub_165dh:	equ 0x165d
 l165eh:	equ 0x165e
 ; Used at following locations:
 ; 0x166d	(jr destination)
+
+l1664h:	equ 0x1664
+; Used at following locations:
+; 0x28a8	(defw directive)
 
 sub_166bh:	equ 0x166b
 ; Used at following locations:
@@ -1352,7 +1362,7 @@ l1c2bh:	equ 0x1c2b
 ; 0x1c42	(jr destination)
 ; 0x1c27	(jr destination)
 
-l1c45h:	equ 0x1c45
+error.no_space:	equ 0x1c45
 ; Used at following locations:
 ; 0x1b79	(jp destination)
 ; 0x1528	(jp destination)
@@ -1372,7 +1382,7 @@ l1c4ah:	equ 0x1c4a
 ; 0x03e5	(jp destination)
 ; 0x03de	(jp destination)
 
-l1c50h:	equ 0x1c50
+error.file_exists:	equ 0x1c50
 ; Used at following locations:
 ; 0x1ac1	(jp destination)
 ; 0x1413	(jp destination)
@@ -1459,6 +1469,10 @@ l1ce4h:	equ 0x1ce4
 l1ce7h:	equ 0x1ce7
 ; Used at following locations:
 ; 0x1cdf	(jr destination)
+
+l1cf0h:	equ 0x1cf0
+; Used at following locations:
+; 0x28ab	(defw directive)
 
 l1d19h:	equ 0x1d19
 ; Used at following locations:
@@ -1764,6 +1778,7 @@ sub_1e36h:	equ 0x1e36
 l1e3dh:	equ 0x1e3d
 ; Used at following locations:
 ; 0x2d9d	(call destination)
+; 0x289c	(defw directive)
 ; 0x2420	(jp destination)
 ; 0x2284	(call destination)
 ; 0x197e	(call destination)
@@ -1804,6 +1819,7 @@ sub_1e43h:	equ 0x1e43
 
 sub_1e4dh:	equ 0x1e4d
 ; Used at following locations:
+; 0x289f	(defw directive)
 ; 0x2404	(call destination)
 ; 0x2280	(call destination)
 ; 0x1b9e	(call destination)
@@ -1888,6 +1904,7 @@ sub_1febh:	equ 0x1feb
 ; Used at following locations:
 ; 0x3eb2	(call destination)
 ; 0x3e64	(call destination)
+; 0x28cf	(defw directive)
 ; 0x20ce	(call destination)
 ; 0x1f7d	(call destination)
 ; 0x1ef9	(call destination)
@@ -1899,6 +1916,7 @@ l1ff0h:	equ 0x1ff0
 sub_1ff6h:	equ 0x1ff6
 ; Used at following locations:
 ; 0x3eaf	(jp destination)
+; 0x28d2	(defw directive)
 ; 0x20db	(call destination)
 ; 0x1f08	(call destination)
 ; 0x1eee	(call destination)
@@ -2326,10 +2344,6 @@ l260fh:	equ 0x260f
 ; Used at following locations:
 ; 0x2624	(jr destination)
 
-l2612h:	equ 0x2612
-; Used at following locations:
-; 0x28c1	(immediate value)
-
 l2614h:	equ 0x2614
 ; Used at following locations:
 ; 0x2629	(jr destination)
@@ -2408,11 +2422,11 @@ sub_2713h:	equ 0x2713
 ; 0x2718	(djnz destination)
 ; 0x1cdb	(call destination)
 
-l271bh:	equ 0x271b
+error.no_disk:	equ 0x271b
 ; Used at following locations:
 ; 0x3eef	(jp destination)
 
-l2723h:	equ 0x2723
+error.directory_full:	equ 0x2723
 ; Used at following locations:
 ; 0x1acc	(jp destination)
 ; 0x141e	(jp destination)
@@ -2429,6 +2443,10 @@ l2731h:	equ 0x2731
 ; Used at following locations:
 ; 0x2737	(jr destination)
 ; 0x272d	(jr destination)
+
+l2739h:	equ 0x2739
+; Used at following locations:
+; 0x28cc	(defw directive)
 
 
 ; BLOCK 'messages_2766' (start 0x2766 end 0x283c)
@@ -2508,21 +2526,21 @@ l2887h:	equ 0x2887
 ; Used at following locations:
 ; 0x2881	(jr destination)
 
-l288ch:	equ 0x288c
+table.c_commands:	equ 0x288c
 ; Used at following locations:
 ; 0x2866	(immediate value)
 
-l28adh:	equ 0x28ad
+l28d8h:	equ 0x28d8
 ; Used at following locations:
-; 0x28a3	(jr destination)
+; 0x28a2	(defw directive)
 
-l28ddh:	equ 0x28dd
+l28e0h:	equ 0x28e0
 ; Used at following locations:
-; 0x28c7	(jr destination)
+; 0x28c6	(defw directive)
 
-l28e1h:	equ 0x28e1
+l28e3h:	equ 0x28e3
 ; Used at following locations:
-; 0x28ca	(jr destination)
+; 0x28c9	(defw directive)
 
 l28e5h:	equ 0x28e5
 ; Used at following locations:
@@ -2531,6 +2549,22 @@ l28e5h:	equ 0x28e5
 l28efh:	equ 0x28ef
 ; Used at following locations:
 ; 0x28ec	(jr destination)
+
+l28f2h:	equ 0x28f2
+; Used at following locations:
+; 0x28b1	(defw directive)
+
+l28fbh:	equ 0x28fb
+; Used at following locations:
+; 0x28ae	(defw directive)
+
+l290fh:	equ 0x290f
+; Used at following locations:
+; 0x28b7	(defw directive)
+
+l2926h:	equ 0x2926
+; Used at following locations:
+; 0x28c3	(defw directive)
 
 sub_292fh:	equ 0x292f
 ; Used at following locations:
@@ -3124,6 +3158,7 @@ sub_3d94h:	equ 0x3d94
 sub_3d98h:	equ 0x3d98
 ; Used at following locations:
 ; 0x3fad	(call destination)
+; 0x288d	(defw directive)
 ; 0x1eeb	(call destination)
 
 l3d9ah:	equ 0x3d9a
@@ -3155,7 +3190,7 @@ sub_3dc8h:	equ 0x3dc8
 
 sub_3dcbh:	equ 0x3dcb
 ; Used at following locations:
-; 0x288f	(immediate value)
+; 0x2890	(defw directive)
 ; 0x2447	(jp destination)
 ; 0x1c9e	(call destination)
 ; 0x1c8e	(call destination)
@@ -3257,6 +3292,7 @@ sub_3e63h:	equ 0x3e63
 ; Used at following locations:
 ; 0x3fb3	(call destination)
 ; 0x3f97	(call destination)
+; 0x2893	(defw directive)
 ; 0x1e83	(call destination)
 
 l3e82h:	equ 0x3e82
@@ -3318,10 +3354,12 @@ l3ef5h:	equ 0x3ef5
 
 sub_3f02h:	equ 0x3f02
 ; Used at following locations:
+; 0x2896	(defw directive)
 ; 0x1e7d	(call destination)
 
 sub_3f06h:	equ 0x3f06
 ; Used at following locations:
+; 0x2899	(defw directive)
 ; 0x1e77	(call destination)
 
 sub_3f0ah:	equ 0x3f0a

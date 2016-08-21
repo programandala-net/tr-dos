@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201608201121
+; Last modified 201608202223
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -117,9 +117,8 @@ variable.p_channel.id:                             equ 23865
 rst_10:                                            equ 0x0010
 rst_18:                                            equ 0x0018
 rst_20:                                            equ 0x0020
-print_message_number_A_of_table_at_HL:             equ 0x03C3
+print_error_number_A_whose_message_is_at_HL:       equ 0x03C3
 check_drive_letter:                                equ 0x0524
-error.wrong_drive_letter:                          equ 0x1D1A
 print_message_at_HL:                               equ 0x2707
 execute_command_in_C:                              equ 0x283C
 call_zx_spectrum_rom:                              equ 0x2F72
@@ -128,6 +127,14 @@ step_rate_of_temporary_drive:                      equ 0x3E08
 enter_trdos_from_basic:                            equ 0x3D31
 interpret_rem_command_in_basic:                    equ 0x3D1A
 jp_execute_command_in_C:                           equ 0x3CFD
+
+; Errors
+
+error.wrong_drive_letter:                          equ 0x1D1A
+error.no_disk:                                     equ 0x271B
+error.directory_full:                              equ 0x2723
+error.no_space:                                    equ 0x1C45
+error.file_exists:                                 equ 0x1C50
 
 ; Texts
 
@@ -157,3 +164,6 @@ message.del_file:                                  equ 0x2A1D
 message.cr.no_files:                               equ 0x2A28
 message.files:                                     equ 0x2A28
 
+; Tables
+
+table.c_commands:                                  equ 0x288C
