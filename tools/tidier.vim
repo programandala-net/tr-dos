@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201609012131
+" Last modified 201609012212
 
 " ==============================================================
 " History
@@ -13,7 +13,8 @@
 " 2016-08-20: Remove unused ROM routines. Add `include` for ROM routines.
 " Clear the messages.
 "
-" 2016-09-01: Label the token commands.
+" 2016-09-01: Label the token commands. Clear the key
+" comparisons. Update the requirements.
 
 " ==============================================================
 
@@ -25,7 +26,7 @@ endfunction
 function! AddInclude()
   call cursor(1,1)
   call search('^  org ')
-  call append('.',['','  include inc/zx_spectrum_rom_routines.z80s',''])
+  call append('.',['','  include inc/zx_spectrum_rom_routines.z80s','  include inc/zx_spectrum_char_codes.z80s',''])
 endfunction
 
 function! RemoveComments()
@@ -191,11 +192,38 @@ function! ClearFileTypes()
   silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
 endfunction
 
+function! ClearKeyComparisons()
+  call cursor(1,1)
+  call search(';05a1')
+  silent! substitute@cp\s059h.\+$@cp "Y"@
+  call search(';1378')
+  silent! substitute@cp\s059h.\+$@cp "Y"@
+  call search(';13a8')
+  silent! substitute@cp\s059h.\+$@cp "Y"@
+  call search(';1468')
+  silent! substitute@cp\s059h.\+$@cp "Y"@
+  call search(';14a8')
+  silent! substitute@cp\s059h.\+$@cp "Y"@
+  call search(';1541')
+  silent! substitute@cp\s059h.\+$@cp "Y"@
+  call search(';15d4')
+  silent! substitute@cp\s059h.\+$@cp "Y"@
+  call search(';1620')
+  silent! substitute@cp\s059h.\+$@cp "Y"@
+  call search(';3f7e')
+  silent! substitute@cp\s049h.\+$@cp "I"@
+  call search(';3f81')
+  silent! substitute@cp\s052h.\+$@cp "R"@
+  call search(';3f85')
+  silent! substitute@cp\s041h.\+$@cp "A"@
+endfunction
+
 function! Tidier()
   call AddRst20Labels()
   call LabelTokenCommands()
   call ClearFileTypes()
   call ClearMessages()
+  call ClearKeyComparisons()
   call RemoveComments()
   call ChangeHeader()
   call AddInclude()

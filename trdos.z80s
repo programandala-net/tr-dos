@@ -2,10 +2,15 @@
 
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
+  include inc/zx_spectrum_rom_routines.z80s
+  include inc/zx_spectrum_char_codes.z80s
+
+; command line: z80dasm --origin=0x0000 --address --labels --source --block-def=trdos.blocks.txt --sym-input=trdos.symbols.input.z80s --sym-output=trdos.symbols.output.z80s --output=trdos.raw.z80s trdos.rom
 
   org 00000h
 
   include inc/zx_spectrum_rom_routines.z80s
+  include inc/zx_spectrum_char_codes.z80s
 
 sys_swap: equ 0x5b00
 sys_bankm:  equ 0x5b5c
@@ -700,11 +705,11 @@ l03cdh:
 l03d9h:
   ld hl,message.cr.no_files
   ld a,001h
-  jp l1c4ah
-l03e1h:
-  ld hl,messages_2766_start
+  jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
+print_OK_and_exit_DOS:
+  ld hl,message.ok
   xor a
-  jp l1c4ah
+  jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 sub_03e8h:
   xor a
   ld (variable.cat_current_sector),a
@@ -915,7 +920,7 @@ cli_command.new:
 l0569h:
   call sub_166bh
   call sub_1e43h
-  jp l03e1h
+  jp print_OK_and_exit_DOS
 sub_0572h:
   ld a,(variable.error_code_msb)
   or a
@@ -924,7 +929,7 @@ l0577h:
   ld a,(variable.deleted_files)
   or a
   jp z,l03d9h
-  jp l03e1h
+  jp print_OK_and_exit_DOS
 sub_0581h:
   push bc
   call sub_1d97h
@@ -937,8 +942,8 @@ sub_0581h:
   call sub_2938h
   ld hl,message.file_exists
   call print_message_at_HL
-  call sub_1052h
-  cp 059h
+  call get_uppercase_pressed_key
+  cp "Y"
   push af
   call sub_1d97h
   pop af
@@ -991,7 +996,7 @@ l05f4h:
   call sub_165dh
   ld a,(variable.filename)
   cp 000h
-  jp z,l03e1h
+  jp z,print_OK_and_exit_DOS
   cp 001h
   jr z,l05f4h
   ld hl,variable.file_start
@@ -1085,13 +1090,13 @@ cli_command.copy:
   call sub_05b4h
   jr nz,l06f3h
   call sub_0581h
-  jp nz,l03e1h
+  jp nz,print_OK_and_exit_DOS
 l06f3h:
   call sub_063ch
   call sub_1e43h
   ld a,(variable.file_type)
   cp "#" ; data file type?
-  jp nz,l03e1h
+  jp nz,print_OK_and_exit_DOS
   ld a,00ah
   ld (variable.find_command_symbols),a
   ld hl,variable.file_start
@@ -1099,7 +1104,7 @@ l06f3h:
   ld a,(variable.two_files_drive)
   call init_disk_drive
   call sub_05b4h
-  jp nz,l03e1h
+  jp nz,print_OK_and_exit_DOS
   call sub_165dh
   ld hl,variable.file_start
   ld de,variable.c_file_start_or_b_file_size
@@ -1164,7 +1169,7 @@ cli_command.erase:
   call sub_292fh
   call l07a0h
   jp nz,l0577h
-  jp l03e1h
+  jp print_OK_and_exit_DOS
 l07a0h:
   ld a,(variable.filename)
   ld (variable.filename_first_char),a
@@ -3301,7 +3306,7 @@ cli_command.asterisk:
   call check_drive_letter
   ld (variable.default_drive),a
   call init_disk_drive
-  jp l03e1h
+  jp print_OK_and_exit_DOS
 sub_102eh:
   ld b,"C" ; file type: code
   ld a,(variable.move_command_first_track)
@@ -3322,7 +3327,7 @@ set_file_type_stored_in_B:
   ld hl,variable.file_type
   ld (hl),b
   ret
-sub_1052h:
+get_uppercase_pressed_key:
   di
   push hl
   push bc
@@ -3881,8 +3886,8 @@ l1360h:
   ld hl,message.insert_source_disk
   call print_message_at_HL
 l1375h:
-  call sub_1052h
-  cp 059h
+  call get_uppercase_pressed_key
+  cp "Y"
   jr nz,l1375h
   call sub_1d9fh
   call sub_102eh
@@ -3891,7 +3896,7 @@ l1375h:
   call sub_13b7h
   ld a,(variable.file_type)
   cp "#" ; data file type?
-  jp nz,l03e1h
+  jp nz,print_OK_and_exit_DOS
 l1393h:
   ld a,00ah
   ld (variable.find_command_symbols),a
@@ -3901,11 +3906,11 @@ l1393h:
   ld hl,message.insert_source_disk
   call print_message_at_HL
 l13a5h:
-  call sub_1052h
-  cp 059h
+  call get_uppercase_pressed_key
+  cp "Y"
   jr nz,l13a5h
   call sub_1cb3h
-  jp nz,l03e1h
+  jp nz,print_OK_and_exit_DOS
   call sub_13b7h
   jr l1393h
 sub_13b7h:
@@ -3980,8 +3985,8 @@ sub_1451h:
   ld hl,message.insert_source_disk
   call print_message_at_HL
 l1465h:
-  call sub_1052h
-  cp 059h
+  call get_uppercase_pressed_key
+  cp "Y"
   jr nz,l1465h
   call sub_1d9fh
 l146fh:
@@ -4011,8 +4016,8 @@ l1484h:
   ld hl,l2785h
   call print_message_at_HL
 l14a5h:
-  call sub_1052h
-  cp 059h
+  call get_uppercase_pressed_key
+  cp "Y"
   jr nz,l14a5h
   call sub_1d9fh
   ld a,(variable.entered_line_3_first_chars.1)
@@ -4086,8 +4091,8 @@ l152ch:
   ld hl,message.insert_source_disk
   call print_message_at_HL
 l153eh:
-  call sub_1052h
-  cp 059h
+  call get_uppercase_pressed_key
+  cp "Y"
   jr nz,l153eh
   call sub_1d9fh
   ld a,0ffh
@@ -4129,7 +4134,7 @@ l1575h:
   ld (variable.current_sector),de
   call sub_1e43h
 l15afh:
-  jp l03e1h
+  jp print_OK_and_exit_DOS
 sub_15b2h:
   ld hl,(variable.file_type)
   ld a,h
@@ -4147,8 +4152,8 @@ sub_15b8h:
   ld hl,message.insert_source_disk
   call print_message_at_HL
 l15d1h:
-  call sub_1052h
-  cp 059h
+  call get_uppercase_pressed_key
+  cp "Y"
   jr nz,l15d1h
   call sub_1d9fh
 l15dbh:
@@ -4182,8 +4187,8 @@ l15f8h:
   ld hl,l2785h
   call print_message_at_HL
 l161dh:
-  call sub_1052h
-  cp 059h
+  call get_uppercase_pressed_key
+  cp "Y"
   jr nz,l161dh
   call sub_1d9fh
   ld a,(variable.entered_line_3_first_chars.1)
@@ -4265,7 +4270,7 @@ cli_command.move:
   call read_system_track
   ld a,(05e19h)
   or a
-  jp z,l03e1h
+  jp z,print_OK_and_exit_DOS
   ld hl,l0000h
   ld (variable.ch_add),hl
   ld c,0ffh
@@ -4458,11 +4463,11 @@ l1818h:
   ld (variable.error_code_msb),a
   ld a,(variable.cat_drive_or_read_verify_flag)
   cp 0ffh
-  jp z,l03e1h
+  jp z,print_OK_and_exit_DOS
   ld a,(variable.file_type)
   cp "B" ; BASIC file type?
   jp z,l012ah
-  jp l03e1h
+  jp print_OK_and_exit_DOS
 sub_1836h:
   call sub_187ah
   call sub_1d75h
@@ -4653,7 +4658,7 @@ l198eh:
 l199dh:
   ld hl,message.verify_error
   ld a,00dh
-  jp l1c4ah
+  jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 cli_command.peek:
   ld a,0ffh
   jr l19abh
@@ -4690,7 +4695,7 @@ cli_command.merge:
   ld de,(sys_prog)
   rst 20h
   defw rom_me_new_lp
-  jp l03e1h
+  jp print_OK_and_exit_DOS
 sub_19f2h:
   ex de,hl
   scf
@@ -4817,7 +4822,7 @@ l1ab0h:
 l1ab6h:
   ld hl,message.cr.rec_overflow
   ld a,005h
-  jp l1c4ah
+  jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 sub_1abeh:
   call sub_292fh
   jp z,error.file_exists
@@ -4983,7 +4988,7 @@ sub_1c0fh:
 l1c13h:
   ld a,00eh
   ld hl,message.array_not_found
-  jp l1c4ah
+  jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 sub_1c1bh:
   call sub_1e2ah
   call sub_1d9bh
@@ -5011,13 +5016,13 @@ l1c2bh:
 error.no_space:
   ld hl,message.cr.no_space
   ld a,003h
-l1c4ah:
+print_error_number_A_whose_message_is_at_HL_and_exit_DOS:
   call print_error_number_A_whose_message_is_at_HL
   jp exit_dos
 error.file_exists:
   ld hl,message.cr.file_exists
   ld a,002h
-  jr l1c4ah
+  jr print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 sub_1c57h:
   ld hl,variable.filename
   ld b,008h
@@ -5865,7 +5870,7 @@ l221bh:
   ld hl,message.stream_opened
   ld a,00ah
 l2225h:
-  jp l1c4ah
+  jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 l2228h:
   ld a,00bh
   ld hl,message.not_disk_file
@@ -6641,11 +6646,11 @@ sub_2713h:
 error.no_disk:
   ld hl,message.no_disk
   ld a,006h
-  jp l1c4ah
+  jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 error.directory_full:
   ld hl,message.directory_full
   ld a,004h
-  jp l1c4ah
+  jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 sub_272bh:
   ld a,01ah
   jr l2731h
@@ -6678,9 +6683,7 @@ test_track:
   ld a,007h
   ld (variable.error_code),a
   ret
-
-; BLOCK 'messages_2766' (start 0x2766 end 0x283c)
-messages_2766_start:
+message.ok:
   defb "O"
   defb "."
   defb "K"
@@ -7118,7 +7121,7 @@ l2992h:
   ret
 cli_command.4:
   xor a
-l2998h:
+set_number_of_tracks:
   ld (variable.start_file_parameter_or_number_of_tracks),a
   call sub_1d75h
   call sub_042bh
@@ -7126,10 +7129,10 @@ l2998h:
   call sub_3e11h
   ld a,(variable.start_file_parameter_or_number_of_tracks)
   ld (hl),a
-  jp l03e1h
+  jp print_OK_and_exit_DOS
 cli_command.8:
   ld a,080h
-  jr l2998h
+  jr set_number_of_tracks
 
 ; BLOCK 'messages_29B2' (start 0x29b2 end 0x2a35)
 messages_29B2_start:
@@ -11734,12 +11737,12 @@ l3f5fh:
   ld hl,message.cr.retry_abort_ignore
   rst 18h
 l3f7bh:
-  call sub_1052h
-  cp 049h
+  call get_uppercase_pressed_key
+  cp "I"
   ret z
-  cp 052h
+  cp "R"
   jr z,l3f94h
-  cp 041h
+  cp "A"
   jr nz,l3f7bh
   call sub_272bh
   ld a,007h

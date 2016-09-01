@@ -367,7 +367,7 @@ l03d9h:	equ 0x03d9
 ; 0x057b	(jp destination)
 ; 0x054c	(jp destination)
 
-l03e1h:	equ 0x03e1
+print_OK_and_exit_DOS:	equ 0x03e1
 ; Used at following locations:
 ; 0x29ab	(jp destination)
 ; 0x19ef	(jp destination)
@@ -688,7 +688,7 @@ set_file_type_stored_in_B:	equ 0x104d
 ; 0x103d	(jr destination)
 ; 0x1034	(jr destination)
 
-sub_1052h:	equ 0x1052
+get_uppercase_pressed_key:	equ 0x1052
 ; Used at following locations:
 ; 0x3f7b	(call destination)
 ; 0x161d	(call destination)
@@ -1422,7 +1422,7 @@ error.no_space:	equ 0x1c45
 ; 0x065e	(jp destination)
 ; 0x0644	(jp destination)
 
-l1c4ah:	equ 0x1c4a
+print_error_number_A_whose_message_is_at_HL_and_exit_DOS:	equ 0x1c4a
 ; Used at following locations:
 ; 0x2728	(jp destination)
 ; 0x2720	(jp destination)
@@ -2516,9 +2516,7 @@ test_track:	equ 0x2739
 ; Used at following locations:
 ; 0x28cc	(defw directive)
 
-
-; BLOCK 'messages_2766' (start 0x2766 end 0x283c)
-messages_2766_start:	equ 0x2766
+message.ok:	equ 0x2766
 ; Used at following locations:
 ; 0x03e1	(immediate value)
 
@@ -2677,7 +2675,7 @@ cli_command.4:	equ 0x2997
 ; Used at following locations:
 ; 0x3028	(defw directive)
 
-l2998h:	equ 0x2998
+set_number_of_tracks:	equ 0x2998
 ; Used at following locations:
 ; 0x29b0	(jr destination)
 

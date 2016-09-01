@@ -1,4 +1,8 @@
 ; z80dasm 1.1.3
+
+  include inc/zx_spectrum_rom_routines.z80s
+  include inc/zx_spectrum_char_codes.z80s
+
 ; command line: z80dasm --origin=0x0000 --address --labels --source --block-def=trdos.blocks.txt --sym-input=trdos.symbols.input.z80s --sym-output=trdos.symbols.output.z80s --output=trdos.raw.z80s trdos.rom
 
 	org	00000h
@@ -695,11 +699,11 @@ l03cdh:
 l03d9h:
 	ld hl,message.cr.no_files		;03d9	21 28 2a 	! ( * 
 	ld a,001h		;03dc	3e 01 	> . 
-	jp l1c4ah		;03de	c3 4a 1c 	. J . 
-l03e1h:
-	ld hl,messages_2766_start		;03e1	21 66 27 	! f ' 
+	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;03de	c3 4a 1c 	. J . 
+print_OK_and_exit_DOS:
+	ld hl,message.ok		;03e1	21 66 27 	! f ' 
 	xor a			;03e4	af 	. 
-	jp l1c4ah		;03e5	c3 4a 1c 	. J . 
+	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;03e5	c3 4a 1c 	. J . 
 sub_03e8h:
 	xor a			;03e8	af 	. 
 	ld (variable.cat_current_sector),a		;03e9	32 cc 5c 	2 . \ 
@@ -910,7 +914,7 @@ cli_command.new:
 l0569h:
 	call sub_166bh		;0569	cd 6b 16 	. k . 
 	call sub_1e43h		;056c	cd 43 1e 	. C . 
-	jp l03e1h		;056f	c3 e1 03 	. . . 
+	jp print_OK_and_exit_DOS		;056f	c3 e1 03 	. . . 
 sub_0572h:
 	ld a,(variable.error_code_msb)		;0572	3a 10 5d 	: . ] 
 	or a			;0575	b7 	. 
@@ -919,7 +923,7 @@ l0577h:
 	ld a,(variable.deleted_files)		;0577	3a 07 5d 	: . ] 
 	or a			;057a	b7 	. 
 	jp z,l03d9h		;057b	ca d9 03 	. . . 
-	jp l03e1h		;057e	c3 e1 03 	. . . 
+	jp print_OK_and_exit_DOS		;057e	c3 e1 03 	. . . 
 sub_0581h:
 	push bc			;0581	c5 	. 
 	call sub_1d97h		;0582	cd 97 1d 	. . . 
@@ -932,7 +936,7 @@ sub_0581h:
 	call sub_2938h		;0595	cd 38 29 	. 8 ) 
 	ld hl,message.file_exists		;0598	21 20 28 	!   ( 
 	call print_message_at_HL		;059b	cd 07 27 	. . ' 
-	call sub_1052h		;059e	cd 52 10 	. R . 
+	call get_uppercase_pressed_key		;059e	cd 52 10 	. R . 
 	cp 059h		;05a1	fe 59 	. Y 
 	push af			;05a3	f5 	. 
 	call sub_1d97h		;05a4	cd 97 1d 	. . . 
@@ -986,7 +990,7 @@ l05f4h:
 	call sub_165dh		;0605	cd 5d 16 	. ] . 
 	ld a,(variable.filename)		;0608	3a dd 5c 	: . \ 
 	cp 000h		;060b	fe 00 	. . 
-	jp z,l03e1h		;060d	ca e1 03 	. . . 
+	jp z,print_OK_and_exit_DOS		;060d	ca e1 03 	. . . 
 	cp 001h		;0610	fe 01 	. . 
 	jr z,l05f4h		;0612	28 e0 	( . 
 	ld hl,variable.file_start		;0614	21 e6 5c 	! . \ 
@@ -1080,13 +1084,13 @@ cli_command.copy:
 	call sub_05b4h		;06e8	cd b4 05 	. . . 
 	jr nz,l06f3h		;06eb	20 06 	  . 
 	call sub_0581h		;06ed	cd 81 05 	. . . 
-	jp nz,l03e1h		;06f0	c2 e1 03 	. . . 
+	jp nz,print_OK_and_exit_DOS		;06f0	c2 e1 03 	. . . 
 l06f3h:
 	call sub_063ch		;06f3	cd 3c 06 	. < . 
 	call sub_1e43h		;06f6	cd 43 1e 	. C . 
 	ld a,(variable.file_type)		;06f9	3a e5 5c 	: . \ 
 	cp 023h		;06fc	fe 23 	. # 
-	jp nz,l03e1h		;06fe	c2 e1 03 	. . . 
+	jp nz,print_OK_and_exit_DOS		;06fe	c2 e1 03 	. . . 
 	ld a,00ah		;0701	3e 0a 	> . 
 	ld (variable.find_command_symbols),a		;0703	32 06 5d 	2 . ] 
 	ld hl,variable.file_start		;0706	21 e6 5c 	! . \ 
@@ -1094,7 +1098,7 @@ l06f3h:
 	ld a,(variable.two_files_drive)		;070a	3a f8 5c 	: . \ 
 	call init_disk_drive		;070d	cd cb 3d 	. . = 
 	call sub_05b4h		;0710	cd b4 05 	. . . 
-	jp nz,l03e1h		;0713	c2 e1 03 	. . . 
+	jp nz,print_OK_and_exit_DOS		;0713	c2 e1 03 	. . . 
 	call sub_165dh		;0716	cd 5d 16 	. ] . 
 	ld hl,variable.file_start		;0719	21 e6 5c 	! . \ 
 	ld de,variable.c_file_start_or_b_file_size		;071c	11 ed 5c 	. . \ 
@@ -1159,7 +1163,7 @@ cli_command.erase:
 	call sub_292fh		;0794	cd 2f 29 	. / ) 
 	call l07a0h		;0797	cd a0 07 	. . . 
 	jp nz,l0577h		;079a	c2 77 05 	. w . 
-	jp l03e1h		;079d	c3 e1 03 	. . . 
+	jp print_OK_and_exit_DOS		;079d	c3 e1 03 	. . . 
 l07a0h:
 	ld a,(variable.filename)		;07a0	3a dd 5c 	: . \ 
 	ld (variable.filename_first_char),a		;07a3	32 08 5d 	2 . ] 
@@ -3296,7 +3300,7 @@ cli_command.asterisk:
 	call check_drive_letter		;1022	cd 24 05 	. $ . 
 	ld (variable.default_drive),a		;1025	32 19 5d 	2 . ] 
 	call init_disk_drive		;1028	cd cb 3d 	. . = 
-	jp l03e1h		;102b	c3 e1 03 	. . . 
+	jp print_OK_and_exit_DOS		;102b	c3 e1 03 	. . . 
 sub_102eh:
 	ld b,043h		;102e	06 43 	. C 
 	ld a,(variable.move_command_first_track)		;1030	3a d6 5c 	: . \ 
@@ -3317,7 +3321,7 @@ set_file_type_stored_in_B:
 	ld hl,variable.file_type		;104d	21 e5 5c 	! . \ 
 	ld (hl),b			;1050	70 	p 
 	ret			;1051	c9 	. 
-sub_1052h:
+get_uppercase_pressed_key:
 	di			;1052	f3 	. 
 	push hl			;1053	e5 	. 
 	push bc			;1054	c5 	. 
@@ -3876,7 +3880,7 @@ l1360h:
 	ld hl,message.insert_source_disk		;136f	21 aa 27 	! . ' 
 	call print_message_at_HL		;1372	cd 07 27 	. . ' 
 l1375h:
-	call sub_1052h		;1375	cd 52 10 	. R . 
+	call get_uppercase_pressed_key		;1375	cd 52 10 	. R . 
 	cp 059h		;1378	fe 59 	. Y 
 	jr nz,l1375h		;137a	20 f9 	  . 
 	call sub_1d9fh		;137c	cd 9f 1d 	. . . 
@@ -3886,7 +3890,7 @@ l1375h:
 	call sub_13b7h		;1388	cd b7 13 	. . . 
 	ld a,(variable.file_type)		;138b	3a e5 5c 	: . \ 
 	cp 023h		;138e	fe 23 	. # 
-	jp nz,l03e1h		;1390	c2 e1 03 	. . . 
+	jp nz,print_OK_and_exit_DOS		;1390	c2 e1 03 	. . . 
 l1393h:
 	ld a,00ah		;1393	3e 0a 	> . 
 	ld (variable.find_command_symbols),a		;1395	32 06 5d 	2 . ] 
@@ -3896,11 +3900,11 @@ l1393h:
 	ld hl,message.insert_source_disk		;139f	21 aa 27 	! . ' 
 	call print_message_at_HL		;13a2	cd 07 27 	. . ' 
 l13a5h:
-	call sub_1052h		;13a5	cd 52 10 	. R . 
+	call get_uppercase_pressed_key		;13a5	cd 52 10 	. R . 
 	cp 059h		;13a8	fe 59 	. Y 
 	jr nz,l13a5h		;13aa	20 f9 	  . 
 	call sub_1cb3h		;13ac	cd b3 1c 	. . . 
-	jp nz,l03e1h		;13af	c2 e1 03 	. . . 
+	jp nz,print_OK_and_exit_DOS		;13af	c2 e1 03 	. . . 
 	call sub_13b7h		;13b2	cd b7 13 	. . . 
 	jr l1393h		;13b5	18 dc 	. . 
 sub_13b7h:
@@ -3975,7 +3979,7 @@ sub_1451h:
 	ld hl,message.insert_source_disk		;145f	21 aa 27 	! . ' 
 	call print_message_at_HL		;1462	cd 07 27 	. . ' 
 l1465h:
-	call sub_1052h		;1465	cd 52 10 	. R . 
+	call get_uppercase_pressed_key		;1465	cd 52 10 	. R . 
 	cp 059h		;1468	fe 59 	. Y 
 	jr nz,l1465h		;146a	20 f9 	  . 
 	call sub_1d9fh		;146c	cd 9f 1d 	. . . 
@@ -4006,7 +4010,7 @@ l1484h:
 	ld hl,l2785h		;149f	21 85 27 	! . ' 
 	call print_message_at_HL		;14a2	cd 07 27 	. . ' 
 l14a5h:
-	call sub_1052h		;14a5	cd 52 10 	. R . 
+	call get_uppercase_pressed_key		;14a5	cd 52 10 	. R . 
 	cp 059h		;14a8	fe 59 	. Y 
 	jr nz,l14a5h		;14aa	20 f9 	  . 
 	call sub_1d9fh		;14ac	cd 9f 1d 	. . . 
@@ -4081,7 +4085,7 @@ l152ch:
 	ld hl,message.insert_source_disk		;1538	21 aa 27 	! . ' 
 	call print_message_at_HL		;153b	cd 07 27 	. . ' 
 l153eh:
-	call sub_1052h		;153e	cd 52 10 	. R . 
+	call get_uppercase_pressed_key		;153e	cd 52 10 	. R . 
 	cp 059h		;1541	fe 59 	. Y 
 	jr nz,l153eh		;1543	20 f9 	  . 
 	call sub_1d9fh		;1545	cd 9f 1d 	. . . 
@@ -4124,7 +4128,7 @@ l1575h:
 	ld (variable.current_sector),de		;15a8	ed 53 f4 5c 	. S . \ 
 	call sub_1e43h		;15ac	cd 43 1e 	. C . 
 l15afh:
-	jp l03e1h		;15af	c3 e1 03 	. . . 
+	jp print_OK_and_exit_DOS		;15af	c3 e1 03 	. . . 
 sub_15b2h:
 	ld hl,(variable.file_type)		;15b2	2a e5 5c 	* . \ 
 	ld a,h			;15b5	7c 	| 
@@ -4142,7 +4146,7 @@ sub_15b8h:
 	ld hl,message.insert_source_disk		;15cb	21 aa 27 	! . ' 
 	call print_message_at_HL		;15ce	cd 07 27 	. . ' 
 l15d1h:
-	call sub_1052h		;15d1	cd 52 10 	. R . 
+	call get_uppercase_pressed_key		;15d1	cd 52 10 	. R . 
 	cp 059h		;15d4	fe 59 	. Y 
 	jr nz,l15d1h		;15d6	20 f9 	  . 
 	call sub_1d9fh		;15d8	cd 9f 1d 	. . . 
@@ -4177,7 +4181,7 @@ l15f8h:
 	ld hl,l2785h		;1617	21 85 27 	! . ' 
 	call print_message_at_HL		;161a	cd 07 27 	. . ' 
 l161dh:
-	call sub_1052h		;161d	cd 52 10 	. R . 
+	call get_uppercase_pressed_key		;161d	cd 52 10 	. R . 
 	cp 059h		;1620	fe 59 	. Y 
 	jr nz,l161dh		;1622	20 f9 	  . 
 	call sub_1d9fh		;1624	cd 9f 1d 	. . . 
@@ -4260,7 +4264,7 @@ cli_command.move:
 	call read_system_track		;16b1	cd 05 04 	. . . 
 	ld a,(05e19h)		;16b4	3a 19 5e 	: . ^ 
 	or a			;16b7	b7 	. 
-	jp z,l03e1h		;16b8	ca e1 03 	. . . 
+	jp z,print_OK_and_exit_DOS		;16b8	ca e1 03 	. . . 
 	ld hl,l0000h		;16bb	21 00 00 	! . . 
 	ld (variable.ch_add),hl		;16be	22 d9 5c 	" . \ 
 	ld c,0ffh		;16c1	0e ff 	. . 
@@ -4453,11 +4457,11 @@ l1818h:
 	ld (variable.error_code_msb),a		;1820	32 10 5d 	2 . ] 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;1823	3a f9 5c 	: . \ 
 	cp 0ffh		;1826	fe ff 	. . 
-	jp z,l03e1h		;1828	ca e1 03 	. . . 
+	jp z,print_OK_and_exit_DOS		;1828	ca e1 03 	. . . 
 	ld a,(variable.file_type)		;182b	3a e5 5c 	: . \ 
 	cp 042h		;182e	fe 42 	. B 
 	jp z,l012ah		;1830	ca 2a 01 	. * . 
-	jp l03e1h		;1833	c3 e1 03 	. . . 
+	jp print_OK_and_exit_DOS		;1833	c3 e1 03 	. . . 
 sub_1836h:
 	call sub_187ah		;1836	cd 7a 18 	. z . 
 	call sub_1d75h		;1839	cd 75 1d 	. u . 
@@ -4648,7 +4652,7 @@ l198eh:
 l199dh:
 	ld hl,message.verify_error		;199d	21 6b 27 	! k ' 
 	ld a,00dh		;19a0	3e 0d 	> . 
-	jp l1c4ah		;19a2	c3 4a 1c 	. J . 
+	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;19a2	c3 4a 1c 	. J . 
 cli_command.peek:
 	ld a,0ffh		;19a5	3e ff 	> . 
 	jr l19abh		;19a7	18 02 	. . 
@@ -4685,7 +4689,7 @@ cli_command.merge:
 	ld de,(sys_prog)		;19e8	ed 5b 53 5c 	. [ S \ 
 	rst 20h			;19ec	e7 	. 
 	defw 008d2h		;19ed	d2 08 	. . 
-	jp l03e1h		;19ef	c3 e1 03 	. . . 
+	jp print_OK_and_exit_DOS		;19ef	c3 e1 03 	. . . 
 sub_19f2h:
 	ex de,hl			;19f2	eb 	. 
 	scf			;19f3	37 	7 
@@ -4812,7 +4816,7 @@ l1ab0h:
 l1ab6h:
 	ld hl,message.cr.rec_overflow		;1ab6	21 ed 29 	! . ) 
 	ld a,005h		;1ab9	3e 05 	> . 
-	jp l1c4ah		;1abb	c3 4a 1c 	. J . 
+	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;1abb	c3 4a 1c 	. J . 
 sub_1abeh:
 	call sub_292fh		;1abe	cd 2f 29 	. / ) 
 	jp z,error.file_exists		;1ac1	ca 50 1c 	. P . 
@@ -4978,7 +4982,7 @@ sub_1c0fh:
 l1c13h:
 	ld a,00eh		;1c13	3e 0e 	> . 
 	ld hl,message.array_not_found		;1c15	21 dd 27 	! . ' 
-	jp l1c4ah		;1c18	c3 4a 1c 	. J . 
+	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;1c18	c3 4a 1c 	. J . 
 sub_1c1bh:
 	call sub_1e2ah		;1c1b	cd 2a 1e 	. * . 
 	call sub_1d9bh		;1c1e	cd 9b 1d 	. . . 
@@ -5006,13 +5010,13 @@ l1c2bh:
 error.no_space:
 	ld hl,message.cr.no_space		;1c45	21 bb 29 	! . ) 
 	ld a,003h		;1c48	3e 03 	> . 
-l1c4ah:
+print_error_number_A_whose_message_is_at_HL_and_exit_DOS:
 	call print_error_number_A_whose_message_is_at_HL		;1c4a	cd c3 03 	. . . 
 	jp exit_dos		;1c4d	c3 d3 01 	. . . 
 error.file_exists:
 	ld hl,message.cr.file_exists		;1c50	21 c5 29 	! . ) 
 	ld a,002h		;1c53	3e 02 	> . 
-	jr l1c4ah		;1c55	18 f3 	. . 
+	jr print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;1c55	18 f3 	. . 
 sub_1c57h:
 	ld hl,variable.filename		;1c57	21 dd 5c 	! . \ 
 	ld b,008h		;1c5a	06 08 	. . 
@@ -5860,7 +5864,7 @@ l221bh:
 	ld hl,message.stream_opened		;2220	21 04 28 	! . ( 
 	ld a,00ah		;2223	3e 0a 	> . 
 l2225h:
-	jp l1c4ah		;2225	c3 4a 1c 	. J . 
+	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;2225	c3 4a 1c 	. J . 
 l2228h:
 	ld a,00bh		;2228	3e 0b 	> . 
 	ld hl,message.not_disk_file		;222a	21 12 28 	! . ( 
@@ -6636,11 +6640,11 @@ sub_2713h:
 error.no_disk:
 	ld hl,message.no_disk		;271b	21 fc 27 	! . ' 
 	ld a,006h		;271e	3e 06 	> . 
-	jp l1c4ah		;2720	c3 4a 1c 	. J . 
+	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;2720	c3 4a 1c 	. J . 
 error.directory_full:
 	ld hl,message.directory_full		;2723	21 ed 27 	! . ' 
 	ld a,004h		;2726	3e 04 	> . 
-	jp l1c4ah		;2728	c3 4a 1c 	. J . 
+	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;2728	c3 4a 1c 	. J . 
 sub_272bh:
 	ld a,01ah		;272b	3e 1a 	> . 
 	jr l2731h		;272d	18 02 	. . 
@@ -6673,9 +6677,7 @@ test_track:
 	ld a,007h		;2760	3e 07 	> . 
 	ld (variable.error_code),a		;2762	32 0f 5d 	2 . ] 
 	ret			;2765	c9 	. 
-
-; BLOCK 'messages_2766' (start 0x2766 end 0x283c)
-messages_2766_start:
+message.ok:
 	defb 04fh		;2766	4f 	O 
 	defb 02eh		;2767	2e 	. 
 	defb 04bh		;2768	4b 	K 
@@ -7113,7 +7115,7 @@ l2992h:
 	ret			;2996	c9 	. 
 cli_command.4:
 	xor a			;2997	af 	. 
-l2998h:
+set_number_of_tracks:
 	ld (variable.start_file_parameter_or_number_of_tracks),a		;2998	32 d7 5c 	2 . \ 
 	call sub_1d75h		;299b	cd 75 1d 	. u . 
 	call sub_042bh		;299e	cd 2b 04 	. + . 
@@ -7121,10 +7123,10 @@ l2998h:
 	call sub_3e11h		;29a4	cd 11 3e 	. . > 
 	ld a,(variable.start_file_parameter_or_number_of_tracks)		;29a7	3a d7 5c 	: . \ 
 	ld (hl),a			;29aa	77 	w 
-	jp l03e1h		;29ab	c3 e1 03 	. . . 
+	jp print_OK_and_exit_DOS		;29ab	c3 e1 03 	. . . 
 cli_command.8:
 	ld a,080h		;29ae	3e 80 	> . 
-	jr l2998h		;29b0	18 e6 	. . 
+	jr set_number_of_tracks		;29b0	18 e6 	. . 
 
 ; BLOCK 'messages_29B2' (start 0x29b2 end 0x2a35)
 messages_29B2_start:
@@ -11729,7 +11731,7 @@ l3f5fh:
 	ld hl,message.cr.retry_abort_ignore		;3f77	21 fe 29 	! . ) 
 	rst 18h			;3f7a	df 	. 
 l3f7bh:
-	call sub_1052h		;3f7b	cd 52 10 	. R . 
+	call get_uppercase_pressed_key		;3f7b	cd 52 10 	. R . 
 	cp 049h		;3f7e	fe 49 	. I 
 	ret z			;3f80	c8 	. 
 	cp 052h		;3f81	fe 52 	. R 
