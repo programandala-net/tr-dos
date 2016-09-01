@@ -150,7 +150,7 @@ l001bh:
 l001eh:
   jr l0024h
 rst_20:
-  jp call_zx_spectrum_rom_routine_on_tos
+  jp call_zx_spectrum_rom_routine_stored_at_the_address_on_tos
   ret
 l0024h:
   ld h,d
@@ -8016,7 +8016,7 @@ l2f69h:
   dec hl
   ld sp,hl
   jp l1d2fh
-call_zx_spectrum_rom_routine_on_tos:
+call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:
   ld (variable.hl_copy),hl
   ld (variable.de_copy),de
   pop hl

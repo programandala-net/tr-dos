@@ -122,7 +122,7 @@ print_error_number_A_whose_message_is_at_HL:       equ 0x03C3
 check_drive_letter:                                equ 0x0524
 print_message_at_HL:                               equ 0x2707
 execute_command_in_C:                              equ 0x283C
-call_zx_spectrum_rom_routine_on_tos:               equ 0x2F72
+call_zx_spectrum_rom_routine_stored_at_the_address_on_tos: equ 0x2F72
 print_character_in_A:                              equ 0x3D82
 step_rate_of_temporary_drive:                      equ 0x3E08
 enter_trdos_from_basic:                            equ 0x3D31

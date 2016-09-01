@@ -3026,7 +3026,7 @@ l2f69h:	equ 0x2f69
 ; Used at following locations:
 ; 0x3d17	(jp destination)
 
-call_zx_spectrum_rom_routine_on_tos:	equ 0x2f72
+call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:	equ 0x2f72
 ; Used at following locations:
 ; 0x0020	(jp destination)
 
