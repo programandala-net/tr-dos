@@ -1,7 +1,10 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201608211752
+; Last modified 201609011426
+
+; XXX FIXME -- Three bytes at 0x2FF0 are disassembled as data, but they are
+; code (`ldir / ret`). This seems a bug of z80dasm.
 
 rst20_0102: unlabeled start 0x0103 unlabeled last 0x0104 type worddata
 rst20_014C: unlabeled start 0x014D unlabeled last 0x014E type worddata
@@ -114,3 +117,6 @@ c_commands_table_17_pointer: unlabeled start 0x28D2 unlabeled last 0x28D3 type p
 c_commands_table_18_index: unlabeled start 0x28D4 unlabeled last 0x28D4 type bytedata
 c_commands_table_18_pointer: unlabeled start 0x28D5 unlabeled last 0x28D6 type pointers
 c_commands_table_19_index: unlabeled start 0x28D7 unlabeled last 0x28D7 type bytedata
+
+token_commands_table: start 0x2FF3 unlabeled last 0x3007 type bytedata
+token_commands_addresses_table: start 0x3008 unlabeled last 0x3031 type pointers

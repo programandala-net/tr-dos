@@ -552,7 +552,7 @@ l030ah:
   call sub_3dc8h
   pop af
 l031ah:
-  ld hl,l2ff3h
+  ld hl,token_commands_table_start
   dec hl
   ld c,000h
 l0320h:
@@ -576,7 +576,7 @@ l0320h:
   ld hl,sys_flags
   res 7,(hl)
   ld b,000h
-  ld hl,03008h
+  ld hl,token_commands_addresses_table_start
   dec c
   sla c
   add hl,bc
@@ -747,6 +747,7 @@ sub_042bh:
   ld a,(hl)
   cp 00dh
   ret
+l0433h:
   call sub_042bh
   ld bc,l0001h+1
   ld (variable.file_size),bc
@@ -891,6 +892,7 @@ sub_0531h:
   cp b
   jp z,error.wrong_drive_letter
   ret
+l053ah:
   call sub_1dcdh
   call sub_1d75h
   call sub_102eh
@@ -1044,6 +1046,7 @@ sub_063ch:
   pop bc
   call sub_166bh
   ret
+l0690h:
   ld hl,(variable.command_line_address)
   inc hl
   ld a,(hl)
@@ -1152,6 +1155,7 @@ sub_0781h:
   xor a
   ld (variable.deleted_files),a
   jr l07a0h
+l0787h:
   call sub_1ddfh
   call sub_1d75h
   call sub_102eh
@@ -3289,6 +3293,7 @@ message_interface_1_start:
   defb "e"
   defb "d"
   defb 000h
+l1018h:
   call sub_1ddfh
   call sub_1d75h
   call sub_0531h
@@ -3645,6 +3650,7 @@ l11b0h:
   call z,sub_0507h
   ret nz
   jr l11b0h
+l11ceh:
   call sub_042bh
   ld bc,l0001h+1
   ld (variable.file_size),bc
@@ -4253,6 +4259,7 @@ sub_1697h:
   add hl,de
   ld (variable.ch_add),hl
   ret
+l16abh:
   call sub_1d75h
   call sub_166fh
   call read_system_track
@@ -4439,8 +4446,10 @@ l17f7h:
 l180dh:
   ldir
   ret
+l1810h:
   ld a,0ffh
   ld (variable.cat_drive_or_read_verify_flag),a
+l1815h:
   call sub_1852h
 l1818h:
   call sub_1836h
@@ -4645,12 +4654,15 @@ l199dh:
   ld hl,message.verify_error
   ld a,00dh
   jp l1c4ah
+l19a5h:
   ld a,0ffh
   jr l19abh
+l19a9h:
   ld a,0eeh
 l19abh:
   ld (variable.error_code_msb),a
   jp l1818h
+l19b1h:
   ld a,0ffh
   ld (variable.unknown_23839),a
   call sub_187ah
@@ -4815,6 +4827,7 @@ sub_1ac4h:
   cp 080h
   jp z,error.directory_full
   ret
+l1ad0h:
   call sub_1852h
   ld hl,l0000h
   ld (variable.basic_program_autostart),hl
@@ -5117,6 +5130,7 @@ find_file:
   ret z
   ld (hl),0ffh
   ret
+l1cfbh:
   call sub_1d75h
   call sub_20e5h
   res 3,(iy+001h)
@@ -5156,6 +5170,7 @@ l1d2fh:
   cp 001h
   jr z,l1d29h
   jr error.wrong_drive_letter
+l1d4dh:
   call sub_1852h
   call sub_1836h
   call sub_1d75h
@@ -5401,6 +5416,7 @@ sub_1ebch:
   ld (variable.move_command_first_track),a
   scf
   ret
+l1ec2h:
   ld hl,0ffffh
   ld (variable.start_file_parameter_or_number_of_tracks),hl
   ld (variable.ch_add),hl
@@ -5765,6 +5781,7 @@ sub_2158h:
   ld hl,(variable.ch_add)
   ld (variable.file_size),hl
   ret
+l2182h:
   ld hl,(variable.command_line_address)
   ld (sys_ch_add),hl
   call sub_1e0bh
@@ -7099,6 +7116,7 @@ l2992h:
   pop de
   pop hl
   ret
+l2997h:
   xor a
 l2998h:
   ld (variable.start_file_parameter_or_number_of_tracks),a
@@ -7109,6 +7127,7 @@ l2998h:
   ld a,(variable.start_file_parameter_or_number_of_tracks)
   ld (hl),a
   jp l03e1h
+l29aeh:
   ld a,080h
   jr l2998h
 
@@ -7732,6 +7751,7 @@ sub_2d92h:
   ld b,a
   call read_sectors
   ret
+l2da1h:
   call sub_1ddfh
   call sub_1d75h
   call sub_102eh
@@ -8058,53 +8078,55 @@ l2fdeh:
   ret z
   ld c,a
   ld hl,variable.tmp_buffer_address
-  ldir
-  ret
-l2ff3h:
-  rst 8
-  ld hl,(0d1d0h)
-  and 0d2h
-  rst 28h
-  ret m
-  cp 0beh
-  call p,0f7d5h
-  out (0d4h),a
-  rst 38h
-  inc (hl)
-  call pe,0f038h
-  sub 033h
-  inc b
-  jr l301ch
-  jp nz,0ab1eh
-  ld d,03ah
-  dec b
-  add a,a
-  rlca
-  dec d
-  jr $-46
-  ld a,(de)
-  ei
-  inc e
-  and l
-  add hl,de
-l301ch:
-  xor c
-  add hl,de
-  or c
-  add hl,de
-  ld c,l
-  dec e
-  add a,d
-  ld hl,l2656h
-  sub b
-  ld b,097h
-  add hl,hl
-  and c
-  dec l
-  xor (hl)
-  add hl,hl
-  adc a,011h
-  djnz $+26
+  defb 0edh,0b0h,0c9h
+
+; BLOCK 'token_commands_table' (start 0x2ff3 end 0x3008)
+token_commands_table_start:
+  defb 0cfh
+  defb "*"
+  defb 0d0h
+  defb 0d1h
+  defb 0e6h
+  defb 0d2h
+  defb 0efh
+  defb 0f8h
+  defb 0feh
+  defb 0beh
+  defb 0f4h
+  defb 0d5h
+  defb 0f7h
+  defb 0d3h
+  defb 0d4h
+  defb 0ffh
+  defb "4"
+  defb 0ech
+  defb "8"
+  defb 0f0h
+  defb 0d6h
+
+; BLOCK 'token_commands_addresses_table' (start 0x3008 end 0x3032)
+token_commands_addresses_table_start:
+  defw l0433h
+  defw l1018h
+  defw l1ec2h
+  defw l16abh
+  defw l053ah
+  defw l0787h
+  defw l1815h
+  defw l1ad0h
+  defw l1cfbh
+  defw l19a5h
+  defw l19a9h
+  defw l19b1h
+  defw l1d4dh
+  defw l2182h
+  defw l2656h
+  defw l0690h
+  defw l2997h
+  defw l2da1h
+  defw l29aeh
+  defw l11ceh
+  defw l1810h
 sub_3032h:
   ld hl,(sys_e_line)
   ld (variable.command_line_address),hl

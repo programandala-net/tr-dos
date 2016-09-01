@@ -456,6 +456,10 @@ sub_042bh:	equ 0x042b
 ; 0x11ce	(call destination)
 ; 0x0433	(call destination)
 
+l0433h:	equ 0x0433
+; Used at following locations:
+; 0x3008	(defw directive)
+
 l045dh:	equ 0x045d
 ; Used at following locations:
 ; 0x0441	(jr destination)
@@ -527,6 +531,10 @@ sub_0531h:	equ 0x0531
 ; 0x1c61	(call destination)
 ; 0x101e	(call destination)
 
+l053ah:	equ 0x053a
+; Used at following locations:
+; 0x3010	(defw directive)
+
 l0569h:	equ 0x0569
 ; Used at following locations:
 ; 0x1b56	(jp destination)
@@ -577,6 +585,10 @@ sub_063ch:	equ 0x063c
 ; 0x06f3	(call destination)
 ; 0x0634	(call destination)
 
+l0690h:	equ 0x0690
+; Used at following locations:
+; 0x3026	(defw directive)
+
 l06f3h:	equ 0x06f3
 ; Used at following locations:
 ; 0x072d	(jr destination)
@@ -599,6 +611,10 @@ l0775h:	equ 0x0775
 sub_0781h:	equ 0x0781
 ; Used at following locations:
 ; 0x05af	(call destination)
+
+l0787h:	equ 0x0787
+; Used at following locations:
+; 0x3012	(defw directive)
 
 l07a0h:	equ 0x07a0
 ; Used at following locations:
@@ -649,6 +665,10 @@ message_interface_1_start:	equ 0x1000
 ; 0x229a	(immediate value)
 ; 0x176f	(immediate value)
 ; 0x026d	(immediate value)
+
+l1018h:	equ 0x1018
+; Used at following locations:
+; 0x300a	(defw directive)
 
 sub_102eh:	equ 0x102e
 ; Used at following locations:
@@ -800,6 +820,10 @@ l11b0h:	equ 0x11b0
 ; Used at following locations:
 ; 0x12b5	(call destination)
 ; 0x11cc	(jr destination)
+
+l11ceh:	equ 0x11ce
+; Used at following locations:
+; 0x302e	(defw directive)
 
 l11f8h:	equ 0x11f8
 ; Used at following locations:
@@ -1053,6 +1077,10 @@ sub_1697h:	equ 0x1697
 ; 0x16f4	(call destination)
 ; 0x16d3	(call destination)
 
+l16abh:	equ 0x16ab
+; Used at following locations:
+; 0x300e	(defw directive)
+
 l16c3h:	equ 0x16c3
 ; Used at following locations:
 ; 0x1769	(jp destination)
@@ -1107,6 +1135,14 @@ l17f7h:	equ 0x17f7
 l180dh:	equ 0x180d
 ; Used at following locations:
 ; 0x180a	(jr destination)
+
+l1810h:	equ 0x1810
+; Used at following locations:
+; 0x3030	(defw directive)
+
+l1815h:	equ 0x1815
+; Used at following locations:
+; 0x3014	(defw directive)
 
 l1818h:	equ 0x1818
 ; Used at following locations:
@@ -1216,9 +1252,21 @@ l199dh:	equ 0x199d
 ; Used at following locations:
 ; 0x1990	(jr destination)
 
+l19a5h:	equ 0x19a5
+; Used at following locations:
+; 0x301a	(defw directive)
+
+l19a9h:	equ 0x19a9
+; Used at following locations:
+; 0x301c	(defw directive)
+
 l19abh:	equ 0x19ab
 ; Used at following locations:
 ; 0x19a7	(jr destination)
+
+l19b1h:	equ 0x19b1
+; Used at following locations:
+; 0x301e	(defw directive)
 
 sub_19f2h:	equ 0x19f2
 ; Used at following locations:
@@ -1284,6 +1332,10 @@ sub_1ac4h:	equ 0x1ac4
 ; 0x2909	(call destination)
 ; 0x28f5	(call destination)
 ; 0x22a0	(call destination)
+
+l1ad0h:	equ 0x1ad0
+; Used at following locations:
+; 0x3016	(defw directive)
 
 l1af8h:	equ 0x1af8
 ; Used at following locations:
@@ -1474,6 +1526,10 @@ find_file:	equ 0x1cf0
 ; Used at following locations:
 ; 0x28ab	(defw directive)
 
+l1cfbh:	equ 0x1cfb
+; Used at following locations:
+; 0x3018	(defw directive)
+
 l1d19h:	equ 0x1d19
 ; Used at following locations:
 ; 0x1d13	(jr destination)
@@ -1522,6 +1578,10 @@ l1d29h:	equ 0x1d29
 l1d2fh:	equ 0x1d2f
 ; Used at following locations:
 ; 0x2f6f	(jp destination)
+
+l1d4dh:	equ 0x1d4d
+; Used at following locations:
+; 0x3020	(defw directive)
 
 sub_1d63h:	equ 0x1d63
 ; Used at following locations:
@@ -1862,6 +1922,10 @@ sub_1ebch:	equ 0x1ebc
 ; Used at following locations:
 ; 0x1eb3	(call destination)
 
+l1ec2h:	equ 0x1ec2
+; Used at following locations:
+; 0x300c	(defw directive)
+
 l1ee8h:	equ 0x1ee8
 ; Used at following locations:
 ; 0x1ee4	(jr destination)
@@ -2046,6 +2110,10 @@ sub_2135h:	equ 0x2135
 sub_2158h:	equ 0x2158
 ; Used at following locations:
 ; 0x219d	(call destination)
+
+l2182h:	equ 0x2182
+; Used at following locations:
+; 0x3022	(defw directive)
 
 l218eh:	equ 0x218e
 ; Used at following locations:
@@ -2377,7 +2445,7 @@ sub_2650h:	equ 0x2650
 
 l2656h:	equ 0x2656
 ; Used at following locations:
-; 0x3023	(immediate value)
+; 0x3024	(defw directive)
 
 l269dh:	equ 0x269d
 ; Used at following locations:
@@ -2605,9 +2673,17 @@ l2992h:	equ 0x2992
 ; 0x2979	(jr destination)
 ; 0x2953	(jr destination)
 
+l2997h:	equ 0x2997
+; Used at following locations:
+; 0x3028	(defw directive)
+
 l2998h:	equ 0x2998
 ; Used at following locations:
 ; 0x29b0	(jr destination)
+
+l29aeh:	equ 0x29ae
+; Used at following locations:
+; 0x302c	(defw directive)
 
 
 ; BLOCK 'messages_29B2' (start 0x29b2 end 0x2a35)
@@ -2816,6 +2892,10 @@ sub_2d92h:	equ 0x2d92
 ; 0x2e02	(call destination)
 ; 0x2ddb	(call destination)
 
+l2da1h:	equ 0x2da1
+; Used at following locations:
+; 0x302a	(defw directive)
+
 l2dd2h:	equ 0x2dd2
 ; Used at following locations:
 ; 0x2db4	(jr destination)
@@ -2967,13 +3047,17 @@ l2fdeh:	equ 0x2fde
 ; Used at following locations:
 ; 0x194b	(jp destination)
 
-l2ff3h:	equ 0x2ff3
+
+; BLOCK 'token_commands_table' (start 0x2ff3 end 0x3008)
+token_commands_table_start:	equ 0x2ff3
 ; Used at following locations:
 ; 0x031a	(immediate value)
 
-l301ch:	equ 0x301c
+
+; BLOCK 'token_commands_addresses_table' (start 0x3008 end 0x3032)
+token_commands_addresses_table_start:	equ 0x3008
 ; Used at following locations:
-; 0x300a	(jr destination)
+; 0x0348	(immediate value)
 
 sub_3032h:	equ 0x3032
 ; Used at following locations:

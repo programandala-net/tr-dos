@@ -547,7 +547,7 @@ l030ah:
 	call sub_3dc8h		;0316	cd c8 3d 	. . = 
 	pop af			;0319	f1 	. 
 l031ah:
-	ld hl,l2ff3h		;031a	21 f3 2f 	! . / 
+	ld hl,token_commands_table_start		;031a	21 f3 2f 	! . / 
 	dec hl			;031d	2b 	+ 
 	ld c,000h		;031e	0e 00 	. . 
 l0320h:
@@ -571,7 +571,7 @@ l0320h:
 	ld hl,sys_flags		;0341	21 3b 5c 	! ; \ 
 	res 7,(hl)		;0344	cb be 	. . 
 	ld b,000h		;0346	06 00 	. . 
-	ld hl,03008h		;0348	21 08 30 	! . 0 
+	ld hl,token_commands_addresses_table_start		;0348	21 08 30 	! . 0 
 	dec c			;034b	0d 	. 
 	sla c		;034c	cb 21 	. ! 
 	add hl,bc			;034e	09 	. 
@@ -742,6 +742,7 @@ sub_042bh:
 	ld a,(hl)			;042f	7e 	~ 
 	cp 00dh		;0430	fe 0d 	. . 
 	ret			;0432	c9 	. 
+l0433h:
 	call sub_042bh		;0433	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;0436	01 02 00 	. . . 
 	ld (variable.file_size),bc		;0439	ed 43 db 5c 	. C . \ 
@@ -886,6 +887,7 @@ sub_0531h:
 	cp b			;0535	b8 	. 
 	jp z,error.wrong_drive_letter		;0536	ca 1a 1d 	. . . 
 	ret			;0539	c9 	. 
+l053ah:
 	call sub_1dcdh		;053a	cd cd 1d 	. . . 
 	call sub_1d75h		;053d	cd 75 1d 	. u . 
 	call sub_102eh		;0540	cd 2e 10 	. . . 
@@ -1039,6 +1041,7 @@ sub_063ch:
 	pop bc			;068b	c1 	. 
 	call sub_166bh		;068c	cd 6b 16 	. k . 
 	ret			;068f	c9 	. 
+l0690h:
 	ld hl,(variable.command_line_address)		;0690	2a 11 5d 	* . ] 
 	inc hl			;0693	23 	# 
 	ld a,(hl)			;0694	7e 	~ 
@@ -1147,6 +1150,7 @@ sub_0781h:
 	xor a			;0781	af 	. 
 	ld (variable.deleted_files),a		;0782	32 07 5d 	2 . ] 
 	jr l07a0h		;0785	18 19 	. . 
+l0787h:
 	call sub_1ddfh		;0787	cd df 1d 	. . . 
 	call sub_1d75h		;078a	cd 75 1d 	. u . 
 	call sub_102eh		;078d	cd 2e 10 	. . . 
@@ -3284,6 +3288,7 @@ message_interface_1_start:
 	defb 065h		;1015	65 	e 
 	defb 064h		;1016	64 	d 
 	defb 000h		;1017	00 	. 
+l1018h:
 	call sub_1ddfh		;1018	cd df 1d 	. . . 
 	call sub_1d75h		;101b	cd 75 1d 	. u . 
 	call sub_0531h		;101e	cd 31 05 	. 1 . 
@@ -3640,6 +3645,7 @@ l11b0h:
 	call z,sub_0507h		;11c8	cc 07 05 	. . . 
 	ret nz			;11cb	c0 	. 
 	jr l11b0h		;11cc	18 e2 	. . 
+l11ceh:
 	call sub_042bh		;11ce	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;11d1	01 02 00 	. . . 
 	ld (variable.file_size),bc		;11d4	ed 43 db 5c 	. C . \ 
@@ -4248,6 +4254,7 @@ sub_1697h:
 	add hl,de			;16a6	19 	. 
 	ld (variable.ch_add),hl		;16a7	22 d9 5c 	" . \ 
 	ret			;16aa	c9 	. 
+l16abh:
 	call sub_1d75h		;16ab	cd 75 1d 	. u . 
 	call sub_166fh		;16ae	cd 6f 16 	. o . 
 	call read_system_track		;16b1	cd 05 04 	. . . 
@@ -4434,8 +4441,10 @@ l17f7h:
 l180dh:
 	ldir		;180d	ed b0 	. . 
 	ret			;180f	c9 	. 
+l1810h:
 	ld a,0ffh		;1810	3e ff 	> . 
 	ld (variable.cat_drive_or_read_verify_flag),a		;1812	32 f9 5c 	2 . \ 
+l1815h:
 	call sub_1852h		;1815	cd 52 18 	. R . 
 l1818h:
 	call sub_1836h		;1818	cd 36 18 	. 6 . 
@@ -4640,12 +4649,15 @@ l199dh:
 	ld hl,message.verify_error		;199d	21 6b 27 	! k ' 
 	ld a,00dh		;19a0	3e 0d 	> . 
 	jp l1c4ah		;19a2	c3 4a 1c 	. J . 
+l19a5h:
 	ld a,0ffh		;19a5	3e ff 	> . 
 	jr l19abh		;19a7	18 02 	. . 
+l19a9h:
 	ld a,0eeh		;19a9	3e ee 	> . 
 l19abh:
 	ld (variable.error_code_msb),a		;19ab	32 10 5d 	2 . ] 
 	jp l1818h		;19ae	c3 18 18 	. . . 
+l19b1h:
 	ld a,0ffh		;19b1	3e ff 	> . 
 	ld (variable.unknown_23839),a		;19b3	32 1f 5d 	2 . ] 
 	call sub_187ah		;19b6	cd 7a 18 	. z . 
@@ -4810,6 +4822,7 @@ sub_1ac4h:
 	cp 080h		;1aca	fe 80 	. . 
 	jp z,error.directory_full		;1acc	ca 23 27 	. # ' 
 	ret			;1acf	c9 	. 
+l1ad0h:
 	call sub_1852h		;1ad0	cd 52 18 	. R . 
 	ld hl,l0000h		;1ad3	21 00 00 	! . . 
 	ld (variable.basic_program_autostart),hl		;1ad6	22 d1 5c 	" . \ 
@@ -5112,6 +5125,7 @@ find_file:
 	ret z			;1cf7	c8 	. 
 	ld (hl),0ffh		;1cf8	36 ff 	6 . 
 	ret			;1cfa	c9 	. 
+l1cfbh:
 	call sub_1d75h		;1cfb	cd 75 1d 	. u . 
 	call sub_20e5h		;1cfe	cd e5 20 	. .   
 	res 3,(iy+001h)		;1d01	fd cb 01 9e 	. . . . 
@@ -5151,6 +5165,7 @@ l1d2fh:
 	cp 001h		;1d47	fe 01 	. . 
 	jr z,l1d29h		;1d49	28 de 	( . 
 	jr error.wrong_drive_letter		;1d4b	18 cd 	. . 
+l1d4dh:
 	call sub_1852h		;1d4d	cd 52 18 	. R . 
 	call sub_1836h		;1d50	cd 36 18 	. 6 . 
 	call sub_1d75h		;1d53	cd 75 1d 	. u . 
@@ -5396,6 +5411,7 @@ sub_1ebch:
 	ld (variable.move_command_first_track),a		;1ebd	32 d6 5c 	2 . \ 
 	scf			;1ec0	37 	7 
 	ret			;1ec1	c9 	. 
+l1ec2h:
 	ld hl,0ffffh		;1ec2	21 ff ff 	! . . 
 	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1ec5	22 d7 5c 	" . \ 
 	ld (variable.ch_add),hl		;1ec8	22 d9 5c 	" . \ 
@@ -5760,6 +5776,7 @@ sub_2158h:
 	ld hl,(variable.ch_add)		;217b	2a d9 5c 	* . \ 
 	ld (variable.file_size),hl		;217e	22 db 5c 	" . \ 
 	ret			;2181	c9 	. 
+l2182h:
 	ld hl,(variable.command_line_address)		;2182	2a 11 5d 	* . ] 
 	ld (sys_ch_add),hl		;2185	22 5d 5c 	" ] \ 
 	call sub_1e0bh		;2188	cd 0b 1e 	. . . 
@@ -7094,6 +7111,7 @@ l2992h:
 	pop de			;2994	d1 	. 
 	pop hl			;2995	e1 	. 
 	ret			;2996	c9 	. 
+l2997h:
 	xor a			;2997	af 	. 
 l2998h:
 	ld (variable.start_file_parameter_or_number_of_tracks),a		;2998	32 d7 5c 	2 . \ 
@@ -7104,6 +7122,7 @@ l2998h:
 	ld a,(variable.start_file_parameter_or_number_of_tracks)		;29a7	3a d7 5c 	: . \ 
 	ld (hl),a			;29aa	77 	w 
 	jp l03e1h		;29ab	c3 e1 03 	. . . 
+l29aeh:
 	ld a,080h		;29ae	3e 80 	> . 
 	jr l2998h		;29b0	18 e6 	. . 
 
@@ -7727,6 +7746,7 @@ sub_2d92h:
 	ld b,a			;2d9c	47 	G 
 	call read_sectors		;2d9d	cd 3d 1e 	. = . 
 	ret			;2da0	c9 	. 
+l2da1h:
 	call sub_1ddfh		;2da1	cd df 1d 	. . . 
 	call sub_1d75h		;2da4	cd 75 1d 	. u . 
 	call sub_102eh		;2da7	cd 2e 10 	. . . 
@@ -8053,53 +8073,55 @@ l2fdeh:
 	ret z			;2feb	c8 	. 
 	ld c,a			;2fec	4f 	O 
 	ld hl,variable.tmp_buffer_address		;2fed	21 25 5d 	! % ] 
-	ldir		;2ff0	ed b0 	. . 
-	ret			;2ff2	c9 	. 
-l2ff3h:
-	rst 8			;2ff3	cf 	. 
-	ld hl,(0d1d0h)		;2ff4	2a d0 d1 	* . . 
-	and 0d2h		;2ff7	e6 d2 	. . 
-	rst 28h			;2ff9	ef 	. 
-	ret m			;2ffa	f8 	. 
-	cp 0beh		;2ffb	fe be 	. . 
-	call p,0f7d5h		;2ffd	f4 d5 f7 	. . . 
-	out (0d4h),a		;3000	d3 d4 	. . 
-	rst 38h			;3002	ff 	. 
-	inc (hl)			;3003	34 	4 
-	call pe,0f038h		;3004	ec 38 f0 	. 8 . 
-	sub 033h		;3007	d6 33 	. 3 
-	inc b			;3009	04 	. 
-	jr l301ch		;300a	18 10 	. . 
-	jp nz,0ab1eh		;300c	c2 1e ab 	. . . 
-	ld d,03ah		;300f	16 3a 	. : 
-	dec b			;3011	05 	. 
-	add a,a			;3012	87 	. 
-	rlca			;3013	07 	. 
-	dec d			;3014	15 	. 
-	jr $-46		;3015	18 d0 	. . 
-	ld a,(de)			;3017	1a 	. 
-	ei			;3018	fb 	. 
-	inc e			;3019	1c 	. 
-	and l			;301a	a5 	. 
-	add hl,de			;301b	19 	. 
-l301ch:
-	xor c			;301c	a9 	. 
-	add hl,de			;301d	19 	. 
-	or c			;301e	b1 	. 
-	add hl,de			;301f	19 	. 
-	ld c,l			;3020	4d 	M 
-	dec e			;3021	1d 	. 
-	add a,d			;3022	82 	. 
-	ld hl,l2656h		;3023	21 56 26 	! V & 
-	sub b			;3026	90 	. 
-	ld b,097h		;3027	06 97 	. . 
-	add hl,hl			;3029	29 	) 
-	and c			;302a	a1 	. 
-	dec l			;302b	2d 	- 
-	xor (hl)			;302c	ae 	. 
-	add hl,hl			;302d	29 	) 
-	adc a,011h		;302e	ce 11 	. . 
-	djnz $+26		;3030	10 18 	. . 
+	defb 0edh,0b0h,0c9h		;2ff0	ed b0 c9 	. . . 
+
+; BLOCK 'token_commands_table' (start 0x2ff3 end 0x3008)
+token_commands_table_start:
+	defb 0cfh		;2ff3	cf 	. 
+	defb 02ah		;2ff4	2a 	* 
+	defb 0d0h		;2ff5	d0 	. 
+	defb 0d1h		;2ff6	d1 	. 
+	defb 0e6h		;2ff7	e6 	. 
+	defb 0d2h		;2ff8	d2 	. 
+	defb 0efh		;2ff9	ef 	. 
+	defb 0f8h		;2ffa	f8 	. 
+	defb 0feh		;2ffb	fe 	. 
+	defb 0beh		;2ffc	be 	. 
+	defb 0f4h		;2ffd	f4 	. 
+	defb 0d5h		;2ffe	d5 	. 
+	defb 0f7h		;2fff	f7 	. 
+	defb 0d3h		;3000	d3 	. 
+	defb 0d4h		;3001	d4 	. 
+	defb 0ffh		;3002	ff 	. 
+	defb 034h		;3003	34 	4 
+	defb 0ech		;3004	ec 	. 
+	defb 038h		;3005	38 	8 
+	defb 0f0h		;3006	f0 	. 
+	defb 0d6h		;3007	d6 	. 
+
+; BLOCK 'token_commands_addresses_table' (start 0x3008 end 0x3032)
+token_commands_addresses_table_start:
+	defw l0433h		;3008	33 04 	3 . 
+	defw l1018h		;300a	18 10 	. . 
+	defw l1ec2h		;300c	c2 1e 	. . 
+	defw l16abh		;300e	ab 16 	. . 
+	defw l053ah		;3010	3a 05 	: . 
+	defw l0787h		;3012	87 07 	. . 
+	defw l1815h		;3014	15 18 	. . 
+	defw l1ad0h		;3016	d0 1a 	. . 
+	defw l1cfbh		;3018	fb 1c 	. . 
+	defw l19a5h		;301a	a5 19 	. . 
+	defw l19a9h		;301c	a9 19 	. . 
+	defw l19b1h		;301e	b1 19 	. . 
+	defw l1d4dh		;3020	4d 1d 	M . 
+	defw l2182h		;3022	82 21 	. ! 
+	defw l2656h		;3024	56 26 	V & 
+	defw l0690h		;3026	90 06 	. . 
+	defw l2997h		;3028	97 29 	. ) 
+	defw l2da1h		;302a	a1 2d 	. - 
+	defw l29aeh		;302c	ae 29 	. ) 
+	defw l11ceh		;302e	ce 11 	. . 
+	defw l1810h		;3030	10 18 	. . 
 sub_3032h:
 	ld hl,(sys_e_line)		;3032	2a 59 5c 	* Y \ 
 	ld (variable.command_line_address),hl		;3035	22 11 5d 	" . ] 
