@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201609012021
+" Last modified 201609012131
 
 " ==============================================================
 " History
@@ -151,9 +151,50 @@ function! LabelTokenCommands()
   silent! substitute@defb\s0d6h\s\+;3007\s\+d6\s\+.\s$@defb token.verify@e
 endfunction
 
+function! ClearFileTypes()
+  call cursor(1,1)
+  call search(';05b7')
+  silent! substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  call search(';06fc')
+  silent! substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  call search(';102e')
+  silent! substitute@ld\sb,043h.\+$@ld b,"C" ; file type: code@
+  call search(';103b')
+  silent! substitute@ld\sb,043h.\+$@ld b,"C" ; file type: code@
+  call search(';1041')
+  silent! substitute@ld\sb,044h.\+$@ld b,"D" ; file type: array@
+  call search(';1045')
+  silent! substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  call search(';1047')
+  silent! substitute@ld\sb,023h.\+$@ld b,"#" ; file type: data@
+  call search(';104b')
+  silent! substitute@ld\sb,042h.\+$@ld b,"B" ; file type: BASIC@
+  call search(';138e')
+  silent! substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  call search(';182e')
+  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  call search(';18d3')
+  silent! substitute@cp\s043h.\+$@cp "C" ; code file type?@
+  call search(';1901')
+  silent! substitute@cp\s043h.\+$@cp "C" ; code file type?@
+  call search(';1906')
+  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  call search(';190d')
+  silent! substitute@cp\s044h.\+$@cp "D" ; array file type?@
+  call search(';19bf')
+  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  call search(';1b4b')
+  silent! substitute@ld\sa,043h.\+$@ld a,"C" ; file type: code@
+  call search(';1bc2')
+  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  call search(';1d5c')
+  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+endfunction
+
 function! Tidier()
   call AddRst20Labels()
   call LabelTokenCommands()
+  call ClearFileTypes()
   call ClearMessages()
   call RemoveComments()
   call ChangeHeader()

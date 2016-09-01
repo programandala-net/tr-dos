@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201609011917
+; Last modified 201609012029
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -120,6 +120,7 @@ rst_18:                                            equ 0x0018
 rst_20:                                            equ 0x0020
 print_error_number_A_whose_message_is_at_HL:       equ 0x03C3
 check_drive_letter:                                equ 0x0524
+set_file_type_stored_in_B:                         equ 0x104D
 print_message_at_HL:                               equ 0x2707
 execute_command_in_C:                              equ 0x283C
 call_zx_spectrum_rom_routine_stored_at_the_address_on_tos: equ 0x2F72

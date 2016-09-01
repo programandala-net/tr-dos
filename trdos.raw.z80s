@@ -3301,19 +3301,19 @@ sub_102eh:
 	ld b,043h		;102e	06 43 	. C 
 	ld a,(variable.move_command_first_track)		;1030	3a d6 5c 	: . \ 
 	or a			;1033	b7 	. 
-	jr nz,l104dh		;1034	20 17 	  . 
+	jr nz,set_file_type_stored_in_B		;1034	20 17 	  . 
 	call sub_1d8ch		;1036	cd 8c 1d 	. . . 
 	cp 0afh		;1039	fe af 	. . 
 	ld b,043h		;103b	06 43 	. C 
-	jr z,l104dh		;103d	28 0e 	( . 
+	jr z,set_file_type_stored_in_B		;103d	28 0e 	( . 
 	cp 0e4h		;103f	fe e4 	. . 
 	ld b,044h		;1041	06 44 	. D 
-	jr z,l104dh		;1043	28 08 	( . 
+	jr z,set_file_type_stored_in_B		;1043	28 08 	( . 
 	cp 023h		;1045	fe 23 	. # 
 	ld b,023h		;1047	06 23 	. # 
-	jr z,l104dh		;1049	28 02 	( . 
+	jr z,set_file_type_stored_in_B		;1049	28 02 	( . 
 	ld b,042h		;104b	06 42 	. B 
-l104dh:
+set_file_type_stored_in_B:
 	ld hl,variable.file_type		;104d	21 e5 5c 	! . \ 
 	ld (hl),b			;1050	70 	p 
 	ret			;1051	c9 	. 

@@ -952,7 +952,7 @@ sub_0581h:
   ret
 sub_05b4h:
   ld a,(variable.file_type)
-  cp 023h
+  cp "#" ; data file type?
   jr z,l05bdh
   xor a
   ret
@@ -1090,7 +1090,7 @@ l06f3h:
   call sub_063ch
   call sub_1e43h
   ld a,(variable.file_type)
-  cp 023h
+  cp "#" ; data file type?
   jp nz,l03e1h
   ld a,00ah
   ld (variable.find_command_symbols),a
@@ -3303,22 +3303,22 @@ cli_command.asterisk:
   call init_disk_drive
   jp l03e1h
 sub_102eh:
-  ld b,043h
+  ld b,"C" ; file type: code
   ld a,(variable.move_command_first_track)
   or a
-  jr nz,l104dh
+  jr nz,set_file_type_stored_in_B
   call sub_1d8ch
   cp 0afh
-  ld b,043h
-  jr z,l104dh
+  ld b,"C" ; file type: code
+  jr z,set_file_type_stored_in_B
   cp 0e4h
-  ld b,044h
-  jr z,l104dh
-  cp 023h
-  ld b,023h
-  jr z,l104dh
-  ld b,042h
-l104dh:
+  ld b,"D" ; file type: array
+  jr z,set_file_type_stored_in_B
+  cp "#" ; data file type?
+  ld b,"#" ; file type: data
+  jr z,set_file_type_stored_in_B
+  ld b,"B" ; file type: BASIC
+set_file_type_stored_in_B:
   ld hl,variable.file_type
   ld (hl),b
   ret
@@ -3890,7 +3890,7 @@ l1375h:
   jp nz,l03d9h
   call sub_13b7h
   ld a,(variable.file_type)
-  cp 023h
+  cp "#" ; data file type?
   jp nz,l03e1h
 l1393h:
   ld a,00ah
@@ -4460,7 +4460,7 @@ l1818h:
   cp 0ffh
   jp z,l03e1h
   ld a,(variable.file_type)
-  cp 042h
+  cp "B" ; BASIC file type?
   jp z,l012ah
   jp l03e1h
 sub_1836h:
@@ -4537,7 +4537,7 @@ l18cbh:
   ld b,a
   ld (variable.file_size),de
   ld a,(variable.file_type)
-  cp 043h
+  cp "C" ; code file type?
   ld a,b
   jr nz,l18fdh
   ld a,b
@@ -4565,15 +4565,15 @@ l18f9h:
 l18fdh:
   ld b,a
   ld a,(variable.file_type)
-  cp 043h
+  cp "C" ; code file type?
   pop de
   ret z
   push de
-  cp 042h
+  cp "B" ; BASIC file type?
   push af
   call z,sub_1a01h
   pop af
-  cp 044h
+  cp "D" ; array file type?
   call z,sub_1a4ch
   call sub_191bh
   ld a,(variable.file_size.high)
@@ -4668,7 +4668,7 @@ cli_command.merge:
   call sub_187ah
   call sub_1d75h
   ld a,(variable.file_type)
-  cp 042h
+  cp "B" ; BASIC file type?
   jp nz,error.wrong_drive_letter
   ld bc,(variable.file_start)
   ld (variable.file_size),bc
@@ -4881,7 +4881,7 @@ l1b39h:
   ld (variable.ch_add),hl
 l1b48h:
   call sub_1d75h
-  ld a,043h
+  ld a,"C" ; file type: code
   ld (variable.file_type),a
   call sub_1abeh
 l1b53h:
@@ -4941,7 +4941,7 @@ l1b6dh:
   ld c,(hl)
   dec c
   ld a,(variable.file_type)
-  cp 042h
+  cp "B" ; BASIC file type?
   call z,sub_1bc8h
   ret
 sub_1bc8h:
@@ -5176,7 +5176,7 @@ cli_command.run:
   call sub_1d75h
   ld hl,(variable.file_start)
   ld a,(variable.file_type)
-  cp 042h
+  cp "B" ; BASIC file type?
   jp z,l012ah
   push hl
   ret

@@ -681,7 +681,7 @@ sub_102eh:	equ 0x102e
 ; 0x06aa	(call destination)
 ; 0x0540	(call destination)
 
-l104dh:	equ 0x104d
+set_file_type_stored_in_B:	equ 0x104d
 ; Used at following locations:
 ; 0x1049	(jr destination)
 ; 0x1043	(jr destination)
