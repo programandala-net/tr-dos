@@ -145,7 +145,7 @@ l001bh:
 l001eh:
 	jr l0024h		;001e	18 04 	. . 
 rst_20:
-	jp call_zx_spectrum_rom		;0020	c3 72 2f 	. r / 
+	jp call_zx_spectrum_rom_routine_on_tos		;0020	c3 72 2f 	. r / 
 	ret			;0023	c9 	. 
 l0024h:
 	ld h,d			;0024	62 	b 
@@ -7991,7 +7991,7 @@ l2f69h:
 	dec hl			;2f6d	2b 	+ 
 	ld sp,hl			;2f6e	f9 	. 
 	jp l1d2fh		;2f6f	c3 2f 1d 	. / . 
-call_zx_spectrum_rom:
+call_zx_spectrum_rom_routine_on_tos:
 	ld (variable.hl_copy),hl		;2f72	22 02 5d 	" . ] 
 	ld (variable.de_copy),de		;2f75	ed 53 04 5d 	. S . ] 
 	pop hl			;2f79	e1 	. 
@@ -8473,6 +8473,9 @@ sub_31f3h:
 	ld hl,(sys_chans)		;31f3	2a 4f 5c 	* O \ 
 	or a			;31f6	b7 	. 
 	ld bc,variable.tmp_buffer_address		;31f7	01 25 5d 	. % ] 
+
+; BLOCK 'code_31FA_XXX_FIXME' (start 0x31fa end 0x31fd)
+code_31FA_XXX_FIXME_start:
 	defb 0edh,042h,0c9h		;31fa	ed 42 c9 	. B . 
 
 ; BLOCK 'not_used_31FD' (start 0x31fd end 0x3cfa)
@@ -11318,10 +11321,10 @@ l3d16h:
 	nop			;3d16	00 	. 
 	jp l2f69h		;3d17	c3 69 2f 	. i / 
 interpret_rem_command_in_basic:
-	call sub_3d21h		;3d1a	cd 21 3d 	. ! = 
+	call entry.init_dos		;3d1a	cd 21 3d 	. ! = 
 	push hl			;3d1d	e5 	. 
 	jp l016ch		;3d1e	c3 6c 01 	. l . 
-sub_3d21h:
+entry.init_dos:
 	call sub_31f3h		;3d21	cd f3 31 	. . 1 
 	nop			;3d24	00 	. 
 	nop			;3d25	00 	. 
@@ -11334,7 +11337,7 @@ entry.call_pushed_address:
 	nop			;3d2f	00 	. 
 	ret			;3d30	c9 	. 
 enter_trdos_from_basic:
-	call sub_3d21h		;3d31	cd 21 3d 	. ! = 
+	call entry.init_dos		;3d31	cd 21 3d 	. ! = 
 	push hl			;3d34	e5 	. 
 	jp l0239h		;3d35	c3 39 02 	. 9 . 
 l3d38h:

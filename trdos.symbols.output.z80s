@@ -2946,7 +2946,7 @@ l2f69h:	equ 0x2f69
 ; Used at following locations:
 ; 0x3d17	(jp destination)
 
-call_zx_spectrum_rom:	equ 0x2f72
+call_zx_spectrum_rom_routine_on_tos:	equ 0x2f72
 ; Used at following locations:
 ; 0x0020	(jp destination)
 
@@ -3048,6 +3048,11 @@ sub_31f3h:	equ 0x31f3
 ; 0x3d21	(call destination)
 
 
+; BLOCK 'code_31FA_XXX_FIXME' (start 0x31fa end 0x31fd)
+code_31FA_XXX_FIXME_start:	equ 0x31fa
+; Used at following locations:
+
+
 ; BLOCK 'not_used_31FD' (start 0x31fd end 0x3cfa)
 not_used_31FD_start:	equ 0x31fd
 ; Used at following locations:
@@ -3094,7 +3099,7 @@ interpret_rem_command_in_basic:	equ 0x3d1a
 ; Used at following locations:
 ; 0x3d04	(jr destination)
 
-sub_3d21h:	equ 0x3d21
+entry.init_dos:	equ 0x3d21
 ; Used at following locations:
 ; 0x3d31	(call destination)
 ; 0x3d1a	(call destination)
