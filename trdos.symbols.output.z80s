@@ -456,7 +456,7 @@ sub_042bh:	equ 0x042b
 ; 0x11ce	(call destination)
 ; 0x0433	(call destination)
 
-l0433h:	equ 0x0433
+cli_command.cat:	equ 0x0433
 ; Used at following locations:
 ; 0x3008	(defw directive)
 
@@ -531,7 +531,7 @@ sub_0531h:	equ 0x0531
 ; 0x1c61	(call destination)
 ; 0x101e	(call destination)
 
-l053ah:	equ 0x053a
+cli_command.new:	equ 0x053a
 ; Used at following locations:
 ; 0x3010	(defw directive)
 
@@ -585,7 +585,7 @@ sub_063ch:	equ 0x063c
 ; 0x06f3	(call destination)
 ; 0x0634	(call destination)
 
-l0690h:	equ 0x0690
+cli_command.copy:	equ 0x0690
 ; Used at following locations:
 ; 0x3026	(defw directive)
 
@@ -612,7 +612,7 @@ sub_0781h:	equ 0x0781
 ; Used at following locations:
 ; 0x05af	(call destination)
 
-l0787h:	equ 0x0787
+cli_command.erase:	equ 0x0787
 ; Used at following locations:
 ; 0x3012	(defw directive)
 
@@ -666,7 +666,7 @@ message_interface_1_start:	equ 0x1000
 ; 0x176f	(immediate value)
 ; 0x026d	(immediate value)
 
-l1018h:	equ 0x1018
+cli_command.asterisk:	equ 0x1018
 ; Used at following locations:
 ; 0x300a	(defw directive)
 
@@ -821,7 +821,7 @@ l11b0h:	equ 0x11b0
 ; 0x12b5	(call destination)
 ; 0x11cc	(jr destination)
 
-l11ceh:	equ 0x11ce
+cli_command.list:	equ 0x11ce
 ; Used at following locations:
 ; 0x302e	(defw directive)
 
@@ -1077,7 +1077,7 @@ sub_1697h:	equ 0x1697
 ; 0x16f4	(call destination)
 ; 0x16d3	(call destination)
 
-l16abh:	equ 0x16ab
+cli_command.move:	equ 0x16ab
 ; Used at following locations:
 ; 0x300e	(defw directive)
 
@@ -1136,11 +1136,11 @@ l180dh:	equ 0x180d
 ; Used at following locations:
 ; 0x180a	(jr destination)
 
-l1810h:	equ 0x1810
+cli_command.verify:	equ 0x1810
 ; Used at following locations:
 ; 0x3030	(defw directive)
 
-l1815h:	equ 0x1815
+cli_command.gosub:	equ 0x1815
 ; Used at following locations:
 ; 0x3014	(defw directive)
 
@@ -1252,11 +1252,11 @@ l199dh:	equ 0x199d
 ; Used at following locations:
 ; 0x1990	(jr destination)
 
-l19a5h:	equ 0x19a5
+cli_command.peek:	equ 0x19a5
 ; Used at following locations:
 ; 0x301a	(defw directive)
 
-l19a9h:	equ 0x19a9
+cli_command.poke:	equ 0x19a9
 ; Used at following locations:
 ; 0x301c	(defw directive)
 
@@ -1264,7 +1264,7 @@ l19abh:	equ 0x19ab
 ; Used at following locations:
 ; 0x19a7	(jr destination)
 
-l19b1h:	equ 0x19b1
+cli_command.merge:	equ 0x19b1
 ; Used at following locations:
 ; 0x301e	(defw directive)
 
@@ -1333,7 +1333,7 @@ sub_1ac4h:	equ 0x1ac4
 ; 0x28f5	(call destination)
 ; 0x22a0	(call destination)
 
-l1ad0h:	equ 0x1ad0
+cli_command.save:	equ 0x1ad0
 ; Used at following locations:
 ; 0x3016	(defw directive)
 
@@ -1526,7 +1526,7 @@ find_file:	equ 0x1cf0
 ; Used at following locations:
 ; 0x28ab	(defw directive)
 
-l1cfbh:	equ 0x1cfb
+cli_command.return:	equ 0x1cfb
 ; Used at following locations:
 ; 0x3018	(defw directive)
 
@@ -1579,7 +1579,7 @@ l1d2fh:	equ 0x1d2f
 ; Used at following locations:
 ; 0x2f6f	(jp destination)
 
-l1d4dh:	equ 0x1d4d
+cli_command.run:	equ 0x1d4d
 ; Used at following locations:
 ; 0x3020	(defw directive)
 
@@ -1922,7 +1922,7 @@ sub_1ebch:	equ 0x1ebc
 ; Used at following locations:
 ; 0x1eb3	(call destination)
 
-l1ec2h:	equ 0x1ec2
+cli_command.format:	equ 0x1ec2
 ; Used at following locations:
 ; 0x300c	(defw directive)
 
@@ -2111,7 +2111,7 @@ sub_2158h:	equ 0x2158
 ; Used at following locations:
 ; 0x219d	(call destination)
 
-l2182h:	equ 0x2182
+cli_command.open_channel:	equ 0x2182
 ; Used at following locations:
 ; 0x3022	(defw directive)
 
@@ -2443,7 +2443,7 @@ sub_2650h:	equ 0x2650
 ; 0x2630	(call destination)
 ; 0x2460	(call destination)
 
-l2656h:	equ 0x2656
+cli_command.close_channel:	equ 0x2656
 ; Used at following locations:
 ; 0x3024	(defw directive)
 
@@ -2673,7 +2673,7 @@ l2992h:	equ 0x2992
 ; 0x2979	(jr destination)
 ; 0x2953	(jr destination)
 
-l2997h:	equ 0x2997
+cli_command.4:	equ 0x2997
 ; Used at following locations:
 ; 0x3028	(defw directive)
 
@@ -2681,7 +2681,7 @@ l2998h:	equ 0x2998
 ; Used at following locations:
 ; 0x29b0	(jr destination)
 
-l29aeh:	equ 0x29ae
+cli_command.8:	equ 0x29ae
 ; Used at following locations:
 ; 0x302c	(defw directive)
 
@@ -2892,7 +2892,7 @@ sub_2d92h:	equ 0x2d92
 ; 0x2e02	(call destination)
 ; 0x2ddb	(call destination)
 
-l2da1h:	equ 0x2da1
+cli_command.go_to:	equ 0x2da1
 ; Used at following locations:
 ; 0x302a	(defw directive)
 

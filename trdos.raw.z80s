@@ -742,7 +742,7 @@ sub_042bh:
 	ld a,(hl)			;042f	7e 	~ 
 	cp 00dh		;0430	fe 0d 	. . 
 	ret			;0432	c9 	. 
-l0433h:
+cli_command.cat:
 	call sub_042bh		;0433	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;0436	01 02 00 	. . . 
 	ld (variable.file_size),bc		;0439	ed 43 db 5c 	. C . \ 
@@ -887,7 +887,7 @@ sub_0531h:
 	cp b			;0535	b8 	. 
 	jp z,error.wrong_drive_letter		;0536	ca 1a 1d 	. . . 
 	ret			;0539	c9 	. 
-l053ah:
+cli_command.new:
 	call sub_1dcdh		;053a	cd cd 1d 	. . . 
 	call sub_1d75h		;053d	cd 75 1d 	. u . 
 	call sub_102eh		;0540	cd 2e 10 	. . . 
@@ -1041,7 +1041,7 @@ sub_063ch:
 	pop bc			;068b	c1 	. 
 	call sub_166bh		;068c	cd 6b 16 	. k . 
 	ret			;068f	c9 	. 
-l0690h:
+cli_command.copy:
 	ld hl,(variable.command_line_address)		;0690	2a 11 5d 	* . ] 
 	inc hl			;0693	23 	# 
 	ld a,(hl)			;0694	7e 	~ 
@@ -1150,7 +1150,7 @@ sub_0781h:
 	xor a			;0781	af 	. 
 	ld (variable.deleted_files),a		;0782	32 07 5d 	2 . ] 
 	jr l07a0h		;0785	18 19 	. . 
-l0787h:
+cli_command.erase:
 	call sub_1ddfh		;0787	cd df 1d 	. . . 
 	call sub_1d75h		;078a	cd 75 1d 	. u . 
 	call sub_102eh		;078d	cd 2e 10 	. . . 
@@ -3288,7 +3288,7 @@ message_interface_1_start:
 	defb 065h		;1015	65 	e 
 	defb 064h		;1016	64 	d 
 	defb 000h		;1017	00 	. 
-l1018h:
+cli_command.asterisk:
 	call sub_1ddfh		;1018	cd df 1d 	. . . 
 	call sub_1d75h		;101b	cd 75 1d 	. u . 
 	call sub_0531h		;101e	cd 31 05 	. 1 . 
@@ -3645,7 +3645,7 @@ l11b0h:
 	call z,sub_0507h		;11c8	cc 07 05 	. . . 
 	ret nz			;11cb	c0 	. 
 	jr l11b0h		;11cc	18 e2 	. . 
-l11ceh:
+cli_command.list:
 	call sub_042bh		;11ce	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;11d1	01 02 00 	. . . 
 	ld (variable.file_size),bc		;11d4	ed 43 db 5c 	. C . \ 
@@ -4254,7 +4254,7 @@ sub_1697h:
 	add hl,de			;16a6	19 	. 
 	ld (variable.ch_add),hl		;16a7	22 d9 5c 	" . \ 
 	ret			;16aa	c9 	. 
-l16abh:
+cli_command.move:
 	call sub_1d75h		;16ab	cd 75 1d 	. u . 
 	call sub_166fh		;16ae	cd 6f 16 	. o . 
 	call read_system_track		;16b1	cd 05 04 	. . . 
@@ -4441,10 +4441,10 @@ l17f7h:
 l180dh:
 	ldir		;180d	ed b0 	. . 
 	ret			;180f	c9 	. 
-l1810h:
+cli_command.verify:
 	ld a,0ffh		;1810	3e ff 	> . 
 	ld (variable.cat_drive_or_read_verify_flag),a		;1812	32 f9 5c 	2 . \ 
-l1815h:
+cli_command.gosub:
 	call sub_1852h		;1815	cd 52 18 	. R . 
 l1818h:
 	call sub_1836h		;1818	cd 36 18 	. 6 . 
@@ -4649,15 +4649,15 @@ l199dh:
 	ld hl,message.verify_error		;199d	21 6b 27 	! k ' 
 	ld a,00dh		;19a0	3e 0d 	> . 
 	jp l1c4ah		;19a2	c3 4a 1c 	. J . 
-l19a5h:
+cli_command.peek:
 	ld a,0ffh		;19a5	3e ff 	> . 
 	jr l19abh		;19a7	18 02 	. . 
-l19a9h:
+cli_command.poke:
 	ld a,0eeh		;19a9	3e ee 	> . 
 l19abh:
 	ld (variable.error_code_msb),a		;19ab	32 10 5d 	2 . ] 
 	jp l1818h		;19ae	c3 18 18 	. . . 
-l19b1h:
+cli_command.merge:
 	ld a,0ffh		;19b1	3e ff 	> . 
 	ld (variable.unknown_23839),a		;19b3	32 1f 5d 	2 . ] 
 	call sub_187ah		;19b6	cd 7a 18 	. z . 
@@ -4822,7 +4822,7 @@ sub_1ac4h:
 	cp 080h		;1aca	fe 80 	. . 
 	jp z,error.directory_full		;1acc	ca 23 27 	. # ' 
 	ret			;1acf	c9 	. 
-l1ad0h:
+cli_command.save:
 	call sub_1852h		;1ad0	cd 52 18 	. R . 
 	ld hl,l0000h		;1ad3	21 00 00 	! . . 
 	ld (variable.basic_program_autostart),hl		;1ad6	22 d1 5c 	" . \ 
@@ -5125,7 +5125,7 @@ find_file:
 	ret z			;1cf7	c8 	. 
 	ld (hl),0ffh		;1cf8	36 ff 	6 . 
 	ret			;1cfa	c9 	. 
-l1cfbh:
+cli_command.return:
 	call sub_1d75h		;1cfb	cd 75 1d 	. u . 
 	call sub_20e5h		;1cfe	cd e5 20 	. .   
 	res 3,(iy+001h)		;1d01	fd cb 01 9e 	. . . . 
@@ -5165,7 +5165,7 @@ l1d2fh:
 	cp 001h		;1d47	fe 01 	. . 
 	jr z,l1d29h		;1d49	28 de 	( . 
 	jr error.wrong_drive_letter		;1d4b	18 cd 	. . 
-l1d4dh:
+cli_command.run:
 	call sub_1852h		;1d4d	cd 52 18 	. R . 
 	call sub_1836h		;1d50	cd 36 18 	. 6 . 
 	call sub_1d75h		;1d53	cd 75 1d 	. u . 
@@ -5411,7 +5411,7 @@ sub_1ebch:
 	ld (variable.move_command_first_track),a		;1ebd	32 d6 5c 	2 . \ 
 	scf			;1ec0	37 	7 
 	ret			;1ec1	c9 	. 
-l1ec2h:
+cli_command.format:
 	ld hl,0ffffh		;1ec2	21 ff ff 	! . . 
 	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1ec5	22 d7 5c 	" . \ 
 	ld (variable.ch_add),hl		;1ec8	22 d9 5c 	" . \ 
@@ -5776,7 +5776,7 @@ sub_2158h:
 	ld hl,(variable.ch_add)		;217b	2a d9 5c 	* . \ 
 	ld (variable.file_size),hl		;217e	22 db 5c 	" . \ 
 	ret			;2181	c9 	. 
-l2182h:
+cli_command.open_channel:
 	ld hl,(variable.command_line_address)		;2182	2a 11 5d 	* . ] 
 	ld (sys_ch_add),hl		;2185	22 5d 5c 	" ] \ 
 	call sub_1e0bh		;2188	cd 0b 1e 	. . . 
@@ -6516,7 +6516,7 @@ sub_2650h:
 	ld a,(hl)			;2653	7e 	~ 
 	or a			;2654	b7 	. 
 	ret			;2655	c9 	. 
-l2656h:
+cli_command.close_channel:
 	ld hl,(variable.command_line_address)		;2656	2a 11 5d 	* . ] 
 	ld (sys_ch_add),hl		;2659	22 5d 5c 	" ] \ 
 	call sub_1e0bh		;265c	cd 0b 1e 	. . . 
@@ -7111,7 +7111,7 @@ l2992h:
 	pop de			;2994	d1 	. 
 	pop hl			;2995	e1 	. 
 	ret			;2996	c9 	. 
-l2997h:
+cli_command.4:
 	xor a			;2997	af 	. 
 l2998h:
 	ld (variable.start_file_parameter_or_number_of_tracks),a		;2998	32 d7 5c 	2 . \ 
@@ -7122,7 +7122,7 @@ l2998h:
 	ld a,(variable.start_file_parameter_or_number_of_tracks)		;29a7	3a d7 5c 	: . \ 
 	ld (hl),a			;29aa	77 	w 
 	jp l03e1h		;29ab	c3 e1 03 	. . . 
-l29aeh:
+cli_command.8:
 	ld a,080h		;29ae	3e 80 	> . 
 	jr l2998h		;29b0	18 e6 	. . 
 
@@ -7746,7 +7746,7 @@ sub_2d92h:
 	ld b,a			;2d9c	47 	G 
 	call read_sectors		;2d9d	cd 3d 1e 	. = . 
 	ret			;2da0	c9 	. 
-l2da1h:
+cli_command.go_to:
 	call sub_1ddfh		;2da1	cd df 1d 	. . . 
 	call sub_1d75h		;2da4	cd 75 1d 	. u . 
 	call sub_102eh		;2da7	cd 2e 10 	. . . 
@@ -8101,27 +8101,27 @@ token_commands_table_start:
 
 ; BLOCK 'token_commands_addresses_table' (start 0x3008 end 0x3032)
 token_commands_addresses_table_start:
-	defw l0433h		;3008	33 04 	3 . 
-	defw l1018h		;300a	18 10 	. . 
-	defw l1ec2h		;300c	c2 1e 	. . 
-	defw l16abh		;300e	ab 16 	. . 
-	defw l053ah		;3010	3a 05 	: . 
-	defw l0787h		;3012	87 07 	. . 
-	defw l1815h		;3014	15 18 	. . 
-	defw l1ad0h		;3016	d0 1a 	. . 
-	defw l1cfbh		;3018	fb 1c 	. . 
-	defw l19a5h		;301a	a5 19 	. . 
-	defw l19a9h		;301c	a9 19 	. . 
-	defw l19b1h		;301e	b1 19 	. . 
-	defw l1d4dh		;3020	4d 1d 	M . 
-	defw l2182h		;3022	82 21 	. ! 
-	defw l2656h		;3024	56 26 	V & 
-	defw l0690h		;3026	90 06 	. . 
-	defw l2997h		;3028	97 29 	. ) 
-	defw l2da1h		;302a	a1 2d 	. - 
-	defw l29aeh		;302c	ae 29 	. ) 
-	defw l11ceh		;302e	ce 11 	. . 
-	defw l1810h		;3030	10 18 	. . 
+	defw cli_command.cat		;3008	33 04 	3 . 
+	defw cli_command.asterisk		;300a	18 10 	. . 
+	defw cli_command.format		;300c	c2 1e 	. . 
+	defw cli_command.move		;300e	ab 16 	. . 
+	defw cli_command.new		;3010	3a 05 	: . 
+	defw cli_command.erase		;3012	87 07 	. . 
+	defw cli_command.gosub		;3014	15 18 	. . 
+	defw cli_command.save		;3016	d0 1a 	. . 
+	defw cli_command.return		;3018	fb 1c 	. . 
+	defw cli_command.peek		;301a	a5 19 	. . 
+	defw cli_command.poke		;301c	a9 19 	. . 
+	defw cli_command.merge		;301e	b1 19 	. . 
+	defw cli_command.run		;3020	4d 1d 	M . 
+	defw cli_command.open_channel		;3022	82 21 	. ! 
+	defw cli_command.close_channel		;3024	56 26 	V & 
+	defw cli_command.copy		;3026	90 06 	. . 
+	defw cli_command.4		;3028	97 29 	. ) 
+	defw cli_command.go_to		;302a	a1 2d 	. - 
+	defw cli_command.8		;302c	ae 29 	. ) 
+	defw cli_command.list		;302e	ce 11 	. . 
+	defw cli_command.verify		;3030	10 18 	. . 
 sub_3032h:
 	ld hl,(sys_e_line)		;3032	2a 59 5c 	* Y \ 
 	ld (variable.command_line_address),hl		;3035	22 11 5d 	" . ] 

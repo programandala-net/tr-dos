@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201608201228
+" Last modified 201609012021
 
 " ==============================================================
 " History
@@ -12,6 +12,8 @@
 "
 " 2016-08-20: Remove unused ROM routines. Add `include` for ROM routines.
 " Clear the messages.
+"
+" 2016-09-01: Label the token commands.
 
 " ==============================================================
 
@@ -30,7 +32,7 @@ function! RemoveComments()
   silent! %substitute@\s\+;[0-9a-f]\{4} .\+$@@
 endfunction
 
-function ClearControlChar(char)
+function! ClearControlChar(char)
   let l:hexByte=printf('%02x',a:char)
   execute 'silent! %substitute@\(\s\+defb 0'.l:hexByte.'h\)\s\+;[0-9a-f]\{4}\s[0-9a-f]\{2}\s\+\.\s$@\1@e'
 endfunction
@@ -43,7 +45,7 @@ function! ClearControlChars()
   endwhile
 endfunction
 
-function ClearPrintableChar(char)
+function! ClearPrintableChar(char)
   let l:hexByte=printf('%02x',a:char)
   execute 'silent! %substitute@\(\s\+defb \)0'.l:hexByte.'h\s\+;[0-9a-f]\{4}\s[0-9a-f]\{2}\s\+\(.\)\s$@\1"\2"@e'
 endfunction
@@ -104,8 +106,54 @@ function! AddRst20Labels()
   call AddRst20Label('rom_test_room','1F05')
 endfunction
 
+function! LabelTokenCommands()
+  call search('defb\s0cfh\s\+;2ff3\s\+cf\s\+.\s$')
+  silent! substitute@defb\s0cfh\s\+;2ff3\s\+cf\s\+.\s$@defb token.cat@e
+  normal j
+  silent! substitute@defb\s02ah\s\+;2ff4\s\+2a\s\+\*\s$@defb "*" ; set current drive@e
+  normal j
+  silent! substitute@defb\s0d0h\s\+;2ff5\s\+d0\s\+.\s$@defb token.format@e
+  normal j
+  silent! substitute@defb\s0d1h\s\+;2ff6\s\+d1\s\+.\s$@defb token.move@e
+  normal j
+  silent! substitute@defb\s0e6h\s\+;2ff7\s\+e6\s\+.\s$@defb token.new@e
+  normal j
+  silent! substitute@defb\s0d2h\s\+;2ff8\s\+d2\s\+.\s$@defb token.erase@e
+  normal j
+  silent! substitute@defb\s0efh\s\+;2ff9\s\+ef\s\+.\s$@defb token.load@e
+  normal j
+  silent! substitute@defb\s0f8h\s\+;2ffa\s\+f8\s\+.\s$@defb token.save@e
+  normal j
+  silent! substitute@defb\s0feh\s\+;2ffb\s\+fe\s\+.\s$@defb token.return@e
+  normal j
+  silent! substitute@defb\s0beh\s\+;2ffc\s\+be\s\+.\s$@defb token.peek@e
+  normal j
+  silent! substitute@defb\s0f4h\s\+;2ffd\s\+f4\s\+.\s$@defb token.poke@e
+  normal j
+  silent! substitute@defb\s0d5h\s\+;2ffe\s\+d5\s\+.\s$@defb token.merge@e
+  normal j
+  silent! substitute@defb\s0f7h\s\+;2fff\s\+f7\s\+.\s$@defb token.run@e
+  normal j
+  silent! substitute@defb\s0d3h\s\+;3000\s\+d3\s\+.\s$@defb token.open_channel@e
+  normal j
+  silent! substitute@defb\s0d4h\s\+;3001\s\+d4\s\+.\s$@defb token.close_channel@e
+  normal j
+  silent! substitute@defb\s0ffh\s\+;3002\s\+ff\s\+.\s$@defb token.copy@e
+  normal j
+  silent! substitute@defb\s034h\s\+;3003\s\+34\s\+4\s$@defb "4" ; set 40 tracks@e
+  normal j
+  silent! substitute@defb\s0ech\s\+;3004\s\+ec\s\+.\s$@defb token.go_to@e
+  normal j
+  silent! substitute@defb\s038h\s\+;3005\s\+38\s\+8\s$@defb "8" ; set 80 tracks@e
+  normal j
+  silent! substitute@defb\s0f0h\s\+;3006\s\+f0\s\+.\s$@defb token.list@e
+  normal j
+  silent! substitute@defb\s0d6h\s\+;3007\s\+d6\s\+.\s$@defb token.verify@e
+endfunction
+
 function! Tidier()
   call AddRst20Labels()
+  call LabelTokenCommands()
   call ClearMessages()
   call RemoveComments()
   call ChangeHeader()

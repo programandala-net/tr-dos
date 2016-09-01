@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201609011250
+; Last modified 201609011917
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -193,3 +193,27 @@ test_track:                                        equ 0x2739
 select_bottom_side:                                equ 0x1FEB
 select_top_side:                                   equ 0x1FF6
 read_system_track:                                 equ 0x0405
+
+; Routines associated to CLI commands
+
+cli_command.cat:            equ 0x0433
+cli_command.asterisk:       equ 0x1018
+cli_command.format:         equ 0x1EC2
+cli_command.move:           equ 0x16AB
+cli_command.new:            equ 0x053A
+cli_command.erase:          equ 0x0787
+cli_command.gosub:          equ 0x1815
+cli_command.save:           equ 0x1AD0
+cli_command.return:         equ 0x1CFB
+cli_command.peek:           equ 0x19A5
+cli_command.poke:           equ 0x19A9
+cli_command.merge:          equ 0x19B1
+cli_command.run:            equ 0x1D4D
+cli_command.open_channel:   equ 0x2182
+cli_command.close_channel:  equ 0x2656
+cli_command.copy:           equ 0x0690
+cli_command.4:              equ 0x2997
+cli_command.go_to:          equ 0x2DA1
+cli_command.8:              equ 0x29AE
+cli_command.list:           equ 0x11CE
+cli_command.verify:         equ 0x1810
