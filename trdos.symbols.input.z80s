@@ -1,226 +1,260 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201609012214
+; Last modified 201609020048
 
 include "inc/zx_spectrum_system_variables.z80s"
 
 ; Entry points
 
-entry.enter_trdos_from_basic:                      equ 15616 ; $3D00
-entry.interpret_rem_command_in_basic:              equ 15619 ; $3D03
-entry.execute_command_in_C:                        equ 15635 ; $3D13
-entry.init_dos:                                    equ 15649 ; $3D21
-entry.call_pushed_address:                         equ 15663 ; $3D2F
+entry.enter_trdos_from_basic:                               equ 15616 ; $3D00
+entry.interpret_rem_command_in_basic:                       equ 15619 ; $3D03
+entry.execute_command_in_C:                                 equ 15635 ; $3D13
+entry.init_dos:                                             equ 15649 ; $3D21
+entry.call_pushed_address:                                  equ 15663 ; $3D2F
 
 ; Variables
 
-variable.interface_1_zone:                         equ 23734
-variable.0xc9:                                     equ 23746
-variable.unknown_23747:                            equ 23747
-variable.drive_a_mode:                             equ 23752
-variable.drive_b_mode:                             equ 23753
-variable.drive_c_mode:                             equ 23754
-variable.drive_d_mode:                             equ 23755
-variable.cat_current_sector:                       equ 23756
-variable.disk_drive_ready:                         equ 23757
-variable.sector_reading_or_writting:               equ 23758
-variable.stack_sp_copy:                            equ 23759
-variable.basic_program_autostart:                  equ 23761
-variable.basic_program_autostart.high:             equ 23762
-variable.unknown_23763:                            equ 23763
-variable.move_command_deleted_files:               equ 23764
-variable.move_command_first_sector:                equ 23765
-variable.move_command_first_track:                 equ 23766
-variable.start_file_parameter_or_number_of_tracks: equ 23767
-variable.start_file_parameter:                     equ 23767
-variable.start_file_parameter.high:                equ 23768
-variable.ch_add:                                   equ 23769
-variable.ch_add.high:                              equ 23770
-variable.file_size:                                equ 23771
-variable.file_size.high:                           equ 23772
-variable.filename:                                 equ 23773
-variable.filename.1:                               equ 23774
-variable.filename.2:                               equ 23775
-variable.filename.3:                               equ 23776
-variable.filename.4:                               equ 23777
-variable.filename.5:                               equ 23778
-variable.filename.6:                               equ 23779
-variable.filename.7:                               equ 23780
-variable.file_type:                                equ 23781
-variable.file_start:                               equ 23782
-variable.file_start.high:                          equ 23783
-variable.file_length_in_bytes:                     equ 23784
-variable.file_length_in_bytes.high:                equ 23785
-variable.file_length_in_sectors:                   equ 23786
-variable.file_first_sector:                        equ 23787
-variable.file_first_track:                         equ 23788
-variable.c_file_start_or_b_file_size:              equ 23789
-variable.file_2_length_in_bytes:                   equ 23791
-variable.file_2_length_in_sectors:                 equ 23793
-variable.file_2_first_sector:                      equ 23794
-variable.file_2_first_track:                       equ 23795
-variable.current_sector:                           equ 23796
-variable.current_track:                            equ 23797
-variable.temporary_drive:                          equ 23798
-variable.cleared:                                  equ 23799
-variable.two_files_drive:                          equ 23800
-variable.cat_drive_or_read_verify_flag:            equ 23801
-variable.a_drive_step_rate:                        equ 23802
-variable.b_drive_step_rate:                        equ 23803
-variable.c_drive_step_rate:                        equ 23804
-variable.d_drive_step_rate:                        equ 23805
-variable.last_fdc_command:                         equ 23806
-variable.sector:                                   equ 23807
-variable.buffer:                                   equ 23808
-variable.hl_copy:                                  equ 23810
-variable.de_copy:                                  equ 23812
-variable.find_command_symbols:                     equ 23814
-variable.deleted_files:                            equ 23815
-variable.filename_first_char:                      equ 23816
-variable.buffer_flag:                              equ 23820
-variable.file_number_for_copying:                  equ 23821
-variable.command_mode:                             equ 23822
-variable.error_code:                               equ 23823
-variable.error_code_msb:                           equ 23824
-variable.command_line_address:                     equ 23825
-variable.err_sp_copy:                              equ 23827
-variable.show_screen_flag:                         equ 23829
-variable.system_register:                          equ 23830
-variable.show_title_flag:                          equ 23831
-variable.interface_1_flag:                         equ 23832
-variable.default_drive:                            equ 23833
-variable.internal_address_of_finishing_proc:       equ 23834
-variable.sp_copy:                                  equ 23836
-variable.find_command_found_file:                  equ 23838
-variable.unknown_23839:                            equ 23839
-variable.entered_line_3_first_chars:               equ 23840
-variable.entered_line_3_first_chars.1:             equ 23841
-variable.entered_line_3_first_chars.2:             equ 23842
-variable.move_command_blocks:                      equ 23843
-variable.tmp_buffer_address:                       equ 23845
-variable.k_channel.output:                         equ 23846
-variable.k_channel.input:                          equ 23848
-variable.k_channel.id:                             equ 23850
-variable.s_channel.output:                         equ 23851
-variable.s_channel.input:                          equ 23853
-variable.s_channel.id:                             equ 23855
-variable.r_channel.output:                         equ 23856
-variable.r_channel.input:                          equ 23858
-variable.r_channel.input.high:                     equ 23859
-variable.r_channel.id:                             equ 23860
-variable.p_channel.output:                         equ 23861
-variable.p_channel.input:                          equ 23863
-variable.p_channel.id:                             equ 23865
+variable.interface_1_zone:                                  equ 23734
+variable.0xc9:                                              equ 23746
+variable.unknown_23747:                                     equ 23747
+variable.drive_a_mode:                                      equ 23752
+variable.drive_b_mode:                                      equ 23753
+variable.drive_c_mode:                                      equ 23754
+variable.drive_d_mode:                                      equ 23755
+variable.cat_current_sector:                                equ 23756
+variable.disk_drive_ready:                                  equ 23757
+variable.sector_reading_or_writting:                        equ 23758
+variable.stack_sp_copy:                                     equ 23759
+variable.basic_program_autostart:                           equ 23761
+variable.basic_program_autostart.high:                      equ 23762
+variable.unknown_23763:                                     equ 23763
+variable.move_command_deleted_files:                        equ 23764
+variable.move_command_first_sector:                         equ 23765
+variable.move_command_first_track:                          equ 23766
+variable.start_file_parameter_or_number_of_tracks:          equ 23767
+variable.start_file_parameter:                              equ 23767
+variable.start_file_parameter.high:                         equ 23768
+variable.ch_add:                                            equ 23769
+variable.ch_add.high:                                       equ 23770
+variable.file_size:                                         equ 23771
+variable.file_size.high:                                    equ 23772
+variable.filename:                                          equ 23773
+variable.filename.1:                                        equ 23774
+variable.filename.2:                                        equ 23775
+variable.filename.3:                                        equ 23776
+variable.filename.4:                                        equ 23777
+variable.filename.5:                                        equ 23778
+variable.filename.6:                                        equ 23779
+variable.filename.7:                                        equ 23780
+variable.file_type:                                         equ 23781
+variable.file_start:                                        equ 23782
+variable.file_start.high:                                   equ 23783
+variable.file_length_in_bytes:                              equ 23784
+variable.file_length_in_bytes.high:                         equ 23785
+variable.file_length_in_sectors:                            equ 23786
+variable.file_first_sector:                                 equ 23787
+variable.file_first_track:                                  equ 23788
+variable.c_file_start_or_b_file_size:                       equ 23789
+variable.file_2_length_in_bytes:                            equ 23791
+variable.file_2_length_in_sectors:                          equ 23793
+variable.file_2_first_sector:                               equ 23794
+variable.file_2_first_track:                                equ 23795
+variable.current_sector:                                    equ 23796
+variable.current_track:                                     equ 23797
+variable.temporary_drive:                                   equ 23798
+variable.cleared:                                           equ 23799
+variable.two_files_drive:                                   equ 23800
+variable.cat_drive_or_read_verify_flag:                     equ 23801
+variable.a_drive_step_rate:                                 equ 23802
+variable.b_drive_step_rate:                                 equ 23803
+variable.c_drive_step_rate:                                 equ 23804
+variable.d_drive_step_rate:                                 equ 23805
+variable.last_fdc_command:                                  equ 23806
+variable.sector:                                            equ 23807
+variable.buffer:                                            equ 23808
+variable.hl_copy:                                           equ 23810
+variable.de_copy:                                           equ 23812
+variable.find_command_symbols:                              equ 23814
+variable.deleted_files:                                     equ 23815
+variable.filename_first_char:                               equ 23816
+variable.buffer_flag:                                       equ 23820
+variable.file_number_for_copying:                           equ 23821
+variable.command_mode:                                      equ 23822
+variable.error_code:                                        equ 23823
+variable.error_code_msb:                                    equ 23824
+variable.command_line_address:                              equ 23825
+variable.err_sp_copy:                                       equ 23827
+variable.show_screen_flag:                                  equ 23829
+variable.system_register:                                   equ 23830
+variable.show_title_flag:                                   equ 23831
+variable.interface_1_flag:                                  equ 23832
+variable.default_drive:                                     equ 23833
+variable.internal_address_of_finishing_proc:                equ 23834
+variable.sp_copy:                                           equ 23836
+variable.find_command_found_file:                           equ 23838
+variable.unknown_23839:                                     equ 23839
+variable.entered_line_3_first_chars:                        equ 23840
+variable.entered_line_3_first_chars.1:                      equ 23841
+variable.entered_line_3_first_chars.2:                      equ 23842
+variable.move_command_blocks:                               equ 23843
+variable.tmp_buffer_address:                                equ 23845
+variable.k_channel.output:                                  equ 23846
+variable.k_channel.input:                                   equ 23848
+variable.k_channel.id:                                      equ 23850
+variable.s_channel.output:                                  equ 23851
+variable.s_channel.input:                                   equ 23853
+variable.s_channel.id:                                      equ 23855
+variable.r_channel.output:                                  equ 23856
+variable.r_channel.input:                                   equ 23858
+variable.r_channel.input.high:                              equ 23859
+variable.r_channel.id:                                      equ 23860
+variable.p_channel.output:                                  equ 23861
+variable.p_channel.input:                                   equ 23863
+variable.p_channel.id:                                      equ 23865
+
+; Entry points to routines of the main ROM
+; (with the names used in the main ROM)
+
+test_room:                                                  equ 0x19FD
+chan_open:                                                  equ 0x1D84
+get_char:                                                   equ 0x1D8C
+editor:                                                     equ 0x1D90
+cls:                                                        equ 0x1D97
+look_vars:                                                  equ 0x1D9B
+cls_lower:                                                  equ 0x1D9F
+stk_fetch:                                                  equ 0x1DB5
+find_int2:                                                  equ 0x1DB9
+expt_exp:                                                   equ 0x1DBD
+expt_1num:                                                  equ 0x1DC1
+remove_fp:                                                  equ 0x1E1C
+bc_spaces:                                                  equ 0x1E23
+next_char:                                                  equ 0x1E2A
+reclaim_2:                                                  equ 0x1E2E
+make_room:                                                  equ 0x1E32
+print_a:                                                    equ 0x3D94
 
 ; Routines
 
-rst_10:                                            equ 0x0010
-rst_18:                                            equ 0x0018
-rst_20:                                            equ 0x0020
-jp_exit_dos:                                       equ 0x03C0
-get_uppercase_pressed_key:                         equ 0x1052
-set_number_of_tracks:                              equ 0x2998
-print_error_number_A_whose_message_is_at_HL:       equ 0x03C3
-print_OK_and_exit_DOS:                             equ 0x03E1
-check_drive_letter:                                equ 0x0524
-set_file_type_stored_in_B:                         equ 0x104D
-print_error_number_A_whose_message_is_at_HL_and_exit_DOS: equ 0x1C4A 
-print_message_at_HL:                               equ 0x2707
-execute_command_in_C:                              equ 0x283C
-call_zx_spectrum_rom_routine_stored_at_the_address_on_tos: equ 0x2F72
-print_character_in_A:                              equ 0x3D82
-step_rate_of_temporary_drive:                      equ 0x3E08
-enter_trdos_from_basic:                            equ 0x3D31
-interpret_rem_command_in_basic:                    equ 0x3D1A
-jp_execute_command_in_C:                           equ 0x3CFD
+rst_10:                                                     equ 0x0010
+rst_18:                                                     equ 0x0018
+rst_20:                                                     equ 0x0020
+jp_exit_dos:                                                equ 0x03C0
+get_uppercase_pressed_key:                                  equ 0x1052
+z_if_checking_syntax:                                       equ 0x1D70
+pop_hl_if_checking_syntax:                                  equ 0x1D75
+open_channel_0:                                             equ 0x1D83
+open_channel_2:                                             equ 0x1D88
+point_interpreter_to_command_line:                          equ 0x1DC5
+parse_expression:                                           equ 0x1DDF
+jp_print_error_number_A_whose_message_is_at_HL:             equ 0x2225
+set_number_of_tracks:                                       equ 0x2998
+print_error_number_A_whose_message_is_at_HL:                equ 0x03C3
+print_OK_and_exit_DOS:                                      equ 0x03E1
+check_drive_letter:                                         equ 0x0524
+set_file_type_stored_in_B:                                  equ 0x104D
+print_error_number_A_whose_message_is_at_HL_and_exit_DOS:   equ 0x1C4A
+print_message_at_HL:                                        equ 0x2707
+execute_command_in_C:                                       equ 0x283C
+call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:  equ 0x2F72
+print_character_in_A:                                       equ 0x3D82
+step_rate_of_temporary_drive:                               equ 0x3E08
+enter_trdos_from_basic:                                     equ 0x3D31
+interpret_rem_command_in_basic:                             equ 0x3D1A
+jp_execute_command_in_C:                                    equ 0x3CFD
+
+; Secondary addresses (e.g. loops)
+
+wait_for_key:                                               equ 0x1056
 
 ; Errors
 
-error.wrong_drive_letter:                          equ 0x1D1A
-error.no_disk:                                     equ 0x271B
-error.directory_full:                              equ 0x2723
-error.no_space:                                    equ 0x1C45
-error.file_exists:                                 equ 0x1C50
+error.no_space:                                             equ 0x1C45
+error.file_exists:                                          equ 0x1C50
+error.wrong_drive_letter:                                   equ 0x1D1A
+error.stream_opened:                                        equ 0x221B
+error.no_disk:                                              equ 0x271B
+error.directory_full:                                       equ 0x2723
+error.not_disk_file:                                        equ 0x2728
 
 ; Texts
 
-message.insert_destination_disk:                   equ 0x2725
-message.ok:                                        equ 0x2766
-message.verify_error:                              equ 0x276B
-message.backup_disk:                               equ 0x2779
-message.insert_source_disk:                        equ 0x27AA
-message.break:                                     equ 0x27CA
-message.out_of_ram:                                equ 0x27D2
-message.array_not_found:                           equ 0x27DD
-message.directory_full:                            equ 0x27ED
-message.no_disk:                                   equ 0x27FC
-message.stream_opened:                             equ 0x2804
-message.not_disk_file:                             equ 0x2812
-message.file_exists:                               equ 0x2820
-message.cr.no_space:                               equ 0x29BB
-message.cr.file_exists:                            equ 0x29C5
-message.cr.free:                                   equ 0x29D2
-message.cr.read_only:                              equ 0x29D8
-message.cr.disc_error:                             equ 0x29E2
-message.cr.rec_overflow:                           equ 0x29ED
-message.cr.title:                                  equ 0x29F7
-message.cr.retry_abort_ignore:                     equ 0x29FE
-message.cr.trk:                                    equ 0x2A13
-message.sec:                                       equ 0x2A18
-message.del_file:                                  equ 0x2A1D
-message.cr.no_files:                               equ 0x2A28
-message.files:                                     equ 0x2A28
+message.insert_destination_disk:                            equ 0x2725
+message.ok:                                                 equ 0x2766
+message.verify_error:                                       equ 0x276B
+message.backup_disk:                                        equ 0x2779
+message.insert_source_disk:                                 equ 0x27AA
+message.break:                                              equ 0x27CA
+message.out_of_ram:                                         equ 0x27D2
+message.array_not_found:                                    equ 0x27DD
+message.directory_full:                                     equ 0x27ED
+message.no_disk:                                            equ 0x27FC
+message.stream_opened:                                      equ 0x2804
+message.not_disk_file:                                      equ 0x2812
+message.file_exists:                                        equ 0x2820
+message.cr.no_space:                                        equ 0x29BB
+message.cr.file_exists:                                     equ 0x29C5
+message.cr.free:                                            equ 0x29D2
+message.cr.read_only:                                       equ 0x29D8
+message.cr.disc_error:                                      equ 0x29E2
+message.cr.rec_overflow:                                    equ 0x29ED
+message.cr.title:                                           equ 0x29F7
+message.cr.retry_abort_ignore:                              equ 0x29FE
+message.cr.trk:                                             equ 0x2A13
+message.sec:                                                equ 0x2A18
+message.del_file:                                           equ 0x2A1D
+message.cr.no_files:                                        equ 0x2A28
+message.files:                                              equ 0x2A28
 
 ; Tables
 
-table.c_commands:                                  equ 0x288C
+table.c_commands:                                           equ 0x288C
 
 ; Routines associated to C commands
 
-init_interface:                                    equ 0x3D98
-init_disk_drive:                                   equ 0x3DCB
-seek_track:                                        equ 0x3E63
-set_sector_number:                                 equ 0x3F02
-define_buffer_address:                             equ 0x3F06
-read_sectors:                                      equ 0x1E3D
-write_sectors:                                     equ 0x1E4D
-print_catalogue:                                   equ 0x28D8
-read_file_descriptor:                              equ 0x165C
-write_file_descriptor:                             equ 0x1664
-find_file:                                         equ 0x1CF0
-save_code_file:                                    equ 0x28FB
-save_basic_program:                                equ 0x28F2
-load_or_verify:                                    equ 0x290F
-exit_dos:                                          equ 0x01D3
-delete_file:                                       equ 0x2926
-copy_from_hl_to_file_descriptor:                   equ 0x28E0
-copy_from_file_descriptor_to_hl:                   equ 0x28E3
-test_track:                                        equ 0x2739
-select_bottom_side:                                equ 0x1FEB
-select_top_side:                                   equ 0x1FF6
-read_system_track:                                 equ 0x0405
+init_interface:                                             equ 0x3D98
+init_disk_drive:                                            equ 0x3DCB
+seek_track:                                                 equ 0x3E63
+set_sector_number:                                          equ 0x3F02
+define_buffer_address:                                      equ 0x3F06
+read_sectors:                                               equ 0x1E3D
+write_sectors:                                              equ 0x1E4D
+print_catalogue:                                            equ 0x28D8
+read_file_descriptor:                                       equ 0x165C
+write_file_descriptor:                                      equ 0x1664
+find_file:                                                  equ 0x1CF0
+save_code_file:                                             equ 0x28FB
+save_basic_program:                                         equ 0x28F2
+load_or_verify:                                             equ 0x290F
+exit_dos:                                                   equ 0x01D3
+delete_file:                                                equ 0x2926
+copy_from_hl_to_file_descriptor:                            equ 0x28E0
+copy_from_file_descriptor_to_hl:                            equ 0x28E3
+test_track:                                                 equ 0x2739
+select_bottom_side:                                         equ 0x1FEB
+select_top_side:                                            equ 0x1FF6
+read_system_track:                                          equ 0x0405
 
 ; Routines associated to CLI commands
 
-cli_command.cat:            equ 0x0433
-cli_command.asterisk:       equ 0x1018
-cli_command.format:         equ 0x1EC2
-cli_command.move:           equ 0x16AB
-cli_command.new:            equ 0x053A
-cli_command.erase:          equ 0x0787
-cli_command.gosub:          equ 0x1815
-cli_command.save:           equ 0x1AD0
-cli_command.return:         equ 0x1CFB
-cli_command.peek:           equ 0x19A5
-cli_command.poke:           equ 0x19A9
-cli_command.merge:          equ 0x19B1
-cli_command.run:            equ 0x1D4D
-cli_command.open_channel:   equ 0x2182
-cli_command.close_channel:  equ 0x2656
-cli_command.copy:           equ 0x0690
-cli_command.4:              equ 0x2997
-cli_command.go_to:          equ 0x2DA1
-cli_command.8:              equ 0x29AE
-cli_command.list:           equ 0x11CE
-cli_command.verify:         equ 0x1810
+cli_command.cat:                                            equ 0x0433
+cli_command.asterisk:                                       equ 0x1018
+cli_command.format:                                         equ 0x1EC2
+cli_command.move:                                           equ 0x16AB
+cli_command.new:                                            equ 0x053A
+cli_command.erase:                                          equ 0x0787
+cli_command.gosub:                                          equ 0x1815
+cli_command.save:                                           equ 0x1AD0
+cli_command.return:                                         equ 0x1CFB
+cli_command.peek:                                           equ 0x19A5
+cli_command.poke:                                           equ 0x19A9
+cli_command.merge:                                          equ 0x19B1
+cli_command.run:                                            equ 0x1D4D
+cli_command.open_channel:                                   equ 0x2182
+cli_command.close_channel:                                  equ 0x2656
+cli_command.copy:                                           equ 0x0690
+cli_command.4:                                              equ 0x2997
+cli_command.go_to:                                          equ 0x2DA1
+cli_command.8:                                              equ 0x29AE
+cli_command.list:                                           equ 0x11CE
+cli_command.verify:                                         equ 0x1810

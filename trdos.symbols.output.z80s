@@ -343,7 +343,7 @@ l03b5h:	equ 0x03b5
 ; Used at following locations:
 ; 0x2a41	(byte load pointer)
 
-l03c0h:	equ 0x03c0
+jp_exit_dos:	equ 0x03c0
 ; Used at following locations:
 ; 0x0413	(jr destination)
 
@@ -700,7 +700,7 @@ get_uppercase_pressed_key:	equ 0x1052
 ; 0x1375	(call destination)
 ; 0x059e	(call destination)
 
-l1056h:	equ 0x1056
+wait_for_key:	equ 0x1056
 ; Used at following locations:
 ; 0x1060	(jr destination)
 ; 0x105b	(jr destination)
@@ -1273,7 +1273,7 @@ sub_19f2h:	equ 0x19f2
 ; 0x1a61	(call destination)
 ; 0x1a31	(call destination)
 
-sub_19fdh:	equ 0x19fd
+test_room:	equ 0x19fd
 ; Used at following locations:
 ; 0x295a	(call destination)
 
@@ -1587,12 +1587,12 @@ sub_1d63h:	equ 0x1d63
 ; Used at following locations:
 ; 0x01dc	(call destination)
 
-sub_1d70h:	equ 0x1d70
+z_if_checking_syntax:	equ 0x1d70
 ; Used at following locations:
 ; 0x1d81	(jr destination)
 ; 0x1d75	(call destination)
 
-sub_1d75h:	equ 0x1d75
+pop_hl_if_checking_syntax:	equ 0x1d75
 ; Used at following locations:
 ; 0x2e2a	(call destination)
 ; 0x2da4	(call destination)
@@ -1628,22 +1628,22 @@ sub_1d7bh:	equ 0x1d7b
 ; 0x1e0b	(call destination)
 ; 0x1deb	(call destination)
 
-sub_1d83h:	equ 0x1d83
+open_channel_0:	equ 0x1d83
 ; Used at following locations:
 ; 0x1d90	(call destination)
 ; 0x02d4	(call destination)
 
-sub_1d84h:	equ 0x1d84
+chan_open:	equ 0x1d84
 ; Used at following locations:
 ; 0x1d8a	(jr destination)
 ; 0x1220	(call destination)
 ; 0x0485	(call destination)
 
-sub_1d88h:	equ 0x1d88
+open_channel_2:	equ 0x1d88
 ; Used at following locations:
 ; 0x025c	(call destination)
 
-sub_1d8ch:	equ 0x1d8c
+get_char:	equ 0x1d8c
 ; Used at following locations:
 ; 0x218e	(call destination)
 ; 0x215b	(call destination)
@@ -1658,11 +1658,11 @@ sub_1d8ch:	equ 0x1d8c
 ; 0x0449	(call destination)
 ; 0x0212	(call destination)
 
-l1d90h:	equ 0x1d90
+editor:	equ 0x1d90
 ; Used at following locations:
 ; 0x2155	(jp destination)
 
-sub_1d97h:	equ 0x1d97
+cls:	equ 0x1d97
 ; Used at following locations:
 ; 0x3f60	(call destination)
 ; 0x160e	(call destination)
@@ -1678,11 +1678,11 @@ sub_1d97h:	equ 0x1d97
 ; 0x0259	(call destination)
 ; 0x012d	(call destination)
 
-sub_1d9bh:	equ 0x1d9b
+look_vars:	equ 0x1d9b
 ; Used at following locations:
 ; 0x1c1e	(call destination)
 
-sub_1d9fh:	equ 0x1d9f
+cls_lower:	equ 0x1d9f
 ; Used at following locations:
 ; 0x1624	(call destination)
 ; 0x15d8	(call destination)
@@ -1715,20 +1715,20 @@ sub_1da9h:	equ 0x1da9
 ; 0x04e9	(call destination)
 ; 0x03b9	(call destination)
 
-sub_1db5h:	equ 0x1db5
+stk_fetch:	equ 0x1db5
 ; Used at following locations:
 ; 0x11fe	(call destination)
 ; 0x05d3	(call destination)
 ; 0x0531	(call destination)
 ; 0x0463	(call destination)
 
-sub_1db9h:	equ 0x1db9
+find_int2:	equ 0x1db9
 ; Used at following locations:
 ; 0x2528	(call destination)
 ; 0x1e0f	(call destination)
 ; 0x1df0	(call destination)
 
-sub_1dbdh:	equ 0x1dbd
+expt_exp:	equ 0x1dbd
 ; Used at following locations:
 ; 0x1de2	(jp destination)
 ; 0x1ddb	(call destination)
@@ -1736,13 +1736,13 @@ sub_1dbdh:	equ 0x1dbd
 ; 0x11f3	(call destination)
 ; 0x0458	(call destination)
 
-sub_1dc1h:	equ 0x1dc1
+expt_1num:	equ 0x1dc1
 ; Used at following locations:
 ; 0x2525	(call destination)
 ; 0x2517	(call destination)
 ; 0x1d7e	(call destination)
 
-sub_1dc5h:	equ 0x1dc5
+point_interpreter_to_command_line:	equ 0x1dc5
 ; Used at following locations:
 ; 0x1ddf	(call destination)
 ; 0x1360	(call destination)
@@ -1756,7 +1756,7 @@ sub_1dd0h:	equ 0x1dd0
 ; Used at following locations:
 ; 0x218b	(call destination)
 
-sub_1ddfh:	equ 0x1ddf
+parse_expression:	equ 0x1ddf
 ; Used at following locations:
 ; 0x2e27	(call destination)
 ; 0x2da1	(call destination)
@@ -1792,18 +1792,18 @@ sub_1e0bh:	equ 0x1e0b
 ; 0x11e1	(call destination)
 ; 0x0446	(call destination)
 
-sub_1e1ch:	equ 0x1e1c
+remove_fp:	equ 0x1e1c
 ; Used at following locations:
 ; 0x1b24	(call destination)
 ; 0x01ed	(call destination)
 
-l1e23h:	equ 0x1e23
+bc_spaces:	equ 0x1e23
 ; Used at following locations:
 ; 0x2501	(jp destination)
 ; 0x167d	(jp destination)
 ; 0x115a	(jp destination)
 
-sub_1e2ah:	equ 0x1e2a
+next_char:	equ 0x1e2a
 ; Used at following locations:
 ; 0x2195	(call destination)
 ; 0x2158	(call destination)
@@ -1816,14 +1816,14 @@ sub_1e2ah:	equ 0x1e2a
 ; 0x0455	(call destination)
 ; 0x0218	(call destination)
 
-sub_1e2eh:	equ 0x1e2e
+reclaim_2:	equ 0x1e2e
 ; Used at following locations:
 ; 0x2983	(call destination)
 ; 0x2695	(call destination)
 ; 0x1a76	(call destination)
 ; 0x1772	(call destination)
 
-sub_1e32h:	equ 0x1e32
+make_room:	equ 0x1e32
 ; Used at following locations:
 ; 0x2964	(call destination)
 ; 0x22bd	(call destination)
@@ -2149,11 +2149,11 @@ sub_220fh:	equ 0x220f
 ; 0x2243	(call destination)
 ; 0x21c2	(call destination)
 
-l221bh:	equ 0x221b
+error.stream_opened:	equ 0x221b
 ; Used at following locations:
 ; 0x2217	(jp destination)
 
-l2225h:	equ 0x2225
+jp_print_error_number_A_whose_message_is_at_HL:	equ 0x2225
 ; Used at following locations:
 ; 0x222d	(jr destination)
 
@@ -2500,6 +2500,9 @@ error.directory_full:	equ 0x2723
 ; 0x141e	(jp destination)
 
 message.insert_destination_disk:	equ 0x2725
+; Used at following locations:
+
+error.not_disk_file:	equ 0x2728
 ; Used at following locations:
 
 sub_272bh:	equ 0x272b
@@ -3238,7 +3241,7 @@ print_character_in_A:	equ 0x3d82
 ; 0x058a	(call destination)
 ; 0x0010	(jp destination)
 
-sub_3d94h:	equ 0x3d94
+print_a:	equ 0x3d94
 ; Used at following locations:
 ; 0x3d8a	(call destination)
 

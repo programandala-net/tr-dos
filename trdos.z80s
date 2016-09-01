@@ -2,10 +2,6 @@
 
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
-  include inc/zx_spectrum_rom_routines.z80s
-  include inc/zx_spectrum_char_codes.z80s
-
-; command line: z80dasm --origin=0x0000 --address --labels --source --block-def=trdos.blocks.txt --sym-input=trdos.symbols.input.z80s --sym-output=trdos.symbols.output.z80s --output=trdos.raw.z80s trdos.rom
 
   org 00000h
 
@@ -294,7 +290,7 @@ l0124h:
   jp 05f10h
 l012ah:
   call sub_20e5h
-  call sub_1d97h
+  call cls
   ld hl,(sys_e_line)
   inc hl
   ld e,(hl)
@@ -394,7 +390,7 @@ exit_dos:
   or a
   ld (hl),000h
   jr nz,l01f3h
-  call sub_1e1ch
+  call remove_fp
   call sub_0212h
 l01f3h:
   ld sp,(variable.sp_copy)
@@ -413,10 +409,10 @@ l0209h:
   push de
   ret
 sub_0212h:
-  call sub_1d8ch
+  call get_char
   cp 00dh
   ret z
-  call sub_1e2ah
+  call next_char
   jr sub_0212h
 sub_021dh:
   ld hl,(sys_err_sp)
@@ -450,8 +446,8 @@ l0239h:
   ld (variable.error_code),a
   jp z,l02cbh
   ld (hl),0aah
-  call sub_1d97h
-  call sub_1d88h
+  call cls
+  call open_channel_2
   ld hl,trdos_title_start
   rst 18h
   call sub_106eh
@@ -523,7 +519,7 @@ l02cbh:
   dec hl
   ld sp,hl
   call sub_20f1h
-  call sub_1d83h
+  call open_channel_0
   ld a,(variable.system_register)
   or 003h
   call sub_02b9h
@@ -534,7 +530,7 @@ l02cbh:
   call sub_2135h
   call sub_3032h
 l02efh:
-  call sub_1d9fh
+  call cls_lower
   ld hl,l02cbh
   ld (variable.internal_address_of_finishing_proc),hl
   xor a
@@ -686,7 +682,7 @@ l03b5h:
   call sub_1da9h
   ld hl,message.cr.free
   rst 18h
-l03c0h:
+jp_exit_dos:
   jp exit_dos
 print_error_number_A_whose_message_is_at_HL:
   push af
@@ -732,7 +728,7 @@ read_system_track:
   jr z,l0415h
   ld hl,message.cr.disc_error
   rst 18h
-  jr l03c0h
+  jr jp_exit_dos
 l0415h:
   call sub_3e11h
   res 0,(hl)
@@ -761,23 +757,23 @@ cli_command.cat:
   jr nz,l045dh
   ld (sys_ch_add),hl
   call sub_1e0bh
-  call sub_1d8ch
+  call get_char
   cp 00dh
   jr z,l046ah
   cp 02ch
   jp nz,error.wrong_drive_letter
-  call sub_1e2ah
-  call sub_1dbdh
+  call next_char
+  call expt_exp
   jr l0460h
 l045dh:
-  call sub_1ddfh
+  call parse_expression
 l0460h:
-  call sub_1d75h
-  call sub_1db5h
+  call pop_hl_if_checking_syntax
+  call stk_fetch
   ex de,hl
   call sub_1c81h
 l046ah:
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld a,(variable.temporary_drive)
   ld (variable.cat_drive_or_read_verify_flag),a
   call read_system_track
@@ -785,11 +781,11 @@ l046ah:
 l0479h:
   cp 002h
   push af
-  call z,sub_1d97h
+  call z,cls
   pop af
   cp 011h
   jp nc,error.wrong_drive_letter
-  call sub_1d84h
+  call chan_open
   ld a,0ffh
   ld (variable.two_files_drive),a
   ld hl,message.cr.title
@@ -892,14 +888,14 @@ check_drive_letter:
   jp nc,error.wrong_drive_letter
   ret
 sub_0531h:
-  call sub_1db5h
+  call stk_fetch
   ld a,c
   cp b
   jp z,error.wrong_drive_letter
   ret
 cli_command.new:
   call sub_1dcdh
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   call sub_102eh
   call sub_1cb0h
   ld a,(variable.temporary_drive)
@@ -932,7 +928,7 @@ l0577h:
   jp print_OK_and_exit_DOS
 sub_0581h:
   push bc
-  call sub_1d97h
+  call cls
   ld a,(variable.temporary_drive)
   add a,041h
   call print_character_in_A
@@ -945,12 +941,12 @@ sub_0581h:
   call get_uppercase_pressed_key
   cp "Y"
   push af
-  call sub_1d97h
+  call cls
   pop af
   pop bc
   ret nz
   push bc
-  call sub_1d97h
+  call cls
   pop bc
   call sub_0781h
   xor a
@@ -972,7 +968,7 @@ l05cbh:
   ld a,(variable.filename)
   cp 02ah
   jp nz,l03d9h
-  call sub_1db5h
+  call stk_fetch
   ex de,hl
   call sub_1c81h
   ld a,(hl)
@@ -1061,7 +1057,7 @@ cli_command.copy:
   cp 042h
   jp z,l152ch
   call sub_1dcdh
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   call sub_166fh
   call sub_102eh
   call sub_1cb0h
@@ -1161,8 +1157,8 @@ sub_0781h:
   ld (variable.deleted_files),a
   jr l07a0h
 cli_command.erase:
-  call sub_1ddfh
-  call sub_1d75h
+  call parse_expression
+  call pop_hl_if_checking_syntax
   call sub_102eh
   xor a
   ld (variable.deleted_files),a
@@ -3299,8 +3295,8 @@ message_interface_1_start:
   defb "d"
   defb 000h
 cli_command.asterisk:
-  call sub_1ddfh
-  call sub_1d75h
+  call parse_expression
+  call pop_hl_if_checking_syntax
   call sub_0531h
   ld a,(de)
   call check_drive_letter
@@ -3312,7 +3308,7 @@ sub_102eh:
   ld a,(variable.move_command_first_track)
   or a
   jr nz,set_file_type_stored_in_B
-  call sub_1d8ch
+  call get_char
   cp 0afh
   ld b,"C" ; file type: code
   jr z,set_file_type_stored_in_B
@@ -3332,14 +3328,14 @@ get_uppercase_pressed_key:
   push hl
   push bc
   push de
-l1056h:
+wait_for_key:
   rst 20h
   defw rom_key_scan
   ld c,000h
-  jr nz,l1056h
+  jr nz,wait_for_key
   rst 20h
   defw rom_k_test
-  jr nc,l1056h
+  jr nc,wait_for_key
   dec d
   ld e,a
   rst 20h
@@ -3581,7 +3577,7 @@ sub_1151h:
   ld e,h
   ld (variable.stack_sp_copy),hl
   ld bc,00222h
-  jp l1e23h
+  jp bc_spaces
 sub_115dh:
   xor a
   ld de,l2710h
@@ -3664,34 +3660,34 @@ cli_command.list:
   jr nz,l11f8h
   ld (sys_ch_add),hl
   call sub_1e0bh
-  call sub_1d8ch
+  call get_char
   cp 00dh
   jr z,l1205h
   cp 02ch
   jp nz,error.wrong_drive_letter
-  call sub_1e2ah
-  call sub_1dbdh
+  call next_char
+  call expt_exp
   jr l11fbh
 l11f8h:
-  call sub_1ddfh
+  call parse_expression
 l11fbh:
-  call sub_1d75h
-  call sub_1db5h
+  call pop_hl_if_checking_syntax
+  call stk_fetch
   ex de,hl
   call sub_1c81h
 l1205h:
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld a,(variable.temporary_drive)
   ld (variable.cat_drive_or_read_verify_flag),a
   call read_system_track
   ld a,(variable.file_size)
   cp 002h
   push af
-  call z,sub_1d97h
+  call z,cls
   pop af
   cp 011h
   jp nc,error.wrong_drive_letter
-  call sub_1d84h
+  call chan_open
   ld a,0ffh
   ld (variable.two_files_drive),a
   call sub_1151h
@@ -3878,10 +3874,10 @@ l1335h:
   call sub_1da9h
   ret
 l1360h:
-  call sub_1dc5h
-  call sub_1e2ah
-  call sub_1dbdh
-  call sub_1d75h
+  call point_interpreter_to_command_line
+  call next_char
+  call expt_exp
+  call pop_hl_if_checking_syntax
   call sub_166fh
   ld hl,message.insert_source_disk
   call print_message_at_HL
@@ -3889,7 +3885,7 @@ l1375h:
   call get_uppercase_pressed_key
   cp "Y"
   jr nz,l1375h
-  call sub_1d9fh
+  call cls_lower
   call sub_102eh
   call sub_1cb0h
   jp nz,l03d9h
@@ -3902,7 +3898,7 @@ l1393h:
   ld (variable.find_command_symbols),a
   ld hl,variable.file_start
   inc (hl)
-  call sub_1d97h
+  call cls
   ld hl,message.insert_source_disk
   call print_message_at_HL
 l13a5h:
@@ -3981,14 +3977,14 @@ sub_1451h:
   ld a,(variable.entered_line_3_first_chars.1)
   or a
   jr nz,l146fh
-  call sub_1d97h
+  call cls
   ld hl,message.insert_source_disk
   call print_message_at_HL
 l1465h:
   call get_uppercase_pressed_key
   cp "Y"
   jr nz,l1465h
-  call sub_1d9fh
+  call cls_lower
 l146fh:
   ld a,(variable.file_2_length_in_sectors)
   or a
@@ -4012,14 +4008,14 @@ l1484h:
   call read_sectors
   ld hl,(variable.current_sector)
   ld (variable.file_2_first_sector),hl
-  call sub_1d97h
+  call cls
   ld hl,l2785h
   call print_message_at_HL
 l14a5h:
   call get_uppercase_pressed_key
   cp "Y"
   jr nz,l14a5h
-  call sub_1d9fh
+  call cls_lower
   ld a,(variable.entered_line_3_first_chars.1)
   or a
   call nz,sub_1403h
@@ -4084,7 +4080,7 @@ l151fh:
   jp c,error.no_space
   ret
 l152ch:
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   call sub_166fh
   ld hl,message.backup_disk
   call print_message_at_HL
@@ -4094,7 +4090,7 @@ l153eh:
   call get_uppercase_pressed_key
   cp "Y"
   jr nz,l153eh
-  call sub_1d9fh
+  call cls_lower
   ld a,0ffh
   ld (variable.entered_line_3_first_chars.1),a
   call read_system_track
@@ -4146,7 +4142,7 @@ sub_15b8h:
   ld a,(variable.entered_line_3_first_chars.1)
   or a
   jr nz,l15dbh
-  call sub_1d97h
+  call cls
   ld hl,message.backup_disk
   call print_message_at_HL
   ld hl,message.insert_source_disk
@@ -4155,7 +4151,7 @@ l15d1h:
   call get_uppercase_pressed_key
   cp "Y"
   jr nz,l15d1h
-  call sub_1d9fh
+  call cls_lower
 l15dbh:
   call sub_15b2h
   ret z
@@ -4181,7 +4177,7 @@ l15f8h:
   call read_sectors
   ld hl,(variable.current_sector)
   ld (variable.filename.4),hl
-  call sub_1d97h
+  call cls
   ld hl,message.backup_disk
   call print_message_at_HL
   ld hl,l2785h
@@ -4190,7 +4186,7 @@ l161dh:
   call get_uppercase_pressed_key
   cp "Y"
   jr nz,l161dh
-  call sub_1d9fh
+  call cls_lower
   ld a,(variable.entered_line_3_first_chars.1)
   or a
   call nz,sub_14f0h
@@ -4239,7 +4235,7 @@ sub_166fh:
   call sub_1680h
   ld hl,(sys_worksp)
   ld (variable.stack_sp_copy),hl
-  jp l1e23h
+  jp bc_spaces
 sub_1680h:
   rst 20h
   defw rom_free_mem
@@ -4265,7 +4261,7 @@ sub_1697h:
   ld (variable.ch_add),hl
   ret
 cli_command.move:
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   call sub_166fh
   call read_system_track
   ld a,(05e19h)
@@ -4368,7 +4364,7 @@ l1710h:
 l176ch:
   ld hl,(variable.stack_sp_copy)
   ld bc,message_interface_1_start
-  call sub_1e2eh
+  call reclaim_2
   call sub_03fdh
   ld hl,(05e0ah)
   ld de,(variable.ch_add)
@@ -4458,7 +4454,7 @@ cli_command.gosub:
   call sub_1852h
 l1818h:
   call sub_1836h
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld a,0ffh
   ld (variable.error_code_msb),a
   ld a,(variable.cat_drive_or_read_verify_flag)
@@ -4470,7 +4466,7 @@ l1818h:
   jp print_OK_and_exit_DOS
 sub_1836h:
   call sub_187ah
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   call sub_18abh
   jp l1921h
 sub_1842h:
@@ -4506,10 +4502,10 @@ l1866h:
 sub_187ah:
   call sub_042bh
   jp z,l027bh
-  call sub_1ddfh
+  call parse_expression
   call sub_0572h
   call nz,sub_1857h
-  call sub_1d8ch
+  call get_char
   cp 0afh
   call z,sub_1842h
   cp 0e4h
@@ -4518,7 +4514,7 @@ sub_187ah:
   call z,sub_102eh
   pop af
   call z,sub_1bfch
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   call sub_292fh
 sub_18a4h:
   jp nz,l03d9h
@@ -4671,7 +4667,7 @@ cli_command.merge:
   ld a,0ffh
   ld (variable.unknown_23839),a
   call sub_187ah
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld a,(variable.file_type)
   cp "B" ; BASIC file type?
   jp nz,error.wrong_drive_letter
@@ -4705,7 +4701,7 @@ sub_19f2h:
   add hl,de
   ld b,h
   ld c,l
-sub_19fdh:
+test_room:
   rst 20h
   defw rom_test_room
   ret
@@ -4744,7 +4740,7 @@ l1a31h:
   rst 20h
   defw rom_reclaim_1
   pop bc
-  call sub_1e32h
+  call make_room
   inc hl
   ld bc,(variable.file_length_in_bytes)
   add hl,bc
@@ -4774,7 +4770,7 @@ sub_1a4ch:
   inc bc
   inc bc
   inc bc
-  call sub_1e2eh
+  call reclaim_2
 l1a79h:
   ld hl,(sys_e_line)
   dec hl
@@ -4783,7 +4779,7 @@ l1a79h:
   inc bc
   inc bc
   inc bc
-  call sub_1e32h
+  call make_room
   inc hl
   ld a,(variable.basic_program_autostart.high)
   ld (hl),a
@@ -4836,14 +4832,14 @@ cli_command.save:
   call sub_1852h
   ld hl,l0000h
   ld (variable.basic_program_autostart),hl
-  call sub_1ddfh
-  call sub_1d8ch
+  call parse_expression
+  call get_char
   cp 0afh
   jr z,l1b39h
   cp 0cah
   jr nz,l1af8h
   call sub_1e0bh
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld hl,(variable.file_size)
   ld (variable.basic_program_autostart),hl
   ld hl,variable.file_type
@@ -4858,8 +4854,8 @@ l1af8h:
   ld (variable.file_size),hl
   jr l1b48h
 l1b0dh:
-  call sub_1d75h
-  call sub_1d8ch
+  call pop_hl_if_checking_syntax
+  call get_char
   ld hl,variable.file_type
   cp 0e4h
   jr z,l1b2ch
@@ -4868,7 +4864,7 @@ l1b0dh:
 l1b1fh:
   ld (hl),042h
   call sub_1abeh
-  call sub_1e1ch
+  call remove_fp
 l1b27h:
   call sub_1bdeh
   jr l1b53h
@@ -4885,7 +4881,7 @@ l1b39h:
   ld hl,(variable.file_size)
   ld (variable.ch_add),hl
 l1b48h:
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld a,"C" ; file type: code
   ld (variable.file_type),a
   call sub_1abeh
@@ -4990,8 +4986,8 @@ l1c13h:
   ld hl,message.array_not_found
   jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 sub_1c1bh:
-  call sub_1e2ah
-  call sub_1d9bh
+  call next_char
+  call look_vars
   set 7,c
   ld a,c
   ld (variable.basic_program_autostart.high),a
@@ -5009,7 +5005,7 @@ l1c2bh:
   ld (variable.start_file_parameter_or_number_of_tracks),hl
   ld (variable.file_size),de
   ld (variable.ch_add),de
-  call sub_1e2ah
+  call next_char
   cp 029h
   jr nz,l1c2bh
   ret
@@ -5136,7 +5132,7 @@ find_file:
   ld (hl),0ffh
   ret
 cli_command.return:
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   call sub_20e5h
   res 3,(iy+001h)
   call sub_0232h
@@ -5178,7 +5174,7 @@ l1d2fh:
 cli_command.run:
   call sub_1852h
   call sub_1836h
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld hl,(variable.file_start)
   ld a,(variable.file_type)
   cp "B" ; BASIC file type?
@@ -5194,45 +5190,45 @@ sub_1d63h:
   rst 20h
   defw rom_set_work
   ret
-sub_1d70h:
+z_if_checking_syntax:
   bit 7,(iy+001h)
   ret
-sub_1d75h:
-  call sub_1d70h
+pop_hl_if_checking_syntax:
+  call z_if_checking_syntax
   ret nz
   pop hl
   ret
 sub_1d7bh:
-  call sub_1e2ah
-  call sub_1dc1h
-  jr sub_1d70h
-sub_1d83h:
+  call next_char
+  call expt_1num
+  jr z_if_checking_syntax
+open_channel_0:
   xor a
-sub_1d84h:
+chan_open:
   rst 20h
   defw rom_chan_open
   ret
-sub_1d88h:
+open_channel_2:
   ld a,002h
-  jr sub_1d84h
-sub_1d8ch:
+  jr chan_open
+get_char:
   rst 20h
   defw rom_get_char
   ret
-l1d90h:
-  call sub_1d83h
+editor:
+  call open_channel_0
   rst 20h
   defw rom_editor
   ret
-sub_1d97h:
+cls:
   rst 20h
   defw rom_cls
   ret
-sub_1d9bh:
+look_vars:
   rst 20h
   defw rom_look_vars
   ret
-sub_1d9fh:
+cls_lower:
   rst 20h
   defw rom_cls_lower
   ret
@@ -5249,84 +5245,84 @@ sub_1da9h:
   defw rom_out_num_1
   call sub_20f1h
   ret
-sub_1db5h:
+stk_fetch:
   rst 20h
   defw rom_stk_fetch
   ret
-sub_1db9h:
+find_int2:
   rst 20h
   defw rom_find_int2
   ret
-sub_1dbdh:
+expt_exp:
   rst 20h
   defw rom_expt_exp
   ret
-sub_1dc1h:
+expt_1num:
   rst 20h
   defw rom_expt_1num
   ret
-sub_1dc5h:
+point_interpreter_to_command_line:
   ld hl,(variable.command_line_address)
   inc hl
   ld (sys_ch_add),hl
   ret
 sub_1dcdh:
-  call sub_1ddfh
+  call parse_expression
 sub_1dd0h:
-  call sub_1d8ch
+  call get_char
   cp 02ch
   jp nz,error.wrong_drive_letter
-  call sub_1e2ah
-  call sub_1dbdh
+  call next_char
+  call expt_exp
   ret
-sub_1ddfh:
-  call sub_1dc5h
-  jp sub_1dbdh
+parse_expression:
+  call point_interpreter_to_command_line
+  jp expt_exp
 sub_1de5h:
-  call sub_1d8ch
+  call get_char
   cp 0afh
   ret nz
 sub_1debh:
   call sub_1d7bh
   jr z,l1dfbh
-  call sub_1db9h
+  call find_int2
   ld (variable.ch_add),bc
   ld (variable.file_size),bc
 l1dfbh:
-  call sub_1d8ch
+  call get_char
   cp 02ch
   jr z,sub_1e0bh
   cp 00dh
   jp nz,error.wrong_drive_letter
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ret
 sub_1e0bh:
   call sub_1d7bh
   ret z
-  call sub_1db9h
+  call find_int2
   ld (variable.file_size),bc
   ld a,003h
   ld (variable.move_command_first_track),a
   ret
-sub_1e1ch:
+remove_fp:
   ld hl,(variable.command_line_address)
   rst 20h
   defw rom_remove_fp
   ret
-l1e23h:
+bc_spaces:
   ld hl,(sys_worksp)
   rst 20h
   defw rom_bc_spaces
   ret
-sub_1e2ah:
+next_char:
   rst 20h
   defw rom_next_char
   ret
-sub_1e2eh:
+reclaim_2:
   rst 20h
   defw rom_reclaim_2
   ret
-sub_1e32h:
+make_room:
   rst 20h
   defw rom_make_room
   ret
@@ -5428,8 +5424,8 @@ cli_command.format:
   ld (variable.basic_program_autostart),hl
   call sub_042bh
   jp z,error.wrong_drive_letter
-  call sub_1ddfh
-  call sub_1d75h
+  call parse_expression
+  call pop_hl_if_checking_syntax
   call sub_1c57h
   call sub_3e11h
   and 080h
@@ -5767,16 +5763,16 @@ sub_2135h:
   rst 10h
   ld hl,sys_err_nr
   ld (hl),0ffh
-  jp l1d90h
+  jp editor
 sub_2158h:
-  call sub_1e2ah
-  call sub_1d8ch
+  call next_char
+  call get_char
   cp 02ch
   jp nz,error.wrong_drive_letter
   ld hl,(variable.file_size)
   ld (variable.ch_add),hl
   call sub_1e0bh
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld hl,(variable.file_size)
   ld a,h
   or a
@@ -5792,10 +5788,10 @@ cli_command.open_channel:
   call sub_1e0bh
   call sub_1dd0h
 l218eh:
-  call sub_1d8ch
+  call get_char
   cp 041h
   jr nc,l219ah
-  call sub_1e2ah
+  call next_char
   jr l218eh
 l219ah:
   cp 0a5h
@@ -5810,7 +5806,7 @@ l219ah:
   jp nz,error.wrong_drive_letter
 l21aeh:
   ld (05d09h),a
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld a,023h
   ld (variable.file_type),a
   ld a,000h
@@ -5862,19 +5858,19 @@ sub_220fh:
   defw rom_str_data1
   ld a,b
   or c
-  jp nz,l221bh
+  jp nz,error.stream_opened
   ret
-l221bh:
+error.stream_opened:
   ld a,019h
   ld (sys_err_nr),a
   ld hl,message.stream_opened
   ld a,00ah
-l2225h:
+jp_print_error_number_A_whose_message_is_at_HL:
   jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 l2228h:
   ld a,00bh
   ld hl,message.not_disk_file
-  jr l2225h
+  jr jp_print_error_number_A_whose_message_is_at_HL
 sub_222fh:
   push hl
   ld c,020h
@@ -5956,7 +5952,7 @@ sub_22b2h:
   ld (sys_curchl),hl
   push hl
   ld bc,l0124h
-  call sub_1e32h
+  call make_room
   ld a,000h
   ld b,000h
 l22c4h:
@@ -6341,7 +6337,7 @@ sub_24f8h:
   ld hl,(sys_worksp)
   ld (variable.stack_sp_copy),hl
   ld bc,rst_10
-  jp l1e23h
+  jp bc_spaces
 sub_2504h:
   ld (hl),00dh
   ld hl,(sys_ch_add)
@@ -6350,13 +6346,13 @@ sub_2504h:
   ld (sys_ch_add),hl
   ld hl,sys_flags
   res 7,(hl)
-  call sub_1dc1h
+  call expt_1num
   ld hl,sys_flags
   set 7,(hl)
   ld hl,(variable.stack_sp_copy)
   ld (sys_ch_add),hl
-  call sub_1dc1h
-  call sub_1db9h
+  call expt_1num
+  call find_int2
   push bc
   pop de
   ld c,020h
@@ -6530,7 +6526,7 @@ cli_command.close_channel:
   ld hl,(variable.command_line_address)
   ld (sys_ch_add),hl
   call sub_1e0bh
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   ld a,(variable.file_size)
   rst 20h
   defw rom_str_data1
@@ -6556,7 +6552,7 @@ cli_command.close_channel:
   call sub_26ceh
   ld hl,(variable.start_file_parameter_or_number_of_tracks)
   ld bc,l0124h
-  call sub_1e2eh
+  call reclaim_2
   ld hl,sys_strms
   ld b,010h
 l269dh:
@@ -6650,6 +6646,7 @@ error.no_disk:
 error.directory_full:
   ld hl,message.directory_full
   ld a,004h
+error.not_disk_file:
   jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 sub_272bh:
   ld a,01ah
@@ -7084,12 +7081,12 @@ sub_294ah:
   push hl
   ld bc,l0100h+1
   push bc
-  call sub_19fdh
+  call test_room
   pop bc
   pop hl
   ld (hl),000h
   ld hl,variable.tmp_buffer_address
-  call sub_1e32h
+  call make_room
   ld hl,(variable.command_line_address)
   ld bc,l0100h+1
   add hl,bc
@@ -7106,7 +7103,7 @@ sub_2970h:
   ld (hl),0ffh
   ld hl,variable.tmp_buffer_address
   ld bc,l0100h+1
-  call sub_1e2eh
+  call reclaim_2
   or a
   ld bc,l0100h+1
   ld hl,(variable.command_line_address)
@@ -7123,7 +7120,7 @@ cli_command.4:
   xor a
 set_number_of_tracks:
   ld (variable.start_file_parameter_or_number_of_tracks),a
-  call sub_1d75h
+  call pop_hl_if_checking_syntax
   call sub_042bh
   jp z,error.wrong_drive_letter
   call sub_3e11h
@@ -7755,8 +7752,8 @@ sub_2d92h:
   call read_sectors
   ret
 cli_command.go_to:
-  call sub_1ddfh
-  call sub_1d75h
+  call parse_expression
+  call pop_hl_if_checking_syntax
   call sub_102eh
   call sub_1c57h
   ld (04020h),bc
@@ -7819,8 +7816,8 @@ l2e05h:
   pop af
   pop bc
   jr l2e39h
-  call sub_1ddfh
-  call sub_1d75h
+  call parse_expression
+  call pop_hl_if_checking_syntax
   call sub_102eh
   call sub_292fh
 l2e33h:
@@ -11418,13 +11415,13 @@ print_character_in_A:
   push af
   call sub_20f1h
   pop af
-  call sub_3d94h
+  call print_a
   call sub_20f1h
   pop de
   pop bc
   pop hl
   ret
-sub_3d94h:
+print_a:
   rst 20h
   defw rom_print_a
   ret
@@ -11723,7 +11720,7 @@ l3f4bh:
   ret z
 l3f5fh:
   push hl
-  call sub_1d97h
+  call cls
   pop hl
   rst 18h
   ld hl,message.cr.trk

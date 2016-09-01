@@ -1,8 +1,4 @@
 ; z80dasm 1.1.3
-
-  include inc/zx_spectrum_rom_routines.z80s
-  include inc/zx_spectrum_char_codes.z80s
-
 ; command line: z80dasm --origin=0x0000 --address --labels --source --block-def=trdos.blocks.txt --sym-input=trdos.symbols.input.z80s --sym-output=trdos.symbols.output.z80s --output=trdos.raw.z80s trdos.rom
 
 	org	00000h
@@ -288,7 +284,7 @@ l0124h:
 	jp 05f10h		;0127	c3 10 5f 	. . _ 
 l012ah:
 	call sub_20e5h		;012a	cd e5 20 	. .   
-	call sub_1d97h		;012d	cd 97 1d 	. . . 
+	call cls		;012d	cd 97 1d 	. . . 
 	ld hl,(sys_e_line)		;0130	2a 59 5c 	* Y \ 
 	inc hl			;0133	23 	# 
 	ld e,(hl)			;0134	5e 	^ 
@@ -388,7 +384,7 @@ exit_dos:
 	or a			;01e8	b7 	. 
 	ld (hl),000h		;01e9	36 00 	6 . 
 	jr nz,l01f3h		;01eb	20 06 	  . 
-	call sub_1e1ch		;01ed	cd 1c 1e 	. . . 
+	call remove_fp		;01ed	cd 1c 1e 	. . . 
 	call sub_0212h		;01f0	cd 12 02 	. . . 
 l01f3h:
 	ld sp,(variable.sp_copy)		;01f3	ed 7b 1c 5d 	. { . ] 
@@ -407,10 +403,10 @@ l0209h:
 	push de			;0210	d5 	. 
 	ret			;0211	c9 	. 
 sub_0212h:
-	call sub_1d8ch		;0212	cd 8c 1d 	. . . 
+	call get_char		;0212	cd 8c 1d 	. . . 
 	cp 00dh		;0215	fe 0d 	. . 
 	ret z			;0217	c8 	. 
-	call sub_1e2ah		;0218	cd 2a 1e 	. * . 
+	call next_char		;0218	cd 2a 1e 	. * . 
 	jr sub_0212h		;021b	18 f5 	. . 
 sub_021dh:
 	ld hl,(sys_err_sp)		;021d	2a 3d 5c 	* = \ 
@@ -444,8 +440,8 @@ l0239h:
 	ld (variable.error_code),a		;0251	32 0f 5d 	2 . ] 
 	jp z,l02cbh		;0254	ca cb 02 	. . . 
 	ld (hl),0aah		;0257	36 aa 	6 . 
-	call sub_1d97h		;0259	cd 97 1d 	. . . 
-	call sub_1d88h		;025c	cd 88 1d 	. . . 
+	call cls		;0259	cd 97 1d 	. . . 
+	call open_channel_2		;025c	cd 88 1d 	. . . 
 	ld hl,trdos_title_start		;025f	21 60 03 	! ` . 
 	rst 18h			;0262	df 	. 
 	call sub_106eh		;0263	cd 6e 10 	. n . 
@@ -517,7 +513,7 @@ l02cbh:
 	dec hl			;02cf	2b 	+ 
 	ld sp,hl			;02d0	f9 	. 
 	call sub_20f1h		;02d1	cd f1 20 	. .   
-	call sub_1d83h		;02d4	cd 83 1d 	. . . 
+	call open_channel_0		;02d4	cd 83 1d 	. . . 
 	ld a,(variable.system_register)		;02d7	3a 16 5d 	: . ] 
 	or 003h		;02da	f6 03 	. . 
 	call sub_02b9h		;02dc	cd b9 02 	. . . 
@@ -528,7 +524,7 @@ l02cbh:
 	call sub_2135h		;02e9	cd 35 21 	. 5 ! 
 	call sub_3032h		;02ec	cd 32 30 	. 2 0 
 l02efh:
-	call sub_1d9fh		;02ef	cd 9f 1d 	. . . 
+	call cls_lower		;02ef	cd 9f 1d 	. . . 
 	ld hl,l02cbh		;02f2	21 cb 02 	! . . 
 	ld (variable.internal_address_of_finishing_proc),hl		;02f5	22 1a 5d 	" . ] 
 	xor a			;02f8	af 	. 
@@ -680,7 +676,7 @@ l03b5h:
 	call sub_1da9h		;03b9	cd a9 1d 	. . . 
 	ld hl,message.cr.free		;03bc	21 d2 29 	! . ) 
 	rst 18h			;03bf	df 	. 
-l03c0h:
+jp_exit_dos:
 	jp exit_dos		;03c0	c3 d3 01 	. . . 
 print_error_number_A_whose_message_is_at_HL:
 	push af			;03c3	f5 	. 
@@ -726,7 +722,7 @@ read_system_track:
 	jr z,l0415h		;040d	28 06 	( . 
 	ld hl,message.cr.disc_error		;040f	21 e2 29 	! . ) 
 	rst 18h			;0412	df 	. 
-	jr l03c0h		;0413	18 ab 	. . 
+	jr jp_exit_dos		;0413	18 ab 	. . 
 l0415h:
 	call sub_3e11h		;0415	cd 11 3e 	. . > 
 	res 0,(hl)		;0418	cb 86 	. . 
@@ -755,23 +751,23 @@ cli_command.cat:
 	jr nz,l045dh		;0441	20 1a 	  . 
 	ld (sys_ch_add),hl		;0443	22 5d 5c 	" ] \ 
 	call sub_1e0bh		;0446	cd 0b 1e 	. . . 
-	call sub_1d8ch		;0449	cd 8c 1d 	. . . 
+	call get_char		;0449	cd 8c 1d 	. . . 
 	cp 00dh		;044c	fe 0d 	. . 
 	jr z,l046ah		;044e	28 1a 	( . 
 	cp 02ch		;0450	fe 2c 	. , 
 	jp nz,error.wrong_drive_letter		;0452	c2 1a 1d 	. . . 
-	call sub_1e2ah		;0455	cd 2a 1e 	. * . 
-	call sub_1dbdh		;0458	cd bd 1d 	. . . 
+	call next_char		;0455	cd 2a 1e 	. * . 
+	call expt_exp		;0458	cd bd 1d 	. . . 
 	jr l0460h		;045b	18 03 	. . 
 l045dh:
-	call sub_1ddfh		;045d	cd df 1d 	. . . 
+	call parse_expression		;045d	cd df 1d 	. . . 
 l0460h:
-	call sub_1d75h		;0460	cd 75 1d 	. u . 
-	call sub_1db5h		;0463	cd b5 1d 	. . . 
+	call pop_hl_if_checking_syntax		;0460	cd 75 1d 	. u . 
+	call stk_fetch		;0463	cd b5 1d 	. . . 
 	ex de,hl			;0466	eb 	. 
 	call sub_1c81h		;0467	cd 81 1c 	. . . 
 l046ah:
-	call sub_1d75h		;046a	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;046a	cd 75 1d 	. u . 
 	ld a,(variable.temporary_drive)		;046d	3a f6 5c 	: . \ 
 	ld (variable.cat_drive_or_read_verify_flag),a		;0470	32 f9 5c 	2 . \ 
 	call read_system_track		;0473	cd 05 04 	. . . 
@@ -779,11 +775,11 @@ l046ah:
 l0479h:
 	cp 002h		;0479	fe 02 	. . 
 	push af			;047b	f5 	. 
-	call z,sub_1d97h		;047c	cc 97 1d 	. . . 
+	call z,cls		;047c	cc 97 1d 	. . . 
 	pop af			;047f	f1 	. 
 	cp 011h		;0480	fe 11 	. . 
 	jp nc,error.wrong_drive_letter		;0482	d2 1a 1d 	. . . 
-	call sub_1d84h		;0485	cd 84 1d 	. . . 
+	call chan_open		;0485	cd 84 1d 	. . . 
 	ld a,0ffh		;0488	3e ff 	> . 
 	ld (variable.two_files_drive),a		;048a	32 f8 5c 	2 . \ 
 	ld hl,message.cr.title		;048d	21 f7 29 	! . ) 
@@ -886,14 +882,14 @@ check_drive_letter:
 	jp nc,error.wrong_drive_letter		;052d	d2 1a 1d 	. . . 
 	ret			;0530	c9 	. 
 sub_0531h:
-	call sub_1db5h		;0531	cd b5 1d 	. . . 
+	call stk_fetch		;0531	cd b5 1d 	. . . 
 	ld a,c			;0534	79 	y 
 	cp b			;0535	b8 	. 
 	jp z,error.wrong_drive_letter		;0536	ca 1a 1d 	. . . 
 	ret			;0539	c9 	. 
 cli_command.new:
 	call sub_1dcdh		;053a	cd cd 1d 	. . . 
-	call sub_1d75h		;053d	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;053d	cd 75 1d 	. u . 
 	call sub_102eh		;0540	cd 2e 10 	. . . 
 	call sub_1cb0h		;0543	cd b0 1c 	. . . 
 	ld a,(variable.temporary_drive)		;0546	3a f6 5c 	: . \ 
@@ -926,7 +922,7 @@ l0577h:
 	jp print_OK_and_exit_DOS		;057e	c3 e1 03 	. . . 
 sub_0581h:
 	push bc			;0581	c5 	. 
-	call sub_1d97h		;0582	cd 97 1d 	. . . 
+	call cls		;0582	cd 97 1d 	. . . 
 	ld a,(variable.temporary_drive)		;0585	3a f6 5c 	: . \ 
 	add a,041h		;0588	c6 41 	. A 
 	call print_character_in_A		;058a	cd 82 3d 	. . = 
@@ -939,12 +935,12 @@ sub_0581h:
 	call get_uppercase_pressed_key		;059e	cd 52 10 	. R . 
 	cp 059h		;05a1	fe 59 	. Y 
 	push af			;05a3	f5 	. 
-	call sub_1d97h		;05a4	cd 97 1d 	. . . 
+	call cls		;05a4	cd 97 1d 	. . . 
 	pop af			;05a7	f1 	. 
 	pop bc			;05a8	c1 	. 
 	ret nz			;05a9	c0 	. 
 	push bc			;05aa	c5 	. 
-	call sub_1d97h		;05ab	cd 97 1d 	. . . 
+	call cls		;05ab	cd 97 1d 	. . . 
 	pop bc			;05ae	c1 	. 
 	call sub_0781h		;05af	cd 81 07 	. . . 
 	xor a			;05b2	af 	. 
@@ -966,7 +962,7 @@ l05cbh:
 	ld a,(variable.filename)		;05cb	3a dd 5c 	: . \ 
 	cp 02ah		;05ce	fe 2a 	. * 
 	jp nz,l03d9h		;05d0	c2 d9 03 	. . . 
-	call sub_1db5h		;05d3	cd b5 1d 	. . . 
+	call stk_fetch		;05d3	cd b5 1d 	. . . 
 	ex de,hl			;05d6	eb 	. 
 	call sub_1c81h		;05d7	cd 81 1c 	. . . 
 	ld a,(hl)			;05da	7e 	~ 
@@ -1055,7 +1051,7 @@ cli_command.copy:
 	cp 042h		;069c	fe 42 	. B 
 	jp z,l152ch		;069e	ca 2c 15 	. , . 
 	call sub_1dcdh		;06a1	cd cd 1d 	. . . 
-	call sub_1d75h		;06a4	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;06a4	cd 75 1d 	. u . 
 	call sub_166fh		;06a7	cd 6f 16 	. o . 
 	call sub_102eh		;06aa	cd 2e 10 	. . . 
 	call sub_1cb0h		;06ad	cd b0 1c 	. . . 
@@ -1155,8 +1151,8 @@ sub_0781h:
 	ld (variable.deleted_files),a		;0782	32 07 5d 	2 . ] 
 	jr l07a0h		;0785	18 19 	. . 
 cli_command.erase:
-	call sub_1ddfh		;0787	cd df 1d 	. . . 
-	call sub_1d75h		;078a	cd 75 1d 	. u . 
+	call parse_expression		;0787	cd df 1d 	. . . 
+	call pop_hl_if_checking_syntax		;078a	cd 75 1d 	. u . 
 	call sub_102eh		;078d	cd 2e 10 	. . . 
 	xor a			;0790	af 	. 
 	ld (variable.deleted_files),a		;0791	32 07 5d 	2 . ] 
@@ -3293,8 +3289,8 @@ message_interface_1_start:
 	defb 064h		;1016	64 	d 
 	defb 000h		;1017	00 	. 
 cli_command.asterisk:
-	call sub_1ddfh		;1018	cd df 1d 	. . . 
-	call sub_1d75h		;101b	cd 75 1d 	. u . 
+	call parse_expression		;1018	cd df 1d 	. . . 
+	call pop_hl_if_checking_syntax		;101b	cd 75 1d 	. u . 
 	call sub_0531h		;101e	cd 31 05 	. 1 . 
 	ld a,(de)			;1021	1a 	. 
 	call check_drive_letter		;1022	cd 24 05 	. $ . 
@@ -3306,7 +3302,7 @@ sub_102eh:
 	ld a,(variable.move_command_first_track)		;1030	3a d6 5c 	: . \ 
 	or a			;1033	b7 	. 
 	jr nz,set_file_type_stored_in_B		;1034	20 17 	  . 
-	call sub_1d8ch		;1036	cd 8c 1d 	. . . 
+	call get_char		;1036	cd 8c 1d 	. . . 
 	cp 0afh		;1039	fe af 	. . 
 	ld b,043h		;103b	06 43 	. C 
 	jr z,set_file_type_stored_in_B		;103d	28 0e 	( . 
@@ -3326,14 +3322,14 @@ get_uppercase_pressed_key:
 	push hl			;1053	e5 	. 
 	push bc			;1054	c5 	. 
 	push de			;1055	d5 	. 
-l1056h:
+wait_for_key:
 	rst 20h			;1056	e7 	. 
 	defw 0028eh		;1057	8e 02 	. . 
 	ld c,000h		;1059	0e 00 	. . 
-	jr nz,l1056h		;105b	20 f9 	  . 
+	jr nz,wait_for_key		;105b	20 f9 	  . 
 	rst 20h			;105d	e7 	. 
 	defw 0031eh		;105e	1e 03 	. . 
-	jr nc,l1056h		;1060	30 f4 	0 . 
+	jr nc,wait_for_key		;1060	30 f4 	0 . 
 	dec d			;1062	15 	. 
 	ld e,a			;1063	5f 	_ 
 	rst 20h			;1064	e7 	. 
@@ -3575,7 +3571,7 @@ sub_1151h:
 	ld e,h			;1153	5c 	\ 
 	ld (variable.stack_sp_copy),hl		;1154	22 cf 5c 	" . \ 
 	ld bc,00222h		;1157	01 22 02 	. " . 
-	jp l1e23h		;115a	c3 23 1e 	. # . 
+	jp bc_spaces		;115a	c3 23 1e 	. # . 
 sub_115dh:
 	xor a			;115d	af 	. 
 	ld de,l2710h		;115e	11 10 27 	. . ' 
@@ -3658,34 +3654,34 @@ cli_command.list:
 	jr nz,l11f8h		;11dc	20 1a 	  . 
 	ld (sys_ch_add),hl		;11de	22 5d 5c 	" ] \ 
 	call sub_1e0bh		;11e1	cd 0b 1e 	. . . 
-	call sub_1d8ch		;11e4	cd 8c 1d 	. . . 
+	call get_char		;11e4	cd 8c 1d 	. . . 
 	cp 00dh		;11e7	fe 0d 	. . 
 	jr z,l1205h		;11e9	28 1a 	( . 
 	cp 02ch		;11eb	fe 2c 	. , 
 	jp nz,error.wrong_drive_letter		;11ed	c2 1a 1d 	. . . 
-	call sub_1e2ah		;11f0	cd 2a 1e 	. * . 
-	call sub_1dbdh		;11f3	cd bd 1d 	. . . 
+	call next_char		;11f0	cd 2a 1e 	. * . 
+	call expt_exp		;11f3	cd bd 1d 	. . . 
 	jr l11fbh		;11f6	18 03 	. . 
 l11f8h:
-	call sub_1ddfh		;11f8	cd df 1d 	. . . 
+	call parse_expression		;11f8	cd df 1d 	. . . 
 l11fbh:
-	call sub_1d75h		;11fb	cd 75 1d 	. u . 
-	call sub_1db5h		;11fe	cd b5 1d 	. . . 
+	call pop_hl_if_checking_syntax		;11fb	cd 75 1d 	. u . 
+	call stk_fetch		;11fe	cd b5 1d 	. . . 
 	ex de,hl			;1201	eb 	. 
 	call sub_1c81h		;1202	cd 81 1c 	. . . 
 l1205h:
-	call sub_1d75h		;1205	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;1205	cd 75 1d 	. u . 
 	ld a,(variable.temporary_drive)		;1208	3a f6 5c 	: . \ 
 	ld (variable.cat_drive_or_read_verify_flag),a		;120b	32 f9 5c 	2 . \ 
 	call read_system_track		;120e	cd 05 04 	. . . 
 	ld a,(variable.file_size)		;1211	3a db 5c 	: . \ 
 	cp 002h		;1214	fe 02 	. . 
 	push af			;1216	f5 	. 
-	call z,sub_1d97h		;1217	cc 97 1d 	. . . 
+	call z,cls		;1217	cc 97 1d 	. . . 
 	pop af			;121a	f1 	. 
 	cp 011h		;121b	fe 11 	. . 
 	jp nc,error.wrong_drive_letter		;121d	d2 1a 1d 	. . . 
-	call sub_1d84h		;1220	cd 84 1d 	. . . 
+	call chan_open		;1220	cd 84 1d 	. . . 
 	ld a,0ffh		;1223	3e ff 	> . 
 	ld (variable.two_files_drive),a		;1225	32 f8 5c 	2 . \ 
 	call sub_1151h		;1228	cd 51 11 	. Q . 
@@ -3872,10 +3868,10 @@ l1335h:
 	call sub_1da9h		;135c	cd a9 1d 	. . . 
 	ret			;135f	c9 	. 
 l1360h:
-	call sub_1dc5h		;1360	cd c5 1d 	. . . 
-	call sub_1e2ah		;1363	cd 2a 1e 	. * . 
-	call sub_1dbdh		;1366	cd bd 1d 	. . . 
-	call sub_1d75h		;1369	cd 75 1d 	. u . 
+	call point_interpreter_to_command_line		;1360	cd c5 1d 	. . . 
+	call next_char		;1363	cd 2a 1e 	. * . 
+	call expt_exp		;1366	cd bd 1d 	. . . 
+	call pop_hl_if_checking_syntax		;1369	cd 75 1d 	. u . 
 	call sub_166fh		;136c	cd 6f 16 	. o . 
 	ld hl,message.insert_source_disk		;136f	21 aa 27 	! . ' 
 	call print_message_at_HL		;1372	cd 07 27 	. . ' 
@@ -3883,7 +3879,7 @@ l1375h:
 	call get_uppercase_pressed_key		;1375	cd 52 10 	. R . 
 	cp 059h		;1378	fe 59 	. Y 
 	jr nz,l1375h		;137a	20 f9 	  . 
-	call sub_1d9fh		;137c	cd 9f 1d 	. . . 
+	call cls_lower		;137c	cd 9f 1d 	. . . 
 	call sub_102eh		;137f	cd 2e 10 	. . . 
 	call sub_1cb0h		;1382	cd b0 1c 	. . . 
 	jp nz,l03d9h		;1385	c2 d9 03 	. . . 
@@ -3896,7 +3892,7 @@ l1393h:
 	ld (variable.find_command_symbols),a		;1395	32 06 5d 	2 . ] 
 	ld hl,variable.file_start		;1398	21 e6 5c 	! . \ 
 	inc (hl)			;139b	34 	4 
-	call sub_1d97h		;139c	cd 97 1d 	. . . 
+	call cls		;139c	cd 97 1d 	. . . 
 	ld hl,message.insert_source_disk		;139f	21 aa 27 	! . ' 
 	call print_message_at_HL		;13a2	cd 07 27 	. . ' 
 l13a5h:
@@ -3975,14 +3971,14 @@ sub_1451h:
 	ld a,(variable.entered_line_3_first_chars.1)		;1456	3a 21 5d 	: ! ] 
 	or a			;1459	b7 	. 
 	jr nz,l146fh		;145a	20 13 	  . 
-	call sub_1d97h		;145c	cd 97 1d 	. . . 
+	call cls		;145c	cd 97 1d 	. . . 
 	ld hl,message.insert_source_disk		;145f	21 aa 27 	! . ' 
 	call print_message_at_HL		;1462	cd 07 27 	. . ' 
 l1465h:
 	call get_uppercase_pressed_key		;1465	cd 52 10 	. R . 
 	cp 059h		;1468	fe 59 	. Y 
 	jr nz,l1465h		;146a	20 f9 	  . 
-	call sub_1d9fh		;146c	cd 9f 1d 	. . . 
+	call cls_lower		;146c	cd 9f 1d 	. . . 
 l146fh:
 	ld a,(variable.file_2_length_in_sectors)		;146f	3a f1 5c 	: . \ 
 	or a			;1472	b7 	. 
@@ -4006,14 +4002,14 @@ l1484h:
 	call read_sectors		;1493	cd 3d 1e 	. = . 
 	ld hl,(variable.current_sector)		;1496	2a f4 5c 	* . \ 
 	ld (variable.file_2_first_sector),hl		;1499	22 f2 5c 	" . \ 
-	call sub_1d97h		;149c	cd 97 1d 	. . . 
+	call cls		;149c	cd 97 1d 	. . . 
 	ld hl,l2785h		;149f	21 85 27 	! . ' 
 	call print_message_at_HL		;14a2	cd 07 27 	. . ' 
 l14a5h:
 	call get_uppercase_pressed_key		;14a5	cd 52 10 	. R . 
 	cp 059h		;14a8	fe 59 	. Y 
 	jr nz,l14a5h		;14aa	20 f9 	  . 
-	call sub_1d9fh		;14ac	cd 9f 1d 	. . . 
+	call cls_lower		;14ac	cd 9f 1d 	. . . 
 	ld a,(variable.entered_line_3_first_chars.1)		;14af	3a 21 5d 	: ! ] 
 	or a			;14b2	b7 	. 
 	call nz,sub_1403h		;14b3	c4 03 14 	. . . 
@@ -4078,7 +4074,7 @@ l151fh:
 	jp c,error.no_space		;1528	da 45 1c 	. E . 
 	ret			;152b	c9 	. 
 l152ch:
-	call sub_1d75h		;152c	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;152c	cd 75 1d 	. u . 
 	call sub_166fh		;152f	cd 6f 16 	. o . 
 	ld hl,message.backup_disk		;1532	21 79 27 	! y ' 
 	call print_message_at_HL		;1535	cd 07 27 	. . ' 
@@ -4088,7 +4084,7 @@ l153eh:
 	call get_uppercase_pressed_key		;153e	cd 52 10 	. R . 
 	cp 059h		;1541	fe 59 	. Y 
 	jr nz,l153eh		;1543	20 f9 	  . 
-	call sub_1d9fh		;1545	cd 9f 1d 	. . . 
+	call cls_lower		;1545	cd 9f 1d 	. . . 
 	ld a,0ffh		;1548	3e ff 	> . 
 	ld (variable.entered_line_3_first_chars.1),a		;154a	32 21 5d 	2 ! ] 
 	call read_system_track		;154d	cd 05 04 	. . . 
@@ -4140,7 +4136,7 @@ sub_15b8h:
 	ld a,(variable.entered_line_3_first_chars.1)		;15bc	3a 21 5d 	: ! ] 
 	or a			;15bf	b7 	. 
 	jr nz,l15dbh		;15c0	20 19 	  . 
-	call sub_1d97h		;15c2	cd 97 1d 	. . . 
+	call cls		;15c2	cd 97 1d 	. . . 
 	ld hl,message.backup_disk		;15c5	21 79 27 	! y ' 
 	call print_message_at_HL		;15c8	cd 07 27 	. . ' 
 	ld hl,message.insert_source_disk		;15cb	21 aa 27 	! . ' 
@@ -4149,7 +4145,7 @@ l15d1h:
 	call get_uppercase_pressed_key		;15d1	cd 52 10 	. R . 
 	cp 059h		;15d4	fe 59 	. Y 
 	jr nz,l15d1h		;15d6	20 f9 	  . 
-	call sub_1d9fh		;15d8	cd 9f 1d 	. . . 
+	call cls_lower		;15d8	cd 9f 1d 	. . . 
 l15dbh:
 	call sub_15b2h		;15db	cd b2 15 	. . . 
 	ret z			;15de	c8 	. 
@@ -4175,7 +4171,7 @@ l15f8h:
 	call read_sectors		;1605	cd 3d 1e 	. = . 
 	ld hl,(variable.current_sector)		;1608	2a f4 5c 	* . \ 
 	ld (variable.filename.4),hl		;160b	22 e1 5c 	" . \ 
-	call sub_1d97h		;160e	cd 97 1d 	. . . 
+	call cls		;160e	cd 97 1d 	. . . 
 	ld hl,message.backup_disk		;1611	21 79 27 	! y ' 
 	call print_message_at_HL		;1614	cd 07 27 	. . ' 
 	ld hl,l2785h		;1617	21 85 27 	! . ' 
@@ -4184,7 +4180,7 @@ l161dh:
 	call get_uppercase_pressed_key		;161d	cd 52 10 	. R . 
 	cp 059h		;1620	fe 59 	. Y 
 	jr nz,l161dh		;1622	20 f9 	  . 
-	call sub_1d9fh		;1624	cd 9f 1d 	. . . 
+	call cls_lower		;1624	cd 9f 1d 	. . . 
 	ld a,(variable.entered_line_3_first_chars.1)		;1627	3a 21 5d 	: ! ] 
 	or a			;162a	b7 	. 
 	call nz,sub_14f0h		;162b	c4 f0 14 	. . . 
@@ -4233,7 +4229,7 @@ sub_166fh:
 	call sub_1680h		;1674	cd 80 16 	. . . 
 	ld hl,(sys_worksp)		;1677	2a 61 5c 	* a \ 
 	ld (variable.stack_sp_copy),hl		;167a	22 cf 5c 	" . \ 
-	jp l1e23h		;167d	c3 23 1e 	. # . 
+	jp bc_spaces		;167d	c3 23 1e 	. # . 
 sub_1680h:
 	rst 20h			;1680	e7 	. 
 	defw 01f1ah		;1681	1a 1f 	. . 
@@ -4259,7 +4255,7 @@ sub_1697h:
 	ld (variable.ch_add),hl		;16a7	22 d9 5c 	" . \ 
 	ret			;16aa	c9 	. 
 cli_command.move:
-	call sub_1d75h		;16ab	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;16ab	cd 75 1d 	. u . 
 	call sub_166fh		;16ae	cd 6f 16 	. o . 
 	call read_system_track		;16b1	cd 05 04 	. . . 
 	ld a,(05e19h)		;16b4	3a 19 5e 	: . ^ 
@@ -4362,7 +4358,7 @@ l1710h:
 l176ch:
 	ld hl,(variable.stack_sp_copy)		;176c	2a cf 5c 	* . \ 
 	ld bc,message_interface_1_start		;176f	01 00 10 	. . . 
-	call sub_1e2eh		;1772	cd 2e 1e 	. . . 
+	call reclaim_2		;1772	cd 2e 1e 	. . . 
 	call sub_03fdh		;1775	cd fd 03 	. . . 
 	ld hl,(05e0ah)		;1778	2a 0a 5e 	* . ^ 
 	ld de,(variable.ch_add)		;177b	ed 5b d9 5c 	. [ . \ 
@@ -4452,7 +4448,7 @@ cli_command.gosub:
 	call sub_1852h		;1815	cd 52 18 	. R . 
 l1818h:
 	call sub_1836h		;1818	cd 36 18 	. 6 . 
-	call sub_1d75h		;181b	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;181b	cd 75 1d 	. u . 
 	ld a,0ffh		;181e	3e ff 	> . 
 	ld (variable.error_code_msb),a		;1820	32 10 5d 	2 . ] 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;1823	3a f9 5c 	: . \ 
@@ -4464,7 +4460,7 @@ l1818h:
 	jp print_OK_and_exit_DOS		;1833	c3 e1 03 	. . . 
 sub_1836h:
 	call sub_187ah		;1836	cd 7a 18 	. z . 
-	call sub_1d75h		;1839	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;1839	cd 75 1d 	. u . 
 	call sub_18abh		;183c	cd ab 18 	. . . 
 	jp l1921h		;183f	c3 21 19 	. ! . 
 sub_1842h:
@@ -4500,10 +4496,10 @@ l1866h:
 sub_187ah:
 	call sub_042bh		;187a	cd 2b 04 	. + . 
 	jp z,l027bh		;187d	ca 7b 02 	. { . 
-	call sub_1ddfh		;1880	cd df 1d 	. . . 
+	call parse_expression		;1880	cd df 1d 	. . . 
 	call sub_0572h		;1883	cd 72 05 	. r . 
 	call nz,sub_1857h		;1886	c4 57 18 	. W . 
-	call sub_1d8ch		;1889	cd 8c 1d 	. . . 
+	call get_char		;1889	cd 8c 1d 	. . . 
 	cp 0afh		;188c	fe af 	. . 
 	call z,sub_1842h		;188e	cc 42 18 	. B . 
 	cp 0e4h		;1891	fe e4 	. . 
@@ -4512,7 +4508,7 @@ sub_187ah:
 	call z,sub_102eh		;1897	cc 2e 10 	. . . 
 	pop af			;189a	f1 	. 
 	call z,sub_1bfch		;189b	cc fc 1b 	. . . 
-	call sub_1d75h		;189e	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;189e	cd 75 1d 	. u . 
 	call sub_292fh		;18a1	cd 2f 29 	. / ) 
 sub_18a4h:
 	jp nz,l03d9h		;18a4	c2 d9 03 	. . . 
@@ -4665,7 +4661,7 @@ cli_command.merge:
 	ld a,0ffh		;19b1	3e ff 	> . 
 	ld (variable.unknown_23839),a		;19b3	32 1f 5d 	2 . ] 
 	call sub_187ah		;19b6	cd 7a 18 	. z . 
-	call sub_1d75h		;19b9	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;19b9	cd 75 1d 	. u . 
 	ld a,(variable.file_type)		;19bc	3a e5 5c 	: . \ 
 	cp 042h		;19bf	fe 42 	. B 
 	jp nz,error.wrong_drive_letter		;19c1	c2 1a 1d 	. . . 
@@ -4699,7 +4695,7 @@ sub_19f2h:
 	add hl,de			;19fa	19 	. 
 	ld b,h			;19fb	44 	D 
 	ld c,l			;19fc	4d 	M 
-sub_19fdh:
+test_room:
 	rst 20h			;19fd	e7 	. 
 	defw 01f05h		;19fe	05 1f 	. . 
 	ret			;1a00	c9 	. 
@@ -4738,7 +4734,7 @@ l1a31h:
 	rst 20h			;1a38	e7 	. 
 	defw 019e5h		;1a39	e5 19 	. . 
 	pop bc			;1a3b	c1 	. 
-	call sub_1e32h		;1a3c	cd 32 1e 	. 2 . 
+	call make_room		;1a3c	cd 32 1e 	. 2 . 
 	inc hl			;1a3f	23 	# 
 	ld bc,(variable.file_length_in_bytes)		;1a40	ed 4b e8 5c 	. K . \ 
 	add hl,bc			;1a44	09 	. 
@@ -4768,7 +4764,7 @@ sub_1a4ch:
 	inc bc			;1a73	03 	. 
 	inc bc			;1a74	03 	. 
 	inc bc			;1a75	03 	. 
-	call sub_1e2eh		;1a76	cd 2e 1e 	. . . 
+	call reclaim_2		;1a76	cd 2e 1e 	. . . 
 l1a79h:
 	ld hl,(sys_e_line)		;1a79	2a 59 5c 	* Y \ 
 	dec hl			;1a7c	2b 	+ 
@@ -4777,7 +4773,7 @@ l1a79h:
 	inc bc			;1a82	03 	. 
 	inc bc			;1a83	03 	. 
 	inc bc			;1a84	03 	. 
-	call sub_1e32h		;1a85	cd 32 1e 	. 2 . 
+	call make_room		;1a85	cd 32 1e 	. 2 . 
 	inc hl			;1a88	23 	# 
 	ld a,(variable.basic_program_autostart.high)		;1a89	3a d2 5c 	: . \ 
 	ld (hl),a			;1a8c	77 	w 
@@ -4830,14 +4826,14 @@ cli_command.save:
 	call sub_1852h		;1ad0	cd 52 18 	. R . 
 	ld hl,l0000h		;1ad3	21 00 00 	! . . 
 	ld (variable.basic_program_autostart),hl		;1ad6	22 d1 5c 	" . \ 
-	call sub_1ddfh		;1ad9	cd df 1d 	. . . 
-	call sub_1d8ch		;1adc	cd 8c 1d 	. . . 
+	call parse_expression		;1ad9	cd df 1d 	. . . 
+	call get_char		;1adc	cd 8c 1d 	. . . 
 	cp 0afh		;1adf	fe af 	. . 
 	jr z,l1b39h		;1ae1	28 56 	( V 
 	cp 0cah		;1ae3	fe ca 	. . 
 	jr nz,l1af8h		;1ae5	20 11 	  . 
 	call sub_1e0bh		;1ae7	cd 0b 1e 	. . . 
-	call sub_1d75h		;1aea	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;1aea	cd 75 1d 	. u . 
 	ld hl,(variable.file_size)		;1aed	2a db 5c 	* . \ 
 	ld (variable.basic_program_autostart),hl		;1af0	22 d1 5c 	" . \ 
 	ld hl,variable.file_type		;1af3	21 e5 5c 	! . \ 
@@ -4852,8 +4848,8 @@ l1af8h:
 	ld (variable.file_size),hl		;1b08	22 db 5c 	" . \ 
 	jr l1b48h		;1b0b	18 3b 	. ; 
 l1b0dh:
-	call sub_1d75h		;1b0d	cd 75 1d 	. u . 
-	call sub_1d8ch		;1b10	cd 8c 1d 	. . . 
+	call pop_hl_if_checking_syntax		;1b0d	cd 75 1d 	. u . 
+	call get_char		;1b10	cd 8c 1d 	. . . 
 	ld hl,variable.file_type		;1b13	21 e5 5c 	! . \ 
 	cp 0e4h		;1b16	fe e4 	. . 
 	jr z,l1b2ch		;1b18	28 12 	( . 
@@ -4862,7 +4858,7 @@ l1b0dh:
 l1b1fh:
 	ld (hl),042h		;1b1f	36 42 	6 B 
 	call sub_1abeh		;1b21	cd be 1a 	. . . 
-	call sub_1e1ch		;1b24	cd 1c 1e 	. . . 
+	call remove_fp		;1b24	cd 1c 1e 	. . . 
 l1b27h:
 	call sub_1bdeh		;1b27	cd de 1b 	. . . 
 	jr l1b53h		;1b2a	18 27 	. ' 
@@ -4879,7 +4875,7 @@ l1b39h:
 	ld hl,(variable.file_size)		;1b42	2a db 5c 	* . \ 
 	ld (variable.ch_add),hl		;1b45	22 d9 5c 	" . \ 
 l1b48h:
-	call sub_1d75h		;1b48	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;1b48	cd 75 1d 	. u . 
 	ld a,043h		;1b4b	3e 43 	> C 
 	ld (variable.file_type),a		;1b4d	32 e5 5c 	2 . \ 
 	call sub_1abeh		;1b50	cd be 1a 	. . . 
@@ -4984,8 +4980,8 @@ l1c13h:
 	ld hl,message.array_not_found		;1c15	21 dd 27 	! . ' 
 	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;1c18	c3 4a 1c 	. J . 
 sub_1c1bh:
-	call sub_1e2ah		;1c1b	cd 2a 1e 	. * . 
-	call sub_1d9bh		;1c1e	cd 9b 1d 	. . . 
+	call next_char		;1c1b	cd 2a 1e 	. * . 
+	call look_vars		;1c1e	cd 9b 1d 	. . . 
 	set 7,c		;1c21	cb f9 	. . 
 	ld a,c			;1c23	79 	y 
 	ld (variable.basic_program_autostart.high),a		;1c24	32 d2 5c 	2 . \ 
@@ -5003,7 +4999,7 @@ l1c2bh:
 	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1c32	22 d7 5c 	" . \ 
 	ld (variable.file_size),de		;1c35	ed 53 db 5c 	. S . \ 
 	ld (variable.ch_add),de		;1c39	ed 53 d9 5c 	. S . \ 
-	call sub_1e2ah		;1c3d	cd 2a 1e 	. * . 
+	call next_char		;1c3d	cd 2a 1e 	. * . 
 	cp 029h		;1c40	fe 29 	. ) 
 	jr nz,l1c2bh		;1c42	20 e7 	  . 
 	ret			;1c44	c9 	. 
@@ -5130,7 +5126,7 @@ find_file:
 	ld (hl),0ffh		;1cf8	36 ff 	6 . 
 	ret			;1cfa	c9 	. 
 cli_command.return:
-	call sub_1d75h		;1cfb	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;1cfb	cd 75 1d 	. u . 
 	call sub_20e5h		;1cfe	cd e5 20 	. .   
 	res 3,(iy+001h)		;1d01	fd cb 01 9e 	. . . . 
 	call sub_0232h		;1d05	cd 32 02 	. 2 . 
@@ -5172,7 +5168,7 @@ l1d2fh:
 cli_command.run:
 	call sub_1852h		;1d4d	cd 52 18 	. R . 
 	call sub_1836h		;1d50	cd 36 18 	. 6 . 
-	call sub_1d75h		;1d53	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;1d53	cd 75 1d 	. u . 
 	ld hl,(variable.file_start)		;1d56	2a e6 5c 	* . \ 
 	ld a,(variable.file_type)		;1d59	3a e5 5c 	: . \ 
 	cp 042h		;1d5c	fe 42 	. B 
@@ -5188,45 +5184,45 @@ sub_1d63h:
 	rst 20h			;1d6c	e7 	. 
 	defw 016bfh		;1d6d	bf 16 	. . 
 	ret			;1d6f	c9 	. 
-sub_1d70h:
+z_if_checking_syntax:
 	bit 7,(iy+001h)		;1d70	fd cb 01 7e 	. . . ~ 
 	ret			;1d74	c9 	. 
-sub_1d75h:
-	call sub_1d70h		;1d75	cd 70 1d 	. p . 
+pop_hl_if_checking_syntax:
+	call z_if_checking_syntax		;1d75	cd 70 1d 	. p . 
 	ret nz			;1d78	c0 	. 
 	pop hl			;1d79	e1 	. 
 	ret			;1d7a	c9 	. 
 sub_1d7bh:
-	call sub_1e2ah		;1d7b	cd 2a 1e 	. * . 
-	call sub_1dc1h		;1d7e	cd c1 1d 	. . . 
-	jr sub_1d70h		;1d81	18 ed 	. . 
-sub_1d83h:
+	call next_char		;1d7b	cd 2a 1e 	. * . 
+	call expt_1num		;1d7e	cd c1 1d 	. . . 
+	jr z_if_checking_syntax		;1d81	18 ed 	. . 
+open_channel_0:
 	xor a			;1d83	af 	. 
-sub_1d84h:
+chan_open:
 	rst 20h			;1d84	e7 	. 
 	defw 01601h		;1d85	01 16 	. . 
 	ret			;1d87	c9 	. 
-sub_1d88h:
+open_channel_2:
 	ld a,002h		;1d88	3e 02 	> . 
-	jr sub_1d84h		;1d8a	18 f8 	. . 
-sub_1d8ch:
+	jr chan_open		;1d8a	18 f8 	. . 
+get_char:
 	rst 20h			;1d8c	e7 	. 
 	defw 00018h		;1d8d	18 00 	. . 
 	ret			;1d8f	c9 	. 
-l1d90h:
-	call sub_1d83h		;1d90	cd 83 1d 	. . . 
+editor:
+	call open_channel_0		;1d90	cd 83 1d 	. . . 
 	rst 20h			;1d93	e7 	. 
 	defw 00f2ch		;1d94	2c 0f 	, . 
 	ret			;1d96	c9 	. 
-sub_1d97h:
+cls:
 	rst 20h			;1d97	e7 	. 
 	defw 00d6bh		;1d98	6b 0d 	k . 
 	ret			;1d9a	c9 	. 
-sub_1d9bh:
+look_vars:
 	rst 20h			;1d9b	e7 	. 
 	defw 028b2h		;1d9c	b2 28 	. ( 
 	ret			;1d9e	c9 	. 
-sub_1d9fh:
+cls_lower:
 	rst 20h			;1d9f	e7 	. 
 	defw 00d6eh		;1da0	6e 0d 	n . 
 	ret			;1da2	c9 	. 
@@ -5243,84 +5239,84 @@ sub_1da9h:
 	defw 01a1bh		;1daf	1b 1a 	. . 
 	call sub_20f1h		;1db1	cd f1 20 	. .   
 	ret			;1db4	c9 	. 
-sub_1db5h:
+stk_fetch:
 	rst 20h			;1db5	e7 	. 
 	defw 02bf1h		;1db6	f1 2b 	. + 
 	ret			;1db8	c9 	. 
-sub_1db9h:
+find_int2:
 	rst 20h			;1db9	e7 	. 
 	defw 01e99h		;1dba	99 1e 	. . 
 	ret			;1dbc	c9 	. 
-sub_1dbdh:
+expt_exp:
 	rst 20h			;1dbd	e7 	. 
 	defw 01c8ch		;1dbe	8c 1c 	. . 
 	ret			;1dc0	c9 	. 
-sub_1dc1h:
+expt_1num:
 	rst 20h			;1dc1	e7 	. 
 	defw 01c82h		;1dc2	82 1c 	. . 
 	ret			;1dc4	c9 	. 
-sub_1dc5h:
+point_interpreter_to_command_line:
 	ld hl,(variable.command_line_address)		;1dc5	2a 11 5d 	* . ] 
 	inc hl			;1dc8	23 	# 
 	ld (sys_ch_add),hl		;1dc9	22 5d 5c 	" ] \ 
 	ret			;1dcc	c9 	. 
 sub_1dcdh:
-	call sub_1ddfh		;1dcd	cd df 1d 	. . . 
+	call parse_expression		;1dcd	cd df 1d 	. . . 
 sub_1dd0h:
-	call sub_1d8ch		;1dd0	cd 8c 1d 	. . . 
+	call get_char		;1dd0	cd 8c 1d 	. . . 
 	cp 02ch		;1dd3	fe 2c 	. , 
 	jp nz,error.wrong_drive_letter		;1dd5	c2 1a 1d 	. . . 
-	call sub_1e2ah		;1dd8	cd 2a 1e 	. * . 
-	call sub_1dbdh		;1ddb	cd bd 1d 	. . . 
+	call next_char		;1dd8	cd 2a 1e 	. * . 
+	call expt_exp		;1ddb	cd bd 1d 	. . . 
 	ret			;1dde	c9 	. 
-sub_1ddfh:
-	call sub_1dc5h		;1ddf	cd c5 1d 	. . . 
-	jp sub_1dbdh		;1de2	c3 bd 1d 	. . . 
+parse_expression:
+	call point_interpreter_to_command_line		;1ddf	cd c5 1d 	. . . 
+	jp expt_exp		;1de2	c3 bd 1d 	. . . 
 sub_1de5h:
-	call sub_1d8ch		;1de5	cd 8c 1d 	. . . 
+	call get_char		;1de5	cd 8c 1d 	. . . 
 	cp 0afh		;1de8	fe af 	. . 
 	ret nz			;1dea	c0 	. 
 sub_1debh:
 	call sub_1d7bh		;1deb	cd 7b 1d 	. { . 
 	jr z,l1dfbh		;1dee	28 0b 	( . 
-	call sub_1db9h		;1df0	cd b9 1d 	. . . 
+	call find_int2		;1df0	cd b9 1d 	. . . 
 	ld (variable.ch_add),bc		;1df3	ed 43 d9 5c 	. C . \ 
 	ld (variable.file_size),bc		;1df7	ed 43 db 5c 	. C . \ 
 l1dfbh:
-	call sub_1d8ch		;1dfb	cd 8c 1d 	. . . 
+	call get_char		;1dfb	cd 8c 1d 	. . . 
 	cp 02ch		;1dfe	fe 2c 	. , 
 	jr z,sub_1e0bh		;1e00	28 09 	( . 
 	cp 00dh		;1e02	fe 0d 	. . 
 	jp nz,error.wrong_drive_letter		;1e04	c2 1a 1d 	. . . 
-	call sub_1d75h		;1e07	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;1e07	cd 75 1d 	. u . 
 	ret			;1e0a	c9 	. 
 sub_1e0bh:
 	call sub_1d7bh		;1e0b	cd 7b 1d 	. { . 
 	ret z			;1e0e	c8 	. 
-	call sub_1db9h		;1e0f	cd b9 1d 	. . . 
+	call find_int2		;1e0f	cd b9 1d 	. . . 
 	ld (variable.file_size),bc		;1e12	ed 43 db 5c 	. C . \ 
 	ld a,003h		;1e16	3e 03 	> . 
 	ld (variable.move_command_first_track),a		;1e18	32 d6 5c 	2 . \ 
 	ret			;1e1b	c9 	. 
-sub_1e1ch:
+remove_fp:
 	ld hl,(variable.command_line_address)		;1e1c	2a 11 5d 	* . ] 
 	rst 20h			;1e1f	e7 	. 
 	defw 011a7h		;1e20	a7 11 	. . 
 	ret			;1e22	c9 	. 
-l1e23h:
+bc_spaces:
 	ld hl,(sys_worksp)		;1e23	2a 61 5c 	* a \ 
 	rst 20h			;1e26	e7 	. 
 	defw 00030h		;1e27	30 00 	0 . 
 	ret			;1e29	c9 	. 
-sub_1e2ah:
+next_char:
 	rst 20h			;1e2a	e7 	. 
 	defw 00020h		;1e2b	20 00 	  . 
 	ret			;1e2d	c9 	. 
-sub_1e2eh:
+reclaim_2:
 	rst 20h			;1e2e	e7 	. 
 	defw 019e8h		;1e2f	e8 19 	. . 
 	ret			;1e31	c9 	. 
-sub_1e32h:
+make_room:
 	rst 20h			;1e32	e7 	. 
 	defw 01655h		;1e33	55 16 	U . 
 	ret			;1e35	c9 	. 
@@ -5422,8 +5418,8 @@ cli_command.format:
 	ld (variable.basic_program_autostart),hl		;1ecb	22 d1 5c 	" . \ 
 	call sub_042bh		;1ece	cd 2b 04 	. + . 
 	jp z,error.wrong_drive_letter		;1ed1	ca 1a 1d 	. . . 
-	call sub_1ddfh		;1ed4	cd df 1d 	. . . 
-	call sub_1d75h		;1ed7	cd 75 1d 	. u . 
+	call parse_expression		;1ed4	cd df 1d 	. . . 
+	call pop_hl_if_checking_syntax		;1ed7	cd 75 1d 	. u . 
 	call sub_1c57h		;1eda	cd 57 1c 	. W . 
 	call sub_3e11h		;1edd	cd 11 3e 	. . > 
 	and 080h		;1ee0	e6 80 	. . 
@@ -5761,16 +5757,16 @@ sub_2135h:
 	rst 10h			;214f	d7 	. 
 	ld hl,sys_err_nr		;2150	21 3a 5c 	! : \ 
 	ld (hl),0ffh		;2153	36 ff 	6 . 
-	jp l1d90h		;2155	c3 90 1d 	. . . 
+	jp editor		;2155	c3 90 1d 	. . . 
 sub_2158h:
-	call sub_1e2ah		;2158	cd 2a 1e 	. * . 
-	call sub_1d8ch		;215b	cd 8c 1d 	. . . 
+	call next_char		;2158	cd 2a 1e 	. * . 
+	call get_char		;215b	cd 8c 1d 	. . . 
 	cp 02ch		;215e	fe 2c 	. , 
 	jp nz,error.wrong_drive_letter		;2160	c2 1a 1d 	. . . 
 	ld hl,(variable.file_size)		;2163	2a db 5c 	* . \ 
 	ld (variable.ch_add),hl		;2166	22 d9 5c 	" . \ 
 	call sub_1e0bh		;2169	cd 0b 1e 	. . . 
-	call sub_1d75h		;216c	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;216c	cd 75 1d 	. u . 
 	ld hl,(variable.file_size)		;216f	2a db 5c 	* . \ 
 	ld a,h			;2172	7c 	| 
 	or a			;2173	b7 	. 
@@ -5786,10 +5782,10 @@ cli_command.open_channel:
 	call sub_1e0bh		;2188	cd 0b 1e 	. . . 
 	call sub_1dd0h		;218b	cd d0 1d 	. . . 
 l218eh:
-	call sub_1d8ch		;218e	cd 8c 1d 	. . . 
+	call get_char		;218e	cd 8c 1d 	. . . 
 	cp 041h		;2191	fe 41 	. A 
 	jr nc,l219ah		;2193	30 05 	0 . 
-	call sub_1e2ah		;2195	cd 2a 1e 	. * . 
+	call next_char		;2195	cd 2a 1e 	. * . 
 	jr l218eh		;2198	18 f4 	. . 
 l219ah:
 	cp 0a5h		;219a	fe a5 	. . 
@@ -5804,7 +5800,7 @@ l219ah:
 	jp nz,error.wrong_drive_letter		;21ab	c2 1a 1d 	. . . 
 l21aeh:
 	ld (05d09h),a		;21ae	32 09 5d 	2 . ] 
-	call sub_1d75h		;21b1	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;21b1	cd 75 1d 	. u . 
 	ld a,023h		;21b4	3e 23 	> # 
 	ld (variable.file_type),a		;21b6	32 e5 5c 	2 . \ 
 	ld a,000h		;21b9	3e 00 	> . 
@@ -5856,19 +5852,19 @@ sub_220fh:
 	defw 01727h		;2213	27 17 	' . 
 	ld a,b			;2215	78 	x 
 	or c			;2216	b1 	. 
-	jp nz,l221bh		;2217	c2 1b 22 	. . " 
+	jp nz,error.stream_opened		;2217	c2 1b 22 	. . " 
 	ret			;221a	c9 	. 
-l221bh:
+error.stream_opened:
 	ld a,019h		;221b	3e 19 	> . 
 	ld (sys_err_nr),a		;221d	32 3a 5c 	2 : \ 
 	ld hl,message.stream_opened		;2220	21 04 28 	! . ( 
 	ld a,00ah		;2223	3e 0a 	> . 
-l2225h:
+jp_print_error_number_A_whose_message_is_at_HL:
 	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;2225	c3 4a 1c 	. J . 
 l2228h:
 	ld a,00bh		;2228	3e 0b 	> . 
 	ld hl,message.not_disk_file		;222a	21 12 28 	! . ( 
-	jr l2225h		;222d	18 f6 	. . 
+	jr jp_print_error_number_A_whose_message_is_at_HL		;222d	18 f6 	. . 
 sub_222fh:
 	push hl			;222f	e5 	. 
 	ld c,020h		;2230	0e 20 	.   
@@ -5950,7 +5946,7 @@ sub_22b2h:
 	ld (sys_curchl),hl		;22b6	22 51 5c 	" Q \ 
 	push hl			;22b9	e5 	. 
 	ld bc,l0124h		;22ba	01 24 01 	. $ . 
-	call sub_1e32h		;22bd	cd 32 1e 	. 2 . 
+	call make_room		;22bd	cd 32 1e 	. 2 . 
 	ld a,000h		;22c0	3e 00 	> . 
 	ld b,000h		;22c2	06 00 	. . 
 l22c4h:
@@ -6335,7 +6331,7 @@ sub_24f8h:
 	ld hl,(sys_worksp)		;24f8	2a 61 5c 	* a \ 
 	ld (variable.stack_sp_copy),hl		;24fb	22 cf 5c 	" . \ 
 	ld bc,rst_10		;24fe	01 10 00 	. . . 
-	jp l1e23h		;2501	c3 23 1e 	. # . 
+	jp bc_spaces		;2501	c3 23 1e 	. # . 
 sub_2504h:
 	ld (hl),00dh		;2504	36 0d 	6 . 
 	ld hl,(sys_ch_add)		;2506	2a 5d 5c 	* ] \ 
@@ -6344,13 +6340,13 @@ sub_2504h:
 	ld (sys_ch_add),hl		;250f	22 5d 5c 	" ] \ 
 	ld hl,sys_flags		;2512	21 3b 5c 	! ; \ 
 	res 7,(hl)		;2515	cb be 	. . 
-	call sub_1dc1h		;2517	cd c1 1d 	. . . 
+	call expt_1num		;2517	cd c1 1d 	. . . 
 	ld hl,sys_flags		;251a	21 3b 5c 	! ; \ 
 	set 7,(hl)		;251d	cb fe 	. . 
 	ld hl,(variable.stack_sp_copy)		;251f	2a cf 5c 	* . \ 
 	ld (sys_ch_add),hl		;2522	22 5d 5c 	" ] \ 
-	call sub_1dc1h		;2525	cd c1 1d 	. . . 
-	call sub_1db9h		;2528	cd b9 1d 	. . . 
+	call expt_1num		;2525	cd c1 1d 	. . . 
+	call find_int2		;2528	cd b9 1d 	. . . 
 	push bc			;252b	c5 	. 
 	pop de			;252c	d1 	. 
 	ld c,020h		;252d	0e 20 	.   
@@ -6524,7 +6520,7 @@ cli_command.close_channel:
 	ld hl,(variable.command_line_address)		;2656	2a 11 5d 	* . ] 
 	ld (sys_ch_add),hl		;2659	22 5d 5c 	" ] \ 
 	call sub_1e0bh		;265c	cd 0b 1e 	. . . 
-	call sub_1d75h		;265f	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;265f	cd 75 1d 	. u . 
 	ld a,(variable.file_size)		;2662	3a db 5c 	: . \ 
 	rst 20h			;2665	e7 	. 
 	defw 01727h		;2666	27 17 	' . 
@@ -6550,7 +6546,7 @@ cli_command.close_channel:
 	call sub_26ceh		;268c	cd ce 26 	. . & 
 	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;268f	2a d7 5c 	* . \ 
 	ld bc,l0124h		;2692	01 24 01 	. $ . 
-	call sub_1e2eh		;2695	cd 2e 1e 	. . . 
+	call reclaim_2		;2695	cd 2e 1e 	. . . 
 	ld hl,sys_strms		;2698	21 10 5c 	! . \ 
 	ld b,010h		;269b	06 10 	. . 
 l269dh:
@@ -6644,6 +6640,7 @@ error.no_disk:
 error.directory_full:
 	ld hl,message.directory_full		;2723	21 ed 27 	! . ' 
 	ld a,004h		;2726	3e 04 	> . 
+error.not_disk_file:
 	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;2728	c3 4a 1c 	. J . 
 sub_272bh:
 	ld a,01ah		;272b	3e 1a 	> . 
@@ -7078,12 +7075,12 @@ sub_294ah:
 	push hl			;2955	e5 	. 
 	ld bc,l0100h+1		;2956	01 01 01 	. . . 
 	push bc			;2959	c5 	. 
-	call sub_19fdh		;295a	cd fd 19 	. . . 
+	call test_room		;295a	cd fd 19 	. . . 
 	pop bc			;295d	c1 	. 
 	pop hl			;295e	e1 	. 
 	ld (hl),000h		;295f	36 00 	6 . 
 	ld hl,variable.tmp_buffer_address		;2961	21 25 5d 	! % ] 
-	call sub_1e32h		;2964	cd 32 1e 	. 2 . 
+	call make_room		;2964	cd 32 1e 	. 2 . 
 	ld hl,(variable.command_line_address)		;2967	2a 11 5d 	* . ] 
 	ld bc,l0100h+1		;296a	01 01 01 	. . . 
 	add hl,bc			;296d	09 	. 
@@ -7100,7 +7097,7 @@ sub_2970h:
 	ld (hl),0ffh		;297b	36 ff 	6 . 
 	ld hl,variable.tmp_buffer_address		;297d	21 25 5d 	! % ] 
 	ld bc,l0100h+1		;2980	01 01 01 	. . . 
-	call sub_1e2eh		;2983	cd 2e 1e 	. . . 
+	call reclaim_2		;2983	cd 2e 1e 	. . . 
 	or a			;2986	b7 	. 
 	ld bc,l0100h+1		;2987	01 01 01 	. . . 
 	ld hl,(variable.command_line_address)		;298a	2a 11 5d 	* . ] 
@@ -7117,7 +7114,7 @@ cli_command.4:
 	xor a			;2997	af 	. 
 set_number_of_tracks:
 	ld (variable.start_file_parameter_or_number_of_tracks),a		;2998	32 d7 5c 	2 . \ 
-	call sub_1d75h		;299b	cd 75 1d 	. u . 
+	call pop_hl_if_checking_syntax		;299b	cd 75 1d 	. u . 
 	call sub_042bh		;299e	cd 2b 04 	. + . 
 	jp z,error.wrong_drive_letter		;29a1	ca 1a 1d 	. . . 
 	call sub_3e11h		;29a4	cd 11 3e 	. . > 
@@ -7749,8 +7746,8 @@ sub_2d92h:
 	call read_sectors		;2d9d	cd 3d 1e 	. = . 
 	ret			;2da0	c9 	. 
 cli_command.go_to:
-	call sub_1ddfh		;2da1	cd df 1d 	. . . 
-	call sub_1d75h		;2da4	cd 75 1d 	. u . 
+	call parse_expression		;2da1	cd df 1d 	. . . 
+	call pop_hl_if_checking_syntax		;2da4	cd 75 1d 	. u . 
 	call sub_102eh		;2da7	cd 2e 10 	. . . 
 	call sub_1c57h		;2daa	cd 57 1c 	. W . 
 	ld (04020h),bc		;2dad	ed 43 20 40 	. C   @ 
@@ -7813,8 +7810,8 @@ l2e05h:
 	pop af			;2e23	f1 	. 
 	pop bc			;2e24	c1 	. 
 	jr l2e39h		;2e25	18 12 	. . 
-	call sub_1ddfh		;2e27	cd df 1d 	. . . 
-	call sub_1d75h		;2e2a	cd 75 1d 	. u . 
+	call parse_expression		;2e27	cd df 1d 	. . . 
+	call pop_hl_if_checking_syntax		;2e2a	cd 75 1d 	. u . 
 	call sub_102eh		;2e2d	cd 2e 10 	. . . 
 	call sub_292fh		;2e30	cd 2f 29 	. / ) 
 l2e33h:
@@ -11412,13 +11409,13 @@ print_character_in_A:
 	push af			;3d85	f5 	. 
 	call sub_20f1h		;3d86	cd f1 20 	. .   
 	pop af			;3d89	f1 	. 
-	call sub_3d94h		;3d8a	cd 94 3d 	. . = 
+	call print_a		;3d8a	cd 94 3d 	. . = 
 	call sub_20f1h		;3d8d	cd f1 20 	. .   
 	pop de			;3d90	d1 	. 
 	pop bc			;3d91	c1 	. 
 	pop hl			;3d92	e1 	. 
 	ret			;3d93	c9 	. 
-sub_3d94h:
+print_a:
 	rst 20h			;3d94	e7 	. 
 	defw 00010h		;3d95	10 00 	. . 
 	ret			;3d97	c9 	. 
@@ -11717,7 +11714,7 @@ l3f4bh:
 	ret z			;3f5e	c8 	. 
 l3f5fh:
 	push hl			;3f5f	e5 	. 
-	call sub_1d97h		;3f60	cd 97 1d 	. . . 
+	call cls		;3f60	cd 97 1d 	. . . 
 	pop hl			;3f63	e1 	. 
 	rst 18h			;3f64	df 	. 
 	ld hl,message.cr.trk		;3f65	21 13 2a 	! . * 
