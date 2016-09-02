@@ -3,20 +3,22 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201609021744
+" Last modified 201609021837
 
 " ==============================================================
 " History
 
 " 2016-08-19: Start.
 "
-" 2016-08-20: Remove unused ROM routines. Add `include` for ROM routines.
-" Clear the messages.
+" 2016-08-20: Remove unused ROM routines. Add `include` for ROM
+" routines.  Clear the messages.
 "
 " 2016-09-01: Label the token commands. Clear the key
 " comparisons. Update the requirements.
 "
-" 2016-09-02: Remove wrong labels. Restore literals.
+" 2016-09-02: Remove wrong labels. Restore literals. Clear drive
+" letters. Generalize the clearing of key comparisons to letters
+" and complete it.
 
 " ==============================================================
 
@@ -172,68 +174,81 @@ function! ClearFileTypes()
   call Report('Clearing file types...')
   call cursor(1,1)
   call search(';05b7')
-  silent substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  silent substitute@023h.\+$@"#" ; data file type?@
   call search(';06fc')
-  silent substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  silent substitute@023h.\+$@"#" ; data file type?@
   call search(';102e')
-  silent substitute@ld\sb,043h.\+$@ld b,"C" ; file type: code@
+  silent substitute@043h.\+$@"C" ; file type: code@
   call search(';103b')
-  silent substitute@ld\sb,043h.\+$@ld b,"C" ; file type: code@
+  silent substitute@043h.\+$@"C" ; file type: code@
   call search(';1041')
-  silent substitute@ld\sb,044h.\+$@ld b,"D" ; file type: array@
+  silent substitute@044h.\+$@"D" ; file type: array@
   call search(';1045')
-  silent substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  silent substitute@023h.\+$@"#" ; data file type?@
   call search(';1047')
-  silent substitute@ld\sb,023h.\+$@ld b,"#" ; file type: data@
+  silent substitute@023h.\+$@"#" ; file type: data@
   call search(';104b')
-  silent substitute@ld\sb,042h.\+$@ld b,"B" ; file type: BASIC@
+  silent substitute@042h.\+$@"B" ; file type: BASIC@
   call search(';138e')
-  silent substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  silent substitute@023h.\+$@"#" ; data file type?@
   call search(';182e')
-  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@042h.\+$@"B" ; BASIC file type?@
   call search(';18d3')
-  silent substitute@cp\s043h.\+$@cp "C" ; code file type?@
+  silent substitute@043h.\+$@"C" ; code file type?@
   call search(';1901')
-  silent substitute@cp\s043h.\+$@cp "C" ; code file type?@
+  silent substitute@043h.\+$@"C" ; code file type?@
   call search(';1906')
-  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@042h.\+$@"B" ; BASIC file type?@
   call search(';190d')
-  silent substitute@cp\s044h.\+$@cp "D" ; array file type?@
+  silent substitute@044h.\+$@"D" ; array file type?@
   call search(';19bf')
-  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@042h.\+$@"B" ; BASIC file type?@
+  call search(';1b1f')
+  silent substitute@042h.\+$@"B" ; file type: BASIC@
+  call search(';1b2c')
+  silent substitute@044h.\+$@"D" ; file type: array@
   call search(';1b4b')
-  silent substitute@ld\sa,043h.\+$@ld a,"C" ; file type: code@
+  silent substitute@043h.\+$@"C" ; file type: code@
   call search(';1bc2')
-  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@042h.\+$@"B" ; BASIC file type?@
   call search(';1d5c')
-  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@042h.\+$@"B" ; BASIC file type?@
+  call search(';22d8')
+  silent substitute@044h.\+$@"D" ; file type: array -- XXX TODO -- confirm@
 endfunction
 
-function! ClearKeyComparisons()
-  call Report('Clearing key comparisons...')
+function! ClearLetterComparisons()
+  call Report('Clearing letter comparisons...')
   call cursor(1,1)
   call search(';05a1')
-  silent substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@059h.\+$@"Y" ; Yes?@
+  call search(';0697')
+  silent substitute@053h.\+@"S" ; `COPY s`?@
+  call search(';069c')
+  silent substitute@042h.\+@"B" ; `COPY b`?@
   call search(';1378')
-  silent substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';13a8')
-  silent substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';1468')
-  silent substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';14a8')
-  silent substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';1541')
-  silent substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';15d4')
-  silent substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';1620')
-  silent substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@059h.\+$@"Y" ; Yes?@
+  call search(';2191')
+  silent substitute@041h.\+@"A"@
   call search(';3f7e')
-  silent substitute@cp\s049h.\+$@cp "I"@
+  silent substitute@049h.\+$@"I" ; Ignore?@
   call search(';3f81')
-  silent substitute@cp\s052h.\+$@cp "R"@
+  silent substitute@052h.\+$@"R" ; Retry?@
   call search(';3f85')
-  silent substitute@cp\s041h.\+$@cp "A"@
+  silent substitute@041h.\+$@"A" ; Abort?@
+
 endfunction
 
 function! ConvertHexNumbersNotation()
@@ -314,13 +329,40 @@ function! RemoveWrongLabels()
 
 endfunction
 
+function! ClearDriveLetter(address)
+
+  " Clear a reference to drive 'A' at the given address.
+
+  call search(';'.a:address)
+  execute 'silent substitute@041h@"A" ; first drive letter@'
+
+endfunction
+
+function! ClearDriveLetters()
+
+  " Clear all references to drive 'A'.
+  "
+  " Note: calls to `ClearDriveLetter()` must be in address
+  " order.
+
+  call Report('Clearing drive letters...')
+  call cursor(1,1)
+  call ClearDriveLetter('04bf')
+  call ClearDriveLetter('0526')
+  call ClearDriveLetter('0588')
+  call ClearDriveLetter('1252')
+  call ClearDriveLetter('214a')
+  
+endfunction
+
 function! Tidier()
 
   call AddRst20Labels()
   call LabelTokenCommands()
   call ClearFileTypes()
   call ClearMessages()
-  call ClearKeyComparisons()
+  call ClearLetterComparisons()
+  call ClearDriveLetters()
   call RemoveWrongLabels()
   call RestoreLiterals()
 

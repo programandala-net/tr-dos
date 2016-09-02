@@ -184,7 +184,7 @@ l0047h:
   ex de,hl
   ld sp,0x6000
   ld (0x5F00),hl
-  ld hl,0x0079
+  ld hl,l0079h
   push hl
   ld hl,entry.call_pushed_address
   push hl
@@ -199,6 +199,7 @@ l0069h:
   pop af
   ld hl,(0x5F00)
   jp 0x5F10
+l0079h:
   ex de,hl
   inc hl
   ld (sys_udg),hl
@@ -794,7 +795,7 @@ l04b6h:
   call sub_04f6h
   call sub_3d80h
   ld a,(variable.temporary_drive)
-  add a,0x41
+  add a,"A" ; first drive letter
   rst 10h
   ld b,0x02
 l04c4h:
@@ -864,7 +865,7 @@ l0517h:
   ret
 check_drive_letter_and_convert_to_number:
   and 0xDF
-  sbc a,0x41
+  sbc a,"A" ; first drive letter
   jp c,error.wrong_drive_letter
   cp 0x04
   jp nc,error.wrong_drive_letter
@@ -912,7 +913,7 @@ sub_0581h:
   push bc
   call cls
   ld a,(variable.temporary_drive)
-  add a,0x41
+  add a,"A" ; first drive letter
   call print_character_in_A
   ld a,0x3A
   call print_character_in_A
@@ -921,7 +922,7 @@ sub_0581h:
   ld hl,message.file_exists
   call print_message_at_HL
   call get_uppercase_pressed_key
-  cp "Y"
+  cp "Y" ; Yes?
   push af
   call cls
   pop af
@@ -1034,10 +1035,10 @@ cli_command.copy:
   inc hl
   ld a,(hl)
   and 0xDF
-  cp 0x53
-  jp z,l1360h
-  cp 0x42
-  jp z,l152ch
+  cp "S" ; `COPY s`?
+  jp z,cli_command.copy_s
+  cp "B" ; `COPY b`?
+  jp z,cli_command.copy_b
   call sub_1dcdh
   call pop_hl_if_checking_syntax
   call sub_166fh
@@ -3571,7 +3572,7 @@ l1168h:
   call sub_11a8h
   add hl,de
   xor a
-  ld de,sub_03e8h
+  ld de,1000
 l1172h:
   sbc hl,de
   jr c,l1179h
@@ -3689,7 +3690,7 @@ l123eh:
   ld hl,l10bah
   rst 18h
   ld a,(variable.temporary_drive)
-  add a,0x41
+  add a,"A" ; first drive letter
   call print_character_in_A
   call sub_3d80h
   ld hl,(variable.stack_sp_copy)
@@ -3853,7 +3854,7 @@ l1335h:
   pop bc
   call sub_1da9h
   ret
-l1360h:
+cli_command.copy_s:
   call point_interpreter_to_command_line
   call next_char
   call expt_exp
@@ -3863,7 +3864,7 @@ l1360h:
   call print_message_at_HL
 l1375h:
   call get_uppercase_pressed_key
-  cp "Y"
+  cp "Y" ; Yes?
   jr nz,l1375h
   call cls_lower
   call sub_102eh
@@ -3883,7 +3884,7 @@ l1393h:
   call print_message_at_HL
 l13a5h:
   call get_uppercase_pressed_key
-  cp "Y"
+  cp "Y" ; Yes?
   jr nz,l13a5h
   call sub_1cb3h
   jp nz,print_OK_and_exit_DOS
@@ -3962,7 +3963,7 @@ sub_1451h:
   call print_message_at_HL
 l1465h:
   call get_uppercase_pressed_key
-  cp "Y"
+  cp "Y" ; Yes?
   jr nz,l1465h
   call cls_lower
 l146fh:
@@ -3993,7 +3994,7 @@ l1484h:
   call print_message_at_HL
 l14a5h:
   call get_uppercase_pressed_key
-  cp "Y"
+  cp "Y" ; Yes?
   jr nz,l14a5h
   call cls_lower
   ld a,(variable.entered_line_3_first_chars.1)
@@ -4059,7 +4060,7 @@ l151fh:
   sbc hl,bc
   jp c,error.no_space
   ret
-l152ch:
+cli_command.copy_b:
   call pop_hl_if_checking_syntax
   call sub_166fh
   ld hl,message.backup_disk
@@ -4068,7 +4069,7 @@ l152ch:
   call print_message_at_HL
 l153eh:
   call get_uppercase_pressed_key
-  cp "Y"
+  cp "Y" ; Yes?
   jr nz,l153eh
   call cls_lower
   ld a,0xFF
@@ -4129,7 +4130,7 @@ sub_15b8h:
   call print_message_at_HL
 l15d1h:
   call get_uppercase_pressed_key
-  cp "Y"
+  cp "Y" ; Yes?
   jr nz,l15d1h
   call cls_lower
 l15dbh:
@@ -4164,7 +4165,7 @@ l15f8h:
   call print_message_at_HL
 l161dh:
   call get_uppercase_pressed_key
-  cp "Y"
+  cp "Y" ; Yes?
   jr nz,l161dh
   call cls_lower
   ld a,(variable.entered_line_3_first_chars.1)
@@ -4842,14 +4843,14 @@ l1b0dh:
   cp 0x0D
   jp nz,error.wrong_drive_letter
 l1b1fh:
-  ld (hl),0x42
+  ld (hl),"B" ; file type: BASIC
   call sub_1abeh
   call remove_fp
 l1b27h:
   call sub_1bdeh
   jr l1b53h
 l1b2ch:
-  ld (hl),0x44
+  ld (hl),"D" ; file type: array
   call sub_1abeh
   call sub_1c0fh
   jr nc,l1b53h
@@ -5736,7 +5737,7 @@ sub_2135h:
   ld hl,(sys_e_line)
   call sub_3d80h
   ld a,(variable.default_drive)
-  add a,0x41
+  add a,"A" ; first drive letter
   rst 10h
   ld a,0x3E
   rst 10h
@@ -5768,7 +5769,7 @@ cli_command.open_channel:
   call sub_1dd0h
 l218eh:
   call get_char
-  cp 0x41
+  cp "A"
   jr nc,l219ah
   call next_char
   jr l218eh
@@ -5950,7 +5951,7 @@ l22c4h:
   inc hl
   ld (hl),d
   inc hl
-  ld (hl),0x44
+  ld (hl),"D" ; file type: array -- XXX TODO -- confirm
   inc hl
   inc hl
   inc hl
@@ -11711,11 +11712,11 @@ l3f5fh:
   rst 18h
 l3f7bh:
   call get_uppercase_pressed_key
-  cp "I"
+  cp "I" ; Ignore?
   ret z
-  cp "R"
+  cp "R" ; Retry?
   jr z,l3f94h
-  cp "A"
+  cp "A" ; Abort?
   jr nz,l3f7bh
   call sub_272bh
   ld a,0x07

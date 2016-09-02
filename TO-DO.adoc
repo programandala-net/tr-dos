@@ -9,8 +9,6 @@
 
 Study the routine at 0x1FB9.
 
-Convert this literal to character "A": `sbc a,041h`.
-
 Label messages at 0x1015 and 0x29B2.
 
 Label 0x4080, screen address used to store a routine copied from the
@@ -19,3 +17,8 @@ ROM (0x2A41).
 Study table at 0x31C8.
 
 Study code at 0x22C4.
+	
+Study meaning of literals (file types?) in:
+
+- `ld (hl),044h  ;22d8 36 44  6 D`
+- `ld (hl),043h  ;2b0e 36 43  6 C`

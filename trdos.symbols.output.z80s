@@ -889,7 +889,7 @@ l1335h:	equ 0x1335
 ; 0x1328	(jr destination)
 ; 0x1325	(jr destination)
 
-l1360h:	equ 0x1360
+cli_command.copy_s:	equ 0x1360
 ; Used at following locations:
 ; 0x0699	(jp destination)
 
@@ -961,7 +961,7 @@ l151fh:	equ 0x151f
 ; 0x150f	(jr destination)
 ; 0x1508	(jr destination)
 
-l152ch:	equ 0x152c
+cli_command.copy_b:	equ 0x152c
 ; Used at following locations:
 ; 0x069e	(jp destination)
 

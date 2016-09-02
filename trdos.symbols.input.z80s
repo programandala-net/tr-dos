@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201609021453
+; Last modified 201609021837
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -261,3 +261,8 @@ cli_command.go_to:                                          equ 0x2DA1
 cli_command.8:                                              equ 0x29AE
 cli_command.list:                                           equ 0x11CE
 cli_command.verify:                                         equ 0x1810
+
+; Sections of the routines associated to CLI commands
+
+cli_command.copy_s:                                         equ 0x1360
+cli_command.copy_b:                                         equ 0x152C

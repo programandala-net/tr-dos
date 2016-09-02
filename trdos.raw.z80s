@@ -1047,9 +1047,9 @@ cli_command.copy:
 	ld a,(hl)			;0694	7e 	~ 
 	and 0dfh		;0695	e6 df 	. . 
 	cp 053h		;0697	fe 53 	. S 
-	jp z,l1360h		;0699	ca 60 13 	. ` . 
+	jp z,cli_command.copy_s		;0699	ca 60 13 	. ` . 
 	cp 042h		;069c	fe 42 	. B 
-	jp z,l152ch		;069e	ca 2c 15 	. , . 
+	jp z,cli_command.copy_b		;069e	ca 2c 15 	. , . 
 	call sub_1dcdh		;06a1	cd cd 1d 	. . . 
 	call pop_hl_if_checking_syntax		;06a4	cd 75 1d 	. u . 
 	call sub_166fh		;06a7	cd 6f 16 	. o . 
@@ -3867,7 +3867,7 @@ l1335h:
 	pop bc			;135b	c1 	. 
 	call sub_1da9h		;135c	cd a9 1d 	. . . 
 	ret			;135f	c9 	. 
-l1360h:
+cli_command.copy_s:
 	call point_interpreter_to_command_line		;1360	cd c5 1d 	. . . 
 	call next_char		;1363	cd 2a 1e 	. * . 
 	call expt_exp		;1366	cd bd 1d 	. . . 
@@ -4073,7 +4073,7 @@ l151fh:
 	sbc hl,bc		;1526	ed 42 	. B 
 	jp c,error.no_space		;1528	da 45 1c 	. E . 
 	ret			;152b	c9 	. 
-l152ch:
+cli_command.copy_b:
 	call pop_hl_if_checking_syntax		;152c	cd 75 1d 	. u . 
 	call sub_166fh		;152f	cd 6f 16 	. o . 
 	ld hl,message.backup_disk		;1532	21 79 27 	! y ' 
