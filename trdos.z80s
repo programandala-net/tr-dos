@@ -119,28 +119,20 @@ variable.tmp_buffer_address:  equ 0x5d25
 variable.k_channel.output:  equ 0x5d26
 variable.r_channel.input.high:  equ 0x5d33
 
-l0000h:
   di
-l0001h:
   ld de,0xFFFF
-l0004h:
   ld a,0x07
   jr l0009h
-l0008h:
   nop
 l0009h:
   out (0xFE),a
-l000bh:
   ld a,0x3F
-l000dh:
   jr l0013h
-l000fh:
   nop
 rst_10:
   jp print_character_in_A
 l0013h:
   ld i,a
-l0015h:
   jp l001bh
 rst_18:
   jp print_message_at_HL
@@ -148,7 +140,6 @@ l001bh:
   nop
   nop
   nop
-l001eh:
   jr l0024h
 rst_20:
   jp call_zx_spectrum_rom_routine_stored_at_the_address_on_tos
@@ -188,17 +179,16 @@ l0047h:
   dec hl
   ld (sys_p_ramt),hl
   ld de,l3eafh
-  ld bc,l00a8h
+  ld bc,0x00A8
   ld a,e
   ex de,hl
   ld sp,0x6000
   ld (0x5F00),hl
-  ld hl,l0079h
+  ld hl,0x0079
   push hl
   ld hl,entry.call_pushed_address
   push hl
   ld hl,0xB8ED
-l0064h:
   jr l0069h
   jp l2a56h
 l0069h:
@@ -209,15 +199,14 @@ l0069h:
   pop af
   ld hl,(0x5F00)
   jp 0x5F10
-l0079h:
   ex de,hl
   inc hl
   ld (sys_udg),hl
   dec hl
-  ld bc,l1e40h
+  ld bc,0x1E40
   ld (sys_rasp),bc
   ld (sys_ramtop),hl
-  ld hl,l3c00h
+  ld hl,0x3C00
   ld (sys_chars),hl
   ld hl,(sys_ramtop)
   ld (hl),0x3E
@@ -231,10 +220,9 @@ l0079h:
   im 1
   ld iy,sys_err_nr
   ld hl,variable.interface_1_zone
-l00a8h:
   ld (sys_chans),hl
   ld de,l15afh
-  ld bc,l0015h
+  ld bc,0x0015
   ex de,hl
   call sub_0117h
   ex de,hl
@@ -257,17 +245,16 @@ l00a8h:
   ld (sys_attr_p),a
   ld (sys_attr_t),a
   ld (sys_bordcr),a
-  ld hl,l0523h
+  ld hl,0x0523
   ld (sys_repdel),hl
   dec (iy-0x3A)
   dec (iy-0x36)
   ld hl,0x15C6
   ld de,sys_strms
-  ld bc,l000dh+1
+  ld bc,0x000D+1
   call sub_0117h
   set 1,(iy+0x01)
   ld hl,variable.0xc9
-l0100h:
   ld (hl),0xC9
   rst 20h
   defw rom_clear_prb
@@ -285,7 +272,6 @@ sub_0117h:
   push hl
   ld hl,0xB0ED
   ld (0x5F10),hl
-l0124h:
   ld hl,(0x5F00)
   jp 0x5F10
 l012ah:
@@ -335,9 +321,9 @@ l016ch:
   ld (variable.cleared),a
   ld a,0xAA
   ld (variable.show_title_flag),a
-  ld hl,l0201h
+  ld hl,finishing_proc_0x0201
   ld (variable.internal_address_of_finishing_proc),hl
-  ld hl,l0000h
+  ld hl,0x0000
   add hl,sp
   ld (variable.sp_copy),hl
   dec hl
@@ -350,7 +336,7 @@ l016ch:
   ex de,hl
   jr nc,l01a5h
   or a
-  ld de,l0100h+1
+  ld de,0x0100+1
   sbc hl,de
 l01a5h:
   ld (sys_ch_add),hl
@@ -379,7 +365,7 @@ sub_01c7h:
   ret
   call sub_1e43h
 exit_dos:
-  ld hl,l0000h
+  ld hl,0x0000
   ld (variable.two_files_drive),hl
   call sub_20e5h
   call sub_1d63h
@@ -397,9 +383,8 @@ l01f3h:
   ld hl,(variable.internal_address_of_finishing_proc)
   ld bc,(variable.error_code)
   ld b,0x00
-l0200h:
   jp (hl)
-l0201h:
+finishing_proc_0x0201:
   call sub_0232h
   bit 7,(iy+0x00)
   ret nz
@@ -431,7 +416,7 @@ sub_0232h:
   ld (sys_err_sp),hl
   ret
 l0239h:
-  ld hl,l0000h
+  ld hl,0x0000
   ld (variable.cleared),hl
   add hl,sp
   ld (variable.sp_copy),hl
@@ -444,7 +429,7 @@ l0239h:
   cp 0xAA
   ld a,0x00
   ld (variable.error_code),a
-  jp z,l02cbh
+  jp z,finishing_proc_0x02CB
   ld (hl),0xAA
   call cls
   call open_channel_2
@@ -455,17 +440,15 @@ l0239h:
   cp 0xF4
   jr z,l0271h
   ld hl,message_interface_1_start
-l0270h:
   rst 18h
 l0271h:
   ld a,(sys_swap)
   cp 0xAA
-  jr nz,l02cbh
+  jr nz,finishing_proc_0x02CB
   call sub_20f1h
 l027bh:
   ld hl,(sys_e_line)
   ld a,0xFE
-l0280h:
   ld (variable.command_mode),a
   ld (hl),0xF7
   inc hl
@@ -513,7 +496,7 @@ l02bbh:
   pop bc
   djnz l02bbh
   ret
-l02cbh:
+finishing_proc_0x02CB:
   ld hl,(variable.sp_copy)
   dec hl
   dec hl
@@ -531,7 +514,7 @@ l02cbh:
   call sub_3032h
 l02efh:
   call cls_lower
-  ld hl,l02cbh
+  ld hl,finishing_proc_0x02CB
   ld (variable.internal_address_of_finishing_proc),hl
   xor a
   ld (variable.error_code),a
@@ -719,7 +702,7 @@ l03f2h:
   jp read_sectors
 sub_03fdh:
   call sub_294ah
-  ld de,l0008h
+  ld de,0x0008
   jr l03f2h
 read_system_track:
   call sub_03fdh
@@ -750,7 +733,7 @@ sub_042bh:
   ret
 cli_command.cat:
   call sub_042bh
-  ld bc,l0001h+1
+  ld bc,0x0001+1
   ld (variable.file_size),bc
   jr z,l046ah
   cp 0x23
@@ -798,7 +781,7 @@ l0479h:
   sub (hl)
   push hl
   call sub_1da3h
-  ld hl,l2a2bh
+  ld hl,message.files
   rst 18h
   pop hl
   ld c,(hl)
@@ -821,7 +804,7 @@ l04c4h:
   rst 10h
   push hl
   call sub_2938h
-  ld bc,l000dh
+  ld bc,0x000D
   pop hl
   push hl
   add hl,bc
@@ -844,7 +827,7 @@ l04e8h:
   call sub_1da9h
   pop hl
   pop bc
-  ld de,rst_10
+  ld de,0x10
   add hl,de
   djnz l04c4h
   jr l04b6h
@@ -859,7 +842,7 @@ sub_04f6h:
   pop hl
   jp l2fc6h
 sub_0507h:
-  ld de,rst_10
+  ld de,0x10
   add hl,de
   ret
 sub_050ch:
@@ -878,7 +861,6 @@ l0517h:
   pop bc
   pop hl
   ld hl,variable.tmp_buffer_address
-l0523h:
   ret
 check_drive_letter_and_convert_to_number:
   and 0xDF
@@ -1041,7 +1023,7 @@ sub_063ch:
   dec c
   ld b,0x00
   push bc
-  ld de,l0009h
+  ld de,0x0009
   ld (variable.current_sector),de
   call sub_1e43h
   pop bc
@@ -1713,7 +1695,6 @@ not_used_0805_start:
   defb 0xFF
   defb 0xFF
   defb 0xFF
-l09f0h:
   defb 0xFF
   defb 0xFF
   defb 0xFF
@@ -1730,7 +1711,6 @@ l09f0h:
   defb 0xFF
   defb 0xFF
   defb 0xFF
-l0a00h:
   defb 0xFF
   defb 0xFF
   defb 0xFF
@@ -3381,7 +3361,7 @@ l1096h:
   pop af
   pop hl
   pop bc
-  ld de,l0100h
+  ld de,0x0100
   add hl,de
   djnz l108fh
   ret
@@ -3580,7 +3560,7 @@ sub_1151h:
   jp bc_spaces
 sub_115dh:
   xor a
-  ld de,l2710h
+  ld de,0x2710
 l1161h:
   sbc hl,de
   jr c,l1168h
@@ -3602,7 +3582,7 @@ l1179h:
   call sub_11a8h
   add hl,de
   xor a
-  ld de,l0064h
+  ld de,0x0064
 l1183h:
   sbc hl,de
   jr c,l118ah
@@ -3613,7 +3593,7 @@ l118ah:
   call sub_11a8h
   add hl,de
   xor a
-  ld de,l0009h+1
+  ld de,0x0009+1
 l1194h:
   sbc hl,de
   jr c,l119bh
@@ -3653,7 +3633,7 @@ l11b0h:
   jr l11b0h
 cli_command.list:
   call sub_042bh
-  ld bc,l0001h+1
+  ld bc,0x0001+1
   ld (variable.file_size),bc
   jr z,l1205h
   cp 0x23
@@ -3693,7 +3673,7 @@ l1205h:
   call sub_1151h
   ld hl,0x5E06
   ld de,(variable.stack_sp_copy)
-  ld bc,rst_20
+  ld bc,0x20
   ldir
   call sub_03e8h
   ld hl,variable.tmp_buffer_address
@@ -3703,7 +3683,7 @@ l123eh:
   push bc
   rst 18h
   ld hl,(variable.stack_sp_copy)
-  ld bc,l0013h+1
+  ld bc,0x0013+1
   add hl,bc
   rst 18h
   ld hl,l10bah
@@ -3713,11 +3693,11 @@ l123eh:
   call print_character_in_A
   call sub_3d80h
   ld hl,(variable.stack_sp_copy)
-  ld bc,l0001h+2
+  ld bc,0x0001+2
   add hl,bc
   ld a,(hl)
   ld hl,(variable.stack_sp_copy)
-  ld bc,l0013h
+  ld bc,0x0013
   add hl,bc
   sub (hl)
   push hl
@@ -3725,7 +3705,7 @@ l123eh:
   ld hl,l10aah
   rst 18h
   ld hl,(variable.stack_sp_copy)
-  ld bc,l0001h+1
+  ld bc,0x0001+1
   add hl,bc
   ld a,(hl)
   ld hl,l10ceh
@@ -3749,7 +3729,7 @@ l1292h:
   ld hl,l111eh
   rst 18h
   ld hl,(variable.stack_sp_copy)
-  ld bc,l0004h
+  ld bc,0x0004
   add hl,bc
   ld c,(hl)
   inc hl
@@ -3766,7 +3746,7 @@ l12b5h:
   push bc
   push hl
   call sub_2938h
-  ld bc,l000dh
+  ld bc,0x000D
   pop hl
   push hl
   add hl,bc
@@ -3791,7 +3771,7 @@ l12d9h:
   rst 18h
   pop hl
   push hl
-  ld bc,l0009h
+  ld bc,0x0009
   add hl,bc
   ld e,(hl)
   inc hl
@@ -3810,7 +3790,7 @@ l12d9h:
   call sub_115dh
   pop hl
   push hl
-  ld bc,l0008h
+  ld bc,0x0008
   add hl,bc
 l1303h:
   ld a,(hl)
@@ -3818,7 +3798,7 @@ l1303h:
   call z,sub_131bh
   pop hl
   pop bc
-  ld de,rst_10
+  ld de,0x10
   add hl,de
   djnz l12b5h
   push hl
@@ -3826,7 +3806,7 @@ l1303h:
   call sub_3d80h
   jp l123eh
 sub_131bh:
-  ld bc,l0004h+1
+  ld bc,0x0004+1
   add hl,bc
   ld b,(hl)
   inc hl
@@ -3848,14 +3828,14 @@ l1333h:
   djnz l132ch
 l1335h:
   ld hl,(variable.stack_sp_copy)
-  ld bc,rst_20+1
+  ld bc,0x20+1
   add hl,bc
   ld b,0x02
   push hl
   call read_sectors
   ld a,0x80
   pop hl
-  ld bc,l0200h
+  ld bc,0x0200
   cpir
   ld a,(hl)
   cp 0xAA
@@ -3933,7 +3913,7 @@ sub_13b7h:
   dec c
   ld b,0x00
   push bc
-  ld de,l0009h
+  ld de,0x0009
   ld (variable.current_sector),de
   call sub_1e43h
   pop bc
@@ -4061,7 +4041,7 @@ sub_14f0h:
   ld (variable.ch_add.high),a
   ld a,(0x5E08)
   ld (variable.file_start.high),a
-  ld hl,l0280h
+  ld hl,0x0280
   cp 0x19
   jr z,l151fh
   ld hl,0x0500
@@ -4069,7 +4049,7 @@ sub_14f0h:
   jr z,l151fh
   cp 0x17
   jr z,l151fh
-  ld hl,l0a00h
+  ld hl,0x0A00
   cp 0x16
   jr z,l151fh
   jp error.wrong_drive_letter
@@ -4098,14 +4078,14 @@ l153eh:
   ld (variable.ch_add),a
   ld a,(0x5E08)
   cp 0x19
-  ld hl,l0280h
+  ld hl,0x0280
   jr z,l1575h
   ld hl,0x0500
   cp 0x18
   jr z,l1575h
   cp 0x17
   jr z,l1575h
-  ld hl,l0a00h
+  ld hl,0x0A00
   cp 0x16
   jr z,l1575h
   jp error.wrong_drive_letter
@@ -4114,7 +4094,7 @@ l1575h:
   sbc hl,bc
   ld (variable.file_type),hl
   ld (variable.filename.2),hl
-  ld hl,l0000h
+  ld hl,0x0000
   ld (variable.filename.4),hl
   ld (variable.filename.6),hl
   call sub_15b8h
@@ -4126,7 +4106,7 @@ l1575h:
   sbc hl,bc
   ld (0x5E0A),hl
   call sub_14e4h
-  ld de,l0009h
+  ld de,0x0009
   ld (variable.current_sector),de
   call sub_1e43h
 l15afh:
@@ -4165,7 +4145,7 @@ l15dbh:
   pop bc
   jp nc,l1644h
   ld bc,(variable.file_type)
-  ld hl,l0000h
+  ld hl,0x0000
   ld (variable.file_type),hl
 l15f8h:
   push bc
@@ -4267,7 +4247,7 @@ cli_command.move:
   ld a,(0x5E19)
   or a
   jp z,print_OK_and_exit_DOS
-  ld hl,l0000h
+  ld hl,0x0000
   ld (variable.ch_add),hl
   ld c,0xFF
 l16c3h:
@@ -4440,7 +4420,7 @@ l17f7h:
   pop af
   call sub_1ca4h
   ld de,variable.filename
-  ld bc,rst_10
+  ld bc,0x10
   or a
   jr z,l180dh
   ex de,hl
@@ -4697,7 +4677,7 @@ sub_19f2h:
   scf
   sbc hl,de
   ret c
-  ld de,l0009h+1
+  ld de,0x0009+1
   add hl,de
   ld b,h
   ld c,l
@@ -4715,11 +4695,11 @@ sub_1a01h:
   ld de,(variable.file_start)
   push de
   push hl
-  ld hl,l0000h
+  ld hl,0x0000
   ld a,(variable.cat_drive_or_read_verify_flag)
   cp 0xFF
   jr z,l1a20h
-  ld hl,l0004h+1
+  ld hl,0x0004+1
 l1a20h:
   add hl,de
   ld (variable.file_size),hl
@@ -4830,7 +4810,7 @@ sub_1ac4h:
   ret
 cli_command.save:
   call sub_1852h
-  ld hl,l0000h
+  ld hl,0x0000
   ld (variable.basic_program_autostart),hl
   call parse_expression
   call get_char
@@ -4972,7 +4952,7 @@ sub_1bdeh:
 sub_1bfch:
   call sub_1c1bh
   ret nc
-  ld hl,l0000h
+  ld hl,0x0000
   ld (variable.ch_add),hl
   ld a,(variable.cat_drive_or_read_verify_flag)
   cp 0xFF
@@ -5383,7 +5363,7 @@ l1e75h:
   pop af
   call nz,sub_3f0ah
   pop hl
-  ld de,l0100h
+  ld de,0x0100
   add hl,de
   push hl
   ld a,0x10
@@ -5469,7 +5449,7 @@ l1f1bh:
   cp 0x80
   jr z,l1f42h
   ld a,0x19
-  ld hl,l0270h
+  ld hl,0x0270
   jr l1f55h
 l1f42h:
   ld a,0x17
@@ -5482,7 +5462,7 @@ l1f49h:
   ld a,0x18
   jr nz,l1f44h
   ld a,0x16
-  ld hl,l09f0h
+  ld hl,0x09F0
 l1f55h:
   ld (0x5E08),a
   ld (0x5E0A),hl
@@ -5492,16 +5472,16 @@ l1f55h:
   ld (0x5E0C),a
   ld hl,0x5E0F
   ld de,0x5E10
-  ld bc,l0008h
+  ld bc,0x0008
   ld (hl),0x20
   ldir
   ld hl,variable.filename
   ld de,0x5E1A
-  ld bc,l0008h
+  ld bc,0x0008
   ldir
   call select_bottom_side
   ld b,0x01
-  ld de,l0008h
+  ld de,0x0008
   ld hl,variable.tmp_buffer_address
   call sub_1e62h
   ld a,(variable.move_command_first_track)
@@ -5573,7 +5553,6 @@ select_top_side:
 sub_1ffdh:
   di
   ld a,0xF4
-l2000h:
   out (0x1F),a
   ld hl,l1fb9h
   ld c,0x7F
@@ -5820,7 +5799,7 @@ l21aeh:
   pop af
   call sub_2242h
   ld hl,(variable.command_line_address)
-  ld bc,l0124h
+  ld bc,0x0124
   add hl,bc
   ld (variable.command_line_address),hl
   jp exit_dos
@@ -5914,7 +5893,7 @@ l226bh:
   jp l2270h
 l2270h:
   push af
-  ld bc,l0013h+1
+  ld bc,0x0013+1
   add hl,bc
   push hl
   call sub_2423h
@@ -5931,7 +5910,7 @@ l2270h:
 sub_2288h:
   ld hl,(variable.start_file_parameter_or_number_of_tracks)
   push hl
-  ld hl,l2000h
+  ld hl,0x2000
   ld (variable.start_file_parameter_or_number_of_tracks),hl
   call sub_229ah
   pop hl
@@ -5942,7 +5921,7 @@ sub_229ah:
   ld (variable.ch_add),hl
   call sub_1ac4h
   call sub_1b59h
-  ld hl,l0000h
+  ld hl,0x0000
   ld (variable.file_length_in_bytes),hl
   call sub_166bh
   jp sub_1e43h
@@ -5951,7 +5930,7 @@ sub_22b2h:
   dec hl
   ld (sys_curchl),hl
   push hl
-  ld bc,l0124h
+  ld bc,0x0124
   call make_room
   ld a,0x00
   ld b,0x00
@@ -6004,11 +5983,11 @@ l2304h:
   ex de,hl
   pop hl
   push de
-  ld de,rst_10
+  ld de,0x10
   add hl,de
   ex de,hl
   ld hl,variable.filename
-  ld bc,rst_10
+  ld bc,0x10
   ldir
   pop hl
   ret
@@ -6017,7 +5996,7 @@ sub_2317h:
   rst 28h
   ld c,(hl)
   rst 28h
-  ld bc,l0024h
+  ld bc,0x0024
   add hl,bc
   ret
 sub_2321h:
@@ -6087,7 +6066,7 @@ l2381h:
   rst 28h
   ex de,hl
   ld hl,variable.filename
-  ld bc,rst_10
+  ld bc,0x10
   ldir
   ld c,0x0C
   rst 28h
@@ -6137,7 +6116,7 @@ sub_23cfh:
   ld c,0x10
   rst 28h
   ld de,variable.filename
-  ld bc,rst_10
+  ld bc,0x10
   ldir
   call sub_1cb3h
   ret nz
@@ -6147,7 +6126,7 @@ sub_23e4h:
   rst 28h
   ex de,hl
   ld hl,variable.filename
-  ld bc,rst_10
+  ld bc,0x10
   ldir
   ld c,0x0C
   rst 28h
@@ -6180,7 +6159,7 @@ sub_2418h:
   jp read_sectors
 sub_2423h:
   ld hl,(sys_curchl)
-  ld bc,l001eh
+  ld bc,0x001E
   add hl,bc
   ld e,(hl)
   inc hl
@@ -6231,14 +6210,14 @@ sub_246eh:
   ld c,0x0D
   rst 28h
   ld a,(hl)
-  ld bc,l000dh+1
+  ld bc,0x000D+1
   add hl,bc
   cp (hl)
   ret nz
   ld c,0x0E
   rst 28h
   ld a,(hl)
-  ld bc,l000dh+1
+  ld bc,0x000D+1
   add hl,bc
   cp (hl)
   ret nz
@@ -6270,7 +6249,7 @@ sub_24a2h:
   cp 0x7F
   ld a,d
   ret nz
-  ld bc,l0013h
+  ld bc,0x0013
   add hl,bc
   ld a,(hl)
   or a
@@ -6336,7 +6315,7 @@ l24f2h:
 sub_24f8h:
   ld hl,(sys_worksp)
   ld (variable.stack_sp_copy),hl
-  ld bc,rst_10
+  ld bc,0x10
   jp bc_spaces
 sub_2504h:
   ld (hl),0x0D
@@ -6359,7 +6338,7 @@ sub_2504h:
   rst 28h
   ld b,(hl)
   xor a
-  ld hl,l0000h
+  ld hl,0x0000
   ld (variable.file_size),hl
 l2538h:
   add hl,de
@@ -6414,7 +6393,7 @@ l2584h:
   ld c,0x10
   rst 28h
   ld de,variable.filename
-  ld bc,rst_10
+  ld bc,0x10
   ldir
   call sub_1cb3h
   jp nz,l25d2h
@@ -6502,7 +6481,7 @@ sub_262bh:
   jr z,l2642h
   cp 0x7F
   jp nz,l249eh
-  ld bc,l0013h
+  ld bc,0x0013
   add hl,bc
   ld (hl),0x00
   jr l2645h
@@ -6551,7 +6530,7 @@ cli_command.close_channel:
   ld (variable.start_file_parameter_or_number_of_tracks),hl
   call sub_26ceh
   ld hl,(variable.start_file_parameter_or_number_of_tracks)
-  ld bc,l0124h
+  ld bc,0x0124
   call reclaim_2
   ld hl,sys_strms
   ld b,0x10
@@ -6571,7 +6550,7 @@ l269dh:
   inc hl
   push hl
   ex de,hl
-  ld bc,l0124h
+  ld bc,0x0124
   sbc hl,bc
   ex de,hl
   pop hl
@@ -6584,12 +6563,12 @@ l26bch:
   pop bc
   djnz l269dh
   ld hl,(variable.command_line_address)
-  ld bc,l0124h
+  ld bc,0x0124
   sbc hl,bc
   ld (variable.command_line_address),hl
   jp exit_dos
 sub_26ceh:
-  ld bc,l000fh
+  ld bc,0x000F
   add hl,bc
   ld a,(hl)
   or a
@@ -6599,12 +6578,12 @@ sub_26ceh:
   call sub_26e1h
   jp sub_23fch
 sub_26e1h:
-  ld bc,l000dh
+  ld bc,0x000D
   add hl,bc
   ld e,(hl)
   inc hl
   ld d,(hl)
-  ld bc,l000dh
+  ld bc,0x000D
   add hl,bc
   ld (hl),e
   inc hl
@@ -6612,7 +6591,7 @@ sub_26e1h:
   ld c,0x10
   rst 28h
   ld de,variable.filename
-  ld bc,rst_10
+  ld bc,0x10
   ldir
   call sub_2443h
   ld c,0x0C
@@ -6628,7 +6607,6 @@ print_message_at_HL:
   rst 10h
   bit 7,(hl)
   ret nz
-l2710h:
   inc hl
   jr print_message_at_HL
 sub_2713h:
@@ -6918,9 +6896,9 @@ execute_command_in_C:
   ld (variable.unknown_23839),a
   pop bc
   pop af
-  ld hl,l0201h
+  ld hl,finishing_proc_0x0201
   ld (variable.internal_address_of_finishing_proc),hl
-  ld hl,l0000h
+  ld hl,0x0000
   add hl,sp
   ld (variable.sp_copy),hl
   dec hl
@@ -7018,7 +6996,7 @@ copy_from_file_descriptor_to_hl:
   ld a,0xFF
 l28e5h:
   ld de,variable.filename
-  ld bc,rst_10
+  ld bc,0x10
   or a
   jr z,l28efh
   ex de,hl
@@ -7079,7 +7057,7 @@ sub_294ah:
   or a
   jr z,l2992h
   push hl
-  ld bc,l0100h+1
+  ld bc,0x0100+1
   push bc
   call test_room
   pop bc
@@ -7088,7 +7066,7 @@ sub_294ah:
   ld hl,variable.tmp_buffer_address
   call make_room
   ld hl,(variable.command_line_address)
-  ld bc,l0100h+1
+  ld bc,0x0100+1
   add hl,bc
   jr l298fh
 sub_2970h:
@@ -7102,10 +7080,10 @@ sub_2970h:
   jr nz,l2992h
   ld (hl),0xFF
   ld hl,variable.tmp_buffer_address
-  ld bc,l0100h+1
+  ld bc,0x0100+1
   call reclaim_2
   or a
-  ld bc,l0100h+1
+  ld bc,0x0100+1
   ld hl,(variable.command_line_address)
   sbc hl,bc
 l298fh:
@@ -7263,11 +7241,10 @@ message.del_file:
   defb "e"
   defb 0x8D
 message.cr.no_files:
-message.files:
   defb 0x0D
   defb "N"
   defb "o"
-l2a2bh:
+message.files:
   defb " "
   defb "F"
   defb "i"
@@ -7281,7 +7258,7 @@ l2a2bh:
 sub_2a35h:
   ld hl,l2a41h
   ld de,0x4080
-  ld bc,rst_20
+  ld bc,0x20
   ldir
   ret
 l2a41h:
@@ -7313,7 +7290,7 @@ l2a56h:
   push af
   ld a,r
   push af
-  ld hl,l0000h
+  ld hl,0x0000
   add hl,sp
   push hl
   ld a,0x3C
@@ -7329,16 +7306,16 @@ l2a56h:
   call sub_2f65h
   call sub_3ea0h
   call sub_3ea0h
-  ld de,l0009h+1
+  ld de,0x0009+1
   ld hl,0x4000
   push hl
   call sub_2d73h
   ld hl,0x4100
-  ld de,l000bh
+  ld de,0x000B
   call sub_2d73h
   pop hl
   push hl
-  ld de,l0008h
+  ld de,0x0008
   call sub_2f1bh
   ld hl,0x40E3
   ld a,(hl)
@@ -7356,12 +7333,12 @@ l2a56h:
   sbc hl,de
   ld (0x40E5),hl
   ld hl,0x4000
-  ld de,l0008h
+  ld de,0x0008
   call sub_2d73h
   pop hl
   ld de,(0x40E1)
   push de
-  ld de,l0009h+1
+  ld de,0x0009+1
   call sub_2f1bh
   pop de
   call sub_2d4ch
@@ -7370,7 +7347,7 @@ l2a56h:
   out (0xFF),a
   call sub_2f65h
   ld hl,0x4000
-  ld de,l0008h
+  ld de,0x0008
   ld b,0x01
   call sub_2f1bh
   pop de
@@ -7378,7 +7355,7 @@ l2a56h:
   ld (0x40E1),de
   push hl
   ld hl,0x4000
-  ld de,l0008h
+  ld de,0x0008
   ld b,0x01
   call sub_2d73h
   ld a,(0x40E4)
@@ -7407,13 +7384,13 @@ l2b09h:
   inc hl
   ld (hl),d
   ld hl,0x4000
-  ld de,l0000h
+  ld de,0x0000
   in a,(0x5F)
   dec a
   ld e,a
   ld b,0x01
   call sub_2d73h
-  ld hl,l0000h
+  ld hl,0x0000
   add hl,sp
   ld (0x4140),hl
   ld sp,0x41FF
@@ -7490,7 +7467,7 @@ l2b95h:
   inc a
   ld (0x40E4),a
   ld hl,(0x40E5)
-  ld de,l0001h
+  ld de,0x0001
   sbc hl,de
   ld (0x40E5),hl
   ret c
@@ -7503,7 +7480,7 @@ l2b95h:
   ld (0x411D),a
   ld hl,0x4100
   ld (0x4119),hl
-  ld hl,l0100h
+  ld hl,0x0100
   ld (0x411B),hl
   ld de,(0x40E1)
   call sub_2f65h
@@ -7519,7 +7496,7 @@ l2b95h:
   ld a,(0x4102)
   call sub_2ce5h
   ld de,0x4110
-  ld bc,rst_10
+  ld bc,0x10
   ex de,hl
   ldir
   in a,(0x5F)
@@ -7535,10 +7512,10 @@ l2c1bh:
   ld hl,(0x4140)
   ld sp,hl
   ld hl,0x4000
-  ld de,l0009h+1
+  ld de,0x0009+1
   call sub_2f1bh
   ld hl,0x4100
-  ld de,l000bh
+  ld de,0x000B
   call sub_2f1bh
   ld a,0x3C
   push af
@@ -7624,7 +7601,7 @@ sub_2c7eh:
   ld a,(0x4102)
   call sub_2ce5h
   ld de,0x4110
-  ld bc,rst_10
+  ld bc,0x10
   ex de,hl
   ldir
   in a,(0x5F)
@@ -7681,12 +7658,12 @@ sub_2d1eh:
   ret
 sub_2d2ah:
   ld hl,0x4000
-  ld de,l0008h
+  ld de,0x0008
   call sub_2f1bh
   ret
 sub_2d34h:
   ld hl,0x4000
-  ld de,l0008h
+  ld de,0x0008
   call sub_2d73h
   ret
 sub_2d3eh:
@@ -7706,7 +7683,7 @@ sub_2d58h:
   push bc
   push de
   call sub_2d73h
-  ld de,l0100h
+  ld de,0x0100
   add hl,de
   pop de
   inc e
@@ -7859,7 +7836,7 @@ l2e79h:
   push bc
   push de
   call sub_2f1bh
-  ld de,l0100h
+  ld de,0x0100
   add hl,de
   pop de
   inc e
@@ -11070,7 +11047,6 @@ not_used_31FD_start:
   defb 0xFF
   defb 0xFF
   defb 0xFF
-l3c00h:
   defb 0xFF
   defb 0x18
   defb 0x03
@@ -11386,7 +11362,7 @@ sub_3d4ch:
   in a,(0xF6)
   ld hl,l3d38h
   ld de,sys_membot
-  ld bc,l0013h+1
+  ld bc,0x0013+1
   ldir
   ld hl,l3d67h
   push hl
@@ -11445,7 +11421,7 @@ l3da5h:
 sub_3dadh:
   ld a,0x08
   call l3d9ah
-  ld de,l0000h
+  ld de,0x0000
   in a,(0x1F)
   and 0x02
   ld b,a

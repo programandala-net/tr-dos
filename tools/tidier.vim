@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201609021408
+" Last modified 201609021744
 
 " ==============================================================
 " History
@@ -15,19 +15,8 @@
 "
 " 2016-09-01: Label the token commands. Clear the key
 " comparisons. Update the requirements.
-
-" ==============================================================
-" To-do
-
-" Restore literals. Examples:
-"	 ld de,rst_10
-"  ld hl,l3c00h
-"  ld de,l15afh
-"  ld bc,l0015h
 "
-" Convert this literal to character:
-"  sbc a,041h
-"  sbc a,"A"
+" 2016-09-02: Remove wrong labels. Restore literals.
 
 " ==============================================================
 
@@ -39,7 +28,7 @@ endfunction
 
 function! ChangeHeader()
   call Report('Changing the header...')
-  silent! :1,2delete
+  silent :1,2delete
   call append(0,['; trdos.z80s','','; This file is part of TR-DOS disassembled','; By Marcos Cruz (programandala.net), 2016'])
 endfunction
 
@@ -52,12 +41,12 @@ endfunction
 
 function! RemoveComments()
   call Report('Removing comments...')
-  silent! %substitute@\s\+;[0-9a-f]\{4} .\+$@@
+  silent %substitute@\s\+;[0-9a-f]\{4} .\+$@@
 endfunction
 
 function! ClearControlChar(char)
   let l:hexByte=printf('%02x',a:char)
-  execute 'silent! %substitute@\(\s\+defb 0'.l:hexByte.'h\)\s\+;[0-9a-f]\{4}\s[0-9a-f]\{2}\s\+\.\s$@\1@e'
+  execute 'silent %substitute@\(\s\+defb 0'.l:hexByte.'h\)\s\+;[0-9a-f]\{4}\s[0-9a-f]\{2}\s\+\.\s$@\1@e'
 endfunction
 
 function! ClearControlChars()
@@ -71,7 +60,7 @@ endfunction
 
 function! ClearPrintableChar(char)
   let l:hexByte=printf('%02x',a:char)
-  execute 'silent! %substitute@\(\s\+defb \)0'.l:hexByte.'h\s\+;[0-9a-f]\{4}\s[0-9a-f]\{2}\s\+\(.\)\s$@\1"\2"@e'
+  execute 'silent %substitute@\(\s\+defb \)0'.l:hexByte.'h\s\+;[0-9a-f]\{4}\s[0-9a-f]\{2}\s\+\(.\)\s$@\1"\2"@e'
 endfunction
 
 function! ClearPrintableChars()
@@ -90,11 +79,11 @@ function! ClearMessages()
 endfunction
 
 function! AddRst20Label(label,address)
-  execute 'silent! %substitute@rst 20h.\+\n  defw 0'.tolower(a:address).'h.\+$@rst 20h\r  defw '.a:label.'@e'
+  execute 'silent %substitute@rst 20h.\+\n  defw 0'.tolower(a:address).'h.\+$@rst 20h\r  defw '.a:label.'@e'
 endfunction
 
 function! AddRst20Labels()
-  call Report('Adding labels to RST 20 calls...')
+  call Report('Adding labels to `rst 20` calls...')
   call AddRst20Label('rom_0058','0058')
   call AddRst20Label('rom_add_char_0F85','0F85')
   call AddRst20Label('rom_bc_spaces','0030')
@@ -136,115 +125,115 @@ endfunction
 function! LabelTokenCommands()
   call Report('Labelling token commands...')
   call search('defb\s0cfh\s\+;2ff3\s\+cf\s\+.\s$')
-  silent! substitute@defb\s0cfh\s\+;2ff3\s\+cf\s\+.\s$@defb token.cat@e
+  silent substitute@defb\s0cfh\s\+;2ff3\s\+cf\s\+.\s$@defb token.cat@e
   normal j
-  silent! substitute@defb\s02ah\s\+;2ff4\s\+2a\s\+\*\s$@defb "*" ; set current drive@e
+  silent substitute@defb\s02ah\s\+;2ff4\s\+2a\s\+\*\s$@defb "*" ; set current drive@e
   normal j
-  silent! substitute@defb\s0d0h\s\+;2ff5\s\+d0\s\+.\s$@defb token.format@e
+  silent substitute@defb\s0d0h\s\+;2ff5\s\+d0\s\+.\s$@defb token.format@e
   normal j
-  silent! substitute@defb\s0d1h\s\+;2ff6\s\+d1\s\+.\s$@defb token.move@e
+  silent substitute@defb\s0d1h\s\+;2ff6\s\+d1\s\+.\s$@defb token.move@e
   normal j
-  silent! substitute@defb\s0e6h\s\+;2ff7\s\+e6\s\+.\s$@defb token.new@e
+  silent substitute@defb\s0e6h\s\+;2ff7\s\+e6\s\+.\s$@defb token.new@e
   normal j
-  silent! substitute@defb\s0d2h\s\+;2ff8\s\+d2\s\+.\s$@defb token.erase@e
+  silent substitute@defb\s0d2h\s\+;2ff8\s\+d2\s\+.\s$@defb token.erase@e
   normal j
-  silent! substitute@defb\s0efh\s\+;2ff9\s\+ef\s\+.\s$@defb token.load@e
+  silent substitute@defb\s0efh\s\+;2ff9\s\+ef\s\+.\s$@defb token.load@e
   normal j
-  silent! substitute@defb\s0f8h\s\+;2ffa\s\+f8\s\+.\s$@defb token.save@e
+  silent substitute@defb\s0f8h\s\+;2ffa\s\+f8\s\+.\s$@defb token.save@e
   normal j
-  silent! substitute@defb\s0feh\s\+;2ffb\s\+fe\s\+.\s$@defb token.return@e
+  silent substitute@defb\s0feh\s\+;2ffb\s\+fe\s\+.\s$@defb token.return@e
   normal j
-  silent! substitute@defb\s0beh\s\+;2ffc\s\+be\s\+.\s$@defb token.peek@e
+  silent substitute@defb\s0beh\s\+;2ffc\s\+be\s\+.\s$@defb token.peek@e
   normal j
-  silent! substitute@defb\s0f4h\s\+;2ffd\s\+f4\s\+.\s$@defb token.poke@e
+  silent substitute@defb\s0f4h\s\+;2ffd\s\+f4\s\+.\s$@defb token.poke@e
   normal j
-  silent! substitute@defb\s0d5h\s\+;2ffe\s\+d5\s\+.\s$@defb token.merge@e
+  silent substitute@defb\s0d5h\s\+;2ffe\s\+d5\s\+.\s$@defb token.merge@e
   normal j
-  silent! substitute@defb\s0f7h\s\+;2fff\s\+f7\s\+.\s$@defb token.run@e
+  silent substitute@defb\s0f7h\s\+;2fff\s\+f7\s\+.\s$@defb token.run@e
   normal j
-  silent! substitute@defb\s0d3h\s\+;3000\s\+d3\s\+.\s$@defb token.open_channel@e
+  silent substitute@defb\s0d3h\s\+;3000\s\+d3\s\+.\s$@defb token.open_channel@e
   normal j
-  silent! substitute@defb\s0d4h\s\+;3001\s\+d4\s\+.\s$@defb token.close_channel@e
+  silent substitute@defb\s0d4h\s\+;3001\s\+d4\s\+.\s$@defb token.close_channel@e
   normal j
-  silent! substitute@defb\s0ffh\s\+;3002\s\+ff\s\+.\s$@defb token.copy@e
+  silent substitute@defb\s0ffh\s\+;3002\s\+ff\s\+.\s$@defb token.copy@e
   normal j
-  silent! substitute@defb\s034h\s\+;3003\s\+34\s\+4\s$@defb "4" ; set 40 tracks@e
+  silent substitute@defb\s034h\s\+;3003\s\+34\s\+4\s$@defb "4" ; set 40 tracks@e
   normal j
-  silent! substitute@defb\s0ech\s\+;3004\s\+ec\s\+.\s$@defb token.go_to@e
+  silent substitute@defb\s0ech\s\+;3004\s\+ec\s\+.\s$@defb token.go_to@e
   normal j
-  silent! substitute@defb\s038h\s\+;3005\s\+38\s\+8\s$@defb "8" ; set 80 tracks@e
+  silent substitute@defb\s038h\s\+;3005\s\+38\s\+8\s$@defb "8" ; set 80 tracks@e
   normal j
-  silent! substitute@defb\s0f0h\s\+;3006\s\+f0\s\+.\s$@defb token.list@e
+  silent substitute@defb\s0f0h\s\+;3006\s\+f0\s\+.\s$@defb token.list@e
   normal j
-  silent! substitute@defb\s0d6h\s\+;3007\s\+d6\s\+.\s$@defb token.verify@e
+  silent substitute@defb\s0d6h\s\+;3007\s\+d6\s\+.\s$@defb token.verify@e
 endfunction
 
 function! ClearFileTypes()
   call Report('Clearing file types...')
   call cursor(1,1)
   call search(';05b7')
-  silent! substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  silent substitute@cp\s023h.\+$@cp "#" ; data file type?@
   call search(';06fc')
-  silent! substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  silent substitute@cp\s023h.\+$@cp "#" ; data file type?@
   call search(';102e')
-  silent! substitute@ld\sb,043h.\+$@ld b,"C" ; file type: code@
+  silent substitute@ld\sb,043h.\+$@ld b,"C" ; file type: code@
   call search(';103b')
-  silent! substitute@ld\sb,043h.\+$@ld b,"C" ; file type: code@
+  silent substitute@ld\sb,043h.\+$@ld b,"C" ; file type: code@
   call search(';1041')
-  silent! substitute@ld\sb,044h.\+$@ld b,"D" ; file type: array@
+  silent substitute@ld\sb,044h.\+$@ld b,"D" ; file type: array@
   call search(';1045')
-  silent! substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  silent substitute@cp\s023h.\+$@cp "#" ; data file type?@
   call search(';1047')
-  silent! substitute@ld\sb,023h.\+$@ld b,"#" ; file type: data@
+  silent substitute@ld\sb,023h.\+$@ld b,"#" ; file type: data@
   call search(';104b')
-  silent! substitute@ld\sb,042h.\+$@ld b,"B" ; file type: BASIC@
+  silent substitute@ld\sb,042h.\+$@ld b,"B" ; file type: BASIC@
   call search(';138e')
-  silent! substitute@cp\s023h.\+$@cp "#" ; data file type?@
+  silent substitute@cp\s023h.\+$@cp "#" ; data file type?@
   call search(';182e')
-  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
   call search(';18d3')
-  silent! substitute@cp\s043h.\+$@cp "C" ; code file type?@
+  silent substitute@cp\s043h.\+$@cp "C" ; code file type?@
   call search(';1901')
-  silent! substitute@cp\s043h.\+$@cp "C" ; code file type?@
+  silent substitute@cp\s043h.\+$@cp "C" ; code file type?@
   call search(';1906')
-  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
   call search(';190d')
-  silent! substitute@cp\s044h.\+$@cp "D" ; array file type?@
+  silent substitute@cp\s044h.\+$@cp "D" ; array file type?@
   call search(';19bf')
-  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
   call search(';1b4b')
-  silent! substitute@ld\sa,043h.\+$@ld a,"C" ; file type: code@
+  silent substitute@ld\sa,043h.\+$@ld a,"C" ; file type: code@
   call search(';1bc2')
-  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
   call search(';1d5c')
-  silent! substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
+  silent substitute@cp\s042h.\+$@cp "B" ; BASIC file type?@
 endfunction
 
 function! ClearKeyComparisons()
   call Report('Clearing key comparisons...')
   call cursor(1,1)
   call search(';05a1')
-  silent! substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@cp\s059h.\+$@cp "Y"@
   call search(';1378')
-  silent! substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@cp\s059h.\+$@cp "Y"@
   call search(';13a8')
-  silent! substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@cp\s059h.\+$@cp "Y"@
   call search(';1468')
-  silent! substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@cp\s059h.\+$@cp "Y"@
   call search(';14a8')
-  silent! substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@cp\s059h.\+$@cp "Y"@
   call search(';1541')
-  silent! substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@cp\s059h.\+$@cp "Y"@
   call search(';15d4')
-  silent! substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@cp\s059h.\+$@cp "Y"@
   call search(';1620')
-  silent! substitute@cp\s059h.\+$@cp "Y"@
+  silent substitute@cp\s059h.\+$@cp "Y"@
   call search(';3f7e')
-  silent! substitute@cp\s049h.\+$@cp "I"@
+  silent substitute@cp\s049h.\+$@cp "I"@
   call search(';3f81')
-  silent! substitute@cp\s052h.\+$@cp "R"@
+  silent substitute@cp\s052h.\+$@cp "R"@
   call search(';3f85')
-  silent! substitute@cp\s041h.\+$@cp "A"@
+  silent substitute@cp\s041h.\+$@cp "A"@
 endfunction
 
 function! ConvertHexNumbersNotation()
@@ -254,8 +243,74 @@ function! ConvertHexNumbersNotation()
   " substitutions have been done.
 
   call Report('Converting notation of hex numbers...')
-  silent! %substitute@\<0\([0-9a-f]\{2}\)h\>@0x\U\1@g
-  silent! %substitute@\<0\([0-9a-f]\{4}\)h\>@0x\U\1@g
+  silent %substitute@\<0\([0-9a-f]\{2}\)h\>@0x\U\1@g
+  silent %substitute@\<0\([0-9a-f]\{4}\)h\>@0x\U\1@g
+
+endfunction
+
+function! RestoreLiteral(label,literal)
+
+  " Restore a literal the disassembler interpreted as an address
+  " loaded into a register, and converted to a label.
+
+  execute 'silent %substitute@ld \(\a\a\),'.a:label.'@ld \1,'.a:literal.'@'
+
+endfunction
+
+function! RestoreLiterals()
+
+  " Restore the literals the disassembler interpreted as
+  " addresses loaded into a register, and converted to labels.
+
+  call Report('Restoring literals...')
+  call RestoreLiteral('l0009h','0x0009')
+  call RestoreLiteral('rst_10','0x10')
+  call RestoreLiteral('rst_20','0x20')
+  call RestoreLiteral('l0013h','0x0013')
+  call RestoreLiteral('l0024h','0x0024')
+  call RestoreLiteral('sub_03e8h','1000')
+  call RestoreLiteral('l1e40h','0x1E40')
+
+endfunction
+
+function! RemoveWrongLabel(address)
+
+  " Remove a wrong label, which has been created by the
+  " disassembler, but actually is a literal.
+
+  execute 'silent %substitute@^l'.a:address.'h:\n@@e'
+  execute 'silent %substitute@,l'.a:address.'h@'.',0x\U'.a:address.'@e'
+
+endfunction
+
+function! RemoveWrongLabels()
+
+  " Remove wrong labels, which have been created by the
+  " disassembler, but actually are literals.
+
+  call Report('Removing wrong labels...')
+  call RemoveWrongLabel('0000')
+  call RemoveWrongLabel('0001')
+  call RemoveWrongLabel('0004')
+  call RemoveWrongLabel('0008')
+  call RemoveWrongLabel('000b')
+  call RemoveWrongLabel('000d')
+  call RemoveWrongLabel('000f')
+  call RemoveWrongLabel('0015')
+  call RemoveWrongLabel('001e')
+  call RemoveWrongLabel('0064')
+  call RemoveWrongLabel('00a8')
+  call RemoveWrongLabel('0100')
+  call RemoveWrongLabel('0124')
+  call RemoveWrongLabel('0200')
+  call RemoveWrongLabel('0270')
+  call RemoveWrongLabel('0280')
+  call RemoveWrongLabel('0523')
+  call RemoveWrongLabel('09f0')
+  call RemoveWrongLabel('0a00')
+  call RemoveWrongLabel('2000')
+  call RemoveWrongLabel('2710')
+  call RemoveWrongLabel('3c00')
 
 endfunction
 
@@ -266,6 +321,8 @@ function! Tidier()
   call ClearFileTypes()
   call ClearMessages()
   call ClearKeyComparisons()
+  call RemoveWrongLabels()
+  call RestoreLiterals()
 
   call ConvertHexNumbersNotation()
   call RemoveComments()

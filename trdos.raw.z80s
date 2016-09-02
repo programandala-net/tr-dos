@@ -329,7 +329,7 @@ l016ch:
 	ld (variable.cleared),a		;0178	32 f7 5c 	2 . \ 
 	ld a,0aah		;017b	3e aa 	> . 
 	ld (variable.show_title_flag),a		;017d	32 17 5d 	2 . ] 
-	ld hl,l0201h		;0180	21 01 02 	! . . 
+	ld hl,finishing_proc_0x0201		;0180	21 01 02 	! . . 
 	ld (variable.internal_address_of_finishing_proc),hl		;0183	22 1a 5d 	" . ] 
 	ld hl,l0000h		;0186	21 00 00 	! . . 
 	add hl,sp			;0189	39 	9 
@@ -393,7 +393,7 @@ l01f3h:
 	ld b,000h		;01fe	06 00 	. . 
 l0200h:
 	jp (hl)			;0200	e9 	. 
-l0201h:
+finishing_proc_0x0201:
 	call sub_0232h		;0201	cd 32 02 	. 2 . 
 	bit 7,(iy+000h)		;0204	fd cb 00 7e 	. . . ~ 
 	ret nz			;0208	c0 	. 
@@ -438,7 +438,7 @@ l0239h:
 	cp 0aah		;024d	fe aa 	. . 
 	ld a,000h		;024f	3e 00 	> . 
 	ld (variable.error_code),a		;0251	32 0f 5d 	2 . ] 
-	jp z,l02cbh		;0254	ca cb 02 	. . . 
+	jp z,finishing_proc_0x02CB		;0254	ca cb 02 	. . . 
 	ld (hl),0aah		;0257	36 aa 	6 . 
 	call cls		;0259	cd 97 1d 	. . . 
 	call open_channel_2		;025c	cd 88 1d 	. . . 
@@ -454,7 +454,7 @@ l0270h:
 l0271h:
 	ld a,(sys_swap)		;0271	3a 00 5b 	: . [ 
 	cp 0aah		;0274	fe aa 	. . 
-	jr nz,l02cbh		;0276	20 53 	  S 
+	jr nz,finishing_proc_0x02CB		;0276	20 53 	  S 
 	call sub_20f1h		;0278	cd f1 20 	. .   
 l027bh:
 	ld hl,(sys_e_line)		;027b	2a 59 5c 	* Y \ 
@@ -507,7 +507,7 @@ l02bbh:
 	pop bc			;02c7	c1 	. 
 	djnz l02bbh		;02c8	10 f1 	. . 
 	ret			;02ca	c9 	. 
-l02cbh:
+finishing_proc_0x02CB:
 	ld hl,(variable.sp_copy)		;02cb	2a 1c 5d 	* . ] 
 	dec hl			;02ce	2b 	+ 
 	dec hl			;02cf	2b 	+ 
@@ -525,7 +525,7 @@ l02cbh:
 	call sub_3032h		;02ec	cd 32 30 	. 2 0 
 l02efh:
 	call cls_lower		;02ef	cd 9f 1d 	. . . 
-	ld hl,l02cbh		;02f2	21 cb 02 	! . . 
+	ld hl,finishing_proc_0x02CB		;02f2	21 cb 02 	! . . 
 	ld (variable.internal_address_of_finishing_proc),hl		;02f5	22 1a 5d 	" . ] 
 	xor a			;02f8	af 	. 
 	ld (variable.error_code),a		;02f9	32 0f 5d 	2 . ] 
@@ -792,7 +792,7 @@ l0479h:
 	sub (hl)			;049e	96 	. 
 	push hl			;049f	e5 	. 
 	call sub_1da3h		;04a0	cd a3 1d 	. . . 
-	ld hl,l2a2bh		;04a3	21 2b 2a 	! + * 
+	ld hl,message.files		;04a3	21 2b 2a 	! + * 
 	rst 18h			;04a6	df 	. 
 	pop hl			;04a7	e1 	. 
 	ld c,(hl)			;04a8	4e 	N 
@@ -6912,7 +6912,7 @@ execute_command_in_C:
 	ld (variable.unknown_23839),a		;284d	32 1f 5d 	2 . ] 
 	pop bc			;2850	c1 	. 
 	pop af			;2851	f1 	. 
-	ld hl,l0201h		;2852	21 01 02 	! . . 
+	ld hl,finishing_proc_0x0201		;2852	21 01 02 	! . . 
 	ld (variable.internal_address_of_finishing_proc),hl		;2855	22 1a 5d 	" . ] 
 	ld hl,l0000h		;2858	21 00 00 	! . . 
 	add hl,sp			;285b	39 	9 
@@ -7257,11 +7257,10 @@ message.del_file:
 	defb 065h		;2a26	65 	e 
 	defb 08dh		;2a27	8d 	. 
 message.cr.no_files:
-message.files:
 	defb 00dh		;2a28	0d 	. 
 	defb 04eh		;2a29	4e 	N 
 	defb 06fh		;2a2a	6f 	o 
-l2a2bh:
+message.files:
 	defb 020h		;2a2b	20 	  
 	defb 046h		;2a2c	46 	F 
 	defb 069h		;2a2d	69 	i 

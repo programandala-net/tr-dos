@@ -237,7 +237,7 @@ l0200h:	equ 0x0200
 ; Used at following locations:
 ; 0x1345	(immediate value)
 
-l0201h:	equ 0x0201
+finishing_proc_0x0201:	equ 0x0201
 ; Used at following locations:
 ; 0x2852	(immediate value)
 ; 0x0180	(immediate value)
@@ -302,7 +302,7 @@ l02bbh:	equ 0x02bb
 ; Used at following locations:
 ; 0x02c8	(djnz destination)
 
-l02cbh:	equ 0x02cb
+finishing_proc_0x02CB:	equ 0x02cb
 ; Used at following locations:
 ; 0x02f2	(immediate value)
 ; 0x0276	(jr destination)
@@ -2742,10 +2742,7 @@ message.cr.no_files:	equ 0x2a28
 ; Used at following locations:
 ; 0x03d9	(immediate value)
 
-message.files:	equ 0x2a28
-; Used at following locations:
-
-l2a2bh:	equ 0x2a2b
+message.files:	equ 0x2a2b
 ; Used at following locations:
 ; 0x04a3	(immediate value)
 

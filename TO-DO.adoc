@@ -1,0 +1,21 @@
+= To-do list of TR-DOS disassembled
+:author: Marcos Cruz (programandala.net)
+:revdate: 2016-09-02
+
+// This file is part of TR-DOS disassembled
+// By Marcos Cruz (programandala.net), 2016
+
+.2016-09-02:
+
+Study the routine at 0x1FB9.
+
+Convert this literal to character "A": `sbc a,041h`.
+
+Label messages at 0x1015 and 0x29B2.
+
+Label 0x4080, screen address used to store a routine copied from the
+ROM (0x2A41).
+
+Study table at 0x31C8.
+
+Study code at 0x22C4.

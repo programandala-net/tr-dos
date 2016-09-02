@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201609021235
+; Last modified 201609021453
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -139,6 +139,8 @@ print_a:                                                    equ 0x3D94
 rst_10:                                                     equ 0x0010
 rst_18:                                                     equ 0x0018
 rst_20:                                                     equ 0x0020
+finishing_proc_0x0201:                                      equ 0x0201
+finishing_proc_0x02CB:                                      equ 0x02CB
 jp_exit_dos:                                                equ 0x03C0
 get_uppercase_pressed_key:                                  equ 0x1052
 z_if_checking_syntax:                                       equ 0x1D70
@@ -204,7 +206,7 @@ message.cr.trk:                                             equ 0x2A13
 message.sec:                                                equ 0x2A18
 message.del_file:                                           equ 0x2A1D
 message.cr.no_files:                                        equ 0x2A28
-message.files:                                              equ 0x2A28
+message.files:                                              equ 0x2A2B
 
 ; Tables
 
