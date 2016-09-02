@@ -721,49 +721,47 @@ l1096h:	equ 0x1096
 ; Used at following locations:
 ; 0x1098	(djnz destination)
 
-
-; BLOCK 'messages_1015' (start 0x10a5 end 0x1152)
-messages_1015_start:	equ 0x10a5
+message.del_files:	equ 0x10a5
 ; Used at following locations:
 ; 0x1298	(immediate value)
 
-l10aah:	equ 0x10aa
+message.files:	equ 0x10aa
 ; Used at following locations:
 ; 0x126e	(immediate value)
 
-l10b3h:	equ 0x10b3
+message.title:	equ 0x10b3
 ; Used at following locations:
 ; 0x123e	(immediate value)
 
-l10bah:	equ 0x10ba
+message.disk_drive:	equ 0x10ba
 ; Used at following locations:
 ; 0x124b	(immediate value)
 
-l10cah:	equ 0x10ca
+message.tab_0x10_space:	equ 0x10ca
 ; Used at following locations:
 ; 0x12dd	(immediate value)
 
-l10ceh:	equ 0x10ce
+message.40_track_single_side:	equ 0x10ce
 ; Used at following locations:
 ; 0x127a	(immediate value)
 
-l10e2h:	equ 0x10e2
+message.80_track_single_side:	equ 0x10e2
 ; Used at following locations:
 ; 0x1281	(immediate value)
 
-l10f6h:	equ 0x10f6
+message.40_track_double_side:	equ 0x10f6
 ; Used at following locations:
 ; 0x1288	(immediate value)
 
-l110ah:	equ 0x110a
+message.80_track_double_side:	equ 0x110a
 ; Used at following locations:
 ; 0x128f	(immediate value)
 
-l111eh:	equ 0x111e
+message.free_sector:	equ 0x111e
 ; Used at following locations:
 ; 0x129c	(immediate value)
 
-l112eh:	equ 0x112e
+message.file_name_start_length_line:	equ 0x112e
 ; Used at following locations:
 ; 0x12ad	(immediate value)
 
@@ -2686,9 +2684,7 @@ cli_command.8:	equ 0x29ae
 ; Used at following locations:
 ; 0x302c	(defw directive)
 
-
-; BLOCK 'messages_29B2' (start 0x29b2 end 0x2a35)
-messages_29B2_start:	equ 0x29b2
+message.error:	equ 0x29b2
 ; Used at following locations:
 ; 0x1d26	(immediate value)
 
@@ -2742,7 +2738,7 @@ message.cr.no_files:	equ 0x2a28
 ; Used at following locations:
 ; 0x03d9	(immediate value)
 
-message.files:	equ 0x2a2b
+message.files.cr:	equ 0x2a2b
 ; Used at following locations:
 ; 0x04a3	(immediate value)
 

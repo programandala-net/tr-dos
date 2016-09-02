@@ -792,7 +792,7 @@ l0479h:
 	sub (hl)			;049e	96 	. 
 	push hl			;049f	e5 	. 
 	call sub_1da3h		;04a0	cd a3 1d 	. . . 
-	ld hl,message.files		;04a3	21 2b 2a 	! + * 
+	ld hl,message.files.cr		;04a3	21 2b 2a 	! + * 
 	rst 18h			;04a6	df 	. 
 	pop hl			;04a7	e1 	. 
 	ld c,(hl)			;04a8	4e 	N 
@@ -3380,15 +3380,13 @@ l1096h:
 	djnz l108fh		;10a1	10 ec 	. . 
 	ret			;10a3	c9 	. 
 	ret			;10a4	c9 	. 
-
-; BLOCK 'messages_1015' (start 0x10a5 end 0x1152)
-messages_1015_start:
+message.del_files:
 	defb 020h		;10a5	20 	  
 	defb 044h		;10a6	44 	D 
 	defb 065h		;10a7	65 	e 
 	defb 06ch		;10a8	6c 	l 
 	defb 02eh		;10a9	2e 	. 
-l10aah:
+message.files:
 	defb 020h		;10aa	20 	  
 	defb 046h		;10ab	46 	F 
 	defb 069h		;10ac	69 	i 
@@ -3398,7 +3396,7 @@ l10aah:
 	defb 073h		;10b0	73 	s 
 	defb 029h		;10b1	29 	) 
 	defb 000h		;10b2	00 	. 
-l10b3h:
+message.title:
 	defb 054h		;10b3	54 	T 
 	defb 069h		;10b4	69 	i 
 	defb 074h		;10b5	74 	t 
@@ -3406,7 +3404,7 @@ l10b3h:
 	defb 065h		;10b7	65 	e 
 	defb 03ah		;10b8	3a 	: 
 	defb 0a0h		;10b9	a0 	. 
-l10bah:
+message.disk_drive:
 	defb 017h		;10ba	17 	. 
 	defb 011h		;10bb	11 	. 
 	defb 020h		;10bc	20 	  
@@ -3423,12 +3421,12 @@ l10bah:
 	defb 03ah		;10c7	3a 	: 
 	defb 020h		;10c8	20 	  
 	defb 000h		;10c9	00 	. 
-l10cah:
+message.tab_0x10_space:
 	defb 017h		;10ca	17 	. 
 	defb 010h		;10cb	10 	. 
 	defb 020h		;10cc	20 	  
 	defb 000h		;10cd	00 	. 
-l10ceh:
+message.40_track_single_side:
 	defb 017h		;10ce	17 	. 
 	defb 010h		;10cf	10 	. 
 	defb 020h		;10d0	20 	  
@@ -3449,7 +3447,7 @@ l10ceh:
 	defb 064h		;10df	64 	d 
 	defb 065h		;10e0	65 	e 
 	defb 000h		;10e1	00 	. 
-l10e2h:
+message.80_track_single_side:
 	defb 017h		;10e2	17 	. 
 	defb 010h		;10e3	10 	. 
 	defb 020h		;10e4	20 	  
@@ -3470,7 +3468,7 @@ l10e2h:
 	defb 064h		;10f3	64 	d 
 	defb 065h		;10f4	65 	e 
 	defb 000h		;10f5	00 	. 
-l10f6h:
+message.40_track_double_side:
 	defb 017h		;10f6	17 	. 
 	defb 010h		;10f7	10 	. 
 	defb 020h		;10f8	20 	  
@@ -3491,7 +3489,7 @@ l10f6h:
 	defb 064h		;1107	64 	d 
 	defb 065h		;1108	65 	e 
 	defb 000h		;1109	00 	. 
-l110ah:
+message.80_track_double_side:
 	defb 017h		;110a	17 	. 
 	defb 010h		;110b	10 	. 
 	defb 020h		;110c	20 	  
@@ -3512,7 +3510,7 @@ l110ah:
 	defb 064h		;111b	64 	d 
 	defb 065h		;111c	65 	e 
 	defb 000h		;111d	00 	. 
-l111eh:
+message.free_sector:
 	defb 017h		;111e	17 	. 
 	defb 010h		;111f	10 	. 
 	defb 020h		;1120	20 	  
@@ -3529,7 +3527,7 @@ l111eh:
 	defb 072h		;112b	72 	r 
 	defb 020h		;112c	20 	  
 	defb 000h		;112d	00 	. 
-l112eh:
+message.file_name_start_length_line:
 	defb 00dh		;112e	0d 	. 
 	defb 00dh		;112f	0d 	. 
 	defb 020h		;1130	20 	  
@@ -3693,14 +3691,14 @@ l1205h:
 	ld hl,variable.tmp_buffer_address		;123a	21 25 5d 	! % ] 
 	push hl			;123d	e5 	. 
 l123eh:
-	ld hl,l10b3h		;123e	21 b3 10 	! . . 
+	ld hl,message.title		;123e	21 b3 10 	! . . 
 	push bc			;1241	c5 	. 
 	rst 18h			;1242	df 	. 
 	ld hl,(variable.stack_sp_copy)		;1243	2a cf 5c 	* . \ 
 	ld bc,l0013h+1		;1246	01 14 00 	. . . 
 	add hl,bc			;1249	09 	. 
 	rst 18h			;124a	df 	. 
-	ld hl,l10bah		;124b	21 ba 10 	! . . 
+	ld hl,message.disk_drive		;124b	21 ba 10 	! . . 
 	rst 18h			;124e	df 	. 
 	ld a,(variable.temporary_drive)		;124f	3a f6 5c 	: . \ 
 	add a,041h		;1252	c6 41 	. A 
@@ -3716,31 +3714,31 @@ l123eh:
 	sub (hl)			;1269	96 	. 
 	push hl			;126a	e5 	. 
 	call sub_1da3h		;126b	cd a3 1d 	. . . 
-	ld hl,l10aah		;126e	21 aa 10 	! . . 
+	ld hl,message.files		;126e	21 aa 10 	! . . 
 	rst 18h			;1271	df 	. 
 	ld hl,(variable.stack_sp_copy)		;1272	2a cf 5c 	* . \ 
 	ld bc,l0001h+1		;1275	01 02 00 	. . . 
 	add hl,bc			;1278	09 	. 
 	ld a,(hl)			;1279	7e 	~ 
-	ld hl,l10ceh		;127a	21 ce 10 	! . . 
+	ld hl,message.40_track_single_side		;127a	21 ce 10 	! . . 
 	cp 019h		;127d	fe 19 	. . 
 	jr z,l1292h		;127f	28 11 	( . 
-	ld hl,l10e2h		;1281	21 e2 10 	! . . 
+	ld hl,message.80_track_single_side		;1281	21 e2 10 	! . . 
 	cp 018h		;1284	fe 18 	. . 
 	jr z,l1292h		;1286	28 0a 	( . 
-	ld hl,l10f6h		;1288	21 f6 10 	! . . 
+	ld hl,message.40_track_double_side		;1288	21 f6 10 	! . . 
 l128bh:
 	cp 017h		;128b	fe 17 	. . 
 	jr z,l1292h		;128d	28 03 	( . 
-	ld hl,l110ah		;128f	21 0a 11 	! . . 
+	ld hl,message.80_track_double_side		;128f	21 0a 11 	! . . 
 l1292h:
 	rst 18h			;1292	df 	. 
 	pop hl			;1293	e1 	. 
 	ld c,(hl)			;1294	4e 	N 
 	call sub_1da4h		;1295	cd a4 1d 	. . . 
-	ld hl,messages_1015_start		;1298	21 a5 10 	! . . 
+	ld hl,message.del_files		;1298	21 a5 10 	! . . 
 	rst 18h			;129b	df 	. 
-	ld hl,l111eh		;129c	21 1e 11 	! . . 
+	ld hl,message.free_sector		;129c	21 1e 11 	! . . 
 	rst 18h			;129f	df 	. 
 	ld hl,(variable.stack_sp_copy)		;12a0	2a cf 5c 	* . \ 
 	ld bc,l0004h		;12a3	01 04 00 	. . . 
@@ -3749,7 +3747,7 @@ l1292h:
 	inc hl			;12a8	23 	# 
 	ld b,(hl)			;12a9	46 	F 
 	call sub_1da9h		;12aa	cd a9 1d 	. . . 
-	ld hl,l112eh		;12ad	21 2e 11 	! . . 
+	ld hl,message.file_name_start_length_line		;12ad	21 2e 11 	! . . 
 	rst 18h			;12b0	df 	. 
 	pop bc			;12b1	c1 	. 
 	pop hl			;12b2	e1 	. 
@@ -3781,7 +3779,7 @@ l12d4h:
 l12d9h:
 	pop bc			;12d9	c1 	. 
 	call sub_1da9h		;12da	cd a9 1d 	. . . 
-	ld hl,l10cah		;12dd	21 ca 10 	! . . 
+	ld hl,message.tab_0x10_space		;12dd	21 ca 10 	! . . 
 	rst 18h			;12e0	df 	. 
 	pop hl			;12e1	e1 	. 
 	push hl			;12e2	e5 	. 
@@ -5147,7 +5145,7 @@ error.wrong_drive_letter:
 	ld (sys_err_nr),a		;1d22	32 3a 5c 	2 : \ 
 l1d25h:
 	inc a			;1d25	3c 	< 
-	ld hl,messages_29B2_start		;1d26	21 b2 29 	! . ) 
+	ld hl,message.error		;1d26	21 b2 29 	! . ) 
 l1d29h:
 	call print_error_number_A_whose_message_is_at_HL		;1d29	cd c3 03 	. . . 
 	jp exit_dos		;1d2c	c3 d3 01 	. . . 
@@ -7124,9 +7122,7 @@ set_number_of_tracks:
 cli_command.8:
 	ld a,080h		;29ae	3e 80 	> . 
 	jr set_number_of_tracks		;29b0	18 e6 	. . 
-
-; BLOCK 'messages_29B2' (start 0x29b2 end 0x2a35)
-messages_29B2_start:
+message.error:
 	defb 00dh		;29b2	0d 	. 
 	defb 02ah		;29b3	2a 	* 
 	defb 045h		;29b4	45 	E 
@@ -7260,7 +7256,7 @@ message.cr.no_files:
 	defb 00dh		;2a28	0d 	. 
 	defb 04eh		;2a29	4e 	N 
 	defb 06fh		;2a2a	6f 	o 
-message.files:
+message.files.cr:
 	defb 020h		;2a2b	20 	  
 	defb 046h		;2a2c	46 	F 
 	defb 069h		;2a2d	69 	i 

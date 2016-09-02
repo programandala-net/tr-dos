@@ -782,7 +782,7 @@ l0479h:
   sub (hl)
   push hl
   call sub_1da3h
-  ld hl,message.files
+  ld hl,message.files.cr
   rst 18h
   pop hl
   ld c,(hl)
@@ -3367,15 +3367,13 @@ l1096h:
   djnz l108fh
   ret
   ret
-
-; BLOCK 'messages_1015' (start 0x10a5 end 0x1152)
-messages_1015_start:
+message.del_files:
   defb " "
   defb "D"
   defb "e"
   defb "l"
   defb "."
-l10aah:
+message.files:
   defb " "
   defb "F"
   defb "i"
@@ -3385,7 +3383,7 @@ l10aah:
   defb "s"
   defb ")"
   defb 0x00
-l10b3h:
+message.title:
   defb "T"
   defb "i"
   defb "t"
@@ -3393,7 +3391,7 @@ l10b3h:
   defb "e"
   defb ":"
   defb 0xA0
-l10bah:
+message.disk_drive:
   defb 0x17
   defb 0x11
   defb " "
@@ -3410,12 +3408,12 @@ l10bah:
   defb ":"
   defb " "
   defb 0x00
-l10cah:
+message.tab_0x10_space:
   defb 0x17
   defb 0x10
   defb " "
   defb 0x00
-l10ceh:
+message.40_track_single_side:
   defb 0x17
   defb 0x10
   defb " "
@@ -3436,7 +3434,7 @@ l10ceh:
   defb "d"
   defb "e"
   defb 0x00
-l10e2h:
+message.80_track_single_side:
   defb 0x17
   defb 0x10
   defb " "
@@ -3457,7 +3455,7 @@ l10e2h:
   defb "d"
   defb "e"
   defb 0x00
-l10f6h:
+message.40_track_double_side:
   defb 0x17
   defb 0x10
   defb " "
@@ -3478,7 +3476,7 @@ l10f6h:
   defb "d"
   defb "e"
   defb 0x00
-l110ah:
+message.80_track_double_side:
   defb 0x17
   defb 0x10
   defb " "
@@ -3499,7 +3497,7 @@ l110ah:
   defb "d"
   defb "e"
   defb 0x00
-l111eh:
+message.free_sector:
   defb 0x17
   defb 0x10
   defb " "
@@ -3516,7 +3514,7 @@ l111eh:
   defb "r"
   defb " "
   defb 0x00
-l112eh:
+message.file_name_start_length_line:
   defb 0x0D
   defb 0x0D
   defb " "
@@ -3680,14 +3678,14 @@ l1205h:
   ld hl,variable.tmp_buffer_address
   push hl
 l123eh:
-  ld hl,l10b3h
+  ld hl,message.title
   push bc
   rst 18h
   ld hl,(variable.stack_sp_copy)
   ld bc,0x0013+1
   add hl,bc
   rst 18h
-  ld hl,l10bah
+  ld hl,message.disk_drive
   rst 18h
   ld a,(variable.temporary_drive)
   add a,"A" ; first drive letter
@@ -3703,31 +3701,31 @@ l123eh:
   sub (hl)
   push hl
   call sub_1da3h
-  ld hl,l10aah
+  ld hl,message.files
   rst 18h
   ld hl,(variable.stack_sp_copy)
   ld bc,0x0001+1
   add hl,bc
   ld a,(hl)
-  ld hl,l10ceh
+  ld hl,message.40_track_single_side
   cp 0x19
   jr z,l1292h
-  ld hl,l10e2h
+  ld hl,message.80_track_single_side
   cp 0x18
   jr z,l1292h
-  ld hl,l10f6h
+  ld hl,message.40_track_double_side
 l128bh:
   cp 0x17
   jr z,l1292h
-  ld hl,l110ah
+  ld hl,message.80_track_double_side
 l1292h:
   rst 18h
   pop hl
   ld c,(hl)
   call sub_1da4h
-  ld hl,messages_1015_start
+  ld hl,message.del_files
   rst 18h
-  ld hl,l111eh
+  ld hl,message.free_sector
   rst 18h
   ld hl,(variable.stack_sp_copy)
   ld bc,0x0004
@@ -3736,7 +3734,7 @@ l1292h:
   inc hl
   ld b,(hl)
   call sub_1da9h
-  ld hl,l112eh
+  ld hl,message.file_name_start_length_line
   rst 18h
   pop bc
   pop hl
@@ -3768,7 +3766,7 @@ l12d4h:
 l12d9h:
   pop bc
   call sub_1da9h
-  ld hl,l10cah
+  ld hl,message.tab_0x10_space
   rst 18h
   pop hl
   push hl
@@ -5134,7 +5132,7 @@ error.wrong_drive_letter:
   ld (sys_err_nr),a
 l1d25h:
   inc a
-  ld hl,messages_29B2_start
+  ld hl,message.error
 l1d29h:
   call print_error_number_A_whose_message_is_at_HL
   jp exit_dos
@@ -7109,9 +7107,7 @@ set_number_of_tracks:
 cli_command.8:
   ld a,0x80
   jr set_number_of_tracks
-
-; BLOCK 'messages_29B2' (start 0x29b2 end 0x2a35)
-messages_29B2_start:
+message.error:
   defb 0x0D
   defb "*"
   defb "E"
@@ -7245,7 +7241,7 @@ message.cr.no_files:
   defb 0x0D
   defb "N"
   defb "o"
-message.files:
+message.files.cr:
   defb " "
   defb "F"
   defb "i"
