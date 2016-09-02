@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201609012212
+" Last modified 201609021408
 
 " ==============================================================
 " History
@@ -31,18 +31,27 @@
 
 " ==============================================================
 
+function! Report(message)
+
+  echomsg a:message
+
+endfunction
+
 function! ChangeHeader()
-  :1,2delete
+  call Report('Changing the header...')
+  silent! :1,2delete
   call append(0,['; trdos.z80s','','; This file is part of TR-DOS disassembled','; By Marcos Cruz (programandala.net), 2016'])
 endfunction
 
 function! AddInclude()
+  call Report('Adding include directives...')
   call cursor(1,1)
   call search('^  org ')
   call append('.',['','  include inc/zx_spectrum_rom_routines.z80s','  include inc/zx_spectrum_char_codes.z80s',''])
 endfunction
 
 function! RemoveComments()
+  call Report('Removing comments...')
   silent! %substitute@\s\+;[0-9a-f]\{4} .\+$@@
 endfunction
 
@@ -52,6 +61,7 @@ function! ClearControlChar(char)
 endfunction
 
 function! ClearControlChars()
+  call Report('  Clearing control chars...')
   let l:char = 0
   while l:char<32
     call ClearControlChar(l:char)
@@ -65,6 +75,7 @@ function! ClearPrintableChar(char)
 endfunction
 
 function! ClearPrintableChars()
+  call Report('  Clearing printable chars...')
   let l:char = 32
   while l:char<127
     call ClearPrintableChar(l:char)
@@ -73,6 +84,7 @@ function! ClearPrintableChars()
 endfunction
 
 function! ClearMessages()
+  call Report('Clearing messages...')
   call ClearControlChars()
   call ClearPrintableChars()
 endfunction
@@ -82,6 +94,7 @@ function! AddRst20Label(label,address)
 endfunction
 
 function! AddRst20Labels()
+  call Report('Adding labels to RST 20 calls...')
   call AddRst20Label('rom_0058','0058')
   call AddRst20Label('rom_add_char_0F85','0F85')
   call AddRst20Label('rom_bc_spaces','0030')
@@ -121,6 +134,7 @@ function! AddRst20Labels()
 endfunction
 
 function! LabelTokenCommands()
+  call Report('Labelling token commands...')
   call search('defb\s0cfh\s\+;2ff3\s\+cf\s\+.\s$')
   silent! substitute@defb\s0cfh\s\+;2ff3\s\+cf\s\+.\s$@defb token.cat@e
   normal j
@@ -166,6 +180,7 @@ function! LabelTokenCommands()
 endfunction
 
 function! ClearFileTypes()
+  call Report('Clearing file types...')
   call cursor(1,1)
   call search(';05b7')
   silent! substitute@cp\s023h.\+$@cp "#" ; data file type?@
@@ -206,6 +221,7 @@ function! ClearFileTypes()
 endfunction
 
 function! ClearKeyComparisons()
+  call Report('Clearing key comparisons...')
   call cursor(1,1)
   call search(';05a1')
   silent! substitute@cp\s059h.\+$@cp "Y"@
@@ -231,15 +247,31 @@ function! ClearKeyComparisons()
   silent! substitute@cp\s041h.\+$@cp "A"@
 endfunction
 
+function! ConvertHexNumbersNotation()
+
+  " Convert hex numbers from notation '0d..dh' to '0xD..D'.
+  " This change must be done at the end, when all other
+  " substitutions have been done.
+
+  call Report('Converting notation of hex numbers...')
+  silent! %substitute@\<0\([0-9a-f]\{2}\)h\>@0x\U\1@g
+  silent! %substitute@\<0\([0-9a-f]\{4}\)h\>@0x\U\1@g
+
+endfunction
+
 function! Tidier()
+
   call AddRst20Labels()
   call LabelTokenCommands()
   call ClearFileTypes()
   call ClearMessages()
   call ClearKeyComparisons()
+
+  call ConvertHexNumbersNotation()
   call RemoveComments()
   call ChangeHeader()
   call AddInclude()
+
 endfunction
 
 call Tidier()
