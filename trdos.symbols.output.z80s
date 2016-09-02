@@ -246,7 +246,7 @@ l0209h:	equ 0x0209
 ; Used at following locations:
 ; 0x1fb9	(immediate value)
 
-sub_0212h:	equ 0x0212
+empty_command_line:	equ 0x0212
 ; Used at following locations:
 ; 0x021b	(jr destination)
 ; 0x01f0	(call destination)
@@ -448,7 +448,7 @@ l0425h:	equ 0x0425
 ; Used at following locations:
 ; 0x0421	(jr destination)
 
-sub_042bh:	equ 0x042b
+z_if_next_command_line_char_is_carriage_return:	equ 0x042b
 ; Used at following locations:
 ; 0x299e	(call destination)
 ; 0x1ece	(call destination)

@@ -5,24 +5,44 @@
 // This file is part of TR-DOS disassembled
 // By Marcos Cruz (programandala.net), 2016
 
-// Last modified 201609021944
+// Last modified 201609022000
 
 .2016-09-02:
 
 Study the routine at 0x1FB9.
 
+.2016-09-02:
+
 Label 0x4080, screen address used to store a routine copied from the
 ROM (0x2A41).
 
+.2016-09-02:
+
 Study table at 0x31C8.
+
+.2016-09-02:
 
 Study code at 0x22C4.
 	
+.2016-09-02:
+
 Study meaning of literals (file types?) in:
 
 - `ld (hl),044h  ;22d8 36 44  6 D`
 - `ld (hl),043h  ;2b0e 36 43  6 C`
 
+.2016-09-02:
+
 Three bytes at 0x2FF0 are disassembled as data, but they are code
 (`ldir / ret`). This seems a bug of z80dasm.
+
+.2016-09-02:
+
+z80dasm's bug? This block causes addresses 0x31FA..0x31FC
+be interpreted as bytedata, in one single line:
+`not_used_31FD: start 0x31FD unlabeled last 0x3CF9 type bytedata`.
+
+This does not solve the problem:
+`code_31FA_XXX_FIXME: start 0x31FA unlabeled last 0x31FC type code`.
+
 

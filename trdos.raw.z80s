@@ -385,7 +385,7 @@ exit_dos:
 	ld (hl),000h		;01e9	36 00 	6 . 
 	jr nz,l01f3h		;01eb	20 06 	  . 
 	call remove_fp		;01ed	cd 1c 1e 	. . . 
-	call sub_0212h		;01f0	cd 12 02 	. . . 
+	call empty_command_line		;01f0	cd 12 02 	. . . 
 l01f3h:
 	ld sp,(variable.sp_copy)		;01f3	ed 7b 1c 5d 	. { . ] 
 	ld hl,(variable.internal_address_of_finishing_proc)		;01f7	2a 1a 5d 	* . ] 
@@ -402,12 +402,12 @@ l0209h:
 	ld sp,(sys_err_sp)		;020c	ed 7b 3d 5c 	. { = \ 
 	push de			;0210	d5 	. 
 	ret			;0211	c9 	. 
-sub_0212h:
+empty_command_line:
 	call get_char		;0212	cd 8c 1d 	. . . 
 	cp 00dh		;0215	fe 0d 	. . 
 	ret z			;0217	c8 	. 
 	call next_char		;0218	cd 2a 1e 	. * . 
-	jr sub_0212h		;021b	18 f5 	. . 
+	jr empty_command_line		;021b	18 f5 	. . 
 sub_021dh:
 	ld hl,(sys_err_sp)		;021d	2a 3d 5c 	* = \ 
 	ld (variable.err_sp_copy),hl		;0220	22 13 5d 	" . ] 
@@ -736,14 +736,14 @@ l0425h:
 	ret nz			;0427	c0 	. 
 	set 1,(hl)		;0428	cb ce 	. . 
 	ret			;042a	c9 	. 
-sub_042bh:
+z_if_next_command_line_char_is_carriage_return:
 	ld hl,(variable.command_line_address)		;042b	2a 11 5d 	* . ] 
 	inc hl			;042e	23 	# 
 	ld a,(hl)			;042f	7e 	~ 
 	cp 00dh		;0430	fe 0d 	. . 
 	ret			;0432	c9 	. 
 cli_command.cat:
-	call sub_042bh		;0433	cd 2b 04 	. + . 
+	call z_if_next_command_line_char_is_carriage_return		;0433	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;0436	01 02 00 	. . . 
 	ld (variable.file_size),bc		;0439	ed 43 db 5c 	. C . \ 
 	jr z,l046ah		;043d	28 2b 	( + 
@@ -3644,7 +3644,7 @@ l11b0h:
 	ret nz			;11cb	c0 	. 
 	jr l11b0h		;11cc	18 e2 	. . 
 cli_command.list:
-	call sub_042bh		;11ce	cd 2b 04 	. + . 
+	call z_if_next_command_line_char_is_carriage_return		;11ce	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;11d1	01 02 00 	. . . 
 	ld (variable.file_size),bc		;11d4	ed 43 db 5c 	. C . \ 
 	jr z,l1205h		;11d8	28 2b 	( + 
@@ -4492,7 +4492,7 @@ l1866h:
 	ld (variable.move_command_first_track),a		;1876	32 d6 5c 	2 . \ 
 	ret			;1879	c9 	. 
 sub_187ah:
-	call sub_042bh		;187a	cd 2b 04 	. + . 
+	call z_if_next_command_line_char_is_carriage_return		;187a	cd 2b 04 	. + . 
 	jp z,l027bh		;187d	ca 7b 02 	. { . 
 	call parse_expression		;1880	cd df 1d 	. . . 
 	call sub_0572h		;1883	cd 72 05 	. r . 
@@ -5414,7 +5414,7 @@ cli_command.format:
 	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1ec5	22 d7 5c 	" . \ 
 	ld (variable.ch_add),hl		;1ec8	22 d9 5c 	" . \ 
 	ld (variable.basic_program_autostart),hl		;1ecb	22 d1 5c 	" . \ 
-	call sub_042bh		;1ece	cd 2b 04 	. + . 
+	call z_if_next_command_line_char_is_carriage_return		;1ece	cd 2b 04 	. + . 
 	jp z,error.wrong_drive_letter		;1ed1	ca 1a 1d 	. . . 
 	call parse_expression		;1ed4	cd df 1d 	. . . 
 	call pop_hl_if_checking_syntax		;1ed7	cd 75 1d 	. u . 
@@ -7113,7 +7113,7 @@ cli_command.4:
 set_number_of_tracks:
 	ld (variable.start_file_parameter_or_number_of_tracks),a		;2998	32 d7 5c 	2 . \ 
 	call pop_hl_if_checking_syntax		;299b	cd 75 1d 	. u . 
-	call sub_042bh		;299e	cd 2b 04 	. + . 
+	call z_if_next_command_line_char_is_carriage_return		;299e	cd 2b 04 	. + . 
 	jp z,error.wrong_drive_letter		;29a1	ca 1a 1d 	. . . 
 	call sub_3e11h		;29a4	cd 11 3e 	. . > 
 	ld a,(variable.start_file_parameter_or_number_of_tracks)		;29a7	3a d7 5c 	: . \ 

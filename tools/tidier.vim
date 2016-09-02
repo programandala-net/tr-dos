@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201609021837
+" Last modified 201609022123
 
 " ==============================================================
 " History
@@ -17,8 +17,8 @@
 " comparisons. Update the requirements.
 "
 " 2016-09-02: Remove wrong labels. Restore literals. Clear drive
-" letters. Generalize the clearing of key comparisons to letters
-" and complete it.
+" letters. Generalize the clearing of key comparisons to
+" characters and complete it.
 
 " ==============================================================
 
@@ -87,7 +87,7 @@ endfunction
 function! AddRst20Labels()
   call Report('Adding labels to `rst 20` calls...')
   call AddRst20Label('rom_0058','0058')
-  call AddRst20Label('rom_add_char_0F85','0F85')
+  call AddRst20Label('rom_add_char_keeping_current_mode','0F85')
   call AddRst20Label('rom_bc_spaces','0030')
   call AddRst20Label('rom_break_key','1F54')
   call AddRst20Label('rom_chan_open','1601')
@@ -217,15 +217,29 @@ function! ClearFileTypes()
   silent substitute@044h.\+$@"D" ; file type: array -- XXX TODO -- confirm@
 endfunction
 
-function! ClearLetterComparisons()
-  call Report('Clearing letter comparisons...')
+function! ClearCharacters()
+  call Report('Clearing characters...')
   call cursor(1,1)
+  call search(';01c8')
+  silent substitute@00dh.\+$@char.carriage_return@
+  call search(';0215')
+  silent substitute@00dh.\+$@char.carriage_return@
+  call search(';0430')
+  silent substitute@00dh.\+$@char.carriage_return@
+  call search(';044c')
+  silent substitute@00dh.\+$@char.carriage_return@
   call search(';05a1')
   silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';0697')
   silent substitute@053h.\+@"S" ; `COPY s`?@
   call search(';069c')
   silent substitute@042h.\+@"B" ; `COPY b`?@
+  call search(';1039')
+  silent substitute@0afh.\+$@token.code ; `CODE`?@
+  call search(';103f')
+  silent substitute@0e4h.\+$@token.data ; `DATA`?@
+  call search(';11e7')
+  silent substitute@00dh.\+$@char.carriage_return@
   call search(';1378')
   silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';13a8')
@@ -240,8 +254,42 @@ function! ClearLetterComparisons()
   silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';1620')
   silent substitute@059h.\+$@"Y" ; Yes?@
+  call search(';1847')
+  silent substitute@00dh.\+$@char.carriage_return@
+  call search(';188c')
+  silent substitute@0afh.\+$@token.code ; `CODE`?@
+  call search(';1891')
+  silent substitute@0e4h.\+$@token.data ; `DATA`?@
+  call search(';1adf')
+  silent substitute@0afh.\+$@token.code ; `CODE`?@
+  call search(';1ae3')
+  silent substitute@0cah.\+$@token.line ; `LINE`?@
+  call search(';1af8')
+  silent substitute@0aah.\+$@token.screen_dollar ; `SCREEN$`?@
+  call search(';1b16')
+  silent substitute@0e4h.\+$@token.data ; `DATA`?@
+  call search(';1b1a')
+  silent substitute@00dh.\+$@char.carriage_return@
+  call search(';1de8')
+  silent substitute@0afh.\+$@token.code ; `CODE`?@
+  call search(';1dfe')
+  silent substitute@02ch.\+$@","@
+  call search(';1e02')
+  silent substitute@00dh.\+$@char.carriage_return@
   call search(';2191')
   silent substitute@041h.\+@"A"@
+  call search(';261d')
+  silent substitute@00dh.\+$@char.carriage_return@
+  call search(';308b')
+  silent substitute@00dh.\+$@char.carriage_return@
+  call search(';3093')
+  silent substitute@00dh.\+$@char.carriage_return@
+  call search(';3096')
+  silent substitute@022h.\+$@'"'@
+  call search(';309c')
+  silent substitute@00dh.\+$@char.carriage_return@
+  call search(';309f')
+  silent substitute@022h.\+$@'"'@
   call search(';3f7e')
   silent substitute@049h.\+$@"I" ; Ignore?@
   call search(';3f81')
@@ -361,7 +409,7 @@ function! Tidier()
   call LabelTokenCommands()
   call ClearFileTypes()
   call ClearMessages()
-  call ClearLetterComparisons()
+  call ClearCharacters()
   call ClearDriveLetters()
   call RemoveWrongLabels()
   call RestoreLiterals()

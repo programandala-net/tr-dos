@@ -358,7 +358,7 @@ l01abh:
   jp l030ah
 sub_01c7h:
   ld a,(hl)
-  cp 0x0D
+  cp char.carriage_return
   ret z
   cp 0x80
   ret z
@@ -378,7 +378,7 @@ exit_dos:
   ld (hl),0x00
   jr nz,l01f3h
   call remove_fp
-  call sub_0212h
+  call empty_command_line
 l01f3h:
   ld sp,(variable.sp_copy)
   ld hl,(variable.internal_address_of_finishing_proc)
@@ -394,12 +394,12 @@ l0209h:
   ld sp,(sys_err_sp)
   push de
   ret
-sub_0212h:
+empty_command_line:
   call get_char
-  cp 0x0D
+  cp char.carriage_return
   ret z
   call next_char
-  jr sub_0212h
+  jr empty_command_line
 sub_021dh:
   ld hl,(sys_err_sp)
   ld (variable.err_sp_copy),hl
@@ -726,14 +726,14 @@ l0425h:
   ret nz
   set 1,(hl)
   ret
-sub_042bh:
+z_if_next_command_line_char_is_carriage_return:
   ld hl,(variable.command_line_address)
   inc hl
   ld a,(hl)
-  cp 0x0D
+  cp char.carriage_return
   ret
 cli_command.cat:
-  call sub_042bh
+  call z_if_next_command_line_char_is_carriage_return
   ld bc,0x0001+1
   ld (variable.file_size),bc
   jr z,l046ah
@@ -742,7 +742,7 @@ cli_command.cat:
   ld (sys_ch_add),hl
   call sub_1e0bh
   call get_char
-  cp 0x0D
+  cp char.carriage_return
   jr z,l046ah
   cp 0x2C
   jp nz,error.wrong_drive_letter
@@ -3290,10 +3290,10 @@ sub_102eh:
   or a
   jr nz,set_file_type_stored_in_B
   call get_char
-  cp 0xAF
+  cp token.code ; `CODE`?
   ld b,"C" ; file type: code
   jr z,set_file_type_stored_in_B
-  cp 0xE4
+  cp token.data ; `DATA`?
   ld b,"D" ; file type: array
   jr z,set_file_type_stored_in_B
   cp "#" ; data file type?
@@ -3631,7 +3631,7 @@ l11b0h:
   ret nz
   jr l11b0h
 cli_command.list:
-  call sub_042bh
+  call z_if_next_command_line_char_is_carriage_return
   ld bc,0x0001+1
   ld (variable.file_size),bc
   jr z,l1205h
@@ -3640,7 +3640,7 @@ cli_command.list:
   ld (sys_ch_add),hl
   call sub_1e0bh
   call get_char
-  cp 0x0D
+  cp char.carriage_return
   jr z,l1205h
   cp 0x2C
   jp nz,error.wrong_drive_letter
@@ -4452,7 +4452,7 @@ sub_1842h:
   ld hl,(sys_ch_add)
   inc hl
   ld a,(hl)
-  cp 0x0D
+  cp char.carriage_return
   ret z
   ld a,0x01
   ld (variable.move_command_first_track),a
@@ -4479,15 +4479,15 @@ l1866h:
   ld (variable.move_command_first_track),a
   ret
 sub_187ah:
-  call sub_042bh
+  call z_if_next_command_line_char_is_carriage_return
   jp z,l027bh
   call parse_expression
   call sub_0572h
   call nz,sub_1857h
   call get_char
-  cp 0xAF
+  cp token.code ; `CODE`?
   call z,sub_1842h
-  cp 0xE4
+  cp token.data ; `DATA`?
   push af
   call sub_0572h
   call z,sub_102eh
@@ -4813,9 +4813,9 @@ cli_command.save:
   ld (variable.basic_program_autostart),hl
   call parse_expression
   call get_char
-  cp 0xAF
+  cp token.code ; `CODE`?
   jr z,l1b39h
-  cp 0xCA
+  cp token.line ; `LINE`?
   jr nz,l1af8h
   call sub_1e0bh
   call pop_hl_if_checking_syntax
@@ -4824,7 +4824,7 @@ cli_command.save:
   ld hl,variable.file_type
   jr l1b1fh
 l1af8h:
-  cp 0xAA
+  cp token.screen_dollar ; `SCREEN$`?
   jr nz,l1b0dh
   ld hl,0x4000
   ld (variable.start_file_parameter_or_number_of_tracks),hl
@@ -4836,9 +4836,9 @@ l1b0dh:
   call pop_hl_if_checking_syntax
   call get_char
   ld hl,variable.file_type
-  cp 0xE4
+  cp token.data ; `DATA`?
   jr z,l1b2ch
-  cp 0x0D
+  cp char.carriage_return
   jp nz,error.wrong_drive_letter
 l1b1fh:
   ld (hl),"B" ; file type: BASIC
@@ -5259,7 +5259,7 @@ parse_expression:
   jp expt_exp
 sub_1de5h:
   call get_char
-  cp 0xAF
+  cp token.code ; `CODE`?
   ret nz
 sub_1debh:
   call sub_1d7bh
@@ -5269,9 +5269,9 @@ sub_1debh:
   ld (variable.file_size),bc
 l1dfbh:
   call get_char
-  cp 0x2C
+  cp ","
   jr z,sub_1e0bh
-  cp 0x0D
+  cp char.carriage_return
   jp nz,error.wrong_drive_letter
   call pop_hl_if_checking_syntax
   ret
@@ -5401,7 +5401,7 @@ cli_command.format:
   ld (variable.start_file_parameter_or_number_of_tracks),hl
   ld (variable.ch_add),hl
   ld (variable.basic_program_autostart),hl
-  call sub_042bh
+  call z_if_next_command_line_char_is_carriage_return
   jp z,error.wrong_drive_letter
   call parse_expression
   call pop_hl_if_checking_syntax
@@ -6465,10 +6465,10 @@ l2614h:
   push hl
   ret
 l261dh:
-  cp 0x0D
+  cp char.carriage_return
   jr z,l2614h
   rst 20h
-  defw rom_add_char_0F85
+  defw rom_add_char_keeping_current_mode
   jr l260fh
 l2626h:
   call sub_262bh
@@ -7098,7 +7098,7 @@ cli_command.4:
 set_number_of_tracks:
   ld (variable.start_file_parameter_or_number_of_tracks),a
   call pop_hl_if_checking_syntax
-  call sub_042bh
+  call z_if_next_command_line_char_is_carriage_return
   jp z,error.wrong_drive_letter
   call sub_3e11h
   ld a,(variable.start_file_parameter_or_number_of_tracks)
@@ -8154,21 +8154,21 @@ l3057h:
 l3087h:
   ld hl,(variable.ch_add)
   ld a,(hl)
-  cp 0x0D
+  cp char.carriage_return
   ret z
   inc hl
   ld (variable.ch_add),hl
   ld a,(hl)
-  cp 0x0D
+  cp char.carriage_return
   ret z
-  cp 0x22
+  cp '"'
   jr nz,l3057h
 l309ah:
   inc hl
   ld a,(hl)
-  cp 0x0D
+  cp char.carriage_return
   ret z
-  cp 0x22
+  cp '"'
   jr nz,l309ah
   inc hl
   ld (variable.ch_add),hl
