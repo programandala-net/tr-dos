@@ -874,14 +874,14 @@ l0517h:
 	ld hl,variable.tmp_buffer_address		;0520	21 25 5d 	! % ] 
 l0523h:
 	ret			;0523	c9 	. 
-check_drive_letter:
+check_drive_letter_and_convert_to_number:
 	and 0dfh		;0524	e6 df 	. . 
 	sbc a,041h		;0526	de 41 	. A 
 	jp c,error.wrong_drive_letter		;0528	da 1a 1d 	. . . 
 	cp 004h		;052b	fe 04 	. . 
 	jp nc,error.wrong_drive_letter		;052d	d2 1a 1d 	. . . 
 	ret			;0530	c9 	. 
-sub_0531h:
+fetch_drive_letter_from_the_calculator_stack:
 	call stk_fetch		;0531	cd b5 1d 	. . . 
 	ld a,c			;0534	79 	y 
 	cp b			;0535	b8 	. 
@@ -3291,9 +3291,9 @@ message_interface_1_start:
 cli_command.asterisk:
 	call parse_expression		;1018	cd df 1d 	. . . 
 	call pop_hl_if_checking_syntax		;101b	cd 75 1d 	. u . 
-	call sub_0531h		;101e	cd 31 05 	. 1 . 
+	call fetch_drive_letter_from_the_calculator_stack		;101e	cd 31 05 	. 1 . 
 	ld a,(de)			;1021	1a 	. 
-	call check_drive_letter		;1022	cd 24 05 	. $ . 
+	call check_drive_letter_and_convert_to_number		;1022	cd 24 05 	. $ . 
 	ld (variable.default_drive),a		;1025	32 19 5d 	2 . ] 
 	call init_disk_drive		;1028	cd cb 3d 	. . = 
 	jp print_OK_and_exit_DOS		;102b	c3 e1 03 	. . . 
@@ -5020,7 +5020,7 @@ l1c5ch:
 	ld (hl),020h		;1c5c	36 20 	6   
 	inc hl			;1c5e	23 	# 
 	djnz l1c5ch		;1c5f	10 fb 	. . 
-	call sub_0531h		;1c61	cd 31 05 	. 1 . 
+	call fetch_drive_letter_from_the_calculator_stack		;1c61	cd 31 05 	. 1 . 
 	ex de,hl			;1c64	eb 	. 
 	call sub_1c81h		;1c65	cd 81 1c 	. . . 
 	ld a,c			;1c68	79 	y 
@@ -5045,7 +5045,7 @@ sub_1c81h:
 	jr nz,l1c98h		;1c85	20 11 	  . 
 	dec hl			;1c87	2b 	+ 
 	ld a,(hl)			;1c88	7e 	~ 
-	call check_drive_letter		;1c89	cd 24 05 	. $ . 
+	call check_drive_letter_and_convert_to_number		;1c89	cd 24 05 	. $ . 
 	push bc			;1c8c	c5 	. 
 	push hl			;1c8d	e5 	. 
 	call init_disk_drive		;1c8e	cd cb 3d 	. . = 

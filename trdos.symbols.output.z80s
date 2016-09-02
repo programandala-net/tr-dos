@@ -521,12 +521,12 @@ l0523h:	equ 0x0523
 ; Used at following locations:
 ; 0x00e1	(immediate value)
 
-check_drive_letter:	equ 0x0524
+check_drive_letter_and_convert_to_number:	equ 0x0524
 ; Used at following locations:
 ; 0x1c89	(call destination)
 ; 0x1022	(call destination)
 
-sub_0531h:	equ 0x0531
+fetch_drive_letter_from_the_calculator_stack:	equ 0x0531
 ; Used at following locations:
 ; 0x1c61	(call destination)
 ; 0x101e	(call destination)

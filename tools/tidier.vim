@@ -17,6 +17,19 @@
 " comparisons. Update the requirements.
 
 " ==============================================================
+" To-do
+
+" Restore literals. Examples:
+"	 ld de,rst_10
+"  ld hl,l3c00h
+"  ld de,l15afh
+"  ld bc,l0015h
+"
+" Convert this literal to character:
+"  sbc a,041h
+"  sbc a,"A"
+
+" ==============================================================
 
 function! ChangeHeader()
   :1,2delete

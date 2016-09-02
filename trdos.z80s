@@ -880,14 +880,14 @@ l0517h:
   ld hl,variable.tmp_buffer_address
 l0523h:
   ret
-check_drive_letter:
+check_drive_letter_and_convert_to_number:
   and 0dfh
   sbc a,041h
   jp c,error.wrong_drive_letter
   cp 004h
   jp nc,error.wrong_drive_letter
   ret
-sub_0531h:
+fetch_drive_letter_from_the_calculator_stack:
   call stk_fetch
   ld a,c
   cp b
@@ -3297,9 +3297,9 @@ message_interface_1_start:
 cli_command.asterisk:
   call parse_expression
   call pop_hl_if_checking_syntax
-  call sub_0531h
+  call fetch_drive_letter_from_the_calculator_stack
   ld a,(de)
-  call check_drive_letter
+  call check_drive_letter_and_convert_to_number
   ld (variable.default_drive),a
   call init_disk_drive
   jp print_OK_and_exit_DOS
@@ -5026,7 +5026,7 @@ l1c5ch:
   ld (hl),020h
   inc hl
   djnz l1c5ch
-  call sub_0531h
+  call fetch_drive_letter_from_the_calculator_stack
   ex de,hl
   call sub_1c81h
   ld a,c
@@ -5051,7 +5051,7 @@ sub_1c81h:
   jr nz,l1c98h
   dec hl
   ld a,(hl)
-  call check_drive_letter
+  call check_drive_letter_and_convert_to_number
   push bc
   push hl
   call init_disk_drive
