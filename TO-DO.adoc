@@ -1,6 +1,6 @@
 = To-do list of TR-DOS disassembled
 :author: Marcos Cruz (programandala.net)
-:revdate: 2016-09-02
+:revdate: 2016-09-15
 
 // This file is part of TR-DOS disassembled
 // By Marcos Cruz (programandala.net), 2016
@@ -45,4 +45,25 @@ be interpreted as bytedata, in one single line:
 This does not solve the problem:
 `code_31FA_XXX_FIXME: start 0x31FA unlabeled last 0x31FC type code`.
 
+.2016-09-15:
+
+It seems there's a typo in the ROM:
+
+----
+	defb 053h		;3179	53 	S 
+	defb 043h		;317a	43 	C 
+	defb 052h		;317b	52 	R 
+	defb 045h		;317c	45 	E 
+	defb 045h		;317d	45 	E 
+	defb 04eh		;317e	4e 	N 
+	defb 004h		;317f	04 	.  should be 24 (character '$')
+	defb 084h		;3180	84 	.  should be 80
+	defb 053h		;3181	53 	S 
+	defb 043h		;3182	43 	C 
+	defb 052h		;3183	52 	R 
+	defb 045h		;3184	45 	E 
+	defb 045h		;3185	45 	E 
+	defb 04eh		;3186	4e 	N 
+	defb 084h		;3187	84 	.  should be a4 (=24+80)
+----
 

@@ -8124,7 +8124,7 @@ l3057h:
   ex de,hl
   inc de
   ld b,0x00
-  ld hl,l31c8h
+  ld hl,unknown_table_31C8_start
   add hl,bc
   ld a,(hl)
   ld hl,(variable.ch_add)
@@ -8235,7 +8235,7 @@ l30f4h:
   ld hl,(sys_e_line)
   ret
 
-; BLOCK 'tokens' (start 0x30fd end 0x31c6)
+; BLOCK 'tokens' (start 0x30fd end 0x31c7)
 tokens_start:
   defb "S"
   defb "A"
@@ -8438,38 +8438,57 @@ tokens_start:
   defb "I"
   defb "F"
   defb 0xD9
-  rst 38h
-  rst 38h
-l31c8h:
-  ret m
-  ret m
-  rst 28h
-  rst 28h
-  rst 30h
-  rst 30h
-  rst 8
-  rst 8
-  jp nc,0xE6D2
-  and 0xD1
-  pop de
-  push de
-  push de
-  cp (hl)
-  cp (hl)
-  call p,0xD3F4
-  call nc,0xAFAF
-  and l
-  and l
-  call po,0xAAE4
-  xor d
-  rst 38h
-  rst 38h
-  ret nc
-  ret nc
-  call pe,0xF0EC
-  ret p
-  jp z,0xD6CA
-  sub 0x00
+  defb 0xFF
+
+; BLOCK 'not_used_31C7' (start 0x31c7 end 0x31c8)
+not_used_31C7_start:
+  defb 0xFF
+
+; BLOCK 'unknown_table_31C8' (start 0x31c8 end 0x31f3)
+unknown_table_31C8_start:
+  defb 0xF8
+  defb 0xF8
+  defb 0xEF
+  defb 0xEF
+  defb 0xF7
+  defb 0xF7
+  defb 0xCF
+  defb 0xCF
+  defb 0xD2
+  defb 0xD2
+  defb 0xE6
+  defb 0xE6
+  defb 0xD1
+  defb 0xD1
+  defb 0xD5
+  defb 0xD5
+  defb 0xBE
+  defb 0xBE
+  defb 0xF4
+  defb 0xF4
+  defb 0xD3
+  defb 0xD4
+  defb 0xAF
+  defb 0xAF
+  defb 0xA5
+  defb 0xA5
+  defb 0xE4
+  defb 0xE4
+  defb 0xAA
+  defb 0xAA
+  defb 0xFF
+  defb 0xFF
+  defb 0xD0
+  defb 0xD0
+  defb 0xEC
+  defb 0xEC
+  defb 0xF0
+  defb 0xF0
+  defb 0xCA
+  defb 0xCA
+  defb 0xD6
+  defb 0xD6
+  defb 0x00
 sub_31f3h:
   ld hl,(sys_chans)
   or a

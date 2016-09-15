@@ -8139,7 +8139,7 @@ l3057h:
 	ex de,hl			;305c	eb 	. 
 	inc de			;305d	13 	. 
 	ld b,000h		;305e	06 00 	. . 
-	ld hl,l31c8h		;3060	21 c8 31 	! . 1 
+	ld hl,unknown_table_31C8_start		;3060	21 c8 31 	! . 1 
 	add hl,bc			;3063	09 	. 
 	ld a,(hl)			;3064	7e 	~ 
 	ld hl,(variable.ch_add)		;3065	2a d9 5c 	* . \ 
@@ -8250,7 +8250,7 @@ l30f4h:
 	ld hl,(sys_e_line)		;30f9	2a 59 5c 	* Y \ 
 	ret			;30fc	c9 	. 
 
-; BLOCK 'tokens' (start 0x30fd end 0x31c6)
+; BLOCK 'tokens' (start 0x30fd end 0x31c7)
 tokens_start:
 	defb 053h		;30fd	53 	S 
 	defb 041h		;30fe	41 	A 
@@ -8453,38 +8453,57 @@ tokens_start:
 	defb 049h		;31c3	49 	I 
 	defb 046h		;31c4	46 	F 
 	defb 0d9h		;31c5	d9 	. 
-	rst 38h			;31c6	ff 	. 
-	rst 38h			;31c7	ff 	. 
-l31c8h:
-	ret m			;31c8	f8 	. 
-	ret m			;31c9	f8 	. 
-	rst 28h			;31ca	ef 	. 
-	rst 28h			;31cb	ef 	. 
-	rst 30h			;31cc	f7 	. 
-	rst 30h			;31cd	f7 	. 
-	rst 8			;31ce	cf 	. 
-	rst 8			;31cf	cf 	. 
-	jp nc,0e6d2h		;31d0	d2 d2 e6 	. . . 
-	and 0d1h		;31d3	e6 d1 	. . 
-	pop de			;31d5	d1 	. 
-	push de			;31d6	d5 	. 
-	push de			;31d7	d5 	. 
-	cp (hl)			;31d8	be 	. 
-	cp (hl)			;31d9	be 	. 
-	call p,0d3f4h		;31da	f4 f4 d3 	. . . 
-	call nc,0afafh		;31dd	d4 af af 	. . . 
-	and l			;31e0	a5 	. 
-	and l			;31e1	a5 	. 
-	call po,0aae4h		;31e2	e4 e4 aa 	. . . 
-	xor d			;31e5	aa 	. 
-	rst 38h			;31e6	ff 	. 
-	rst 38h			;31e7	ff 	. 
-	ret nc			;31e8	d0 	. 
-	ret nc			;31e9	d0 	. 
-	call pe,0f0ech		;31ea	ec ec f0 	. . . 
-	ret p			;31ed	f0 	. 
-	jp z,0d6cah		;31ee	ca ca d6 	. . . 
-	sub 000h		;31f1	d6 00 	. . 
+	defb 0ffh		;31c6	ff 	. 
+
+; BLOCK 'not_used_31C7' (start 0x31c7 end 0x31c8)
+not_used_31C7_start:
+	defb 0ffh		;31c7	ff 	. 
+
+; BLOCK 'unknown_table_31C8' (start 0x31c8 end 0x31f3)
+unknown_table_31C8_start:
+	defb 0f8h		;31c8	f8 	. 
+	defb 0f8h		;31c9	f8 	. 
+	defb 0efh		;31ca	ef 	. 
+	defb 0efh		;31cb	ef 	. 
+	defb 0f7h		;31cc	f7 	. 
+	defb 0f7h		;31cd	f7 	. 
+	defb 0cfh		;31ce	cf 	. 
+	defb 0cfh		;31cf	cf 	. 
+	defb 0d2h		;31d0	d2 	. 
+	defb 0d2h		;31d1	d2 	. 
+	defb 0e6h		;31d2	e6 	. 
+	defb 0e6h		;31d3	e6 	. 
+	defb 0d1h		;31d4	d1 	. 
+	defb 0d1h		;31d5	d1 	. 
+	defb 0d5h		;31d6	d5 	. 
+	defb 0d5h		;31d7	d5 	. 
+	defb 0beh		;31d8	be 	. 
+	defb 0beh		;31d9	be 	. 
+	defb 0f4h		;31da	f4 	. 
+	defb 0f4h		;31db	f4 	. 
+	defb 0d3h		;31dc	d3 	. 
+	defb 0d4h		;31dd	d4 	. 
+	defb 0afh		;31de	af 	. 
+	defb 0afh		;31df	af 	. 
+	defb 0a5h		;31e0	a5 	. 
+	defb 0a5h		;31e1	a5 	. 
+	defb 0e4h		;31e2	e4 	. 
+	defb 0e4h		;31e3	e4 	. 
+	defb 0aah		;31e4	aa 	. 
+	defb 0aah		;31e5	aa 	. 
+	defb 0ffh		;31e6	ff 	. 
+	defb 0ffh		;31e7	ff 	. 
+	defb 0d0h		;31e8	d0 	. 
+	defb 0d0h		;31e9	d0 	. 
+	defb 0ech		;31ea	ec 	. 
+	defb 0ech		;31eb	ec 	. 
+	defb 0f0h		;31ec	f0 	. 
+	defb 0f0h		;31ed	f0 	. 
+	defb 0cah		;31ee	ca 	. 
+	defb 0cah		;31ef	ca 	. 
+	defb 0d6h		;31f0	d6 	. 
+	defb 0d6h		;31f1	d6 	. 
+	defb 000h		;31f2	00 	. 
 sub_31f3h:
 	ld hl,(sys_chans)		;31f3	2a 4f 5c 	* O \ 
 	or a			;31f6	b7 	. 

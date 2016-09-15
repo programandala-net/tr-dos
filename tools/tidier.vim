@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201609022123
+" Last modified 201609152243
 
 " ==============================================================
 " History
@@ -19,6 +19,8 @@
 " 2016-09-02: Remove wrong labels. Restore literals. Clear drive
 " letters. Generalize the clearing of key comparisons to
 " characters and complete it.
+"
+" 2016-09-15: Add `CompactUnusedZones()`.
 
 " ==============================================================
 
@@ -403,6 +405,18 @@ function! ClearDriveLetters()
   
 endfunction
 
+function! CompactUnusedZones()
+
+  " Compact the unused zones.
+  " XXX TODO -- finish
+
+  call cursor(1,1)
+  call search('^not_used_31FD_start:$')
+  normal j
+  silent substitute@\_.\+\(^l[0-9a-f]\{4}h:$\)@  defs 2813,$0xFF\r\r@
+
+endfunction
+
 function! Tidier()
 
   call AddRst20Labels()
@@ -413,6 +427,7 @@ function! Tidier()
   call ClearDriveLetters()
   call RemoveWrongLabels()
   call RestoreLiterals()
+  " call CompactUnusedZones()
 
   call ConvertHexNumbersNotation()
   call RemoveComments()

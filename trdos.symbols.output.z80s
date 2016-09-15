@@ -3112,12 +3112,19 @@ l30f4h:	equ 0x30f4
 ; 0x30e8	(jr destination)
 
 
-; BLOCK 'tokens' (start 0x30fd end 0x31c6)
+; BLOCK 'tokens' (start 0x30fd end 0x31c7)
 tokens_start:	equ 0x30fd
 ; Used at following locations:
 ; 0x30ac	(immediate value)
 
-l31c8h:	equ 0x31c8
+
+; BLOCK 'not_used_31C7' (start 0x31c7 end 0x31c8)
+not_used_31C7_start:	equ 0x31c7
+; Used at following locations:
+
+
+; BLOCK 'unknown_table_31C8' (start 0x31c8 end 0x31f3)
+unknown_table_31C8_start:	equ 0x31c8
 ; Used at following locations:
 ; 0x3060	(immediate value)
 

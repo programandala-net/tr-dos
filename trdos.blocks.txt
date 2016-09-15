@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201609021936
+; Last modified 201609152301
 
 rst20_0102: unlabeled start 0x0103 unlabeled last 0x0104 type worddata
 rst20_014C: unlabeled start 0x014D unlabeled last 0x014E type worddata
@@ -52,7 +52,7 @@ messages_10A5: unlabeled start 0x10A5 unlabeled last 0x1151 type bytedata
 not_used_16F9: start 0x16F9 unlabeled last 0x0170F type bytedata
 messages_2766: unlabeled start 0x2766 unlabeled last 0x283B type bytedata
 messages_29B2: unlabeled start 0x29B2 unlabeled last 0x2A34 type bytedata
-tokens: start 0x30FD unlabeled last 0x31C5 type bytedata
+tokens: start 0x30FD unlabeled last 0x31C6 type bytedata
 
 ; XXX FIXME -- z80dasm's bug? This block causes addresses 0x31FA..0x31FC
 ; be interpreted as bytedata, in one single line:
@@ -62,6 +62,7 @@ not_used_31FD: start 0x31FD unlabeled last 0x3CF9 type bytedata
 code_31FA_XXX_FIXME: start 0x31FA unlabeled last 0x31FC type code
 
 not_used_3FF0: start 0x3FF0 unlabeled last 0x3FFF type bytedata
+not_used_31C7: start 0x31C7 unlabeled last 0x31C7 type bytedata
 
 c_commands_table_00_index: unlabeled start 0x288C unlabeled last 0x288C type bytedata
 c_commands_table_00_pointer: unlabeled start 0x288D unlabeled last 0x288E type pointers
@@ -117,3 +118,4 @@ c_commands_table_19_index: unlabeled start 0x28D7 unlabeled last 0x28D7 type byt
 
 token_commands_table: start 0x2FF3 unlabeled last 0x3007 type bytedata
 token_commands_addresses_table: start 0x3008 unlabeled last 0x3031 type pointers
+unknown_table_31C8: start 0x31C8 unlabeled last 0x31F2 type bytedata
