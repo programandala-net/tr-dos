@@ -96,6 +96,7 @@ variable.de_copy: equ 0x5d04
 variable.find_command_symbols:  equ 0x5d06
 variable.deleted_files: equ 0x5d07
 variable.filename_first_char: equ 0x5d08
+variable.unknown_23817: equ 0x5d09
 variable.buffer_flag: equ 0x5d0c
 variable.file_number_for_copying: equ 0x5d0d
 variable.command_mode:  equ 0x5d0e
@@ -5783,7 +5784,7 @@ l219ah:
   cp 0x57
   jp nz,error.wrong_drive_letter
 l21aeh:
-  ld (0x5D09),a
+  ld (variable.unknown_23817),a
   call pop_hl_if_checking_syntax
   ld a,0x23
   ld (variable.file_type),a
@@ -5810,7 +5811,7 @@ sub_21dbh:
   call read_system_track
   pop af
   jr nz,l2206h
-  ld a,(0x5D09)
+  ld a,(variable.unknown_23817)
   cp 0x52
   jr z,l2201h
 l21f1h:
@@ -5826,7 +5827,7 @@ l2201h:
   xor a
   ret
 l2206h:
-  ld a,(0x5D09)
+  ld a,(variable.unknown_23817)
   cp 0x52
   ret nz
   jp l03d9h
@@ -5877,11 +5878,11 @@ sub_2242h:
   inc hl
   ld (hl),d
   call sub_22b2h
-  ld a,(0x5D09)
+  ld a,(variable.unknown_23817)
   cp 0xA5
   call z,sub_222fh
   jr z,l226bh
-  ld a,(0x5D09)
+  ld a,(variable.unknown_23817)
   cp 0x52
   ld a,0xFF
   jr nz,l226bh
@@ -5965,7 +5966,7 @@ l22c4h:
   ld a,(variable.find_command_found_file)
   ld (hl),a
   inc hl
-  ld a,(0x5D09)
+  ld a,(variable.unknown_23817)
   cp 0x52
   ld (hl),0x00
   jr z,l22fch

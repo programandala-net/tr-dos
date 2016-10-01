@@ -90,6 +90,7 @@ variable.de_copy:	equ 0x5d04
 variable.find_command_symbols:	equ 0x5d06
 variable.deleted_files:	equ 0x5d07
 variable.filename_first_char:	equ 0x5d08
+variable.unknown_23817:	equ 0x5d09
 variable.buffer_flag:	equ 0x5d0c
 variable.file_number_for_copying:	equ 0x5d0d
 variable.command_mode:	equ 0x5d0e
@@ -5797,7 +5798,7 @@ l219ah:
 	cp 057h		;21a9	fe 57 	. W 
 	jp nz,error.wrong_drive_letter		;21ab	c2 1a 1d 	. . . 
 l21aeh:
-	ld (05d09h),a		;21ae	32 09 5d 	2 . ] 
+	ld (variable.unknown_23817),a		;21ae	32 09 5d 	2 . ] 
 	call pop_hl_if_checking_syntax		;21b1	cd 75 1d 	. u . 
 	ld a,023h		;21b4	3e 23 	> # 
 	ld (variable.file_type),a		;21b6	32 e5 5c 	2 . \ 
@@ -5824,7 +5825,7 @@ sub_21dbh:
 	call read_system_track		;21e4	cd 05 04 	. . . 
 	pop af			;21e7	f1 	. 
 	jr nz,l2206h		;21e8	20 1c 	  . 
-	ld a,(05d09h)		;21ea	3a 09 5d 	: . ] 
+	ld a,(variable.unknown_23817)		;21ea	3a 09 5d 	: . ] 
 	cp 052h		;21ed	fe 52 	. R 
 	jr z,l2201h		;21ef	28 10 	( . 
 l21f1h:
@@ -5840,7 +5841,7 @@ l2201h:
 	xor a			;2204	af 	. 
 	ret			;2205	c9 	. 
 l2206h:
-	ld a,(05d09h)		;2206	3a 09 5d 	: . ] 
+	ld a,(variable.unknown_23817)		;2206	3a 09 5d 	: . ] 
 	cp 052h		;2209	fe 52 	. R 
 	ret nz			;220b	c0 	. 
 	jp l03d9h		;220c	c3 d9 03 	. . . 
@@ -5891,11 +5892,11 @@ sub_2242h:
 	inc hl			;2252	23 	# 
 	ld (hl),d			;2253	72 	r 
 	call sub_22b2h		;2254	cd b2 22 	. . " 
-	ld a,(05d09h)		;2257	3a 09 5d 	: . ] 
+	ld a,(variable.unknown_23817)		;2257	3a 09 5d 	: . ] 
 	cp 0a5h		;225a	fe a5 	. . 
 	call z,sub_222fh		;225c	cc 2f 22 	. / " 
 	jr z,l226bh		;225f	28 0a 	( . 
-	ld a,(05d09h)		;2261	3a 09 5d 	: . ] 
+	ld a,(variable.unknown_23817)		;2261	3a 09 5d 	: . ] 
 	cp 052h		;2264	fe 52 	. R 
 	ld a,0ffh		;2266	3e ff 	> . 
 	jr nz,l226bh		;2268	20 01 	  . 
@@ -5979,7 +5980,7 @@ l22c4h:
 	ld a,(variable.find_command_found_file)		;22ea	3a 1e 5d 	: . ] 
 	ld (hl),a			;22ed	77 	w 
 	inc hl			;22ee	23 	# 
-	ld a,(05d09h)		;22ef	3a 09 5d 	: . ] 
+	ld a,(variable.unknown_23817)		;22ef	3a 09 5d 	: . ] 
 	cp 052h		;22f2	fe 52 	. R 
 	ld (hl),000h		;22f4	36 00 	6 . 
 	jr z,l22fch		;22f6	28 04 	( . 

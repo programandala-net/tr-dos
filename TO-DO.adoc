@@ -5,7 +5,7 @@
 // This file is part of TR-DOS disassembled
 // By Marcos Cruz (programandala.net), 2016
 
-// Last modified 201609022000
+// Last modified 20160915
 
 .2016-09-02:
 

@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201609022129
+; Last modified 201610011443
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -78,6 +78,7 @@ variable.de_copy:                                           equ 23812
 variable.find_command_symbols:                              equ 23814
 variable.deleted_files:                                     equ 23815
 variable.filename_first_char:                               equ 23816
+variable.unknown_23817:                                     equ 23817
 variable.buffer_flag:                                       equ 23820
 variable.file_number_for_copying:                           equ 23821
 variable.command_mode:                                      equ 23822
