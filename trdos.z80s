@@ -683,7 +683,7 @@ l03cdh:
   or a
   call z,print_message_at_HL
   ret
-l03d9h:
+print_no_files_error_and_exit_DOS:
   ld hl,message.cr.no_files
   ld a,0x01
   jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
@@ -884,7 +884,7 @@ cli_command.new:
   call sub_1cb0h
   ld a,(variable.temporary_drive)
   ld (variable.two_files_drive),a
-  jp nz,l03d9h
+  jp nz,print_no_files_error_and_exit_DOS
   push bc
   call sub_165dh
   call sub_1cb0h
@@ -908,7 +908,7 @@ sub_0572h:
 l0577h:
   ld a,(variable.deleted_files)
   or a
-  jp z,l03d9h
+  jp z,print_no_files_error_and_exit_DOS
   jp print_OK_and_exit_DOS
 sub_0581h:
   push bc
@@ -951,7 +951,7 @@ l05bdh:
 l05cbh:
   ld a,(variable.filename)
   cp 0x2A
-  jp nz,l03d9h
+  jp nz,print_no_files_error_and_exit_DOS
   call stk_fetch
   ex de,hl
   call sub_1c81h
@@ -3868,7 +3868,7 @@ l1375h:
   call cls_lower
   call sub_102eh
   call sub_1cb0h
-  jp nz,l03d9h
+  jp nz,print_no_files_error_and_exit_DOS
   call sub_13b7h
   ld a,(variable.file_type)
   cp "#" ; data file type?
@@ -4497,7 +4497,7 @@ sub_187ah:
   call pop_hl_if_checking_syntax
   call sub_292fh
 sub_18a4h:
-  jp nz,l03d9h
+  jp nz,print_no_files_error_and_exit_DOS
   call sub_165dh
   ret
 sub_18abh:
@@ -5830,7 +5830,7 @@ l2206h:
   ld a,(variable.data_file_mode)
   cp "R" ; sequential access data file type read mode?
   ret nz
-  jp l03d9h
+  jp print_no_files_error_and_exit_DOS
 sub_220fh:
   ld a,(variable.file_size)
   rst 20h
@@ -7737,7 +7737,7 @@ cli_command.go_to:
   jr nc,l2dd2h
   call read_system_track
   call sub_1cb3h
-  jp nz,l03d9h
+  jp nz,print_no_files_error_and_exit_DOS
   ld hl,variable.filename
   ld bc,(0x4020)
   add hl,bc
@@ -7796,7 +7796,7 @@ l2e05h:
   call sub_102eh
   call sub_292fh
 l2e33h:
-  jp nz,l03d9h
+  jp nz,print_no_files_error_and_exit_DOS
   call sub_165dh
 l2e39h:
   ld a,(variable.filename)

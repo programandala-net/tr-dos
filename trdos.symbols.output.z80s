@@ -356,7 +356,7 @@ l03cdh:	equ 0x03cd
 ; Used at following locations:
 ; 0x03c9	(jr destination)
 
-l03d9h:	equ 0x03d9
+print_no_files_error_and_exit_DOS:	equ 0x03d9
 ; Used at following locations:
 ; 0x2e33	(jp destination)
 ; 0x2dbc	(jp destination)

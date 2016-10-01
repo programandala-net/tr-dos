@@ -693,7 +693,7 @@ l03cdh:
 	or a			;03d4	b7 	. 
 	call z,print_message_at_HL		;03d5	cc 07 27 	. . ' 
 	ret			;03d8	c9 	. 
-l03d9h:
+print_no_files_error_and_exit_DOS:
 	ld hl,message.cr.no_files		;03d9	21 28 2a 	! ( * 
 	ld a,001h		;03dc	3e 01 	> . 
 	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;03de	c3 4a 1c 	. J . 
@@ -895,7 +895,7 @@ cli_command.new:
 	call sub_1cb0h		;0543	cd b0 1c 	. . . 
 	ld a,(variable.temporary_drive)		;0546	3a f6 5c 	: . \ 
 	ld (variable.two_files_drive),a		;0549	32 f8 5c 	2 . \ 
-	jp nz,l03d9h		;054c	c2 d9 03 	. . . 
+	jp nz,print_no_files_error_and_exit_DOS		;054c	c2 d9 03 	. . . 
 	push bc			;054f	c5 	. 
 	call sub_165dh		;0550	cd 5d 16 	. ] . 
 	call sub_1cb0h		;0553	cd b0 1c 	. . . 
@@ -919,7 +919,7 @@ sub_0572h:
 l0577h:
 	ld a,(variable.deleted_files)		;0577	3a 07 5d 	: . ] 
 	or a			;057a	b7 	. 
-	jp z,l03d9h		;057b	ca d9 03 	. . . 
+	jp z,print_no_files_error_and_exit_DOS		;057b	ca d9 03 	. . . 
 	jp print_OK_and_exit_DOS		;057e	c3 e1 03 	. . . 
 sub_0581h:
 	push bc			;0581	c5 	. 
@@ -962,7 +962,7 @@ l05bdh:
 l05cbh:
 	ld a,(variable.filename)		;05cb	3a dd 5c 	: . \ 
 	cp 02ah		;05ce	fe 2a 	. * 
-	jp nz,l03d9h		;05d0	c2 d9 03 	. . . 
+	jp nz,print_no_files_error_and_exit_DOS		;05d0	c2 d9 03 	. . . 
 	call stk_fetch		;05d3	cd b5 1d 	. . . 
 	ex de,hl			;05d6	eb 	. 
 	call sub_1c81h		;05d7	cd 81 1c 	. . . 
@@ -3881,7 +3881,7 @@ l1375h:
 	call cls_lower		;137c	cd 9f 1d 	. . . 
 	call sub_102eh		;137f	cd 2e 10 	. . . 
 	call sub_1cb0h		;1382	cd b0 1c 	. . . 
-	jp nz,l03d9h		;1385	c2 d9 03 	. . . 
+	jp nz,print_no_files_error_and_exit_DOS		;1385	c2 d9 03 	. . . 
 	call sub_13b7h		;1388	cd b7 13 	. . . 
 	ld a,(variable.file_type)		;138b	3a e5 5c 	: . \ 
 	cp 023h		;138e	fe 23 	. # 
@@ -4510,7 +4510,7 @@ sub_187ah:
 	call pop_hl_if_checking_syntax		;189e	cd 75 1d 	. u . 
 	call sub_292fh		;18a1	cd 2f 29 	. / ) 
 sub_18a4h:
-	jp nz,l03d9h		;18a4	c2 d9 03 	. . . 
+	jp nz,print_no_files_error_and_exit_DOS		;18a4	c2 d9 03 	. . . 
 	call sub_165dh		;18a7	cd 5d 16 	. ] . 
 	ret			;18aa	c9 	. 
 sub_18abh:
@@ -5844,7 +5844,7 @@ l2206h:
 	ld a,(variable.data_file_mode)		;2206	3a 09 5d 	: . ] 
 	cp 052h		;2209	fe 52 	. R 
 	ret nz			;220b	c0 	. 
-	jp l03d9h		;220c	c3 d9 03 	. . . 
+	jp print_no_files_error_and_exit_DOS		;220c	c3 d9 03 	. . . 
 sub_220fh:
 	ld a,(variable.file_size)		;220f	3a db 5c 	: . \ 
 	rst 20h			;2212	e7 	. 
@@ -7752,7 +7752,7 @@ cli_command.go_to:
 	jr nc,l2dd2h		;2db4	30 1c 	0 . 
 	call read_system_track		;2db6	cd 05 04 	. . . 
 	call sub_1cb3h		;2db9	cd b3 1c 	. . . 
-	jp nz,l03d9h		;2dbc	c2 d9 03 	. . . 
+	jp nz,print_no_files_error_and_exit_DOS		;2dbc	c2 d9 03 	. . . 
 	ld hl,variable.filename		;2dbf	21 dd 5c 	! . \ 
 	ld bc,(04020h)		;2dc2	ed 4b 20 40 	. K   @ 
 	add hl,bc			;2dc6	09 	. 
@@ -7811,7 +7811,7 @@ l2e05h:
 	call sub_102eh		;2e2d	cd 2e 10 	. . . 
 	call sub_292fh		;2e30	cd 2f 29 	. / ) 
 l2e33h:
-	jp nz,l03d9h		;2e33	c2 d9 03 	. . . 
+	jp nz,print_no_files_error_and_exit_DOS		;2e33	c2 d9 03 	. . . 
 	call sub_165dh		;2e36	cd 5d 16 	. ] . 
 l2e39h:
 	ld a,(variable.filename)		;2e39	3a dd 5c 	: . \ 

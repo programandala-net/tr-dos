@@ -1,7 +1,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016
 
-; Last modified 201610011443
+; Last modified 201610011529
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -155,6 +155,7 @@ parse_expression:                                           equ 0x1DDF
 jp_print_error_number_A_whose_message_is_at_HL:             equ 0x2225
 set_number_of_tracks:                                       equ 0x2998
 print_error_number_A_whose_message_is_at_HL:                equ 0x03C3
+print_no_files_error_and_exit_DOS:                          equ 0x03D9
 print_OK_and_exit_DOS:                                      equ 0x03E1
 check_drive_letter_and_convert_to_number:                   equ 0x0524
 set_file_type_stored_in_B:                                  equ 0x104D
