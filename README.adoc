@@ -1,18 +1,36 @@
 = TR-DOS _Disassembled_
 :author: Marcos Cruz (programandala.net)
-:revdate: 2016-08-14
+:revdate: 2016-10-01
 
 // This file is written in AsciDoc/Asciidoctor format
 // (see <http://asciidoctor.org>).
 
-// Project webpage:
-
-// http://programandala.net/en.program.abersoft_forth.html
-
 == Description
 
 The goal of this project is to disassemble TR-DOS 5.03, in order to
-fix some problems found during the development of its support for
-http://programandala.net/en.program.solo_forth.html[Solo Forth].
+study it and fix some problems found during the development of its
+support for http://programandala.net/en.program.solo_forth.html[Solo
+Forth].
 
 The project started on 2016-08-14.
+
+== Bibliography
+
+Documentation used for this project, listed in no particular order:
+
+- http://vtrdos.ru[Virtual TR-DOS]
+- _TR-DOS для профессионалов и любителей_ (TR-DOS for professionals
+  and amateurs), by Yu Pomortsev, Moscow, 1994.  PDF version by Deny
+  (Denisenko DA), 2007. (Can be downloaded from
+  http://vtrdos.ru[Virtual TR-DOS]).
+- _Описание и полный дизассемблер ПЗУ TR-DOS 5.04T_ (Description and
+  full disassembly of TR-DOS 5.04T), by Павел Федин (Paul Fedin),
+  1996. (Can be downloaded from http://vtrdos.ru[Virtual TR-DOS]).
+- http://ramsoft.bbk.org.omegahg.com/tech/tr-info.zip
+- http://www.worldofspectrum.org/pub/sinclair/hardware-info/TR-DOS_Programming.txt[TR-DOS
+  Programming]
+- http://www.worldofspectrum.org/pub/sinclair/hardware-info/TR-DOS_Variables.txt[TR-DOS
+  Variables]
+- http://www.worldofspectrum.org/pub/sinclair/hardware-info/Beta128DiskInterface_Manual.txt[Beta
+  128 Disk Interface Manual]
+- http://tr-dos.ru
