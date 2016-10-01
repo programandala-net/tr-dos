@@ -96,7 +96,7 @@ variable.de_copy: equ 0x5d04
 variable.find_command_symbols:  equ 0x5d06
 variable.deleted_files: equ 0x5d07
 variable.filename_first_char: equ 0x5d08
-variable.unknown_23817: equ 0x5d09
+variable.data_file_mode:  equ 0x5d09
 variable.buffer_flag: equ 0x5d0c
 variable.file_number_for_copying: equ 0x5d0d
 variable.command_mode:  equ 0x5d0e
@@ -5746,7 +5746,7 @@ sub_2135h:
 sub_2158h:
   call next_char
   call get_char
-  cp 0x2C
+  cp ","
   jp nz,error.wrong_drive_letter
   ld hl,(variable.file_size)
   ld (variable.ch_add),hl
@@ -5773,20 +5773,20 @@ l218eh:
   call next_char
   jr l218eh
 l219ah:
-  cp 0xA5
+  cp token.rnd ; random access data file type?
   push af
   call z,sub_2158h
   pop af
   jr z,l21aeh
   and 0xDF
-  cp 0x52
+  cp "R" ; sequential access data file type read mode?
   jr z,l21aeh
-  cp 0x57
+  cp "W" ; sequential access data file type write mode?
   jp nz,error.wrong_drive_letter
 l21aeh:
-  ld (variable.unknown_23817),a
+  ld (variable.data_file_mode),a
   call pop_hl_if_checking_syntax
-  ld a,0x23
+  ld a,"#" ; data file type?
   ld (variable.file_type),a
   ld a,0x00
   ld (variable.file_start),a
@@ -5811,8 +5811,8 @@ sub_21dbh:
   call read_system_track
   pop af
   jr nz,l2206h
-  ld a,(variable.unknown_23817)
-  cp 0x52
+  ld a,(variable.data_file_mode)
+  cp "R" ; sequential access data file type read mode?
   jr z,l2201h
 l21f1h:
   ld hl,variable.file_start
@@ -5827,8 +5827,8 @@ l2201h:
   xor a
   ret
 l2206h:
-  ld a,(variable.unknown_23817)
-  cp 0x52
+  ld a,(variable.data_file_mode)
+  cp "R" ; sequential access data file type read mode?
   ret nz
   jp l03d9h
 sub_220fh:
@@ -5878,12 +5878,12 @@ sub_2242h:
   inc hl
   ld (hl),d
   call sub_22b2h
-  ld a,(variable.unknown_23817)
-  cp 0xA5
+  ld a,(variable.data_file_mode)
+  cp token.rnd ; random access data file type?
   call z,sub_222fh
   jr z,l226bh
-  ld a,(variable.unknown_23817)
-  cp 0x52
+  ld a,(variable.data_file_mode)
+  cp "R" ; sequential access data file type read mode?
   ld a,0xFF
   jr nz,l226bh
   xor a
@@ -5966,8 +5966,8 @@ l22c4h:
   ld a,(variable.find_command_found_file)
   ld (hl),a
   inc hl
-  ld a,(variable.unknown_23817)
-  cp 0x52
+  ld a,(variable.data_file_mode)
+  cp "R" ; sequential access data file type read mode?
   ld (hl),0x00
   jr z,l22fch
   ld a,(variable.file_length_in_bytes)

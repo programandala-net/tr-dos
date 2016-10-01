@@ -78,7 +78,7 @@ variable.de_copy:                                           equ 23812
 variable.find_command_symbols:                              equ 23814
 variable.deleted_files:                                     equ 23815
 variable.filename_first_char:                               equ 23816
-variable.unknown_23817:                                     equ 23817
+variable.data_file_mode:                                    equ 23817
 variable.buffer_flag:                                       equ 23820
 variable.file_number_for_copying:                           equ 23821
 variable.command_mode:                                      equ 23822

@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016
 
-" Last modified 201609152243
+" Last modified 201610011525
 
 " ==============================================================
 " History
@@ -21,6 +21,8 @@
 " characters and complete it.
 "
 " 2016-09-15: Add `CompactUnusedZones()`.
+"
+" 2016-10-01: Clear comparisons of data file modes.
 
 " ==============================================================
 
@@ -215,8 +217,26 @@ function! ClearFileTypes()
   silent substitute@042h.\+$@"B" ; BASIC file type?@
   call search(';1d5c')
   silent substitute@042h.\+$@"B" ; BASIC file type?@
+  call search(';219a')
+  silent substitute@0a5h.\+$@token.rnd ; random access data file type?@
+  call search(';21a5')
+  silent substitute@052h.\+$@"R" ; sequential access data file type read mode?@
+  call search(';21a9')
+  silent substitute@057h.\+$@"W" ; sequential access data file type write mode?@
+  call search(';21b4')
+  silent substitute@023h.\+$@"#" ; data file type?@
+  call search(';21ed')
+  silent substitute@052h.\+$@"R" ; sequential access data file type read mode?@
+  call search(';2209')
+  silent substitute@052h.\+$@"R" ; sequential access data file type read mode?@
+  call search(';225a')
+  silent substitute@0a5h.\+$@token.rnd ; random access data file type?@
+  call search(';2264')
+  silent substitute@052h.\+$@"R" ; sequential access data file type read mode?@
   call search(';22d8')
   silent substitute@044h.\+$@"D" ; file type: array -- XXX TODO -- confirm@
+  call search(';22f2')
+  silent substitute@052h.\+$@"R" ; sequential access data file type read mode?@
 endfunction
 
 function! ClearCharacters()
@@ -278,6 +298,8 @@ function! ClearCharacters()
   silent substitute@02ch.\+$@","@
   call search(';1e02')
   silent substitute@00dh.\+$@char.carriage_return@
+  call search(';215e')
+  silent substitute@02ch.\+$@","@
   call search(';2191')
   silent substitute@041h.\+@"A"@
   call search(';261d')

@@ -4220,7 +4220,7 @@ variable.filename_first_char:	equ 0x5d08
 ; 0x07d9	(byte load pointer)
 ; 0x07a3	(byte load pointer)
 
-variable.unknown_23817:	equ 0x5d09
+variable.data_file_mode:	equ 0x5d09
 ; Used at following locations:
 ; 0x22ef	(byte load pointer)
 ; 0x2261	(byte load pointer)
