@@ -6,7 +6,7 @@
 # TR-DOS disassembled
 # http://programandala.net/
 
-# Last modified 201608202117
+# Last modified 201610011544
 
 ################################################################
 # Requirements
@@ -63,10 +63,16 @@ trdos.z80s: trdos.raw.z80s tools/tidier.vim
 
 trdos.reassembled.rom: trdos.z80s
 	pasmo $< $@
+	diff -s trdos.rom $@
 
 ################################################################
 # Change history
 
 # 2016-08-14: Start.
+#
 # 2016-08-19: Add after-processing with Vim.
+#
 # 2016-08-20: Add assembling of the disassembled source, as a check.
+#
+# 2016-10-01: Add `diff` check to the reassembled ROM; formerly a manual check
+# was done with VBinDiff.
