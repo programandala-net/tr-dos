@@ -187,7 +187,7 @@ l0166h:	equ 0x0166
 ; Used at following locations:
 ; 0x0161	(jr destination)
 
-l016ch:	equ 0x016c
+do_interpret_rem_command_in_basic:	equ 0x016c
 ; Used at following locations:
 ; 0x3d1e	(jp destination)
 

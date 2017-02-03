@@ -314,7 +314,7 @@ l0166h:
   ld hl,variable.0xc9
   push hl
   ret
-l016ch:
+do_interpret_rem_command_in_basic:
   call sub_20f1h
   call sub_294ah
   ld a,0xFF
@@ -11343,7 +11343,7 @@ l3d16h:
 interpret_rem_command_in_basic:
   call entry.init_dos
   push hl
-  jp l016ch
+  jp do_interpret_rem_command_in_basic
 entry.init_dos:
   call sub_31f3h
   nop
