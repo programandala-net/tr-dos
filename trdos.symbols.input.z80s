@@ -1,7 +1,9 @@
+; trdos.symbols.input.z80s
+;
 ; This file is part of TR-DOS disassembled
-; By Marcos Cruz (programandala.net), 2016
+; By Marcos Cruz (programandala.net), 2016, 2017
 
-; Last modified 201702030230
+; Last modified 201702031731
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -155,6 +157,7 @@ point_interpreter_to_command_line:                          equ 0x1DC5
 parse_expression:                                           equ 0x1DDF
 jp_print_error_number_A_whose_message_is_at_HL:             equ 0x2225
 set_number_of_tracks:                                       equ 0x2998
+read_all_file_sectors:                                      equ 0x2D92
 print_error_number_A_whose_message_is_at_HL:                equ 0x03C3
 print_no_files_error_and_exit_DOS:                          equ 0x03D9
 print_OK_and_exit_DOS:                                      equ 0x03E1

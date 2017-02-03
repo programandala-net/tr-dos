@@ -2881,7 +2881,7 @@ l2d7bh:	equ 0x2d7b
 ; Used at following locations:
 ; 0x2d8f	(jr destination)
 
-sub_2d92h:	equ 0x2d92
+read_all_file_sectors:	equ 0x2d92
 ; Used at following locations:
 ; 0x2e02	(call destination)
 ; 0x2ddb	(call destination)

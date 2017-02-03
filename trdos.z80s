@@ -738,7 +738,7 @@ cli_command.cat:
   ld bc,0x0001+1
   ld (variable.file_size),bc
   jr z,l046ah
-  cp 0x23
+  cp '#' ; channel?
   jr nz,l045dh
   ld (sys_ch_add),hl
   call sub_1e0bh
@@ -7719,7 +7719,7 @@ l2d7bh:
   push de
   jr nz,l2d7bh
   halt
-sub_2d92h:
+read_all_file_sectors:
   ld hl,(variable.file_start)
   ld de,(variable.file_first_sector)
   ld a,(variable.file_length_in_sectors)
@@ -7752,7 +7752,7 @@ l2dd2h:
   jp l2e33h
 l2dd8h:
   call sub_165dh
-  call sub_2d92h
+  call read_all_file_sectors
   ld sp,0x40FF
   ld b,0x08
 l2de3h:
@@ -7772,7 +7772,7 @@ l2de3h:
   call sub_1cb3h
   jr nz,l2e05h
   call sub_165dh
-  call sub_2d92h
+  call read_all_file_sectors
 l2e05h:
   pop bc
   djnz l2de3h

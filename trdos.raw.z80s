@@ -7734,7 +7734,7 @@ l2d7bh:
 	push de			;2d8e	d5 	. 
 	jr nz,l2d7bh		;2d8f	20 ea 	  . 
 	halt			;2d91	76 	v 
-sub_2d92h:
+read_all_file_sectors:
 	ld hl,(variable.file_start)		;2d92	2a e6 5c 	* . \ 
 	ld de,(variable.file_first_sector)		;2d95	ed 5b eb 5c 	. [ . \ 
 	ld a,(variable.file_length_in_sectors)		;2d99	3a ea 5c 	: . \ 
@@ -7767,7 +7767,7 @@ l2dd2h:
 	jp l2e33h		;2dd5	c3 33 2e 	. 3 . 
 l2dd8h:
 	call sub_165dh		;2dd8	cd 5d 16 	. ] . 
-	call sub_2d92h		;2ddb	cd 92 2d 	. . - 
+	call read_all_file_sectors		;2ddb	cd 92 2d 	. . - 
 	ld sp,040ffh		;2dde	31 ff 40 	1 . @ 
 	ld b,008h		;2de1	06 08 	. . 
 l2de3h:
@@ -7787,7 +7787,7 @@ l2de3h:
 	call sub_1cb3h		;2dfa	cd b3 1c 	. . . 
 	jr nz,l2e05h		;2dfd	20 06 	  . 
 	call sub_165dh		;2dff	cd 5d 16 	. ] . 
-	call sub_2d92h		;2e02	cd 92 2d 	. . - 
+	call read_all_file_sectors		;2e02	cd 92 2d 	. . - 
 l2e05h:
 	pop bc			;2e05	c1 	. 
 	djnz l2de3h		;2e06	10 db 	. . 

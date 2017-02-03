@@ -1,9 +1,9 @@
 " tidier.vim
 
 " This file is part of TR-DOS disassembled
-" By Marcos Cruz (programandala.net), 2016
+" By Marcos Cruz (programandala.net), 2016, 2017
 
-" Last modified 201610011525
+" Last modified 201702031730
 
 " ==============================================================
 " History
@@ -23,6 +23,8 @@
 " 2016-09-15: Add `CompactUnusedZones()`.
 "
 " 2016-10-01: Clear comparisons of data file modes.
+"
+" 2017-02-03: Add new char to `ClearCharacters()` at $043F.
 
 " ==============================================================
 
@@ -248,6 +250,8 @@ function! ClearCharacters()
   silent substitute@00dh.\+$@char.carriage_return@
   call search(';0430')
   silent substitute@00dh.\+$@char.carriage_return@
+  call search(';043f')
+  silent substitute@023h.\+$@'#' ; channel?@
   call search(';044c')
   silent substitute@00dh.\+$@char.carriage_return@
   call search(';05a1')
