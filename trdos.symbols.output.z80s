@@ -2503,12 +2503,12 @@ message.insert_destination_disk:	equ 0x2725
 error.not_disk_file:	equ 0x2728
 ; Used at following locations:
 
-sub_272bh:	equ 0x272b
+set_sys_err_nr_to_tape_loading_error:	equ 0x272b
 ; Used at following locations:
 ; 0x3f89	(call destination)
 ; 0x3ee7	(call destination)
 
-l2731h:	equ 0x2731
+set_sys_err_nr:	equ 0x2731
 ; Used at following locations:
 ; 0x2737	(jr destination)
 ; 0x272d	(jr destination)
@@ -3274,7 +3274,7 @@ l3dbah:	equ 0x3dba
 ; Used at following locations:
 ; 0x3dc3	(jr destination)
 
-sub_3dc8h:	equ 0x3dc8
+init_default_disk_drive:	equ 0x3dc8
 ; Used at following locations:
 ; 0x0316	(call destination)
 
@@ -3324,7 +3324,7 @@ l3e01h:	equ 0x3e01
 ; Used at following locations:
 ; 0x3e02	(jr destination)
 
-step_rate_of_temporary_drive:	equ 0x3e08
+point_HL_to_step_rate_of_temporary_drive:	equ 0x3e08
 ; Used at following locations:
 ; 0x3fa5	(call destination)
 ; 0x3e83	(call destination)
@@ -3352,15 +3352,15 @@ sub_3e11h:	equ 0x3e11
 ; 0x13ce	(call destination)
 ; 0x0415	(call destination)
 
-sub_3e16h:	equ 0x3e16
+calculate_step_rate_of_temporary_drive:	equ 0x3e16
 ; Used at following locations:
 ; 0x3de2	(call destination)
 
-l3e1dh:	equ 0x3e1d
+try_B_as_step_rate_of_temporary_drive:	equ 0x3e1d
 ; Used at following locations:
 ; 0x3e42	(jr destination)
 
-l3e3fh:	equ 0x3e3f
+next_try_of_step_rate_of_temporary_drive:	equ 0x3e3f
 ; Used at following locations:
 ; 0x3e34	(jr destination)
 
@@ -3489,7 +3489,7 @@ l3f5fh:	equ 0x3f5f
 ; Used at following locations:
 ; 0x3f58	(jr destination)
 
-l3f7bh:	equ 0x3f7b
+ignore_retry_or_abort:	equ 0x3f7b
 ; Used at following locations:
 ; 0x3f87	(jr destination)
 

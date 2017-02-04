@@ -535,7 +535,7 @@ l030ah:
   cp 0xFE
   jr z,l031ah
   push af
-  call sub_3dc8h
+  call init_default_disk_drive
   pop af
 l031ah:
   ld hl,token_commands_table_start
@@ -5523,7 +5523,7 @@ l1fb9h:
   ex af,af'
   djnz $+3
 sub_1fcah:
-  call step_rate_of_temporary_drive
+  call point_HL_to_step_rate_of_temporary_drive
   or 0x11
   ld b,a
   ld a,0x32
@@ -6626,15 +6626,15 @@ error.directory_full:
   ld a,0x04
 error.not_disk_file:
   jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
-sub_272bh:
+set_sys_err_nr_to_tape_loading_error:
   ld a,0x1A
-  jr l2731h
+  jr set_sys_err_nr
   ld a,0x12
-l2731h:
+set_sys_err_nr:
   ld (sys_err_nr),a
   ret
   ld a,0x03
-  jr l2731h
+  jr set_sys_err_nr
 test_track:
   xor a
   ld (variable.start_file_parameter.high),a
@@ -11452,7 +11452,7 @@ l3dbah:
   or d
   jr nz,l3dbah
   jp l3ee7h
-sub_3dc8h:
+init_default_disk_drive:
   ld a,(variable.default_drive)
 init_disk_drive:
   ld (variable.temporary_drive),a
@@ -11462,11 +11462,11 @@ init_disk_drive:
   or c
   out (0xFF),a
   ld (hl),a
-  call step_rate_of_temporary_drive
+  call point_HL_to_step_rate_of_temporary_drive
   and 0x80
   jr z,l3dfah
   call sub_3dadh
-  call sub_3e16h
+  call calculate_step_rate_of_temporary_drive
   call sub_3e11h
   cp 0xFF
   jr nz,l3dfah
@@ -11491,7 +11491,7 @@ l3e01h:
   dec a
   jr nz,sub_3dffh
   ret
-step_rate_of_temporary_drive:
+point_HL_to_step_rate_of_temporary_drive:
   ld de,variable.a_drive_step_rate
 l3e0bh:
   ld hl,(variable.temporary_drive)
@@ -11501,11 +11501,11 @@ l3e0bh:
 sub_3e11h:
   ld de,variable.drive_a_mode
   jr l3e0bh
-sub_3e16h:
-  call step_rate_of_temporary_drive
-  ld b,0x08
-  ld c,0x04
-l3e1dh:
+calculate_step_rate_of_temporary_drive:
+  call point_HL_to_step_rate_of_temporary_drive
+  ld b,0x08 ; initial step rate
+  ld c,0x04 ; number of tries
+try_B_as_step_rate_of_temporary_drive:
   ld (hl),b
   ld a,0x08
   call l3d9ah
@@ -11517,17 +11517,17 @@ l3e1dh:
   call sub_3e44h
   in a,(0x1F)
   and 0x04
-  jr nz,l3e3fh
+  jr nz,next_try_of_step_rate_of_temporary_drive
   xor a
   call sub_3e44h
   in a,(0x1F)
   and 0x04
   ret nz
-l3e3fh:
-  inc b
-  dec c
+next_try_of_step_rate_of_temporary_drive:
+  inc b ; try the next step rate
+  dec c ; more tries?
   ret z
-  jr l3e1dh
+  jr try_B_as_step_rate_of_temporary_drive
 sub_3e44h:
   out (0x7F),a
   ld a,b
@@ -11571,7 +11571,7 @@ seek_track:
 l3e82h:
   ld c,a
 l3e83h:
-  call step_rate_of_temporary_drive
+  call point_HL_to_step_rate_of_temporary_drive
   ld b,a
   in a,(0x3F)
   cp c
@@ -11636,7 +11636,7 @@ l3eceh:
   cp 0xFF
   ret z
 l3ee7h:
-  call sub_272bh
+  call set_sys_err_nr_to_tape_loading_error
   ld a,0xFF
   ld (variable.show_title_flag),a
   jp error.no_disk
@@ -11726,15 +11726,15 @@ l3f5fh:
   call sub_1da3h
   ld hl,message.cr.retry_abort_ignore
   rst 18h
-l3f7bh:
+ignore_retry_or_abort:
   call get_uppercase_pressed_key
   cp "I" ; Ignore?
   ret z
   cp "R" ; Retry?
   jr z,l3f94h
   cp "A" ; Abort?
-  jr nz,l3f7bh
-  call sub_272bh
+  jr nz,ignore_retry_or_abort
+  call set_sys_err_nr_to_tape_loading_error
   ld a,0x07
   ld (variable.error_code),a
   jp exit_dos
@@ -11747,10 +11747,10 @@ l3fa0h:
   dec d
   jp z,l3f48h
   push de
-  call step_rate_of_temporary_drive
+  call point_HL_to_step_rate_of_temporary_drive
   and 0x02
   jr nz,l3fadh
-  inc (hl)
+  inc (hl) ; increase the step rate
 l3fadh:
   call init_interface
   ld a,(variable.current_track)

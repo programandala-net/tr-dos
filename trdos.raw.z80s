@@ -545,7 +545,7 @@ l030ah:
 	cp 0feh		;0311	fe fe 	. . 
 	jr z,l031ah		;0313	28 05 	( . 
 	push af			;0315	f5 	. 
-	call sub_3dc8h		;0316	cd c8 3d 	. . = 
+	call init_default_disk_drive		;0316	cd c8 3d 	. . = 
 	pop af			;0319	f1 	. 
 l031ah:
 	ld hl,token_commands_table_start		;031a	21 f3 2f 	! . / 
@@ -5536,7 +5536,7 @@ l1fb9h:
 	ex af,af'			;1fc7	08 	. 
 	djnz $+3		;1fc8	10 01 	. . 
 sub_1fcah:
-	call step_rate_of_temporary_drive		;1fca	cd 08 3e 	. . > 
+	call point_HL_to_step_rate_of_temporary_drive		;1fca	cd 08 3e 	. . > 
 	or 011h		;1fcd	f6 11 	. . 
 	ld b,a			;1fcf	47 	G 
 	ld a,032h		;1fd0	3e 32 	> 2 
@@ -6641,15 +6641,15 @@ error.directory_full:
 	ld a,004h		;2726	3e 04 	> . 
 error.not_disk_file:
 	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;2728	c3 4a 1c 	. J . 
-sub_272bh:
+set_sys_err_nr_to_tape_loading_error:
 	ld a,01ah		;272b	3e 1a 	> . 
-	jr l2731h		;272d	18 02 	. . 
+	jr set_sys_err_nr		;272d	18 02 	. . 
 	ld a,012h		;272f	3e 12 	> . 
-l2731h:
+set_sys_err_nr:
 	ld (sys_err_nr),a		;2731	32 3a 5c 	2 : \ 
 	ret			;2734	c9 	. 
 	ld a,003h		;2735	3e 03 	> . 
-	jr l2731h		;2737	18 f8 	. . 
+	jr set_sys_err_nr		;2737	18 f8 	. . 
 test_track:
 	xor a			;2739	af 	. 
 	ld (variable.start_file_parameter.high),a		;273a	32 d8 5c 	2 . \ 
@@ -11468,7 +11468,7 @@ l3dbah:
 	or d			;3dc2	b2 	. 
 	jr nz,l3dbah		;3dc3	20 f5 	  . 
 	jp l3ee7h		;3dc5	c3 e7 3e 	. . > 
-sub_3dc8h:
+init_default_disk_drive:
 	ld a,(variable.default_drive)		;3dc8	3a 19 5d 	: . ] 
 init_disk_drive:
 	ld (variable.temporary_drive),a		;3dcb	32 f6 5c 	2 . \ 
@@ -11478,11 +11478,11 @@ init_disk_drive:
 	or c			;3dd4	b1 	. 
 	out (0ffh),a		;3dd5	d3 ff 	. . 
 	ld (hl),a			;3dd7	77 	w 
-	call step_rate_of_temporary_drive		;3dd8	cd 08 3e 	. . > 
+	call point_HL_to_step_rate_of_temporary_drive		;3dd8	cd 08 3e 	. . > 
 	and 080h		;3ddb	e6 80 	. . 
 	jr z,l3dfah		;3ddd	28 1b 	( . 
 	call sub_3dadh		;3ddf	cd ad 3d 	. . = 
-	call sub_3e16h		;3de2	cd 16 3e 	. . > 
+	call calculate_step_rate_of_temporary_drive		;3de2	cd 16 3e 	. . > 
 	call sub_3e11h		;3de5	cd 11 3e 	. . > 
 	cp 0ffh		;3de8	fe ff 	. . 
 	jr nz,l3dfah		;3dea	20 0e 	  . 
@@ -11507,7 +11507,7 @@ l3e01h:
 	dec a			;3e04	3d 	= 
 	jr nz,sub_3dffh		;3e05	20 f8 	  . 
 	ret			;3e07	c9 	. 
-step_rate_of_temporary_drive:
+point_HL_to_step_rate_of_temporary_drive:
 	ld de,variable.a_drive_step_rate		;3e08	11 fa 5c 	. . \ 
 l3e0bh:
 	ld hl,(variable.temporary_drive)		;3e0b	2a f6 5c 	* . \ 
@@ -11517,11 +11517,11 @@ l3e0bh:
 sub_3e11h:
 	ld de,variable.drive_a_mode		;3e11	11 c8 5c 	. . \ 
 	jr l3e0bh		;3e14	18 f5 	. . 
-sub_3e16h:
-	call step_rate_of_temporary_drive		;3e16	cd 08 3e 	. . > 
+calculate_step_rate_of_temporary_drive:
+	call point_HL_to_step_rate_of_temporary_drive		;3e16	cd 08 3e 	. . > 
 	ld b,008h		;3e19	06 08 	. . 
 	ld c,004h		;3e1b	0e 04 	. . 
-l3e1dh:
+try_B_as_step_rate_of_temporary_drive:
 	ld (hl),b			;3e1d	70 	p 
 	ld a,008h		;3e1e	3e 08 	> . 
 	call l3d9ah		;3e20	cd 9a 3d 	. . = 
@@ -11533,17 +11533,17 @@ l3e1dh:
 	call sub_3e44h		;3e2d	cd 44 3e 	. D > 
 	in a,(01fh)		;3e30	db 1f 	. . 
 	and 004h		;3e32	e6 04 	. . 
-	jr nz,l3e3fh		;3e34	20 09 	  . 
+	jr nz,next_try_of_step_rate_of_temporary_drive		;3e34	20 09 	  . 
 	xor a			;3e36	af 	. 
 	call sub_3e44h		;3e37	cd 44 3e 	. D > 
 	in a,(01fh)		;3e3a	db 1f 	. . 
 	and 004h		;3e3c	e6 04 	. . 
 	ret nz			;3e3e	c0 	. 
-l3e3fh:
+next_try_of_step_rate_of_temporary_drive:
 	inc b			;3e3f	04 	. 
 	dec c			;3e40	0d 	. 
 	ret z			;3e41	c8 	. 
-	jr l3e1dh		;3e42	18 d9 	. . 
+	jr try_B_as_step_rate_of_temporary_drive		;3e42	18 d9 	. . 
 sub_3e44h:
 	out (07fh),a		;3e44	d3 7f 	.  
 	ld a,b			;3e46	78 	x 
@@ -11587,7 +11587,7 @@ seek_track:
 l3e82h:
 	ld c,a			;3e82	4f 	O 
 l3e83h:
-	call step_rate_of_temporary_drive		;3e83	cd 08 3e 	. . > 
+	call point_HL_to_step_rate_of_temporary_drive		;3e83	cd 08 3e 	. . > 
 	ld b,a			;3e86	47 	G 
 	in a,(03fh)		;3e87	db 3f 	. ? 
 	cp c			;3e89	b9 	. 
@@ -11652,7 +11652,7 @@ l3eceh:
 	cp 0ffh		;3ee4	fe ff 	. . 
 	ret z			;3ee6	c8 	. 
 l3ee7h:
-	call sub_272bh		;3ee7	cd 2b 27 	. + ' 
+	call set_sys_err_nr_to_tape_loading_error		;3ee7	cd 2b 27 	. + ' 
 	ld a,0ffh		;3eea	3e ff 	> . 
 	ld (variable.show_title_flag),a		;3eec	32 17 5d 	2 . ] 
 	jp error.no_disk		;3eef	c3 1b 27 	. . ' 
@@ -11742,15 +11742,15 @@ l3f5fh:
 	call sub_1da3h		;3f74	cd a3 1d 	. . . 
 	ld hl,message.cr.retry_abort_ignore		;3f77	21 fe 29 	! . ) 
 	rst 18h			;3f7a	df 	. 
-l3f7bh:
+ignore_retry_or_abort:
 	call get_uppercase_pressed_key		;3f7b	cd 52 10 	. R . 
 	cp 049h		;3f7e	fe 49 	. I 
 	ret z			;3f80	c8 	. 
 	cp 052h		;3f81	fe 52 	. R 
 	jr z,l3f94h		;3f83	28 0f 	( . 
 	cp 041h		;3f85	fe 41 	. A 
-	jr nz,l3f7bh		;3f87	20 f2 	  . 
-	call sub_272bh		;3f89	cd 2b 27 	. + ' 
+	jr nz,ignore_retry_or_abort		;3f87	20 f2 	  . 
+	call set_sys_err_nr_to_tape_loading_error		;3f89	cd 2b 27 	. + ' 
 	ld a,007h		;3f8c	3e 07 	> . 
 	ld (variable.error_code),a		;3f8e	32 0f 5d 	2 . ] 
 	jp exit_dos		;3f91	c3 d3 01 	. . . 
@@ -11763,7 +11763,7 @@ l3fa0h:
 	dec d			;3fa0	15 	. 
 	jp z,l3f48h		;3fa1	ca 48 3f 	. H ? 
 	push de			;3fa4	d5 	. 
-	call step_rate_of_temporary_drive		;3fa5	cd 08 3e 	. . > 
+	call point_HL_to_step_rate_of_temporary_drive		;3fa5	cd 08 3e 	. . > 
 	and 002h		;3fa8	e6 02 	. . 
 	jr nz,l3fadh		;3faa	20 01 	  . 
 	inc (hl)			;3fac	34 	4 

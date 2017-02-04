@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016, 2017
 
-" Last modified 201702031730
+" Last modified 201702042326
 
 " ==============================================================
 " History
@@ -25,6 +25,8 @@
 " 2016-10-01: Clear comparisons of data file modes.
 "
 " 2017-02-03: Add new char to `ClearCharacters()` at $043F.
+"
+" 2017-02-04: Add `AddComments()`.
 
 " ==============================================================
 
@@ -48,7 +50,7 @@ function! AddInclude()
 endfunction
 
 function! RemoveComments()
-  call Report('Removing comments...')
+  call Report('Removing default comments...')
   silent %substitute@\s\+;[0-9a-f]\{4} .\+$@@
 endfunction
 
@@ -239,6 +241,23 @@ function! ClearFileTypes()
   silent substitute@044h.\+$@"D" ; file type: array -- XXX TODO -- confirm@
   call search(';22f2')
   silent substitute@052h.\+$@"R" ; sequential access data file type read mode?@
+endfunction
+
+function! AddComments()
+  call Report('Adding comments...')
+  call cursor(1,1)
+  call search(';3d9e')
+  silent substitute@\s\+;3d9e.\+$@ ; "BREAK into program"@
+  call search(';3e19')
+  silent substitute@\s\+;3e19.\+$@ ; initial step rate@
+  call search(';3e1b')
+  silent substitute@\s\+;3e1b.\+$@ ; number of tries@
+  call search(';3e3f')
+  silent substitute@\s\+;3e3f.\+$@ ; try the next step rate@
+  call search(';3e40')
+  silent substitute@\s\+;3e40.\+$@ ; more tries?@
+  call search(';3fac')
+  silent substitute@\s\+;3fac.\+$@ ; increase the step rate@
 endfunction
 
 function! ClearCharacters()
@@ -454,7 +473,7 @@ function! Tidier()
   call RemoveWrongLabels()
   call RestoreLiterals()
   " call CompactUnusedZones()
-
+  call AddComments()
   call ConvertHexNumbersNotation()
   call RemoveComments()
   call ChangeHeader()
