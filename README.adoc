@@ -56,9 +56,9 @@ is optional:
 == How to disassemble
 
 1. Make sure the <<_requirements,required programs>> are installed.
-2. Enter the project directory and give the `make` command.
+2. Enter the project directory and enter the `make` command.
 3. If you want to assemble the disassembly and check that the result
-   is identical to the original ROM, give the `make back` command.
+   is identical to the original ROM, enter the `make back` command.
 
 == Bibliography
 
@@ -67,11 +67,11 @@ Documentation used for this project, listed in no particular order:
 - http://vtrdos.ru[Virtual TR-DOS]
 - _TR-DOS для профессионалов и любителей_ (TR-DOS for professionals
   and amateurs), by Yu Pomortsev, Moscow, 1994.  PDF version by Deny
-  (Denisenko DA), 2007. (Can be downloaded from
-  http://vtrdos.ru[Virtual TR-DOS]).
+  (Denisenko DA), 2007. It can be downloaded from
+  http://vtrdos.ru[Virtual TR-DOS].
 - _Описание и полный дизассемблер ПЗУ TR-DOS 5.04T_ (Description and
   full disassembly of TR-DOS 5.04T), by Павел Федин (Paul Fedin), 1996.
-  (Can be downloaded from http://vtrdos.ru[Virtual TR-DOS]).
+  It can be downloaded from http://vtrdos.ru[Virtual TR-DOS].
 - http://ramsoft.bbk.org.omegahg.com/tech/tr-info.zip
 - http://www.worldofspectrum.org/pub/sinclair/hardware-info/TR-DOS_Programming.txt[TR-DOS
   Programming]
