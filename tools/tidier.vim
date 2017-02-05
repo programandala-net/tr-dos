@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016, 2017
 
-" Last modified 201702042326
+" Last modified 201702051759
 
 " ==============================================================
 " History
@@ -246,8 +246,8 @@ endfunction
 function! AddComments()
   call Report('Adding comments...')
   call cursor(1,1)
-  call search(';3d9e')
-  silent substitute@\s\+;3d9e.\+$@ ; "BREAK into program"@
+  call search(';3da3')
+  silent substitute@\s\+;3da3.\+$@ ; "BREAK into program"@
   call search(';3e19')
   silent substitute@\s\+;3e19.\+$@ ; initial step rate@
   call search(';3e1b')
