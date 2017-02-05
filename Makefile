@@ -22,6 +22,10 @@
 # Pasmo by Julián Albo
 # http://pasmo.speccy.org
 
+# diffutils by Paul Eggert, Mike Haertel, David Hayes, Richard
+# Stallman, and Len Tower.
+# http://www.gnu.org/software/diffutils/
+
 ################################################################
 # History
 

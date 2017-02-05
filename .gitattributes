@@ -1,2 +1,3 @@
 *.rom binary
 *.z80s linguist-language=Assembly
+*.fs linguist-language=Forth
