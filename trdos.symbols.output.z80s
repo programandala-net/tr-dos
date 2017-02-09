@@ -2605,7 +2605,7 @@ copy_from_hl_to_file_descriptor:	equ 0x28e0
 ; Used at following locations:
 ; 0x28c6	(defw directive)
 
-copy_from_file_descriptor_to_hl:	equ 0x28e3
+copy_from_file_descriptor_to_HL:	equ 0x28e3
 ; Used at following locations:
 ; 0x28c9	(defw directive)
 
@@ -3024,7 +3024,7 @@ call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:	equ 0x2f72
 ; Used at following locations:
 ; 0x0020	(jp destination)
 
-l2f90h:	equ 0x2f90
+init_main_variables:	equ 0x2f90
 ; Used at following locations:
 ; 0x3d67	(immediate value)
 
@@ -3262,7 +3262,7 @@ l3d9ch:	equ 0x3d9c
 ; Used at following locations:
 ; 0x3daa	(jr destination)
 
-l3da5h:	equ 0x3da5
+break_key_not_pressedt:	equ 0x3da5
 ; Used at following locations:
 ; 0x3da0	(jr destination)
 
@@ -3278,7 +3278,7 @@ init_default_disk_drive:	equ 0x3dc8
 ; Used at following locations:
 ; 0x0316	(call destination)
 
-init_disk_drive:	equ 0x3dcb
+init_disk_drive_in_A_register:	equ 0x3dcb
 ; Used at following locations:
 ; 0x2890	(defw directive)
 ; 0x2447	(jp destination)
@@ -3428,7 +3428,7 @@ l3eceh:	equ 0x3ece
 ; 0x3ed9	(djnz destination)
 ; 0x3ed7	(jr destination)
 
-l3ee7h:	equ 0x3ee7
+report_tape_loading_error_and_force_no_disk_error:	equ 0x3ee7
 ; Used at following locations:
 ; 0x3f52	(jp destination)
 ; 0x3dc5	(jp destination)

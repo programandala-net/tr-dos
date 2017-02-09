@@ -23,19 +23,19 @@ GitHub]).
 │   ├── zx_spectrum_system_variables.z80s
 │   └── zx_spectrum_trdos.z80s
 ├── Makefile
-├── README.adoc                            = this file
+├── README.adoc                            = This file
 ├── TO-DO.adoc                             = To-Do list
 ├── tools                                  = programs used by Makefile or during the development
 │   ├── make_blocks.c_commands_table.fs
 │   ├── make_blocks.rst_20.fs
 │   └── tidier.vim                         = VimL program that postprocess the disassembly
-├── trdos.blocks.txt                       = block definitions for the disassembler
-├── trdos.raw.z80s                         = disassembly created by the disassembler
+├── trdos.blocks.txt                       = Block definitions for the disassembler
+├── trdos.raw.z80s                         = Disassembly created by the disassembler
 ├── trdos.reassembled.rom                  = TR-DOS reassembled from <trdos.z80s>
-├── trdos.rom                              = original ROM of TR-DOS 5.03 to be disassembled
-├── trdos.symbols.input.z80s               = symbols defined for the disassembler
-├── trdos.symbols.output.z80s              = output symbols of the disassembly
-└── trdos.z80s                             = final disassembly, postprocessed by <tools/tidier.vim>
+├── trdos.rom                              = Original ROM of TR-DOS 5.03 to be disassembled
+├── trdos.symbols.input.z80s               = Symbols defined for the disassembler
+├── trdos.symbols.output.z80s              = Output symbols of the disassembly
+└── trdos.z80s                             = Final disassembly, postprocessed by <tools/tidier.vim>
 ....
 
 == Requirements
@@ -46,7 +46,7 @@ programs must be installed:
 - https://www.tablix.org/~avian/z80dasm/[z80dasm], by Tomaž Šolc.
 - http://vim.org[Vim], by Bram Moolenaar
 
-The following programs are needed to reassembly the disassembly, what
+The following programs are needed to reassemble the disassembly, what
 is optional:
 
 - http://pasmo.speccy.org[Pasmo], by Julián Albo
@@ -56,9 +56,9 @@ is optional:
 == How to disassemble
 
 1. Make sure the <<_requirements,required programs>> are installed.
-2. Enter the project directory and enter the `make` command.
+2. Enter the project directory and give the `make` command.
 3. If you want to assemble the disassembly and check that the result
-   is identical to the original ROM, enter the `make back` command.
+   is identical to the original ROM, give the `make back` command.
 
 == Bibliography
 

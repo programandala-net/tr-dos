@@ -849,7 +849,7 @@ sub_04f6h:
 	ld a,(variable.cat_drive_or_read_verify_flag)		;04f8	3a f9 5c 	: . \ 
 	ld hl,variable.temporary_drive		;04fb	21 f6 5c 	! . \ 
 	cp (hl)			;04fe	be 	. 
-	call nz,init_disk_drive		;04ff	c4 cb 3d 	. . = 
+	call nz,init_disk_drive_in_A_register		;04ff	c4 cb 3d 	. . = 
 	pop bc			;0502	c1 	. 
 	pop hl			;0503	e1 	. 
 	jp l2fc6h		;0504	c3 c6 2f 	. . / 
@@ -972,13 +972,13 @@ l05cbh:
 	ld a,(variable.temporary_drive)		;05e0	3a f6 5c 	: . \ 
 	ld (variable.cat_drive_or_read_verify_flag),a		;05e3	32 f9 5c 	2 . \ 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;05e6	3a f9 5c 	: . \ 
-	call init_disk_drive		;05e9	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;05e9	cd cb 3d 	. . = 
 	call read_system_track		;05ec	cd 05 04 	. . . 
 	ld a,0ffh		;05ef	3e ff 	> . 
 	ld (variable.file_number_for_copying),a		;05f1	32 0d 5d 	2 . ] 
 l05f4h:
 	ld a,(variable.two_files_drive)		;05f4	3a f8 5c 	: . \ 
-	call init_disk_drive		;05f7	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;05f7	cd cb 3d 	. . = 
 	call read_system_track		;05fa	cd 05 04 	. . . 
 	ld a,(variable.file_number_for_copying)		;05fd	3a 0d 5d 	: . ] 
 	inc a			;0600	3c 	< 
@@ -995,7 +995,7 @@ l05f4h:
 	ld bc,00007h		;061a	01 07 00 	. . . 
 	ldir		;061d	ed b0 	. . 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;061f	3a f9 5c 	: . \ 
-	call init_disk_drive		;0622	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;0622	cd cb 3d 	. . = 
 	call sub_1cb3h		;0625	cd b3 1c 	. . . 
 	jr nz,l0634h		;0628	20 0a 	  . 
 	call sub_05b4h		;062a	cd b4 05 	. . . 
@@ -1070,10 +1070,10 @@ cli_command.copy:
 	ld a,(variable.temporary_drive)		;06cc	3a f6 5c 	: . \ 
 	ld (variable.cat_drive_or_read_verify_flag),a		;06cf	32 f9 5c 	2 . \ 
 	ld a,(variable.two_files_drive)		;06d2	3a f8 5c 	: . \ 
-	call init_disk_drive		;06d5	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;06d5	cd cb 3d 	. . = 
 	call read_system_track		;06d8	cd 05 04 	. . . 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;06db	3a f9 5c 	: . \ 
-	call init_disk_drive		;06de	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;06de	cd cb 3d 	. . = 
 	call read_system_track		;06e1	cd 05 04 	. . . 
 	pop bc			;06e4	c1 	. 
 	pop af			;06e5	f1 	. 
@@ -1093,7 +1093,7 @@ l06f3h:
 	ld hl,variable.file_start		;0706	21 e6 5c 	! . \ 
 	inc (hl)			;0709	34 	4 
 	ld a,(variable.two_files_drive)		;070a	3a f8 5c 	: . \ 
-	call init_disk_drive		;070d	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;070d	cd cb 3d 	. . = 
 	call sub_05b4h		;0710	cd b4 05 	. . . 
 	jp nz,print_OK_and_exit_DOS		;0713	c2 e1 03 	. . . 
 	call sub_165dh		;0716	cd 5d 16 	. ] . 
@@ -1102,7 +1102,7 @@ l06f3h:
 	ld bc,00007h		;071f	01 07 00 	. . . 
 	ldir		;0722	ed b0 	. . 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;0724	3a f9 5c 	: . \ 
-	call init_disk_drive		;0727	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;0727	cd cb 3d 	. . = 
 	call read_system_track		;072a	cd 05 04 	. . . 
 	jr l06f3h		;072d	18 c4 	. . 
 sub_072fh:
@@ -1121,7 +1121,7 @@ sub_072fh:
 l0744h:
 	push bc			;0744	c5 	. 
 	ld a,(variable.two_files_drive)		;0745	3a f8 5c 	: . \ 
-	call init_disk_drive		;0748	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;0748	cd cb 3d 	. . = 
 	pop bc			;074b	c1 	. 
 	push bc			;074c	c5 	. 
 	ld hl,(variable.stack_sp_copy)		;074d	2a cf 5c 	* . \ 
@@ -1131,7 +1131,7 @@ l0744h:
 	ld hl,(variable.current_sector)		;0758	2a f4 5c 	* . \ 
 	ld (variable.file_2_first_sector),hl		;075b	22 f2 5c 	" . \ 
 	ld a,(variable.cat_drive_or_read_verify_flag)		;075e	3a f9 5c 	: . \ 
-	call init_disk_drive		;0761	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;0761	cd cb 3d 	. . = 
 	pop hl			;0764	e1 	. 
 	pop bc			;0765	c1 	. 
 	ld de,(variable.file_first_sector)		;0766	ed 5b eb 5c 	. [ . \ 
@@ -3296,7 +3296,7 @@ cli_command.asterisk:
 	ld a,(de)			;1021	1a 	. 
 	call check_drive_letter_and_convert_to_number		;1022	cd 24 05 	. $ . 
 	ld (variable.default_drive),a		;1025	32 19 5d 	2 . ] 
-	call init_disk_drive		;1028	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;1028	cd cb 3d 	. . = 
 	jp print_OK_and_exit_DOS		;102b	c3 e1 03 	. . . 
 sub_102eh:
 	ld b,043h		;102e	06 43 	. C 
@@ -3633,7 +3633,7 @@ l11b0h:
 	ld a,(variable.cat_drive_or_read_verify_flag)		;11b2	3a f9 5c 	: . \ 
 	ld hl,variable.temporary_drive		;11b5	21 f6 5c 	! . \ 
 	cp (hl)			;11b8	be 	. 
-	call nz,init_disk_drive		;11b9	c4 cb 3d 	. . = 
+	call nz,init_disk_drive_in_A_register		;11b9	c4 cb 3d 	. . = 
 	pop bc			;11bc	c1 	. 
 	pop hl			;11bd	e1 	. 
 	call sub_050ch		;11be	cd 0c 05 	. . . 
@@ -5047,7 +5047,7 @@ sub_1c81h:
 	call check_drive_letter_and_convert_to_number		;1c89	cd 24 05 	. $ . 
 	push bc			;1c8c	c5 	. 
 	push hl			;1c8d	e5 	. 
-	call init_disk_drive		;1c8e	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;1c8e	cd cb 3d 	. . = 
 	pop hl			;1c91	e1 	. 
 	pop bc			;1c92	c1 	. 
 	dec bc			;1c93	0b 	. 
@@ -5060,7 +5060,7 @@ l1c98h:
 	ld a,(variable.default_drive)		;1c99	3a 19 5d 	: . ] 
 	push bc			;1c9c	c5 	. 
 	push hl			;1c9d	e5 	. 
-	call init_disk_drive		;1c9e	cd cb 3d 	. . = 
+	call init_disk_drive_in_A_register		;1c9e	cd cb 3d 	. . = 
 	pop hl			;1ca1	e1 	. 
 	pop bc			;1ca2	c1 	. 
 	ret			;1ca3	c9 	. 
@@ -6201,7 +6201,7 @@ sub_2443h:
 	ld c,00bh		;2443	0e 0b 	. . 
 	rst 28h			;2445	ef 	. 
 	ld a,(hl)			;2446	7e 	~ 
-	jp init_disk_drive		;2447	c3 cb 3d 	. . = 
+	jp init_disk_drive_in_A_register		;2447	c3 cb 3d 	. . = 
 l244ah:
 	ld hl,variable.0xc9		;244a	21 c2 5c 	! . \ 
 	push hl			;244d	e5 	. 
@@ -6951,7 +6951,7 @@ table.c_commands:
 	defb 000h		;288c	00 	. 
 	defw init_interface		;288d	98 3d 	. = 
 	defb 001h		;288f	01 	. 
-	defw init_disk_drive		;2890	cb 3d 	. = 
+	defw init_disk_drive_in_A_register		;2890	cb 3d 	. = 
 	defb 002h		;2892	02 	. 
 	defw seek_track		;2893	63 3e 	c > 
 	defb 003h		;2895	03 	. 
@@ -6989,7 +6989,7 @@ table.c_commands:
 	defb 013h		;28c5	13 	. 
 	defw copy_from_hl_to_file_descriptor		;28c6	e0 28 	. ( 
 	defb 014h		;28c8	14 	. 
-	defw copy_from_file_descriptor_to_hl		;28c9	e3 28 	. ( 
+	defw copy_from_file_descriptor_to_HL		;28c9	e3 28 	. ( 
 	defb 015h		;28cb	15 	. 
 	defw test_track		;28cc	39 27 	9 ' 
 	defb 016h		;28ce	16 	. 
@@ -7007,7 +7007,7 @@ print_catalogue:
 copy_from_hl_to_file_descriptor:
 	xor a			;28e0	af 	. 
 	jr l28e5h		;28e1	18 02 	. . 
-copy_from_file_descriptor_to_hl:
+copy_from_file_descriptor_to_HL:
 	ld a,0ffh		;28e3	3e ff 	> . 
 l28e5h:
 	ld de,variable.filename		;28e5	11 dd 5c 	. . \ 
@@ -8023,7 +8023,7 @@ call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:
 	ld hl,(variable.hl_copy)		;2f88	2a 02 5d 	* . ] 
 	ld de,(variable.de_copy)		;2f8b	ed 5b 04 5d 	. [ . ] 
 	ret			;2f8f	c9 	. 
-l2f90h:
+init_main_variables:
 	ld hl,0ffffh		;2f90	21 ff ff 	! . . 
 	ld (variable.a_drive_step_rate),hl		;2f93	22 fa 5c 	" . \ 
 	ld (variable.c_drive_step_rate),hl		;2f96	22 fc 5c 	" . \ 
@@ -11403,7 +11403,7 @@ sub_3d4ch:
 	push hl			;3d63	e5 	. 
 	jp sys_membot		;3d64	c3 92 5c 	. . \ 
 l3d67h:
-	ld hl,l2f90h		;3d67	21 90 2f 	! . / 
+	ld hl,init_main_variables		;3d67	21 90 2f 	! . / 
 	push hl			;3d6a	e5 	. 
 	ld hl,entry.call_pushed_address		;3d6b	21 2f 3d 	! / = 
 	push hl			;3d6e	e5 	. 
@@ -11442,10 +11442,10 @@ l3d9ch:
 	push hl			;3d9c	e5 	. 
 	rst 20h			;3d9d	e7 	. 
 	defw 01f54h		;3d9e	54 1f 	T . 
-	jr c,l3da5h		;3da0	38 03 	8 . 
+	jr c,break_key_not_pressedt		;3da0	38 03 	8 . 
 	rst 20h			;3da2	e7 	. 
 	defw 01b7bh		;3da3	7b 1b 	{ . 
-l3da5h:
+break_key_not_pressedt:
 	pop hl			;3da5	e1 	. 
 	in a,(0ffh)		;3da6	db ff 	. . 
 	and 080h		;3da8	e6 80 	. . 
@@ -11467,10 +11467,10 @@ l3dbah:
 	ld a,e			;3dc1	7b 	{ 
 	or d			;3dc2	b2 	. 
 	jr nz,l3dbah		;3dc3	20 f5 	  . 
-	jp l3ee7h		;3dc5	c3 e7 3e 	. . > 
+	jp report_tape_loading_error_and_force_no_disk_error		;3dc5	c3 e7 3e 	. . > 
 init_default_disk_drive:
 	ld a,(variable.default_drive)		;3dc8	3a 19 5d 	: . ] 
-init_disk_drive:
+init_disk_drive_in_A_register:
 	ld (variable.temporary_drive),a		;3dcb	32 f6 5c 	2 . \ 
 	ld hl,variable.system_register		;3dce	21 16 5d 	! . ] 
 	ld c,a			;3dd1	4f 	O 
@@ -11651,7 +11651,7 @@ l3eceh:
 	ld a,(variable.basic_program_autostart)		;3ee1	3a d1 5c 	: . \ 
 	cp 0ffh		;3ee4	fe ff 	. . 
 	ret z			;3ee6	c8 	. 
-l3ee7h:
+report_tape_loading_error_and_force_no_disk_error:
 	call set_sys_err_nr_to_tape_loading_error		;3ee7	cd 2b 27 	. + ' 
 	ld a,0ffh		;3eea	3e ff 	> . 
 	ld (variable.show_title_flag),a		;3eec	32 17 5d 	2 . ] 
@@ -11720,7 +11720,7 @@ l3f4bh:
 	out (01fh),a		;3f4d	d3 1f 	. . 
 	ld a,b			;3f4f	78 	x 
 	and 001h		;3f50	e6 01 	. . 
-	jp nz,l3ee7h		;3f52	c2 e7 3e 	. . > 
+	jp nz,report_tape_loading_error_and_force_no_disk_error		;3f52	c2 e7 3e 	. . > 
 	in a,(03fh)		;3f55	db 3f 	. ? 
 	or a			;3f57	b7 	. 
 	jr nz,l3f5fh		;3f58	20 05 	  . 

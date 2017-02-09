@@ -258,7 +258,7 @@ l0079h:
   set 1,(iy+0x01)
   ld hl,variable.0xc9
   ld (hl),0xC9
-  rst 20h
+  rst 0x20
   defw rom_clear_prb
   ld hl,sys_df_sz
   ld (hl),0x02
@@ -297,7 +297,7 @@ l0140h:
   ld (sys_newppc),hl
   xor a
   ld (sys_nsppc),a
-  rst 20h
+  rst 0x20
   defw rom_set_min
   ld hl,(sys_prog)
   dec hl
@@ -307,8 +307,8 @@ l0140h:
   or a
   ld hl,0x1B76
   jr z,l0166h
-  rst 20h
-  defw rom_report_0
+  rst 0x20
+  defw rom_report_0 ; Error report: "OK"
 l0166h:
   push hl
   ld hl,variable.0xc9
@@ -436,13 +436,13 @@ l0239h:
   call cls
   call open_channel_2
   ld hl,trdos_title_start
-  rst 18h
+  rst 0x18
   call sub_106eh
   ld a,(variable.interface_1_zone)
   cp 0xF4
   jr z,l0271h
   ld hl,message_interface_1_start
-  rst 18h
+  rst 0x18
 l0271h:
   ld a,(sys_swap)
   cp 0xAA
@@ -666,7 +666,7 @@ l03b5h:
   ld bc,(0x5E0A)
   call sub_1da9h
   ld hl,message.cr.free
-  rst 18h
+  rst 0x18
 jp_exit_dos:
   jp exit_dos
 print_error_number_A_whose_message_is_at_HL:
@@ -712,7 +712,7 @@ read_system_track:
   cp 0x10
   jr z,l0415h
   ld hl,message.cr.disc_error
-  rst 18h
+  rst 0x18
   jr jp_exit_dos
 l0415h:
   call sub_3e11h
@@ -774,9 +774,9 @@ l0479h:
   ld a,0xFF
   ld (variable.two_files_drive),a
   ld hl,message.cr.title
-  rst 18h
+  rst 0x18
   ld hl,0x5E1A
-  rst 18h
+  rst 0x18
   call sub_3d80h
   ld a,(0x5E09)
   ld hl,0x5E19
@@ -784,12 +784,12 @@ l0479h:
   push hl
   call sub_1da3h
   ld hl,message.files.cr
-  rst 18h
+  rst 0x18
   pop hl
   ld c,(hl)
   call sub_1da4h
   ld hl,message.del_file
-  rst 18h
+  rst 0x18
   call sub_03e8h
   ld hl,variable.tmp_buffer_address
 l04b6h:
@@ -797,13 +797,13 @@ l04b6h:
   call sub_3d80h
   ld a,(variable.temporary_drive)
   add a,"A" ; first drive letter
-  rst 10h
+  rst 0x10
   ld b,0x02
 l04c4h:
   call sub_04f6h
   push bc
   ld a,0x3A
-  rst 10h
+  rst 0x10
   push hl
   call sub_2938h
   ld bc,0x000D
@@ -822,7 +822,7 @@ l04dfh:
   jr nc,l04e8h
 l04e3h:
   ld a,0x20
-  rst 10h
+  rst 0x10
   djnz l04e3h
 l04e8h:
   pop bc
@@ -839,7 +839,7 @@ sub_04f6h:
   ld a,(variable.cat_drive_or_read_verify_flag)
   ld hl,variable.temporary_drive
   cp (hl)
-  call nz,init_disk_drive
+  call nz,init_disk_drive_in_A_register
   pop bc
   pop hl
   jp l2fc6h
@@ -961,13 +961,13 @@ l05cbh:
   ld a,(variable.temporary_drive)
   ld (variable.cat_drive_or_read_verify_flag),a
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   call read_system_track
   ld a,0xFF
   ld (variable.file_number_for_copying),a
 l05f4h:
   ld a,(variable.two_files_drive)
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   call read_system_track
   ld a,(variable.file_number_for_copying)
   inc a
@@ -984,7 +984,7 @@ l05f4h:
   ld bc,0x0007
   ldir
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   call sub_1cb3h
   jr nz,l0634h
   call sub_05b4h
@@ -1059,10 +1059,10 @@ cli_command.copy:
   ld a,(variable.temporary_drive)
   ld (variable.cat_drive_or_read_verify_flag),a
   ld a,(variable.two_files_drive)
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   call read_system_track
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   call read_system_track
   pop bc
   pop af
@@ -1082,7 +1082,7 @@ l06f3h:
   ld hl,variable.file_start
   inc (hl)
   ld a,(variable.two_files_drive)
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   call sub_05b4h
   jp nz,print_OK_and_exit_DOS
   call sub_165dh
@@ -1091,7 +1091,7 @@ l06f3h:
   ld bc,0x0007
   ldir
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   call read_system_track
   jr l06f3h
 sub_072fh:
@@ -1110,7 +1110,7 @@ sub_072fh:
 l0744h:
   push bc
   ld a,(variable.two_files_drive)
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   pop bc
   push bc
   ld hl,(variable.stack_sp_copy)
@@ -1120,7 +1120,7 @@ l0744h:
   ld hl,(variable.current_sector)
   ld (variable.file_2_first_sector),hl
   ld a,(variable.cat_drive_or_read_verify_flag)
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   pop hl
   pop bc
   ld de,(variable.file_first_sector)
@@ -3283,7 +3283,7 @@ cli_command.asterisk:
   ld a,(de)
   call check_drive_letter_and_convert_to_number
   ld (variable.default_drive),a
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   jp print_OK_and_exit_DOS
 sub_102eh:
   ld b,"C" ; file type: code
@@ -3311,16 +3311,16 @@ get_uppercase_pressed_key:
   push bc
   push de
 wait_for_key:
-  rst 20h
+  rst 0x20
   defw rom_key_scan
   ld c,0x00
   jr nz,wait_for_key
-  rst 20h
+  rst 0x20
   defw rom_k_test
   jr nc,wait_for_key
   dec d
   ld e,a
-  rst 20h
+  rst 0x20
   defw rom_k_decode
   pop de
   pop bc
@@ -3620,7 +3620,7 @@ l11b0h:
   ld a,(variable.cat_drive_or_read_verify_flag)
   ld hl,variable.temporary_drive
   cp (hl)
-  call nz,init_disk_drive
+  call nz,init_disk_drive_in_A_register
   pop bc
   pop hl
   call sub_050ch
@@ -3681,13 +3681,13 @@ l1205h:
 l123eh:
   ld hl,message.title
   push bc
-  rst 18h
+  rst 0x18
   ld hl,(variable.stack_sp_copy)
   ld bc,0x0013+1
   add hl,bc
-  rst 18h
+  rst 0x18
   ld hl,message.disk_drive
-  rst 18h
+  rst 0x18
   ld a,(variable.temporary_drive)
   add a,"A" ; first drive letter
   call print_character_in_A
@@ -3703,7 +3703,7 @@ l123eh:
   push hl
   call sub_1da3h
   ld hl,message.files
-  rst 18h
+  rst 0x18
   ld hl,(variable.stack_sp_copy)
   ld bc,0x0001+1
   add hl,bc
@@ -3720,14 +3720,14 @@ l128bh:
   jr z,l1292h
   ld hl,message.80_track_double_side
 l1292h:
-  rst 18h
+  rst 0x18
   pop hl
   ld c,(hl)
   call sub_1da4h
   ld hl,message.del_files
-  rst 18h
+  rst 0x18
   ld hl,message.free_sector
-  rst 18h
+  rst 0x18
   ld hl,(variable.stack_sp_copy)
   ld bc,0x0004
   add hl,bc
@@ -3736,7 +3736,7 @@ l1292h:
   ld b,(hl)
   call sub_1da9h
   ld hl,message.file_name_start_length_line
-  rst 18h
+  rst 0x18
   pop bc
   pop hl
   ld b,0x10
@@ -3762,13 +3762,13 @@ l12d0h:
   jr nc,l12d9h
 l12d4h:
   ld a,0x20
-  rst 10h
+  rst 0x10
   djnz l12d4h
 l12d9h:
   pop bc
   call sub_1da9h
   ld hl,message.tab_0x10_space
-  rst 18h
+  rst 0x18
   pop hl
   push hl
   ld bc,0x0009
@@ -4217,7 +4217,7 @@ sub_166fh:
   ld (variable.stack_sp_copy),hl
   jp bc_spaces
 sub_1680h:
-  rst 20h
+  rst 0x20
   defw rom_free_mem
   ld hl,0xFFFF
   sbc hl,bc
@@ -4655,7 +4655,7 @@ cli_command.merge:
   ld (variable.file_size),bc
   push bc
   inc bc
-  rst 20h
+  rst 0x20
   defw rom_bc_spaces
   defb "6"
   defw 0xEB80
@@ -4669,7 +4669,7 @@ cli_command.merge:
   call l1921h
   pop hl
   ld de,(sys_prog)
-  rst 20h
+  rst 0x20
   defw rom_me_new_lp
   jp print_OK_and_exit_DOS
 sub_19f2h:
@@ -4682,7 +4682,7 @@ sub_19f2h:
   ld b,h
   ld c,l
 test_room:
-  rst 20h
+  rst 0x20
   defw rom_test_room
   ret
 sub_1a01h:
@@ -4717,7 +4717,7 @@ l1a31h:
   pop de
   pop hl
   push bc
-  rst 20h
+  rst 0x20
   defw rom_reclaim_1
   pop bc
   call make_room
@@ -5034,7 +5034,7 @@ sub_1c81h:
   call check_drive_letter_and_convert_to_number
   push bc
   push hl
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   pop hl
   pop bc
   dec bc
@@ -5047,7 +5047,7 @@ l1c98h:
   ld a,(variable.default_drive)
   push bc
   push hl
-  call init_disk_drive
+  call init_disk_drive_in_A_register
   pop hl
   pop bc
   ret
@@ -5129,7 +5129,7 @@ l1d19h:
 error.wrong_drive_letter:
   bit 7,(iy+0x00)
   jr z,l1d25h
-  ld a,0x0B
+  ld a,0x0B ; Error report code: "Nonsense in BASIC"
   ld (sys_err_nr),a
 l1d25h:
   inc a
@@ -5167,7 +5167,7 @@ sub_1d63h:
   cp 0xFF
   ld (hl),0x00
   ret nz
-  rst 20h
+  rst 0x20
   defw rom_set_work
   ret
 z_if_checking_syntax:
@@ -5185,31 +5185,31 @@ sub_1d7bh:
 open_channel_0:
   xor a
 chan_open:
-  rst 20h
+  rst 0x20
   defw rom_chan_open
   ret
 open_channel_2:
   ld a,0x02
   jr chan_open
 get_char:
-  rst 20h
+  rst 0x20
   defw rom_get_char
   ret
 editor:
   call open_channel_0
-  rst 20h
+  rst 0x20
   defw rom_editor
   ret
 cls:
-  rst 20h
+  rst 0x20
   defw rom_cls
   ret
 look_vars:
-  rst 20h
+  rst 0x20
   defw rom_look_vars
   ret
 cls_lower:
-  rst 20h
+  rst 0x20
   defw rom_cls_lower
   ret
 sub_1da3h:
@@ -5221,24 +5221,24 @@ sub_1da9h:
   push bc
   call sub_20f1h
   pop bc
-  rst 20h
+  rst 0x20
   defw rom_out_num_1
   call sub_20f1h
   ret
 stk_fetch:
-  rst 20h
+  rst 0x20
   defw rom_stk_fetch
   ret
 find_int2:
-  rst 20h
+  rst 0x20
   defw rom_find_int2
   ret
 expt_exp:
-  rst 20h
+  rst 0x20
   defw rom_expt_exp
   ret
 expt_1num:
-  rst 20h
+  rst 0x20
   defw rom_expt_1num
   ret
 point_interpreter_to_command_line:
@@ -5286,24 +5286,24 @@ sub_1e0bh:
   ret
 remove_fp:
   ld hl,(variable.command_line_address)
-  rst 20h
+  rst 0x20
   defw rom_remove_fp
   ret
 bc_spaces:
   ld hl,(sys_worksp)
-  rst 20h
+  rst 0x20
   defw rom_bc_spaces
   ret
 next_char:
-  rst 20h
+  rst 0x20
   defw rom_next_char
   ret
 reclaim_2:
-  rst 20h
+  rst 0x20
   defw rom_reclaim_2
   ret
 make_room:
-  rst 20h
+  rst 0x20
   defw rom_make_room
   ret
 sub_1e36h:
@@ -5491,9 +5491,9 @@ l1f55h:
   ld hl,(0x5E0A)
   ld (variable.start_file_parameter_or_number_of_tracks),hl
   ld hl,variable.filename
-  rst 18h
+  rst 0x18
   ld a,0x0D
-  rst 10h
+  rst 0x10
   ld hl,(variable.start_file_parameter_or_number_of_tracks)
   pop af
   push hl
@@ -5504,7 +5504,7 @@ l1f55h:
   ld c,l
   call sub_1da9h
   ld a,0x2F
-  rst 10h
+  rst 0x10
   pop bc
   call sub_1da9h
   jp exit_dos
@@ -5737,9 +5737,9 @@ sub_2135h:
   call sub_3d80h
   ld a,(variable.default_drive)
   add a,"A" ; first drive letter
-  rst 10h
+  rst 0x10
   ld a,0x3E
-  rst 10h
+  rst 0x10
   ld hl,sys_err_nr
   ld (hl),0xFF
   jp editor
@@ -5833,14 +5833,14 @@ l2206h:
   jp print_no_files_error_and_exit_DOS
 sub_220fh:
   ld a,(variable.file_size)
-  rst 20h
+  rst 0x20
   defw rom_str_data1
   ld a,b
   or c
   jp nz,error.stream_opened
   ret
 error.stream_opened:
-  ld a,0x19
+  ld a,0x19 ; Error report code: "Parameter error" (should be 0x17, invalid stream)
   ld (sys_err_nr),a
   ld hl,message.stream_opened
   ld a,0x0A
@@ -5853,7 +5853,7 @@ l2228h:
 sub_222fh:
   push hl
   ld c,0x20
-  rst 28h
+  rst 0x28
   ld a,(variable.start_file_parameter_or_number_of_tracks)
   ld (hl),a
   inc hl
@@ -5993,9 +5993,9 @@ l2304h:
   ret
 sub_2317h:
   ld c,0x0D
-  rst 28h
+  rst 0x28
   ld c,(hl)
-  rst 28h
+  rst 0x28
   ld bc,0x0024
   add hl,bc
   ret
@@ -6008,7 +6008,7 @@ l2323h:
   ret
 l232ah:
   ld c,0x0D
-  rst 28h
+  rst 0x28
   inc (hl)
   ret nz
   push hl
@@ -6025,7 +6025,7 @@ l232ah:
   ret nz
   push hl
   ld c,0x0F
-  rst 28h
+  rst 0x28
   ld a,(hl)
   cp 0x7F
   pop hl
@@ -6033,21 +6033,21 @@ l232ah:
   ld hl,(sys_curchl)
   call sub_26e1h
   ld c,0x0E
-  rst 28h
+  rst 0x28
   jp l2379h
 l2358h:
   call sub_23cfh
   push af
   call z,sub_2418h
   ld c,0x0E
-  rst 28h
+  rst 0x28
   pop af
   call nz,sub_2370h
   ret
 sub_2367h:
   ld (hl),0x00
   ld c,0x19
-  rst 28h
+  rst 0x28
   ld d,0x20
   ld e,(hl)
   ret
@@ -6063,19 +6063,19 @@ l2381h:
   call sub_229ah
   call sub_2970h
   ld c,0x10
-  rst 28h
+  rst 0x28
   ex de,hl
   ld hl,variable.filename
   ld bc,0x10
   ldir
   ld c,0x0C
-  rst 28h
+  rst 0x28
   ld a,(variable.find_command_found_file)
   ld (hl),a
   ret
 sub_239bh:
   ld c,0x0D
-  rst 28h
+  rst 0x28
   inc (hl)
   ret nz
   inc hl
@@ -6083,7 +6083,7 @@ sub_239bh:
   push hl
   call sub_2443h
   ld c,0x23
-  rst 28h
+  rst 0x28
   ld a,(hl)
   or a
   jr z,l23b6h
@@ -6111,10 +6111,10 @@ sub_23c1h:
 sub_23cfh:
   ld (hl),0x00
   ld c,0x19
-  rst 28h
+  rst 0x28
   inc (hl)
   ld c,0x10
-  rst 28h
+  rst 0x28
   ld de,variable.filename
   ld bc,0x10
   ldir
@@ -6123,13 +6123,13 @@ sub_23cfh:
 sub_23e4h:
   call sub_165dh
   ld c,0x10
-  rst 28h
+  rst 0x28
   ex de,hl
   ld hl,variable.filename
   ld bc,0x10
   ldir
   ld c,0x0C
-  rst 28h
+  rst 0x28
   ld a,(variable.find_command_found_file)
   ld (hl),a
   xor a
@@ -6140,7 +6140,7 @@ sub_23fch:
   ld b,0x01
   call write_sectors
   ld c,0x0F
-  rst 28h
+  rst 0x28
   ld a,(hl)
   cp 0x7F
   ret z
@@ -6165,7 +6165,7 @@ sub_2423h:
   inc hl
   ld d,(hl)
   ld c,0x0E
-  rst 28h
+  rst 0x28
   ld b,(hl)
   dec b
   inc b
@@ -6185,9 +6185,9 @@ l2441h:
   ret
 sub_2443h:
   ld c,0x0B
-  rst 28h
+  rst 0x28
   ld a,(hl)
-  jp init_disk_drive
+  jp init_disk_drive_in_A_register
 l244ah:
   ld hl,variable.0xc9
   push hl
@@ -6208,14 +6208,14 @@ l244ah:
   jp l232ah
 sub_246eh:
   ld c,0x0D
-  rst 28h
+  rst 0x28
   ld a,(hl)
   ld bc,0x000D+1
   add hl,bc
   cp (hl)
   ret nz
   ld c,0x0E
-  rst 28h
+  rst 0x28
   ld a,(hl)
   ld bc,0x000D+1
   add hl,bc
@@ -6231,11 +6231,11 @@ sub_246eh:
   pop hl
   ret
 l2492h:
-  ld a,0x07
+  ld a,0x07 ; Error report code: "End of file"
 l2494h:
   ld (sys_err_nr),a
   call sub_20e5h
-  rst 20h
+  rst 0x20
   defw rom_0058
   ret
 l249eh:
@@ -6244,7 +6244,7 @@ l249eh:
 sub_24a2h:
   ld d,a
   ld c,0x0F
-  rst 28h
+  rst 0x28
   ld a,(hl)
   cp 0x7F
   ld a,d
@@ -6276,7 +6276,7 @@ l24c2h:
   ld (hl),a
   call z,sub_2504h
   ld c,0x21
-  rst 28h
+  rst 0x28
   inc (hl)
   pop hl
   ret
@@ -6291,7 +6291,7 @@ l24d5h:
   push hl
   push af
   ld c,0x23
-  rst 28h
+  rst 0x28
   ld (hl),0xFF
   pop af
   pop hl
@@ -6335,7 +6335,7 @@ sub_2504h:
   push bc
   pop de
   ld c,0x20
-  rst 28h
+  rst 0x28
   ld b,(hl)
   xor a
   ld hl,0x0000
@@ -6360,7 +6360,7 @@ l2544h:
   ld (sys_ch_add),hl
   call sub_2568h
   ld c,0x21
-  rst 28h
+  rst 0x28
   ld a,0xFF
   ld (hl),a
   inc hl
@@ -6368,18 +6368,18 @@ l2544h:
   ret
 sub_2568h:
   ld c,0x19
-  rst 28h
+  rst 0x28
   ld a,(variable.ch_add.high)
   cp (hl)
   jp nz,l2584h
   ld c,0x0E
-  rst 28h
+  rst 0x28
   ld a,(variable.file_size)
   cp (hl)
   jp nz,l25a7h
 l257ch:
   ld c,0x0D
-  rst 28h
+  rst 0x28
   ld a,(variable.ch_add)
   ld (hl),a
   ret
@@ -6388,10 +6388,10 @@ l2584h:
   call nz,sub_25c3h
   ld a,(variable.ch_add.high)
   ld c,0x19
-  rst 28h
+  rst 0x28
   ld (hl),a
   ld c,0x10
-  rst 28h
+  rst 0x28
   ld de,variable.filename
   ld bc,0x10
   ldir
@@ -6405,7 +6405,7 @@ l25a7h:
 l25adh:
   ld a,(variable.file_size)
   ld c,0x0E
-  rst 28h
+  rst 0x28
   ld (hl),a
   push hl
   call sub_2443h
@@ -6421,7 +6421,7 @@ sub_25c3h:
   ret
 sub_25cah:
   ld c,0x23
-  rst 28h
+  rst 0x28
   ld a,(hl)
   or a
   ld (hl),0x00
@@ -6468,7 +6468,7 @@ l2614h:
 l261dh:
   cp char.carriage_return
   jr z,l2614h
-  rst 20h
+  rst 0x20
   defw rom_add_char_keeping_current_mode
   jr l260fh
 l2626h:
@@ -6497,7 +6497,7 @@ l2645h:
   ret
 sub_2650h:
   ld c,0x0F
-  rst 28h
+  rst 0x28
   ld a,(hl)
   or a
   ret
@@ -6507,7 +6507,7 @@ cli_command.close_channel:
   call sub_1e0bh
   call pop_hl_if_checking_syntax
   ld a,(variable.file_size)
-  rst 20h
+  rst 0x20
   defw rom_str_data1
   ld a,b
   or c
@@ -6589,13 +6589,13 @@ sub_26e1h:
   inc hl
   ld (hl),d
   ld c,0x10
-  rst 28h
+  rst 0x28
   ld de,variable.filename
   ld bc,0x10
   ldir
   call sub_2443h
   ld c,0x0C
-  rst 28h
+  rst 0x28
   ld c,(hl)
   call sub_166bh
   jp sub_1e43h
@@ -6604,7 +6604,7 @@ print_message_at_HL:
   or a
   ret z
   and 0x7F
-  rst 10h
+  rst 0x10
   bit 7,(hl)
   ret nz
   inc hl
@@ -6627,13 +6627,13 @@ error.directory_full:
 error.not_disk_file:
   jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
 set_sys_err_nr_to_tape_loading_error:
-  ld a,0x1A
+  ld a,0x1A ; Error report code: "Tape loading error"
   jr set_sys_err_nr
-  ld a,0x12
+  ld a,0x12 ; Error report code: "Invalid I/O device"
 set_sys_err_nr:
   ld (sys_err_nr),a
   ret
-  ld a,0x03
+  ld a,0x03 ; Error report code: "Out of memory"
   jr set_sys_err_nr
 test_track:
   xor a
@@ -6655,7 +6655,7 @@ test_track:
   ld a,(variable.move_command_first_track)
   or a
   ret z
-  ld a,0x07
+  ld a,0x07 ; Error code: "Disk errors"
   ld (variable.error_code),a
   ret
 message.ok:
@@ -6936,7 +6936,7 @@ table.c_commands:
   defb 0x00
   defw init_interface
   defb 0x01
-  defw init_disk_drive
+  defw init_disk_drive_in_A_register
   defb 0x02
   defw seek_track
   defb 0x03
@@ -6974,7 +6974,7 @@ table.c_commands:
   defb 0x13
   defw copy_from_hl_to_file_descriptor
   defb 0x14
-  defw copy_from_file_descriptor_to_hl
+  defw copy_from_file_descriptor_to_HL
   defb 0x15
   defw test_track
   defb 0x16
@@ -6992,7 +6992,7 @@ print_catalogue:
 copy_from_hl_to_file_descriptor:
   xor a
   jr l28e5h
-copy_from_file_descriptor_to_hl:
+copy_from_file_descriptor_to_HL:
   ld a,0xFF
 l28e5h:
   ld de,variable.filename
@@ -7036,15 +7036,15 @@ sub_2938h:
   ld b,0x08
 l293bh:
   ld a,(hl)
-  rst 10h
+  rst 0x10
   inc hl
   djnz l293bh
   ld a,0x3C
-  rst 10h
+  rst 0x10
   ld a,(hl)
-  rst 10h
+  rst 0x10
   ld a,0x3E
-  rst 10h
+  rst 0x10
   pop bc
   ret
 sub_294ah:
@@ -8008,7 +8008,7 @@ call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:
   ld hl,(variable.hl_copy)
   ld de,(variable.de_copy)
   ret
-l2f90h:
+init_main_variables:
   ld hl,0xFFFF
   ld (variable.a_drive_step_rate),hl
   ld (variable.c_drive_step_rate),hl
@@ -8132,10 +8132,10 @@ l3057h:
   ld (hl),a
   inc hl
   ex de,hl
-  rst 20h
+  rst 0x20
   defw rom_differ
   push bc
-  rst 20h
+  rst 0x20
   defw rom_reclaim_2
   pop bc
   ld a,(variable.move_command_first_track)
@@ -8227,7 +8227,7 @@ sub_30e1h:
   ld (variable.move_command_first_track),a
   dec hl
   dec hl
-  rst 20h
+  rst 0x20
   defw rom_line_addr
   ret
 l30f4h:
@@ -11387,7 +11387,7 @@ sub_3d4ch:
   push hl
   jp sys_membot
 l3d67h:
-  ld hl,l2f90h
+  ld hl,init_main_variables
   push hl
   ld hl,entry.call_pushed_address
   push hl
@@ -11415,7 +11415,7 @@ print_character_in_A:
   pop hl
   ret
 print_a:
-  rst 20h
+  rst 0x20
   defw rom_print_a
   ret
 init_interface:
@@ -11424,12 +11424,12 @@ l3d9ah:
   out (0x1F),a
 l3d9ch:
   push hl
-  rst 20h
+  rst 0x20
   defw rom_break_key
-  jr c,l3da5h
-  rst 20h
-  defw rom_report_l
-l3da5h:
+  jr c,break_key_not_pressedt
+  rst 0x20
+  defw rom_report_l ; Error report: "BREAK into program"
+break_key_not_pressedt:
   pop hl
   in a,(0xFF)
   and 0x80
@@ -11451,10 +11451,10 @@ l3dbah:
   ld a,e
   or d
   jr nz,l3dbah
-  jp l3ee7h
+  jp report_tape_loading_error_and_force_no_disk_error
 init_default_disk_drive:
   ld a,(variable.default_drive)
-init_disk_drive:
+init_disk_drive_in_A_register:
   ld (variable.temporary_drive),a
   ld hl,variable.system_register
   ld c,a
@@ -11635,7 +11635,7 @@ l3eceh:
   ld a,(variable.basic_program_autostart)
   cp 0xFF
   ret z
-l3ee7h:
+report_tape_loading_error_and_force_no_disk_error:
   call set_sys_err_nr_to_tape_loading_error
   ld a,0xFF
   ld (variable.show_title_flag),a
@@ -11704,7 +11704,7 @@ l3f4bh:
   out (0x1F),a
   ld a,b
   and 0x01
-  jp nz,l3ee7h
+  jp nz,report_tape_loading_error_and_force_no_disk_error
   in a,(0x3F)
   or a
   jr nz,l3f5fh
@@ -11715,17 +11715,17 @@ l3f5fh:
   push hl
   call cls
   pop hl
-  rst 18h
+  rst 0x18
   ld hl,message.cr.trk
-  rst 18h
+  rst 0x18
   in a,(0x3F)
   call sub_1da3h
   ld hl,message.sec
-  rst 18h
+  rst 0x18
   in a,(0x5F)
   call sub_1da3h
   ld hl,message.cr.retry_abort_ignore
-  rst 18h
+  rst 0x18
 ignore_retry_or_abort:
   call get_uppercase_pressed_key
   cp "I" ; Ignore?

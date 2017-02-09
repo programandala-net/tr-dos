@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016, 2017
 
-" Last modified 201702051759
+" Last modified 201702052052
 
 " ==============================================================
 " History
@@ -27,6 +27,12 @@
 " 2017-02-03: Add new char to `ClearCharacters()` at $043F.
 "
 " 2017-02-04: Add `AddComments()`.
+"
+" 2017-02-05: Make `AddRst20Label()` keep the original comment
+" of the line. This way the line can be found later to add a
+" specific comment. Original comments are removed at the end
+" anyway. Convert the hexadecimal notation of `rst`
+" instructions.
 
 " ==============================================================
 
@@ -89,11 +95,11 @@ function! ClearMessages()
 endfunction
 
 function! AddRst20Label(label,address)
-  execute 'silent %substitute@rst 20h.\+\n  defw 0'.tolower(a:address).'h.\+$@rst 20h\r  defw '.a:label.'@e'
+  execute 'silent %substitute@rst 20h.\+\n  defw 0'.tolower(a:address).'h@rst 20h\r  defw '.a:label.'@e'
 endfunction
 
 function! AddRst20Labels()
-  call Report('Adding labels to `rst 20` calls...')
+  call Report('Adding labels to `rst 20h` calls...')
   call AddRst20Label('rom_0058','0058')
   call AddRst20Label('rom_add_char_keeping_current_mode','0F85')
   call AddRst20Label('rom_bc_spaces','0030')
@@ -123,7 +129,6 @@ function! AddRst20Labels()
   call AddRst20Label('rom_reclaim_2','19E8')
   call AddRst20Label('rom_remove_fp','11A7')
   call AddRst20Label('rom_report_0','1BB0')
-  call AddRst20Label('rom_report_1','1DD8')
   call AddRst20Label('rom_report_l','1B7B')
   call AddRst20Label('rom_set_min','16B0')
   call AddRst20Label('rom_set_work','16BF')
@@ -246,8 +251,24 @@ endfunction
 function! AddComments()
   call Report('Adding comments...')
   call cursor(1,1)
+  call search(';0164')
+  silent substitute@\s\+;0164.\+$@ ; Error report: "OK"@
+  call search(';1d20')
+  silent substitute@\s\+;1d20.\+$@ ; Error report code: "Nonsense in BASIC"@
+  call search(';221b')
+  silent substitute@\s\+;221b.\+$@ ; Error report code: "Parameter error" (should be 0x17, invalid stream)@
+  call search(';2492')
+  silent substitute@\s\+;2492.\+$@ ; Error report code: "End of file"@
+  call search(';272b')
+  silent substitute@\s\+;272b.\+$@ ; Error report code: "Tape loading error"@
+  call search(';272f')
+  silent substitute@\s\+;272f.\+$@ ; Error report code: "Invalid I/O device"@
+  call search(';2735')
+  silent substitute@\s\+;2735.\+$@ ; Error report code: "Out of memory"@
+  call search(';2760')
+  silent substitute@\s\+;2760.\+$@ ; Error code: "Disk errors"@
   call search(';3da3')
-  silent substitute@\s\+;3da3.\+$@ ; "BREAK into program"@
+  silent substitute@\s\+;3da3.\+$@ ; Error report: "BREAK into program"@
   call search(';3e19')
   silent substitute@\s\+;3e19.\+$@ ; initial step rate@
   call search(';3e1b')
@@ -355,6 +376,7 @@ function! ConvertHexNumbersNotation()
   call Report('Converting notation of hex numbers...')
   silent %substitute@\<0\([0-9a-f]\{2}\)h\>@0x\U\1@g
   silent %substitute@\<0\([0-9a-f]\{4}\)h\>@0x\U\1@g
+  silent %substitute@^  rst \([0-9a-f]\{2}\)h\>@  rst 0x\U\1@
 
 endfunction
 

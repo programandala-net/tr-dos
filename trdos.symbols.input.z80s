@@ -3,7 +3,7 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016, 2017
 
-; Last modified 201702042314
+; Last modified 201702052112
 
 include "inc/zx_spectrum_system_variables.z80s"
 
@@ -168,6 +168,7 @@ execute_command_in_C:                                       equ 0x283C
 set_number_of_tracks:                                       equ 0x2998
 read_all_file_sectors:                                      equ 0x2D92
 call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:  equ 0x2F72
+init_main_variables:                                        equ 0x2F90
 jp_execute_command_in_C:                                    equ 0x3CFD
 interpret_rem_command_in_basic:                             equ 0x3D1A
 enter_trdos_from_basic:                                     equ 0x3D31
@@ -176,12 +177,14 @@ init_default_disk_drive:                                    equ 0x3DC8
 point_HL_to_step_rate_of_temporary_drive:                   equ 0x3E08
 calculate_step_rate_of_temporary_drive:                     equ 0x3E16
 try_B_as_step_rate_of_temporary_drive:                      equ 0x3E1D
+report_tape_loading_error_and_issue_no_disk_error:          equ 0x3EE7
 
 
 ; Secondary addresses (e.g. loops or jumps in a subroutine)
 
 wait_for_key:                                               equ 0x1056
 set_sys_err_nr:                                             equ 0x2731
+break_key_not_pressedt:                                     equ 0x3DA5
 next_try_of_step_rate_of_temporary_drive:                   equ 0x3E3F
 ignore_retry_or_abort:                                      equ 0x3F7B
 
@@ -257,13 +260,13 @@ select_top_side:                                            equ 0x1FF6
 test_track:                                                 equ 0x2739
 print_catalogue:                                            equ 0x28D8
 copy_from_hl_to_file_descriptor:                            equ 0x28E0
-copy_from_file_descriptor_to_hl:                            equ 0x28E3
+copy_from_file_descriptor_to_HL:                            equ 0x28E3
 save_basic_program:                                         equ 0x28F2
 save_code_file:                                             equ 0x28FB
 load_or_verify:                                             equ 0x290F
 delete_file:                                                equ 0x2926
 init_interface:                                             equ 0x3D98
-init_disk_drive:                                            equ 0x3DCB
+init_disk_drive_in_A_register:                              equ 0x3DCB
 seek_track:                                                 equ 0x3E63
 set_sector_number:                                          equ 0x3F02
 define_buffer_address:                                      equ 0x3F06
