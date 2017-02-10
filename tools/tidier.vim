@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016, 2017
 
-" Last modified 201702052052
+" Last modified 201702102201
 
 " ==============================================================
 " History
@@ -33,6 +33,10 @@
 " specific comment. Original comments are removed at the end
 " anyway. Convert the hexadecimal notation of `rst`
 " instructions.
+"
+" 2017-02-10: Remove the new label `zx_spectrum_font_char_0`
+" from the result.  It must be referenced in code, but it
+" belongs to the main ROM.
 
 " ==============================================================
 
@@ -446,6 +450,30 @@ function! RemoveWrongLabels()
 
 endfunction
 
+function! FixMiscThings()
+
+  " Remove a label that belongs to the main ROM:
+  :%s@^zx_spectrum_font_char_0:\n@@e
+
+  " Convert back to code three bytes that the disassembler
+  " interprets as data (it seems a bug related to the
+  " calculation of block zones):
+
+  :%s@^; BLOCK 'code_31FA_XXX_FIXME' (start 0x31fa end 0x31fd)\n@@e
+  :%s@^code_31FA_XXX_FIXME_start:\n@@e
+"  :%s@^\s\+defb 0xed,0x42,0xc9.\+;31fa.\+\n@  sbc hl,bc\r  ret\r@e
+"  :%s@^\s\+defb 0xED,0x42,0xC9\n@  sbc hl,bc\r  ret\r@e
+	:%s@^\s\+defb\s\+0edh,042h,0c9h.\+;31fa.\+\n@  sbc hl,bc\r  ret\r@e
+
+  " XXX TMP -- The three lines above are searched apart, just in
+  " case the block definition that tries to fix the problem is
+  " removed. Also, the data is searched for in two formats, to
+  " make it possible to change the position of this function in
+  " the flow of the program.
+
+endfunction
+
+
 function! ClearDriveLetter(address)
 
   " Clear a reference to drive 'A' at the given address.
@@ -495,6 +523,7 @@ function! Tidier()
   call RemoveWrongLabels()
   call RestoreLiterals()
   " call CompactUnusedZones()
+  call FixMiscThings()
   call AddComments()
   call ConvertHexNumbersNotation()
   call RemoveComments()

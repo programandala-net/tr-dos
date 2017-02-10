@@ -38,81 +38,89 @@ sys_membot:	equ 0x5c92
 sys_ramtop:	equ 0x5cb2
 sys_p_ramt:	equ 0x5cb4
 sys_p_ramt.high:	equ 0x5cb5
-variable.interface_1_zone:	equ 0x5cb6
-variable.0xc9:	equ 0x5cc2
-variable.unknown_23747:	equ 0x5cc3
-variable.drive_a_mode:	equ 0x5cc8
-variable.drive_c_mode:	equ 0x5cca
-variable.cat_current_sector:	equ 0x5ccc
-variable.disk_drive_ready:	equ 0x5ccd
-variable.sector_reading_or_writting:	equ 0x5cce
-variable.stack_sp_copy:	equ 0x5ccf
-variable.basic_program_autostart:	equ 0x5cd1
-variable.basic_program_autostart.high:	equ 0x5cd2
-variable.unknown_23763:	equ 0x5cd3
-variable.move_command_deleted_files:	equ 0x5cd4
-variable.move_command_first_sector:	equ 0x5cd5
-variable.move_command_first_track:	equ 0x5cd6
-variable.start_file_parameter_or_number_of_tracks:	equ 0x5cd7
-variable.start_file_parameter.high:	equ 0x5cd8
-variable.ch_add:	equ 0x5cd9
-variable.ch_add.high:	equ 0x5cda
-variable.file_size:	equ 0x5cdb
-variable.file_size.high:	equ 0x5cdc
-variable.filename:	equ 0x5cdd
-variable.filename.2:	equ 0x5cdf
-variable.filename.4:	equ 0x5ce1
-variable.filename.6:	equ 0x5ce3
-variable.file_type:	equ 0x5ce5
-variable.file_start:	equ 0x5ce6
-variable.file_start.high:	equ 0x5ce7
-variable.file_length_in_bytes:	equ 0x5ce8
-variable.file_length_in_bytes.high:	equ 0x5ce9
-variable.file_length_in_sectors:	equ 0x5cea
-variable.file_first_sector:	equ 0x5ceb
-variable.c_file_start_or_b_file_size:	equ 0x5ced
-variable.file_2_length_in_bytes:	equ 0x5cef
-variable.file_2_length_in_sectors:	equ 0x5cf1
-variable.file_2_first_sector:	equ 0x5cf2
-variable.current_sector:	equ 0x5cf4
-variable.current_track:	equ 0x5cf5
-variable.temporary_drive:	equ 0x5cf6
-variable.cleared:	equ 0x5cf7
-variable.two_files_drive:	equ 0x5cf8
-variable.cat_drive_or_read_verify_flag:	equ 0x5cf9
-variable.a_drive_step_rate:	equ 0x5cfa
-variable.c_drive_step_rate:	equ 0x5cfc
-variable.last_fdc_command:	equ 0x5cfe
-variable.sector:	equ 0x5cff
-variable.buffer:	equ 0x5d00
-variable.hl_copy:	equ 0x5d02
-variable.de_copy:	equ 0x5d04
-variable.find_command_symbols:	equ 0x5d06
-variable.deleted_files:	equ 0x5d07
-variable.filename_first_char:	equ 0x5d08
-variable.data_file_mode:	equ 0x5d09
-variable.buffer_flag:	equ 0x5d0c
-variable.file_number_for_copying:	equ 0x5d0d
-variable.command_mode:	equ 0x5d0e
-variable.error_code:	equ 0x5d0f
-variable.error_code_msb:	equ 0x5d10
-variable.command_line_address:	equ 0x5d11
-variable.err_sp_copy:	equ 0x5d13
-variable.show_screen_flag:	equ 0x5d15
-variable.system_register:	equ 0x5d16
-variable.show_title_flag:	equ 0x5d17
-variable.interface_1_flag:	equ 0x5d18
-variable.default_drive:	equ 0x5d19
-variable.internal_address_of_finishing_proc:	equ 0x5d1a
-variable.sp_copy:	equ 0x5d1c
-variable.find_command_found_file:	equ 0x5d1e
-variable.unknown_23839:	equ 0x5d1f
-variable.entered_line_3_first_chars:	equ 0x5d20
-variable.entered_line_3_first_chars.1:	equ 0x5d21
-variable.move_command_blocks:	equ 0x5d23
-variable.tmp_buffer_address:	equ 0x5d25
-variable.k_channel.output:	equ 0x5d26
-variable.r_channel.input.high:	equ 0x5d33
+trdos_variable.interface_1_zone:	equ 0x5cb6
+trdos_variable.0xc9:	equ 0x5cc2
+trdos_variable.unknown_23747:	equ 0x5cc3
+trdos_variable.drive_a_mode:	equ 0x5cc8
+trdos_variable.drive_c_mode:	equ 0x5cca
+trdos_variable.cat_current_sector:	equ 0x5ccc
+trdos_variable.disk_drive_ready:	equ 0x5ccd
+trdos_variable.sector_rw_flag:	equ 0x5cce
+trdos_variable.stack_sp_copy:	equ 0x5ccf
+trdos_variable.basic_program_autostart:	equ 0x5cd1
+trdos_variable.basic_program_autostart.high:	equ 0x5cd2
+trdos_variable.unknown_23763:	equ 0x5cd3
+trdos_variable.move_command_deleted_files:	equ 0x5cd4
+trdos_variable.move_command_first_sector:	equ 0x5cd5
+trdos_variable.bad_sectors_or_move_command_first_track:	equ 0x5cd6
+trdos_variable.start_file_parameter_or_number_of_tracks:	equ 0x5cd7
+trdos_variable.start_file_parameter.high:	equ 0x5cd8
+trdos_variable.ch_add:	equ 0x5cd9
+trdos_variable.ch_add.high:	equ 0x5cda
+trdos_variable.file_size:	equ 0x5cdb
+trdos_variable.file_size.high:	equ 0x5cdc
+trdos_variable.filename:	equ 0x5cdd
+trdos_variable.filename.2:	equ 0x5cdf
+trdos_variable.filename.4:	equ 0x5ce1
+trdos_variable.filename.6:	equ 0x5ce3
+trdos_variable.file_type:	equ 0x5ce5
+trdos_variable.file_start:	equ 0x5ce6
+trdos_variable.file_start.high:	equ 0x5ce7
+trdos_variable.file_length_in_bytes:	equ 0x5ce8
+trdos_variable.file_length_in_bytes.high:	equ 0x5ce9
+trdos_variable.file_length_in_sectors:	equ 0x5cea
+trdos_variable.file_first_sector:	equ 0x5ceb
+trdos_variable.c_file_start_or_b_file_size:	equ 0x5ced
+trdos_variable.file_2_length_in_bytes:	equ 0x5cef
+trdos_variable.file_2_length_in_sectors:	equ 0x5cf1
+trdos_variable.file_2_first_sector:	equ 0x5cf2
+trdos_variable.current_sector:	equ 0x5cf4
+trdos_variable.current_track:	equ 0x5cf5
+trdos_variable.current_temporary_drive:	equ 0x5cf6
+trdos_variable.cleared:	equ 0x5cf7
+trdos_variable.two_files_drive:	equ 0x5cf8
+trdos_variable.cat_drive_or_read_verify_flag:	equ 0x5cf9
+trdos_variable.drive_a_step_rate:	equ 0x5cfa
+trdos_variable.drive_c_step_rate:	equ 0x5cfc
+trdos_variable.last_fdc_command:	equ 0x5cfe
+trdos_variable.sector:	equ 0x5cff
+trdos_variable.buffer:	equ 0x5d00
+trdos_variable.hl_copy:	equ 0x5d02
+trdos_variable.de_copy:	equ 0x5d04
+trdos_variable.find_command_symbols:	equ 0x5d06
+trdos_variable.deleted_files:	equ 0x5d07
+trdos_variable.filename_first_char:	equ 0x5d08
+trdos_variable.data_file_mode:	equ 0x5d09
+trdos_variable.buffer_flag:	equ 0x5d0c
+trdos_variable.file_number_for_copying:	equ 0x5d0d
+trdos_variable.command_mode:	equ 0x5d0e
+trdos_variable.error_code:	equ 0x5d0f
+trdos_variable.error_code_msb:	equ 0x5d10
+trdos_variable.command_line_address:	equ 0x5d11
+trdos_variable.err_sp_copy:	equ 0x5d13
+trdos_variable.show_screen_flag:	equ 0x5d15
+trdos_variable.system_register:	equ 0x5d16
+trdos_variable.show_title_flag:	equ 0x5d17
+trdos_variable.interface_1_flag:	equ 0x5d18
+trdos_variable.default_drive:	equ 0x5d19
+trdos_variable.internal_address_of_finishing_proc:	equ 0x5d1a
+trdos_variable.sp_copy:	equ 0x5d1c
+trdos_variable.find_command_found_file:	equ 0x5d1e
+trdos_variable.unknown_23839:	equ 0x5d1f
+trdos_variable.entered_line_3_first_chars:	equ 0x5d20
+trdos_variable.entered_line_3_first_chars.1:	equ 0x5d21
+trdos_variable.move_command_blocks:	equ 0x5d23
+trdos_variable.tmp_buffer_address:	equ 0x5d25
+trdos_variable.k_channel.output:	equ 0x5d26
+trdos_variable.r_channel.input.high:	equ 0x5d33
+trdos_sector_buffer.next_free_sector:	equ 0x5e06
+trdos_sector_buffer.next_free_track:	equ 0x5e07
+trdos_sector_buffer.disk_type:	equ 0x5e08
+trdos_sector_buffer.files:	equ 0x5e09
+trdos_sector_buffer.free_sectors:	equ 0x5e0a
+trdos_sector_buffer.sectors_per_track:	equ 0x5e0c
+trdos_sector_buffer.deleted_files:	equ 0x5e19
+trdos_sector_buffer.disc_title:	equ 0x5e1a
 
 l0000h:
 	di			;0000	f3 	. 
@@ -190,12 +198,12 @@ l0047h:
 	ld (05f00h),hl		;0056	22 00 5f 	" . _ 
 	ld hl,l0079h		;0059	21 79 00 	! y . 
 	push hl			;005c	e5 	. 
-	ld hl,entry.call_pushed_address		;005d	21 2f 3d 	! / = 
+	ld hl,trdos_entry.call_pushed_address		;005d	21 2f 3d 	! / = 
 	push hl			;0060	e5 	. 
 	ld hl,0b8edh		;0061	21 ed b8 	! . . 
 l0064h:
 	jr l0069h		;0064	18 03 	. . 
-	jp l2a56h		;0066	c3 56 2a 	. V * 
+	jp magic_button_nmi_request		;0066	c3 56 2a 	. V * 
 l0069h:
 	ld (05f10h),hl		;0069	22 10 5f 	" . _ 
 	push af			;006c	f5 	. 
@@ -212,7 +220,7 @@ l0079h:
 	ld bc,l1e40h		;007f	01 40 1e 	. @ . 
 	ld (sys_rasp),bc		;0082	ed 43 38 5c 	. C 8 \ 
 	ld (sys_ramtop),hl		;0086	22 b2 5c 	" . \ 
-	ld hl,l3c00h		;0089	21 00 3c 	! . < 
+	ld hl,zx_spectrum_font_char_0		;0089	21 00 3c 	! . < 
 	ld (sys_chars),hl		;008c	22 36 5c 	" 6 \ 
 	ld hl,(sys_ramtop)		;008f	2a b2 5c 	* . \ 
 	ld (hl),03eh		;0092	36 3e 	6 > 
@@ -225,7 +233,7 @@ l0079h:
 	push de			;009e	d5 	. 
 	im 1		;009f	ed 56 	. V 
 	ld iy,sys_err_nr		;00a1	fd 21 3a 5c 	. ! : \ 
-	ld hl,variable.interface_1_zone		;00a5	21 b6 5c 	! . \ 
+	ld hl,trdos_variable.interface_1_zone		;00a5	21 b6 5c 	! . \ 
 l00a8h:
 	ld (sys_chans),hl		;00a8	22 4f 5c 	" O \ 
 	ld de,l15afh		;00ab	11 af 15 	. . . 
@@ -261,7 +269,7 @@ l00a8h:
 	ld bc,l000dh+1		;00f3	01 0e 00 	. . . 
 	call sub_0117h		;00f6	cd 17 01 	. . . 
 	set 1,(iy+001h)		;00f9	fd cb 01 ce 	. . . . 
-	ld hl,variable.0xc9		;00fd	21 c2 5c 	! . \ 
+	ld hl,trdos_variable.0xc9		;00fd	21 c2 5c 	! . \ 
 l0100h:
 	ld (hl),0c9h		;0100	36 c9 	6 . 
 	rst 20h			;0102	e7 	. 
@@ -276,7 +284,7 @@ l0100h:
 	jp enter_trdos_from_basic		;0114	c3 31 3d 	. 1 = 
 sub_0117h:
 	ld (05f00h),hl		;0117	22 00 5f 	" . _ 
-	ld hl,entry.call_pushed_address		;011a	21 2f 3d 	! / = 
+	ld hl,trdos_entry.call_pushed_address		;011a	21 2f 3d 	! / = 
 	push hl			;011d	e5 	. 
 	ld hl,0b0edh		;011e	21 ed b0 	! . . 
 	ld (05f10h),hl		;0121	22 10 5f 	" . _ 
@@ -296,7 +304,7 @@ l012ah:
 	ex de,hl			;0139	eb 	. 
 	jr z,l0140h		;013a	28 04 	( . 
 	xor a			;013c	af 	. 
-	ld (variable.error_code_msb),a		;013d	32 10 5d 	2 . ] 
+	ld (trdos_variable.error_code_msb),a		;013d	32 10 5d 	2 . ] 
 l0140h:
 	push hl			;0140	e5 	. 
 	call sub_0232h		;0141	cd 32 02 	. 2 . 
@@ -310,7 +318,7 @@ l0140h:
 	dec hl			;0152	2b 	+ 
 	ld (sys_datadd),hl		;0153	22 57 5c 	" W \ 
 	ld sp,(sys_err_sp)		;0156	ed 7b 3d 5c 	. { = \ 
-	ld a,(variable.error_code_msb)		;015a	3a 10 5d 	: . ] 
+	ld a,(trdos_variable.error_code_msb)		;015a	3a 10 5d 	: . ] 
 	or a			;015d	b7 	. 
 	ld hl,01b76h		;015e	21 76 1b 	! v . 
 	jr z,l0166h		;0161	28 03 	( . 
@@ -318,23 +326,23 @@ l0140h:
 	defw 01bb0h		;0164	b0 1b 	. . 
 l0166h:
 	push hl			;0166	e5 	. 
-	ld hl,variable.0xc9		;0167	21 c2 5c 	! . \ 
+	ld hl,trdos_variable.0xc9		;0167	21 c2 5c 	! . \ 
 	push hl			;016a	e5 	. 
 	ret			;016b	c9 	. 
 do_interpret_rem_command_in_basic:
 	call sub_20f1h		;016c	cd f1 20 	. .   
 	call sub_294ah		;016f	cd 4a 29 	. J ) 
 	ld a,0ffh		;0172	3e ff 	> . 
-	ld (variable.show_screen_flag),a		;0174	32 15 5d 	2 . ] 
+	ld (trdos_variable.show_screen_flag),a		;0174	32 15 5d 	2 . ] 
 	xor a			;0177	af 	. 
-	ld (variable.cleared),a		;0178	32 f7 5c 	2 . \ 
+	ld (trdos_variable.cleared),a		;0178	32 f7 5c 	2 . \ 
 	ld a,0aah		;017b	3e aa 	> . 
-	ld (variable.show_title_flag),a		;017d	32 17 5d 	2 . ] 
+	ld (trdos_variable.show_title_flag),a		;017d	32 17 5d 	2 . ] 
 	ld hl,finishing_proc_0x0201		;0180	21 01 02 	! . . 
-	ld (variable.internal_address_of_finishing_proc),hl		;0183	22 1a 5d 	" . ] 
+	ld (trdos_variable.internal_address_of_finishing_proc),hl		;0183	22 1a 5d 	" . ] 
 	ld hl,l0000h		;0186	21 00 00 	! . . 
 	add hl,sp			;0189	39 	9 
-	ld (variable.sp_copy),hl		;018a	22 1c 5d 	" . ] 
+	ld (trdos_variable.sp_copy),hl		;018a	22 1c 5d 	" . ] 
 	dec hl			;018d	2b 	+ 
 	dec hl			;018e	2b 	+ 
 	ld sp,hl			;018f	f9 	. 
@@ -362,7 +370,7 @@ l01abh:
 	jp nz,exit_dos		;01ba	c2 d3 01 	. . . 
 	inc hl			;01bd	23 	# 
 	call sub_3048h		;01be	cd 48 30 	. H 0 
-	ld hl,(variable.command_line_address)		;01c1	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;01c1	2a 11 5d 	* . ] 
 	jp l030ah		;01c4	c3 0a 03 	. . . 
 sub_01c7h:
 	ld a,(hl)			;01c7	7e 	~ 
@@ -375,12 +383,12 @@ sub_01c7h:
 	call sub_1e43h		;01d0	cd 43 1e 	. C . 
 exit_dos:
 	ld hl,l0000h		;01d3	21 00 00 	! . . 
-	ld (variable.two_files_drive),hl		;01d6	22 f8 5c 	" . \ 
+	ld (trdos_variable.two_files_drive),hl		;01d6	22 f8 5c 	" . \ 
 	call sub_20e5h		;01d9	cd e5 20 	. .   
 	call sub_1d63h		;01dc	cd 63 1d 	. c . 
-	ld hl,variable.show_title_flag		;01df	21 17 5d 	! . ] 
+	ld hl,trdos_variable.show_title_flag		;01df	21 17 5d 	! . ] 
 	ld (hl),0aah		;01e2	36 aa 	6 . 
-	ld hl,variable.unknown_23839		;01e4	21 1f 5d 	! . ] 
+	ld hl,trdos_variable.unknown_23839		;01e4	21 1f 5d 	! . ] 
 	ld a,(hl)			;01e7	7e 	~ 
 	or a			;01e8	b7 	. 
 	ld (hl),000h		;01e9	36 00 	6 . 
@@ -388,9 +396,9 @@ exit_dos:
 	call remove_fp		;01ed	cd 1c 1e 	. . . 
 	call empty_command_line		;01f0	cd 12 02 	. . . 
 l01f3h:
-	ld sp,(variable.sp_copy)		;01f3	ed 7b 1c 5d 	. { . ] 
-	ld hl,(variable.internal_address_of_finishing_proc)		;01f7	2a 1a 5d 	* . ] 
-	ld bc,(variable.error_code)		;01fa	ed 4b 0f 5d 	. K . ] 
+	ld sp,(trdos_variable.sp_copy)		;01f3	ed 7b 1c 5d 	. { . ] 
+	ld hl,(trdos_variable.internal_address_of_finishing_proc)		;01f7	2a 1a 5d 	* . ] 
+	ld bc,(trdos_variable.error_code)		;01fa	ed 4b 0f 5d 	. K . ] 
 	ld b,000h		;01fe	06 00 	. . 
 l0200h:
 	jp (hl)			;0200	e9 	. 
@@ -398,8 +406,7 @@ finishing_proc_0x0201:
 	call sub_0232h		;0201	cd 32 02 	. 2 . 
 	bit 7,(iy+000h)		;0204	fd cb 00 7e 	. . . ~ 
 	ret nz			;0208	c0 	. 
-l0209h:
-	ld de,variable.0xc9		;0209	11 c2 5c 	. . \ 
+	ld de,trdos_variable.0xc9		;0209	11 c2 5c 	. . \ 
 	ld sp,(sys_err_sp)		;020c	ed 7b 3d 5c 	. { = \ 
 	push de			;0210	d5 	. 
 	ret			;0211	c9 	. 
@@ -411,8 +418,8 @@ empty_command_line:
 	jr empty_command_line		;021b	18 f5 	. . 
 sub_021dh:
 	ld hl,(sys_err_sp)		;021d	2a 3d 5c 	* = \ 
-	ld (variable.err_sp_copy),hl		;0220	22 13 5d 	" . ] 
-	ld hl,(variable.sp_copy)		;0223	2a 1c 5d 	* . ] 
+	ld (trdos_variable.err_sp_copy),hl		;0220	22 13 5d 	" . ] 
+	ld hl,(trdos_variable.sp_copy)		;0223	2a 1c 5d 	* . ] 
 	dec hl			;0226	2b 	+ 
 	dec hl			;0227	2b 	+ 
 	ld (sys_err_sp),hl		;0228	22 3d 5c 	" = \ 
@@ -422,23 +429,23 @@ sub_021dh:
 	ld (hl),d			;0230	72 	r 
 	ret			;0231	c9 	. 
 sub_0232h:
-	ld hl,(variable.err_sp_copy)		;0232	2a 13 5d 	* . ] 
+	ld hl,(trdos_variable.err_sp_copy)		;0232	2a 13 5d 	* . ] 
 	ld (sys_err_sp),hl		;0235	22 3d 5c 	" = \ 
 	ret			;0238	c9 	. 
 l0239h:
 	ld hl,l0000h		;0239	21 00 00 	! . . 
-	ld (variable.cleared),hl		;023c	22 f7 5c 	" . \ 
+	ld (trdos_variable.cleared),hl		;023c	22 f7 5c 	" . \ 
 	add hl,sp			;023f	39 	9 
-	ld (variable.sp_copy),hl		;0240	22 1c 5d 	" . ] 
+	ld (trdos_variable.sp_copy),hl		;0240	22 1c 5d 	" . ] 
 	dec hl			;0243	2b 	+ 
 	dec hl			;0244	2b 	+ 
 	ld sp,hl			;0245	f9 	. 
 	call sub_021dh		;0246	cd 1d 02 	. . . 
-	ld hl,variable.show_title_flag		;0249	21 17 5d 	! . ] 
+	ld hl,trdos_variable.show_title_flag		;0249	21 17 5d 	! . ] 
 	ld a,(hl)			;024c	7e 	~ 
 	cp 0aah		;024d	fe aa 	. . 
 	ld a,000h		;024f	3e 00 	> . 
-	ld (variable.error_code),a		;0251	32 0f 5d 	2 . ] 
+	ld (trdos_variable.error_code),a		;0251	32 0f 5d 	2 . ] 
 	jp z,finishing_proc_0x02CB		;0254	ca cb 02 	. . . 
 	ld (hl),0aah		;0257	36 aa 	6 . 
 	call cls		;0259	cd 97 1d 	. . . 
@@ -446,7 +453,7 @@ l0239h:
 	ld hl,trdos_title_start		;025f	21 60 03 	! ` . 
 	rst 18h			;0262	df 	. 
 	call sub_106eh		;0263	cd 6e 10 	. n . 
-	ld a,(variable.interface_1_zone)		;0266	3a b6 5c 	: . \ 
+	ld a,(trdos_variable.interface_1_zone)		;0266	3a b6 5c 	: . \ 
 	cp 0f4h		;0269	fe f4 	. . 
 	jr z,l0271h		;026b	28 04 	( . 
 	ld hl,message_interface_1_start		;026d	21 00 10 	! . . 
@@ -461,7 +468,7 @@ l027bh:
 	ld hl,(sys_e_line)		;027b	2a 59 5c 	* Y \ 
 	ld a,0feh		;027e	3e fe 	> . 
 l0280h:
-	ld (variable.command_mode),a		;0280	32 0e 5d 	2 . ] 
+	ld (trdos_variable.command_mode),a		;0280	32 0e 5d 	2 . ] 
 	ld (hl),0f7h		;0283	36 f7 	6 . 
 	inc hl			;0285	23 	# 
 	ld (hl),022h		;0286	36 22 	6 " 
@@ -509,33 +516,33 @@ l02bbh:
 	djnz l02bbh		;02c8	10 f1 	. . 
 	ret			;02ca	c9 	. 
 finishing_proc_0x02CB:
-	ld hl,(variable.sp_copy)		;02cb	2a 1c 5d 	* . ] 
+	ld hl,(trdos_variable.sp_copy)		;02cb	2a 1c 5d 	* . ] 
 	dec hl			;02ce	2b 	+ 
 	dec hl			;02cf	2b 	+ 
 	ld sp,hl			;02d0	f9 	. 
 	call sub_20f1h		;02d1	cd f1 20 	. .   
 	call open_channel_0		;02d4	cd 83 1d 	. . . 
-	ld a,(variable.system_register)		;02d7	3a 16 5d 	: . ] 
+	ld a,(trdos_variable.system_register)		;02d7	3a 16 5d 	: . ] 
 	or 003h		;02da	f6 03 	. . 
 	call sub_02b9h		;02dc	cd b9 02 	. . . 
-	ld a,(variable.system_register)		;02df	3a 16 5d 	: . ] 
+	ld a,(trdos_variable.system_register)		;02df	3a 16 5d 	: . ] 
 	call sub_02b9h		;02e2	cd b9 02 	. . . 
 	xor a			;02e5	af 	. 
-	ld (variable.show_screen_flag),a		;02e6	32 15 5d 	2 . ] 
+	ld (trdos_variable.show_screen_flag),a		;02e6	32 15 5d 	2 . ] 
 	call sub_2135h		;02e9	cd 35 21 	. 5 ! 
 	call sub_3032h		;02ec	cd 32 30 	. 2 0 
 l02efh:
 	call cls_lower		;02ef	cd 9f 1d 	. . . 
 	ld hl,finishing_proc_0x02CB		;02f2	21 cb 02 	! . . 
-	ld (variable.internal_address_of_finishing_proc),hl		;02f5	22 1a 5d 	" . ] 
+	ld (trdos_variable.internal_address_of_finishing_proc),hl		;02f5	22 1a 5d 	" . ] 
 	xor a			;02f8	af 	. 
-	ld (variable.error_code),a		;02f9	32 0f 5d 	2 . ] 
+	ld (trdos_variable.error_code),a		;02f9	32 0f 5d 	2 . ] 
 	ld hl,(sys_e_line)		;02fc	2a 59 5c 	* Y \ 
 	push hl			;02ff	e5 	. 
-	ld de,variable.entered_line_3_first_chars		;0300	11 20 5d 	.   ] 
+	ld de,trdos_variable.entered_line_3_first_chars		;0300	11 20 5d 	.   ] 
 	call sub_02b0h		;0303	cd b0 02 	. . . 
 	pop hl			;0306	e1 	. 
-	ld (variable.command_line_address),hl		;0307	22 11 5d 	" . ] 
+	ld (trdos_variable.command_line_address),hl		;0307	22 11 5d 	" . ] 
 l030ah:
 	ld a,(hl)			;030a	7e 	~ 
 	ld b,a			;030b	47 	G 
@@ -564,11 +571,11 @@ l0320h:
 	cp 0feh		;032d	fe fe 	. . 
 	call nz,sub_294ah		;032f	c4 4a 29 	. J ) 
 	ld a,009h		;0332	3e 09 	> . 
-	ld (variable.find_command_symbols),a		;0334	32 06 5d 	2 . ] 
+	ld (trdos_variable.find_command_symbols),a		;0334	32 06 5d 	2 . ] 
 	xor a			;0337	af 	. 
-	ld (variable.error_code),a		;0338	32 0f 5d 	2 . ] 
-	ld (variable.move_command_first_track),a		;033b	32 d6 5c 	2 . \ 
-	ld (variable.error_code_msb),a		;033e	32 10 5d 	2 . ] 
+	ld (trdos_variable.error_code),a		;0338	32 0f 5d 	2 . ] 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;033b	32 d6 5c 	2 . \ 
+	ld (trdos_variable.error_code_msb),a		;033e	32 10 5d 	2 . ] 
 	ld hl,sys_flags		;0341	21 3b 5c 	! ; \ 
 	res 7,(hl)		;0344	cb be 	. . 
 	ld b,000h		;0346	06 00 	. . 
@@ -673,7 +680,7 @@ l03ach:
 	call sub_3d80h		;03af	cd 80 3d 	. . = 
 	call sub_3d80h		;03b2	cd 80 3d 	. . = 
 l03b5h:
-	ld bc,(05e0ah)		;03b5	ed 4b 0a 5e 	. K . ^ 
+	ld bc,(trdos_sector_buffer.free_sectors)		;03b5	ed 4b 0a 5e 	. K . ^ 
 	call sub_1da9h		;03b9	cd a9 1d 	. . . 
 	ld hl,message.cr.free		;03bc	21 d2 29 	! . ) 
 	rst 18h			;03bf	df 	. 
@@ -681,15 +688,15 @@ jp_exit_dos:
 	jp exit_dos		;03c0	c3 d3 01 	. . . 
 print_error_number_A_whose_message_is_at_HL:
 	push af			;03c3	f5 	. 
-	ld a,(variable.command_mode)		;03c4	3a 0e 5d 	: . ] 
+	ld a,(trdos_variable.command_mode)		;03c4	3a 0e 5d 	: . ] 
 	cp 0feh		;03c7	fe fe 	. . 
 	jr nz,l03cdh		;03c9	20 02 	  . 
 	pop af			;03cb	f1 	. 
 	ret			;03cc	c9 	. 
 l03cdh:
 	pop af			;03cd	f1 	. 
-	ld (variable.error_code),a		;03ce	32 0f 5d 	2 . ] 
-	ld a,(variable.show_screen_flag)		;03d1	3a 15 5d 	: . ] 
+	ld (trdos_variable.error_code),a		;03ce	32 0f 5d 	2 . ] 
+	ld a,(trdos_variable.show_screen_flag)		;03d1	3a 15 5d 	: . ] 
 	or a			;03d4	b7 	. 
 	call z,print_message_at_HL		;03d5	cc 07 27 	. . ' 
 	ret			;03d8	c9 	. 
@@ -703,13 +710,13 @@ print_OK_and_exit_DOS:
 	jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;03e5	c3 4a 1c 	. J . 
 sub_03e8h:
 	xor a			;03e8	af 	. 
-	ld (variable.cat_current_sector),a		;03e9	32 cc 5c 	2 . \ 
+	ld (trdos_variable.cat_current_sector),a		;03e9	32 cc 5c 	2 . \ 
 sub_03ech:
-	ld de,(variable.cat_current_sector)		;03ec	ed 5b cc 5c 	. [ . \ 
+	ld de,(trdos_variable.cat_current_sector)		;03ec	ed 5b cc 5c 	. [ . \ 
 	ld d,000h		;03f0	16 00 	. . 
 l03f2h:
 	call sub_294ah		;03f2	cd 4a 29 	. J ) 
-	ld hl,variable.tmp_buffer_address		;03f5	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;03f5	21 25 5d 	! % ] 
 	ld b,001h		;03f8	06 01 	. . 
 	jp read_sectors		;03fa	c3 3d 1e 	. = . 
 sub_03fdh:
@@ -718,7 +725,7 @@ sub_03fdh:
 	jr l03f2h		;0403	18 ed 	. . 
 read_system_track:
 	call sub_03fdh		;0405	cd fd 03 	. . . 
-	ld a,(05e0ch)		;0408	3a 0c 5e 	: . ^ 
+	ld a,(trdos_sector_buffer.sectors_per_track)		;0408	3a 0c 5e 	: . ^ 
 	cp 010h		;040b	fe 10 	. . 
 	jr z,l0415h		;040d	28 06 	( . 
 	ld hl,message.cr.disc_error		;040f	21 e2 29 	! . ) 
@@ -728,7 +735,7 @@ l0415h:
 	call sub_3e11h		;0415	cd 11 3e 	. . > 
 	res 0,(hl)		;0418	cb 86 	. . 
 	res 1,(hl)		;041a	cb 8e 	. . 
-	ld a,(05e08h)		;041c	3a 08 5e 	: . ^ 
+	ld a,(trdos_sector_buffer.disk_type)		;041c	3a 08 5e 	: . ^ 
 	bit 0,a		;041f	cb 47 	. G 
 	jr nz,l0425h		;0421	20 02 	  . 
 	set 0,(hl)		;0423	cb c6 	. . 
@@ -738,7 +745,7 @@ l0425h:
 	set 1,(hl)		;0428	cb ce 	. . 
 	ret			;042a	c9 	. 
 z_if_next_command_line_char_is_carriage_return:
-	ld hl,(variable.command_line_address)		;042b	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;042b	2a 11 5d 	* . ] 
 	inc hl			;042e	23 	# 
 	ld a,(hl)			;042f	7e 	~ 
 	cp 00dh		;0430	fe 0d 	. . 
@@ -746,7 +753,7 @@ z_if_next_command_line_char_is_carriage_return:
 cli_command.cat:
 	call z_if_next_command_line_char_is_carriage_return		;0433	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;0436	01 02 00 	. . . 
-	ld (variable.file_size),bc		;0439	ed 43 db 5c 	. C . \ 
+	ld (trdos_variable.file_size),bc		;0439	ed 43 db 5c 	. C . \ 
 	jr z,l046ah		;043d	28 2b 	( + 
 	cp 023h		;043f	fe 23 	. # 
 	jr nz,l045dh		;0441	20 1a 	  . 
@@ -769,10 +776,10 @@ l0460h:
 	call sub_1c81h		;0467	cd 81 1c 	. . . 
 l046ah:
 	call pop_hl_if_checking_syntax		;046a	cd 75 1d 	. u . 
-	ld a,(variable.temporary_drive)		;046d	3a f6 5c 	: . \ 
-	ld (variable.cat_drive_or_read_verify_flag),a		;0470	32 f9 5c 	2 . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;046d	3a f6 5c 	: . \ 
+	ld (trdos_variable.cat_drive_or_read_verify_flag),a		;0470	32 f9 5c 	2 . \ 
 	call read_system_track		;0473	cd 05 04 	. . . 
-	ld a,(variable.file_size)		;0476	3a db 5c 	: . \ 
+	ld a,(trdos_variable.file_size)		;0476	3a db 5c 	: . \ 
 l0479h:
 	cp 002h		;0479	fe 02 	. . 
 	push af			;047b	f5 	. 
@@ -782,14 +789,14 @@ l0479h:
 	jp nc,error.wrong_drive_letter		;0482	d2 1a 1d 	. . . 
 	call chan_open		;0485	cd 84 1d 	. . . 
 	ld a,0ffh		;0488	3e ff 	> . 
-	ld (variable.two_files_drive),a		;048a	32 f8 5c 	2 . \ 
+	ld (trdos_variable.two_files_drive),a		;048a	32 f8 5c 	2 . \ 
 	ld hl,message.cr.title		;048d	21 f7 29 	! . ) 
 	rst 18h			;0490	df 	. 
-	ld hl,05e1ah		;0491	21 1a 5e 	! . ^ 
+	ld hl,trdos_sector_buffer.disc_title		;0491	21 1a 5e 	! . ^ 
 	rst 18h			;0494	df 	. 
 	call sub_3d80h		;0495	cd 80 3d 	. . = 
-	ld a,(05e09h)		;0498	3a 09 5e 	: . ^ 
-	ld hl,05e19h		;049b	21 19 5e 	! . ^ 
+	ld a,(trdos_sector_buffer.files)		;0498	3a 09 5e 	: . ^ 
+	ld hl,trdos_sector_buffer.deleted_files		;049b	21 19 5e 	! . ^ 
 	sub (hl)			;049e	96 	. 
 	push hl			;049f	e5 	. 
 	call sub_1da3h		;04a0	cd a3 1d 	. . . 
@@ -801,11 +808,11 @@ l0479h:
 	ld hl,message.del_file		;04ac	21 1d 2a 	! . * 
 	rst 18h			;04af	df 	. 
 	call sub_03e8h		;04b0	cd e8 03 	. . . 
-	ld hl,variable.tmp_buffer_address		;04b3	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;04b3	21 25 5d 	! % ] 
 l04b6h:
 	call sub_04f6h		;04b6	cd f6 04 	. . . 
 	call sub_3d80h		;04b9	cd 80 3d 	. . = 
-	ld a,(variable.temporary_drive)		;04bc	3a f6 5c 	: . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;04bc	3a f6 5c 	: . \ 
 	add a,041h		;04bf	c6 41 	. A 
 	rst 10h			;04c1	d7 	. 
 	ld b,002h		;04c2	06 02 	. . 
@@ -846,8 +853,8 @@ l04e8h:
 sub_04f6h:
 	push hl			;04f6	e5 	. 
 	push bc			;04f7	c5 	. 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;04f8	3a f9 5c 	: . \ 
-	ld hl,variable.temporary_drive		;04fb	21 f6 5c 	! . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;04f8	3a f9 5c 	: . \ 
+	ld hl,trdos_variable.current_temporary_drive		;04fb	21 f6 5c 	! . \ 
 	cp (hl)			;04fe	be 	. 
 	call nz,init_disk_drive_in_A_register		;04ff	c4 cb 3d 	. . = 
 	pop bc			;0502	c1 	. 
@@ -867,12 +874,12 @@ sub_050ch:
 	pop hl			;0515	e1 	. 
 	ret			;0516	c9 	. 
 l0517h:
-	ld hl,variable.cat_current_sector		;0517	21 cc 5c 	! . \ 
+	ld hl,trdos_variable.cat_current_sector		;0517	21 cc 5c 	! . \ 
 	inc (hl)			;051a	34 	4 
 	call sub_03ech		;051b	cd ec 03 	. . . 
 	pop bc			;051e	c1 	. 
 	pop hl			;051f	e1 	. 
-	ld hl,variable.tmp_buffer_address		;0520	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;0520	21 25 5d 	! % ] 
 l0523h:
 	ret			;0523	c9 	. 
 check_drive_letter_and_convert_to_number:
@@ -893,15 +900,15 @@ cli_command.new:
 	call pop_hl_if_checking_syntax		;053d	cd 75 1d 	. u . 
 	call sub_102eh		;0540	cd 2e 10 	. . . 
 	call sub_1cb0h		;0543	cd b0 1c 	. . . 
-	ld a,(variable.temporary_drive)		;0546	3a f6 5c 	: . \ 
-	ld (variable.two_files_drive),a		;0549	32 f8 5c 	2 . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;0546	3a f6 5c 	: . \ 
+	ld (trdos_variable.two_files_drive),a		;0549	32 f8 5c 	2 . \ 
 	jp nz,print_no_files_error_and_exit_DOS		;054c	c2 d9 03 	. . . 
 	push bc			;054f	c5 	. 
 	call sub_165dh		;0550	cd 5d 16 	. ] . 
 	call sub_1cb0h		;0553	cd b0 1c 	. . . 
 	push af			;0556	f5 	. 
-	ld a,(variable.two_files_drive)		;0557	3a f8 5c 	: . \ 
-	ld hl,variable.temporary_drive		;055a	21 f6 5c 	! . \ 
+	ld a,(trdos_variable.two_files_drive)		;0557	3a f8 5c 	: . \ 
+	ld hl,trdos_variable.current_temporary_drive		;055a	21 f6 5c 	! . \ 
 	cp (hl)			;055d	be 	. 
 	jp nz,error.wrong_drive_letter		;055e	c2 1a 1d 	. . . 
 	call read_system_track		;0561	cd 05 04 	. . . 
@@ -913,23 +920,23 @@ l0569h:
 	call sub_1e43h		;056c	cd 43 1e 	. C . 
 	jp print_OK_and_exit_DOS		;056f	c3 e1 03 	. . . 
 sub_0572h:
-	ld a,(variable.error_code_msb)		;0572	3a 10 5d 	: . ] 
+	ld a,(trdos_variable.error_code_msb)		;0572	3a 10 5d 	: . ] 
 	or a			;0575	b7 	. 
 	ret			;0576	c9 	. 
 l0577h:
-	ld a,(variable.deleted_files)		;0577	3a 07 5d 	: . ] 
+	ld a,(trdos_variable.deleted_files)		;0577	3a 07 5d 	: . ] 
 	or a			;057a	b7 	. 
 	jp z,print_no_files_error_and_exit_DOS		;057b	ca d9 03 	. . . 
 	jp print_OK_and_exit_DOS		;057e	c3 e1 03 	. . . 
 sub_0581h:
 	push bc			;0581	c5 	. 
 	call cls		;0582	cd 97 1d 	. . . 
-	ld a,(variable.temporary_drive)		;0585	3a f6 5c 	: . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;0585	3a f6 5c 	: . \ 
 	add a,041h		;0588	c6 41 	. A 
 	call print_character_in_A		;058a	cd 82 3d 	. . = 
 	ld a,03ah		;058d	3e 3a 	> : 
 	call print_character_in_A		;058f	cd 82 3d 	. . = 
-	ld hl,variable.filename		;0592	21 dd 5c 	! . \ 
+	ld hl,trdos_variable.filename		;0592	21 dd 5c 	! . \ 
 	call sub_2938h		;0595	cd 38 29 	. 8 ) 
 	ld hl,message.file_exists		;0598	21 20 28 	!   ( 
 	call print_message_at_HL		;059b	cd 07 27 	. . ' 
@@ -947,20 +954,20 @@ sub_0581h:
 	xor a			;05b2	af 	. 
 	ret			;05b3	c9 	. 
 sub_05b4h:
-	ld a,(variable.file_type)		;05b4	3a e5 5c 	: . \ 
+	ld a,(trdos_variable.file_type)		;05b4	3a e5 5c 	: . \ 
 	cp 023h		;05b7	fe 23 	. # 
 	jr z,l05bdh		;05b9	28 02 	( . 
 	xor a			;05bb	af 	. 
 	ret			;05bc	c9 	. 
 l05bdh:
 	ld a,00ah		;05bd	3e 0a 	> . 
-	ld (variable.find_command_symbols),a		;05bf	32 06 5d 	2 . ] 
+	ld (trdos_variable.find_command_symbols),a		;05bf	32 06 5d 	2 . ] 
 	call sub_1cb3h		;05c2	cd b3 1c 	. . . 
 	ld a,009h		;05c5	3e 09 	> . 
-	ld (variable.find_command_symbols),a		;05c7	32 06 5d 	2 . ] 
+	ld (trdos_variable.find_command_symbols),a		;05c7	32 06 5d 	2 . ] 
 	ret			;05ca	c9 	. 
 l05cbh:
-	ld a,(variable.filename)		;05cb	3a dd 5c 	: . \ 
+	ld a,(trdos_variable.filename)		;05cb	3a dd 5c 	: . \ 
 	cp 02ah		;05ce	fe 2a 	. * 
 	jp nz,print_no_files_error_and_exit_DOS		;05d0	c2 d9 03 	. . . 
 	call stk_fetch		;05d3	cd b5 1d 	. . . 
@@ -969,32 +976,32 @@ l05cbh:
 	ld a,(hl)			;05da	7e 	~ 
 	cp 02ah		;05db	fe 2a 	. * 
 	jp nz,error.wrong_drive_letter		;05dd	c2 1a 1d 	. . . 
-	ld a,(variable.temporary_drive)		;05e0	3a f6 5c 	: . \ 
-	ld (variable.cat_drive_or_read_verify_flag),a		;05e3	32 f9 5c 	2 . \ 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;05e6	3a f9 5c 	: . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;05e0	3a f6 5c 	: . \ 
+	ld (trdos_variable.cat_drive_or_read_verify_flag),a		;05e3	32 f9 5c 	2 . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;05e6	3a f9 5c 	: . \ 
 	call init_disk_drive_in_A_register		;05e9	cd cb 3d 	. . = 
 	call read_system_track		;05ec	cd 05 04 	. . . 
 	ld a,0ffh		;05ef	3e ff 	> . 
-	ld (variable.file_number_for_copying),a		;05f1	32 0d 5d 	2 . ] 
+	ld (trdos_variable.file_number_for_copying),a		;05f1	32 0d 5d 	2 . ] 
 l05f4h:
-	ld a,(variable.two_files_drive)		;05f4	3a f8 5c 	: . \ 
+	ld a,(trdos_variable.two_files_drive)		;05f4	3a f8 5c 	: . \ 
 	call init_disk_drive_in_A_register		;05f7	cd cb 3d 	. . = 
 	call read_system_track		;05fa	cd 05 04 	. . . 
-	ld a,(variable.file_number_for_copying)		;05fd	3a 0d 5d 	: . ] 
+	ld a,(trdos_variable.file_number_for_copying)		;05fd	3a 0d 5d 	: . ] 
 	inc a			;0600	3c 	< 
-	ld (variable.file_number_for_copying),a		;0601	32 0d 5d 	2 . ] 
+	ld (trdos_variable.file_number_for_copying),a		;0601	32 0d 5d 	2 . ] 
 	ld c,a			;0604	4f 	O 
 	call sub_165dh		;0605	cd 5d 16 	. ] . 
-	ld a,(variable.filename)		;0608	3a dd 5c 	: . \ 
+	ld a,(trdos_variable.filename)		;0608	3a dd 5c 	: . \ 
 	cp 000h		;060b	fe 00 	. . 
 	jp z,print_OK_and_exit_DOS		;060d	ca e1 03 	. . . 
 	cp 001h		;0610	fe 01 	. . 
 	jr z,l05f4h		;0612	28 e0 	( . 
-	ld hl,variable.file_start		;0614	21 e6 5c 	! . \ 
-	ld de,variable.c_file_start_or_b_file_size		;0617	11 ed 5c 	. . \ 
+	ld hl,trdos_variable.file_start		;0614	21 e6 5c 	! . \ 
+	ld de,trdos_variable.c_file_start_or_b_file_size		;0617	11 ed 5c 	. . \ 
 	ld bc,00007h		;061a	01 07 00 	. . . 
 	ldir		;061d	ed b0 	. . 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;061f	3a f9 5c 	: . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;061f	3a f9 5c 	: . \ 
 	call init_disk_drive_in_A_register		;0622	cd cb 3d 	. . = 
 	call sub_1cb3h		;0625	cd b3 1c 	. . . 
 	jr nz,l0634h		;0628	20 0a 	  . 
@@ -1008,42 +1015,42 @@ l0634h:
 	jr l05f4h		;063a	18 b8 	. . 
 sub_063ch:
 	call sub_03fdh		;063c	cd fd 03 	. . . 
-	ld a,(05e09h)		;063f	3a 09 5e 	: . ^ 
+	ld a,(trdos_sector_buffer.files)		;063f	3a 09 5e 	: . ^ 
 	cp 080h		;0642	fe 80 	. . 
 	jp z,error.no_space		;0644	ca 45 1c 	. E . 
-	ld hl,variable.c_file_start_or_b_file_size		;0647	21 ed 5c 	! . \ 
-	ld de,variable.file_start		;064a	11 e6 5c 	. . \ 
+	ld hl,trdos_variable.c_file_start_or_b_file_size		;0647	21 ed 5c 	! . \ 
+	ld de,trdos_variable.file_start		;064a	11 e6 5c 	. . \ 
 	ld bc,00007h		;064d	01 07 00 	. . . 
 	ldir		;0650	ed b0 	. . 
-	ld de,(variable.file_length_in_sectors)		;0652	ed 5b ea 5c 	. [ . \ 
+	ld de,(trdos_variable.file_length_in_sectors)		;0652	ed 5b ea 5c 	. [ . \ 
 	ld d,000h		;0656	16 00 	. . 
 	or a			;0658	b7 	. 
-	ld hl,(05e0ah)		;0659	2a 0a 5e 	* . ^ 
+	ld hl,(trdos_sector_buffer.free_sectors)		;0659	2a 0a 5e 	* . ^ 
 	sbc hl,de		;065c	ed 52 	. R 
 	jp c,error.no_space		;065e	da 45 1c 	. E . 
-	ld (05e0ah),hl		;0661	22 0a 5e 	" . ^ 
-	ld hl,(05e06h)		;0664	2a 06 5e 	* . ^ 
-	ld (variable.file_first_sector),hl		;0667	22 eb 5c 	" . \ 
+	ld (trdos_sector_buffer.free_sectors),hl		;0661	22 0a 5e 	" . ^ 
+	ld hl,(trdos_sector_buffer.next_free_sector)		;0664	2a 06 5e 	* . ^ 
+	ld (trdos_variable.file_first_sector),hl		;0667	22 eb 5c 	" . \ 
 	push hl			;066a	e5 	. 
 	call sub_072fh		;066b	cd 2f 07 	. / . 
 	pop hl			;066e	e1 	. 
-	ld (variable.file_first_sector),hl		;066f	22 eb 5c 	" . \ 
-	ld hl,(variable.current_sector)		;0672	2a f4 5c 	* . \ 
-	ld (05e06h),hl		;0675	22 06 5e 	" . ^ 
-	ld hl,05e09h		;0678	21 09 5e 	! . ^ 
+	ld (trdos_variable.file_first_sector),hl		;066f	22 eb 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;0672	2a f4 5c 	* . \ 
+	ld (trdos_sector_buffer.next_free_sector),hl		;0675	22 06 5e 	" . ^ 
+	ld hl,trdos_sector_buffer.files		;0678	21 09 5e 	! . ^ 
 	inc (hl)			;067b	34 	4 
 	ld c,(hl)			;067c	4e 	N 
 	dec c			;067d	0d 	. 
 	ld b,000h		;067e	06 00 	. . 
 	push bc			;0680	c5 	. 
 	ld de,l0009h		;0681	11 09 00 	. . . 
-	ld (variable.current_sector),de		;0684	ed 53 f4 5c 	. S . \ 
+	ld (trdos_variable.current_sector),de		;0684	ed 53 f4 5c 	. S . \ 
 	call sub_1e43h		;0688	cd 43 1e 	. C . 
 	pop bc			;068b	c1 	. 
 	call sub_166bh		;068c	cd 6b 16 	. k . 
 	ret			;068f	c9 	. 
 cli_command.copy:
-	ld hl,(variable.command_line_address)		;0690	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;0690	2a 11 5d 	* . ] 
 	inc hl			;0693	23 	# 
 	ld a,(hl)			;0694	7e 	~ 
 	and 0dfh		;0695	e6 df 	. . 
@@ -1056,23 +1063,23 @@ cli_command.copy:
 	call sub_166fh		;06a7	cd 6f 16 	. o . 
 	call sub_102eh		;06aa	cd 2e 10 	. . . 
 	call sub_1cb0h		;06ad	cd b0 1c 	. . . 
-	ld a,(variable.temporary_drive)		;06b0	3a f6 5c 	: . \ 
-	ld (variable.two_files_drive),a		;06b3	32 f8 5c 	2 . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;06b0	3a f6 5c 	: . \ 
+	ld (trdos_variable.two_files_drive),a		;06b3	32 f8 5c 	2 . \ 
 	jp nz,l05cbh		;06b6	c2 cb 05 	. . . 
 	call sub_165dh		;06b9	cd 5d 16 	. ] . 
-	ld hl,variable.file_start		;06bc	21 e6 5c 	! . \ 
-	ld de,variable.c_file_start_or_b_file_size		;06bf	11 ed 5c 	. . \ 
+	ld hl,trdos_variable.file_start		;06bc	21 e6 5c 	! . \ 
+	ld de,trdos_variable.c_file_start_or_b_file_size		;06bf	11 ed 5c 	. . \ 
 	ld bc,00007h		;06c2	01 07 00 	. . . 
 	ldir		;06c5	ed b0 	. . 
 	call sub_1cb0h		;06c7	cd b0 1c 	. . . 
 	push af			;06ca	f5 	. 
 	push bc			;06cb	c5 	. 
-	ld a,(variable.temporary_drive)		;06cc	3a f6 5c 	: . \ 
-	ld (variable.cat_drive_or_read_verify_flag),a		;06cf	32 f9 5c 	2 . \ 
-	ld a,(variable.two_files_drive)		;06d2	3a f8 5c 	: . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;06cc	3a f6 5c 	: . \ 
+	ld (trdos_variable.cat_drive_or_read_verify_flag),a		;06cf	32 f9 5c 	2 . \ 
+	ld a,(trdos_variable.two_files_drive)		;06d2	3a f8 5c 	: . \ 
 	call init_disk_drive_in_A_register		;06d5	cd cb 3d 	. . = 
 	call read_system_track		;06d8	cd 05 04 	. . . 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;06db	3a f9 5c 	: . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;06db	3a f9 5c 	: . \ 
 	call init_disk_drive_in_A_register		;06de	cd cb 3d 	. . = 
 	call read_system_track		;06e1	cd 05 04 	. . . 
 	pop bc			;06e4	c1 	. 
@@ -1085,102 +1092,102 @@ cli_command.copy:
 l06f3h:
 	call sub_063ch		;06f3	cd 3c 06 	. < . 
 	call sub_1e43h		;06f6	cd 43 1e 	. C . 
-	ld a,(variable.file_type)		;06f9	3a e5 5c 	: . \ 
+	ld a,(trdos_variable.file_type)		;06f9	3a e5 5c 	: . \ 
 	cp 023h		;06fc	fe 23 	. # 
 	jp nz,print_OK_and_exit_DOS		;06fe	c2 e1 03 	. . . 
 	ld a,00ah		;0701	3e 0a 	> . 
-	ld (variable.find_command_symbols),a		;0703	32 06 5d 	2 . ] 
-	ld hl,variable.file_start		;0706	21 e6 5c 	! . \ 
+	ld (trdos_variable.find_command_symbols),a		;0703	32 06 5d 	2 . ] 
+	ld hl,trdos_variable.file_start		;0706	21 e6 5c 	! . \ 
 	inc (hl)			;0709	34 	4 
-	ld a,(variable.two_files_drive)		;070a	3a f8 5c 	: . \ 
+	ld a,(trdos_variable.two_files_drive)		;070a	3a f8 5c 	: . \ 
 	call init_disk_drive_in_A_register		;070d	cd cb 3d 	. . = 
 	call sub_05b4h		;0710	cd b4 05 	. . . 
 	jp nz,print_OK_and_exit_DOS		;0713	c2 e1 03 	. . . 
 	call sub_165dh		;0716	cd 5d 16 	. ] . 
-	ld hl,variable.file_start		;0719	21 e6 5c 	! . \ 
-	ld de,variable.c_file_start_or_b_file_size		;071c	11 ed 5c 	. . \ 
+	ld hl,trdos_variable.file_start		;0719	21 e6 5c 	! . \ 
+	ld de,trdos_variable.c_file_start_or_b_file_size		;071c	11 ed 5c 	. . \ 
 	ld bc,00007h		;071f	01 07 00 	. . . 
 	ldir		;0722	ed b0 	. . 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;0724	3a f9 5c 	: . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;0724	3a f9 5c 	: . \ 
 	call init_disk_drive_in_A_register		;0727	cd cb 3d 	. . = 
 	call read_system_track		;072a	cd 05 04 	. . . 
 	jr l06f3h		;072d	18 c4 	. . 
 sub_072fh:
-	ld a,(variable.file_2_length_in_sectors)		;072f	3a f1 5c 	: . \ 
+	ld a,(trdos_variable.file_2_length_in_sectors)		;072f	3a f1 5c 	: . \ 
 	or a			;0732	b7 	. 
 	ret z			;0733	c8 	. 
 	push hl			;0734	e5 	. 
-	ld hl,variable.move_command_blocks		;0735	21 23 5d 	! # ] 
+	ld hl,trdos_variable.move_command_blocks		;0735	21 23 5d 	! # ] 
 	sub (hl)			;0738	96 	. 
 	pop hl			;0739	e1 	. 
 	jr nc,l0775h		;073a	30 39 	0 9 
-	ld a,(variable.file_2_length_in_sectors)		;073c	3a f1 5c 	: . \ 
+	ld a,(trdos_variable.file_2_length_in_sectors)		;073c	3a f1 5c 	: . \ 
 	ld b,a			;073f	47 	G 
 	xor a			;0740	af 	. 
-	ld (variable.file_2_length_in_sectors),a		;0741	32 f1 5c 	2 . \ 
+	ld (trdos_variable.file_2_length_in_sectors),a		;0741	32 f1 5c 	2 . \ 
 l0744h:
 	push bc			;0744	c5 	. 
-	ld a,(variable.two_files_drive)		;0745	3a f8 5c 	: . \ 
+	ld a,(trdos_variable.two_files_drive)		;0745	3a f8 5c 	: . \ 
 	call init_disk_drive_in_A_register		;0748	cd cb 3d 	. . = 
 	pop bc			;074b	c1 	. 
 	push bc			;074c	c5 	. 
-	ld hl,(variable.stack_sp_copy)		;074d	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;074d	2a cf 5c 	* . \ 
 	push hl			;0750	e5 	. 
-	ld de,(variable.file_2_first_sector)		;0751	ed 5b f2 5c 	. [ . \ 
+	ld de,(trdos_variable.file_2_first_sector)		;0751	ed 5b f2 5c 	. [ . \ 
 	call read_sectors		;0755	cd 3d 1e 	. = . 
-	ld hl,(variable.current_sector)		;0758	2a f4 5c 	* . \ 
-	ld (variable.file_2_first_sector),hl		;075b	22 f2 5c 	" . \ 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;075e	3a f9 5c 	: . \ 
+	ld hl,(trdos_variable.current_sector)		;0758	2a f4 5c 	* . \ 
+	ld (trdos_variable.file_2_first_sector),hl		;075b	22 f2 5c 	" . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;075e	3a f9 5c 	: . \ 
 	call init_disk_drive_in_A_register		;0761	cd cb 3d 	. . = 
 	pop hl			;0764	e1 	. 
 	pop bc			;0765	c1 	. 
-	ld de,(variable.file_first_sector)		;0766	ed 5b eb 5c 	. [ . \ 
+	ld de,(trdos_variable.file_first_sector)		;0766	ed 5b eb 5c 	. [ . \ 
 	call write_sectors		;076a	cd 4d 1e 	. M . 
-	ld hl,(variable.current_sector)		;076d	2a f4 5c 	* . \ 
-	ld (variable.file_first_sector),hl		;0770	22 eb 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;076d	2a f4 5c 	* . \ 
+	ld (trdos_variable.file_first_sector),hl		;0770	22 eb 5c 	" . \ 
 	jr sub_072fh		;0773	18 ba 	. . 
 l0775h:
-	ld (variable.file_2_length_in_sectors),a		;0775	32 f1 5c 	2 . \ 
+	ld (trdos_variable.file_2_length_in_sectors),a		;0775	32 f1 5c 	2 . \ 
 	push hl			;0778	e5 	. 
-	ld hl,variable.move_command_blocks		;0779	21 23 5d 	! # ] 
+	ld hl,trdos_variable.move_command_blocks		;0779	21 23 5d 	! # ] 
 	ld b,(hl)			;077c	46 	F 
 	pop hl			;077d	e1 	. 
 	xor a			;077e	af 	. 
 	jr l0744h		;077f	18 c3 	. . 
 sub_0781h:
 	xor a			;0781	af 	. 
-	ld (variable.deleted_files),a		;0782	32 07 5d 	2 . ] 
+	ld (trdos_variable.deleted_files),a		;0782	32 07 5d 	2 . ] 
 	jr l07a0h		;0785	18 19 	. . 
 cli_command.erase:
 	call parse_expression		;0787	cd df 1d 	. . . 
 	call pop_hl_if_checking_syntax		;078a	cd 75 1d 	. u . 
 	call sub_102eh		;078d	cd 2e 10 	. . . 
 	xor a			;0790	af 	. 
-	ld (variable.deleted_files),a		;0791	32 07 5d 	2 . ] 
+	ld (trdos_variable.deleted_files),a		;0791	32 07 5d 	2 . ] 
 	call sub_292fh		;0794	cd 2f 29 	. / ) 
 	call l07a0h		;0797	cd a0 07 	. . . 
 	jp nz,l0577h		;079a	c2 77 05 	. w . 
 	jp print_OK_and_exit_DOS		;079d	c3 e1 03 	. . . 
 l07a0h:
-	ld a,(variable.filename)		;07a0	3a dd 5c 	: . \ 
-	ld (variable.filename_first_char),a		;07a3	32 08 5d 	2 . ] 
+	ld a,(trdos_variable.filename)		;07a0	3a dd 5c 	: . \ 
+	ld (trdos_variable.filename_first_char),a		;07a3	32 08 5d 	2 . ] 
 	ret nz			;07a6	c0 	. 
-	ld hl,variable.deleted_files		;07a7	21 07 5d 	! . ] 
+	ld hl,trdos_variable.deleted_files		;07a7	21 07 5d 	! . ] 
 	inc (hl)			;07aa	34 	4 
 	push bc			;07ab	c5 	. 
 	call sub_03fdh		;07ac	cd fd 03 	. . . 
-	ld a,(05e09h)		;07af	3a 09 5e 	: . ^ 
+	ld a,(trdos_sector_buffer.files)		;07af	3a 09 5e 	: . ^ 
 	pop bc			;07b2	c1 	. 
 	inc c			;07b3	0c 	. 
 	cp c			;07b4	b9 	. 
 	jr nz,l07bch		;07b5	20 05 	  . 
 	dec a			;07b7	3d 	= 
-	ld (05e09h),a		;07b8	32 09 5e 	2 . ^ 
+	ld (trdos_sector_buffer.files),a		;07b8	32 09 5e 	2 . ^ 
 	xor a			;07bb	af 	. 
 l07bch:
 	push af			;07bc	f5 	. 
 	jr z,l07c3h		;07bd	28 04 	( . 
-	ld hl,05e19h		;07bf	21 19 5e 	! . ^ 
+	ld hl,trdos_sector_buffer.deleted_files		;07bf	21 19 5e 	! . ^ 
 	inc (hl)			;07c2	34 	4 
 l07c3h:
 	push bc			;07c3	c5 	. 
@@ -1192,24 +1199,24 @@ l07c3h:
 	jp z,l07d2h		;07cd	ca d2 07 	. . . 
 	ld a,001h		;07d0	3e 01 	> . 
 l07d2h:
-	ld (variable.filename),a		;07d2	32 dd 5c 	2 . \ 
+	ld (trdos_variable.filename),a		;07d2	32 dd 5c 	2 . \ 
 	push af			;07d5	f5 	. 
 	call l1e40h		;07d6	cd 40 1e 	. @ . 
-	ld a,(variable.filename_first_char)		;07d9	3a 08 5d 	: . ] 
-	ld (variable.filename),a		;07dc	32 dd 5c 	2 . \ 
+	ld a,(trdos_variable.filename_first_char)		;07d9	3a 08 5d 	: . ] 
+	ld (trdos_variable.filename),a		;07dc	32 dd 5c 	2 . \ 
 	pop af			;07df	f1 	. 
 	jr z,l07e7h		;07e0	28 05 	( . 
 	call sub_1cb3h		;07e2	cd b3 1c 	. . . 
 	jr l07a0h		;07e5	18 b9 	. . 
 l07e7h:
 	call sub_03fdh		;07e7	cd fd 03 	. . . 
-	ld hl,(variable.file_first_sector)		;07ea	2a eb 5c 	* . \ 
-	ld (05e06h),hl		;07ed	22 06 5e 	" . ^ 
-	ld de,(variable.file_length_in_sectors)		;07f0	ed 5b ea 5c 	. [ . \ 
-	ld hl,(05e0ah)		;07f4	2a 0a 5e 	* . ^ 
+	ld hl,(trdos_variable.file_first_sector)		;07ea	2a eb 5c 	* . \ 
+	ld (trdos_sector_buffer.next_free_sector),hl		;07ed	22 06 5e 	" . ^ 
+	ld de,(trdos_variable.file_length_in_sectors)		;07f0	ed 5b ea 5c 	. [ . \ 
+	ld hl,(trdos_sector_buffer.free_sectors)		;07f4	2a 0a 5e 	* . ^ 
 	ld d,000h		;07f7	16 00 	. . 
 	add hl,de			;07f9	19 	. 
-	ld (05e0ah),hl		;07fa	22 0a 5e 	" . ^ 
+	ld (trdos_sector_buffer.free_sectors),hl		;07fa	22 0a 5e 	" . ^ 
 	jp sub_1e43h		;07fd	c3 43 1e 	. C . 
 l0800h:
 	and 0fch		;0800	e6 fc 	. . 
@@ -3295,12 +3302,12 @@ cli_command.asterisk:
 	call fetch_drive_letter_from_the_calculator_stack		;101e	cd 31 05 	. 1 . 
 	ld a,(de)			;1021	1a 	. 
 	call check_drive_letter_and_convert_to_number		;1022	cd 24 05 	. $ . 
-	ld (variable.default_drive),a		;1025	32 19 5d 	2 . ] 
+	ld (trdos_variable.default_drive),a		;1025	32 19 5d 	2 . ] 
 	call init_disk_drive_in_A_register		;1028	cd cb 3d 	. . = 
 	jp print_OK_and_exit_DOS		;102b	c3 e1 03 	. . . 
 sub_102eh:
 	ld b,043h		;102e	06 43 	. C 
-	ld a,(variable.move_command_first_track)		;1030	3a d6 5c 	: . \ 
+	ld a,(trdos_variable.bad_sectors_or_move_command_first_track)		;1030	3a d6 5c 	: . \ 
 	or a			;1033	b7 	. 
 	jr nz,set_file_type_stored_in_B		;1034	20 17 	  . 
 	call get_char		;1036	cd 8c 1d 	. . . 
@@ -3315,7 +3322,7 @@ sub_102eh:
 	jr z,set_file_type_stored_in_B		;1049	28 02 	( . 
 	ld b,042h		;104b	06 42 	. B 
 set_file_type_stored_in_B:
-	ld hl,variable.file_type		;104d	21 e5 5c 	! . \ 
+	ld hl,trdos_variable.file_type		;104d	21 e5 5c 	! . \ 
 	ld (hl),b			;1050	70 	p 
 	ret			;1051	c9 	. 
 get_uppercase_pressed_key:
@@ -3568,7 +3575,7 @@ sub_1151h:
 	defb 02ah		;1151	2a 	* 
 	ld h,c			;1152	61 	a 
 	ld e,h			;1153	5c 	\ 
-	ld (variable.stack_sp_copy),hl		;1154	22 cf 5c 	" . \ 
+	ld (trdos_variable.stack_sp_copy),hl		;1154	22 cf 5c 	" . \ 
 	ld bc,00222h		;1157	01 22 02 	. " . 
 	jp bc_spaces		;115a	c3 23 1e 	. # . 
 sub_115dh:
@@ -3630,8 +3637,8 @@ sub_11a8h:
 l11b0h:
 	push hl			;11b0	e5 	. 
 	push bc			;11b1	c5 	. 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;11b2	3a f9 5c 	: . \ 
-	ld hl,variable.temporary_drive		;11b5	21 f6 5c 	! . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;11b2	3a f9 5c 	: . \ 
+	ld hl,trdos_variable.current_temporary_drive		;11b5	21 f6 5c 	! . \ 
 	cp (hl)			;11b8	be 	. 
 	call nz,init_disk_drive_in_A_register		;11b9	c4 cb 3d 	. . = 
 	pop bc			;11bc	c1 	. 
@@ -3647,7 +3654,7 @@ l11b0h:
 cli_command.list:
 	call z_if_next_command_line_char_is_carriage_return		;11ce	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;11d1	01 02 00 	. . . 
-	ld (variable.file_size),bc		;11d4	ed 43 db 5c 	. C . \ 
+	ld (trdos_variable.file_size),bc		;11d4	ed 43 db 5c 	. C . \ 
 	jr z,l1205h		;11d8	28 2b 	( + 
 	cp 023h		;11da	fe 23 	. # 
 	jr nz,l11f8h		;11dc	20 1a 	  . 
@@ -3670,10 +3677,10 @@ l11fbh:
 	call sub_1c81h		;1202	cd 81 1c 	. . . 
 l1205h:
 	call pop_hl_if_checking_syntax		;1205	cd 75 1d 	. u . 
-	ld a,(variable.temporary_drive)		;1208	3a f6 5c 	: . \ 
-	ld (variable.cat_drive_or_read_verify_flag),a		;120b	32 f9 5c 	2 . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;1208	3a f6 5c 	: . \ 
+	ld (trdos_variable.cat_drive_or_read_verify_flag),a		;120b	32 f9 5c 	2 . \ 
 	call read_system_track		;120e	cd 05 04 	. . . 
-	ld a,(variable.file_size)		;1211	3a db 5c 	: . \ 
+	ld a,(trdos_variable.file_size)		;1211	3a db 5c 	: . \ 
 	cp 002h		;1214	fe 02 	. . 
 	push af			;1216	f5 	. 
 	call z,cls		;1217	cc 97 1d 	. . . 
@@ -3682,34 +3689,34 @@ l1205h:
 	jp nc,error.wrong_drive_letter		;121d	d2 1a 1d 	. . . 
 	call chan_open		;1220	cd 84 1d 	. . . 
 	ld a,0ffh		;1223	3e ff 	> . 
-	ld (variable.two_files_drive),a		;1225	32 f8 5c 	2 . \ 
+	ld (trdos_variable.two_files_drive),a		;1225	32 f8 5c 	2 . \ 
 	call sub_1151h		;1228	cd 51 11 	. Q . 
-	ld hl,05e06h		;122b	21 06 5e 	! . ^ 
-	ld de,(variable.stack_sp_copy)		;122e	ed 5b cf 5c 	. [ . \ 
+	ld hl,trdos_sector_buffer.next_free_sector		;122b	21 06 5e 	! . ^ 
+	ld de,(trdos_variable.stack_sp_copy)		;122e	ed 5b cf 5c 	. [ . \ 
 	ld bc,rst_20		;1232	01 20 00 	.   . 
 	ldir		;1235	ed b0 	. . 
 	call sub_03e8h		;1237	cd e8 03 	. . . 
-	ld hl,variable.tmp_buffer_address		;123a	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;123a	21 25 5d 	! % ] 
 	push hl			;123d	e5 	. 
 l123eh:
 	ld hl,message.title		;123e	21 b3 10 	! . . 
 	push bc			;1241	c5 	. 
 	rst 18h			;1242	df 	. 
-	ld hl,(variable.stack_sp_copy)		;1243	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;1243	2a cf 5c 	* . \ 
 	ld bc,l0013h+1		;1246	01 14 00 	. . . 
 	add hl,bc			;1249	09 	. 
 	rst 18h			;124a	df 	. 
 	ld hl,message.disk_drive		;124b	21 ba 10 	! . . 
 	rst 18h			;124e	df 	. 
-	ld a,(variable.temporary_drive)		;124f	3a f6 5c 	: . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;124f	3a f6 5c 	: . \ 
 	add a,041h		;1252	c6 41 	. A 
 	call print_character_in_A		;1254	cd 82 3d 	. . = 
 	call sub_3d80h		;1257	cd 80 3d 	. . = 
-	ld hl,(variable.stack_sp_copy)		;125a	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;125a	2a cf 5c 	* . \ 
 	ld bc,l0001h+2		;125d	01 03 00 	. . . 
 	add hl,bc			;1260	09 	. 
 	ld a,(hl)			;1261	7e 	~ 
-	ld hl,(variable.stack_sp_copy)		;1262	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;1262	2a cf 5c 	* . \ 
 	ld bc,l0013h		;1265	01 13 00 	. . . 
 	add hl,bc			;1268	09 	. 
 	sub (hl)			;1269	96 	. 
@@ -3717,7 +3724,7 @@ l123eh:
 	call sub_1da3h		;126b	cd a3 1d 	. . . 
 	ld hl,message.files		;126e	21 aa 10 	! . . 
 	rst 18h			;1271	df 	. 
-	ld hl,(variable.stack_sp_copy)		;1272	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;1272	2a cf 5c 	* . \ 
 	ld bc,l0001h+1		;1275	01 02 00 	. . . 
 	add hl,bc			;1278	09 	. 
 	ld a,(hl)			;1279	7e 	~ 
@@ -3741,7 +3748,7 @@ l1292h:
 	rst 18h			;129b	df 	. 
 	ld hl,message.free_sector		;129c	21 1e 11 	! . . 
 	rst 18h			;129f	df 	. 
-	ld hl,(variable.stack_sp_copy)		;12a0	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;12a0	2a cf 5c 	* . \ 
 	ld bc,l0004h		;12a3	01 04 00 	. . . 
 	add hl,bc			;12a6	09 	. 
 	ld c,(hl)			;12a7	4e 	N 
@@ -3840,7 +3847,7 @@ l132ch:
 l1333h:
 	djnz l132ch		;1333	10 f7 	. . 
 l1335h:
-	ld hl,(variable.stack_sp_copy)		;1335	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;1335	2a cf 5c 	* . \ 
 	ld bc,rst_20+1		;1338	01 21 00 	. ! . 
 	add hl,bc			;133b	09 	. 
 	ld b,002h		;133c	06 02 	. . 
@@ -3883,13 +3890,13 @@ l1375h:
 	call sub_1cb0h		;1382	cd b0 1c 	. . . 
 	jp nz,print_no_files_error_and_exit_DOS		;1385	c2 d9 03 	. . . 
 	call sub_13b7h		;1388	cd b7 13 	. . . 
-	ld a,(variable.file_type)		;138b	3a e5 5c 	: . \ 
+	ld a,(trdos_variable.file_type)		;138b	3a e5 5c 	: . \ 
 	cp 023h		;138e	fe 23 	. # 
 	jp nz,print_OK_and_exit_DOS		;1390	c2 e1 03 	. . . 
 l1393h:
 	ld a,00ah		;1393	3e 0a 	> . 
-	ld (variable.find_command_symbols),a		;1395	32 06 5d 	2 . ] 
-	ld hl,variable.file_start		;1398	21 e6 5c 	! . \ 
+	ld (trdos_variable.find_command_symbols),a		;1395	32 06 5d 	2 . ] 
+	ld hl,trdos_variable.file_start		;1398	21 e6 5c 	! . \ 
 	inc (hl)			;139b	34 	4 
 	call cls		;139c	cd 97 1d 	. . . 
 	ld hl,message.insert_source_disk		;139f	21 aa 27 	! . ' 
@@ -3904,30 +3911,30 @@ l13a5h:
 	jr l1393h		;13b5	18 dc 	. . 
 sub_13b7h:
 	call sub_165dh		;13b7	cd 5d 16 	. ] . 
-	ld hl,variable.file_start		;13ba	21 e6 5c 	! . \ 
-	ld de,variable.c_file_start_or_b_file_size		;13bd	11 ed 5c 	. . \ 
+	ld hl,trdos_variable.file_start		;13ba	21 e6 5c 	! . \ 
+	ld de,trdos_variable.c_file_start_or_b_file_size		;13bd	11 ed 5c 	. . \ 
 	ld bc,00007h		;13c0	01 07 00 	. . . 
 	ldir		;13c3	ed b0 	. . 
-	ld a,(variable.file_2_length_in_sectors)		;13c5	3a f1 5c 	: . \ 
-	ld (variable.error_code_msb),a		;13c8	32 10 5d 	2 . ] 
+	ld a,(trdos_variable.file_2_length_in_sectors)		;13c5	3a f1 5c 	: . \ 
+	ld (trdos_variable.error_code_msb),a		;13c8	32 10 5d 	2 . ] 
 	call read_system_track		;13cb	cd 05 04 	. . . 
 	call sub_3e11h		;13ce	cd 11 3e 	. . > 
-	ld (variable.ch_add),a		;13d1	32 d9 5c 	2 . \ 
+	ld (trdos_variable.ch_add),a		;13d1	32 d9 5c 	2 . \ 
 	ld a,0ffh		;13d4	3e ff 	> . 
-	ld (variable.entered_line_3_first_chars.1),a		;13d6	32 21 5d 	2 ! ] 
+	ld (trdos_variable.entered_line_3_first_chars.1),a		;13d6	32 21 5d 	2 ! ] 
 	call sub_1451h		;13d9	cd 51 14 	. Q . 
-	ld hl,(variable.unknown_23839)		;13dc	2a 1f 5d 	* . ] 
-	ld (variable.file_first_sector),hl		;13df	22 eb 5c 	" . \ 
-	ld hl,(variable.current_sector)		;13e2	2a f4 5c 	* . \ 
-	ld (05e06h),hl		;13e5	22 06 5e 	" . ^ 
-	ld hl,05e09h		;13e8	21 09 5e 	! . ^ 
+	ld hl,(trdos_variable.unknown_23839)		;13dc	2a 1f 5d 	* . ] 
+	ld (trdos_variable.file_first_sector),hl		;13df	22 eb 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;13e2	2a f4 5c 	* . \ 
+	ld (trdos_sector_buffer.next_free_sector),hl		;13e5	22 06 5e 	" . ^ 
+	ld hl,trdos_sector_buffer.files		;13e8	21 09 5e 	! . ^ 
 	inc (hl)			;13eb	34 	4 
 	ld c,(hl)			;13ec	4e 	N 
 	dec c			;13ed	0d 	. 
 	ld b,000h		;13ee	06 00 	. . 
 	push bc			;13f0	c5 	. 
 	ld de,l0009h		;13f1	11 09 00 	. . . 
-	ld (variable.current_sector),de		;13f4	ed 53 f4 5c 	. S . \ 
+	ld (trdos_variable.current_sector),de		;13f4	ed 53 f4 5c 	. S . \ 
 	call sub_1e43h		;13f8	cd 43 1e 	. C . 
 	pop bc			;13fb	c1 	. 
 	call sub_166bh		;13fc	cd 6b 16 	. k . 
@@ -3935,39 +3942,39 @@ sub_13b7h:
 	ret			;1402	c9 	. 
 sub_1403h:
 	xor a			;1403	af 	. 
-	ld (variable.entered_line_3_first_chars.1),a		;1404	32 21 5d 	2 ! ] 
+	ld (trdos_variable.entered_line_3_first_chars.1),a		;1404	32 21 5d 	2 ! ] 
 	call read_system_track		;1407	cd 05 04 	. . . 
 	call sub_3e11h		;140a	cd 11 3e 	. . > 
-	ld (variable.ch_add.high),a		;140d	32 da 5c 	2 . \ 
+	ld (trdos_variable.ch_add.high),a		;140d	32 da 5c 	2 . \ 
 	call sub_1cb3h		;1410	cd b3 1c 	. . . 
 	jp z,error.file_exists		;1413	ca 50 1c 	. P . 
 	call sub_03fdh		;1416	cd fd 03 	. . . 
-	ld a,(05e09h)		;1419	3a 09 5e 	: . ^ 
+	ld a,(trdos_sector_buffer.files)		;1419	3a 09 5e 	: . ^ 
 	cp 080h		;141c	fe 80 	. . 
 	jp z,error.directory_full		;141e	ca 23 27 	. # ' 
-	ld hl,variable.c_file_start_or_b_file_size		;1421	21 ed 5c 	! . \ 
-	ld de,variable.file_start		;1424	11 e6 5c 	. . \ 
+	ld hl,trdos_variable.c_file_start_or_b_file_size		;1421	21 ed 5c 	! . \ 
+	ld de,trdos_variable.file_start		;1424	11 e6 5c 	. . \ 
 	ld bc,00007h		;1427	01 07 00 	. . . 
 	ldir		;142a	ed b0 	. . 
 	call sub_03fdh		;142c	cd fd 03 	. . . 
-	ld a,(variable.error_code_msb)		;142f	3a 10 5d 	: . ] 
-	ld (variable.file_length_in_sectors),a		;1432	32 ea 5c 	2 . \ 
-	ld de,(variable.file_length_in_sectors)		;1435	ed 5b ea 5c 	. [ . \ 
+	ld a,(trdos_variable.error_code_msb)		;142f	3a 10 5d 	: . ] 
+	ld (trdos_variable.file_length_in_sectors),a		;1432	32 ea 5c 	2 . \ 
+	ld de,(trdos_variable.file_length_in_sectors)		;1435	ed 5b ea 5c 	. [ . \ 
 	ld d,000h		;1439	16 00 	. . 
 	or a			;143b	b7 	. 
-	ld hl,(05e0ah)		;143c	2a 0a 5e 	* . ^ 
+	ld hl,(trdos_sector_buffer.free_sectors)		;143c	2a 0a 5e 	* . ^ 
 	sbc hl,de		;143f	ed 52 	. R 
 	jp c,error.no_space		;1441	da 45 1c 	. E . 
-	ld (05e0ah),hl		;1444	22 0a 5e 	" . ^ 
-	ld hl,(05e06h)		;1447	2a 06 5e 	* . ^ 
-	ld (variable.file_first_sector),hl		;144a	22 eb 5c 	" . \ 
-	ld (variable.unknown_23839),hl		;144d	22 1f 5d 	" . ] 
+	ld (trdos_sector_buffer.free_sectors),hl		;1444	22 0a 5e 	" . ^ 
+	ld hl,(trdos_sector_buffer.next_free_sector)		;1447	2a 06 5e 	* . ^ 
+	ld (trdos_variable.file_first_sector),hl		;144a	22 eb 5c 	" . \ 
+	ld (trdos_variable.unknown_23839),hl		;144d	22 1f 5d 	" . ] 
 	ret			;1450	c9 	. 
 sub_1451h:
-	ld a,(variable.file_2_length_in_sectors)		;1451	3a f1 5c 	: . \ 
+	ld a,(trdos_variable.file_2_length_in_sectors)		;1451	3a f1 5c 	: . \ 
 	or a			;1454	b7 	. 
 	ret z			;1455	c8 	. 
-	ld a,(variable.entered_line_3_first_chars.1)		;1456	3a 21 5d 	: ! ] 
+	ld a,(trdos_variable.entered_line_3_first_chars.1)		;1456	3a 21 5d 	: ! ] 
 	or a			;1459	b7 	. 
 	jr nz,l146fh		;145a	20 13 	  . 
 	call cls		;145c	cd 97 1d 	. . . 
@@ -3979,28 +3986,28 @@ l1465h:
 	jr nz,l1465h		;146a	20 f9 	  . 
 	call cls_lower		;146c	cd 9f 1d 	. . . 
 l146fh:
-	ld a,(variable.file_2_length_in_sectors)		;146f	3a f1 5c 	: . \ 
+	ld a,(trdos_variable.file_2_length_in_sectors)		;146f	3a f1 5c 	: . \ 
 	or a			;1472	b7 	. 
 	ret z			;1473	c8 	. 
 	push hl			;1474	e5 	. 
-	ld hl,variable.move_command_blocks		;1475	21 23 5d 	! # ] 
+	ld hl,trdos_variable.move_command_blocks		;1475	21 23 5d 	! # ] 
 	sub (hl)			;1478	96 	. 
 	pop hl			;1479	e1 	. 
 	jr nc,l14cbh		;147a	30 4f 	0 O 
-	ld a,(variable.file_2_length_in_sectors)		;147c	3a f1 5c 	: . \ 
+	ld a,(trdos_variable.file_2_length_in_sectors)		;147c	3a f1 5c 	: . \ 
 	ld b,a			;147f	47 	G 
 	xor a			;1480	af 	. 
-	ld (variable.file_2_length_in_sectors),a		;1481	32 f1 5c 	2 . \ 
+	ld (trdos_variable.file_2_length_in_sectors),a		;1481	32 f1 5c 	2 . \ 
 l1484h:
 	push bc			;1484	c5 	. 
-	ld (variable.sector_reading_or_writting),a		;1485	32 ce 5c 	2 . \ 
-	ld hl,(variable.stack_sp_copy)		;1488	2a cf 5c 	* . \ 
+	ld (trdos_variable.sector_rw_flag),a		;1485	32 ce 5c 	2 . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;1488	2a cf 5c 	* . \ 
 	push hl			;148b	e5 	. 
-	ld de,(variable.file_2_first_sector)		;148c	ed 5b f2 5c 	. [ . \ 
+	ld de,(trdos_variable.file_2_first_sector)		;148c	ed 5b f2 5c 	. [ . \ 
 	call sub_14d8h		;1490	cd d8 14 	. . . 
 	call read_sectors		;1493	cd 3d 1e 	. = . 
-	ld hl,(variable.current_sector)		;1496	2a f4 5c 	* . \ 
-	ld (variable.file_2_first_sector),hl		;1499	22 f2 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;1496	2a f4 5c 	* . \ 
+	ld (trdos_variable.file_2_first_sector),hl		;1499	22 f2 5c 	" . \ 
 	call cls		;149c	cd 97 1d 	. . . 
 	ld hl,l2785h		;149f	21 85 27 	! . ' 
 	call print_message_at_HL		;14a2	cd 07 27 	. . ' 
@@ -4009,21 +4016,21 @@ l14a5h:
 	cp 059h		;14a8	fe 59 	. Y 
 	jr nz,l14a5h		;14aa	20 f9 	  . 
 	call cls_lower		;14ac	cd 9f 1d 	. . . 
-	ld a,(variable.entered_line_3_first_chars.1)		;14af	3a 21 5d 	: ! ] 
+	ld a,(trdos_variable.entered_line_3_first_chars.1)		;14af	3a 21 5d 	: ! ] 
 	or a			;14b2	b7 	. 
 	call nz,sub_1403h		;14b3	c4 03 14 	. . . 
 	pop hl			;14b6	e1 	. 
 	pop bc			;14b7	c1 	. 
-	ld de,(variable.file_first_sector)		;14b8	ed 5b eb 5c 	. [ . \ 
+	ld de,(trdos_variable.file_first_sector)		;14b8	ed 5b eb 5c 	. [ . \ 
 	call sub_14e4h		;14bc	cd e4 14 	. . . 
 	call write_sectors		;14bf	cd 4d 1e 	. M . 
-	ld hl,(variable.current_sector)		;14c2	2a f4 5c 	* . \ 
-	ld (variable.file_first_sector),hl		;14c5	22 eb 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;14c2	2a f4 5c 	* . \ 
+	ld (trdos_variable.file_first_sector),hl		;14c5	22 eb 5c 	" . \ 
 	jp sub_1451h		;14c8	c3 51 14 	. Q . 
 l14cbh:
-	ld (variable.file_2_length_in_sectors),a		;14cb	32 f1 5c 	2 . \ 
+	ld (trdos_variable.file_2_length_in_sectors),a		;14cb	32 f1 5c 	2 . \ 
 	push hl			;14ce	e5 	. 
-	ld hl,variable.move_command_blocks		;14cf	21 23 5d 	! # ] 
+	ld hl,trdos_variable.move_command_blocks		;14cf	21 23 5d 	! # ] 
 	ld b,(hl)			;14d2	46 	F 
 	pop hl			;14d3	e1 	. 
 	xor a			;14d4	af 	. 
@@ -4032,7 +4039,7 @@ sub_14d8h:
 	push hl			;14d8	e5 	. 
 	push de			;14d9	d5 	. 
 	call sub_3e11h		;14da	cd 11 3e 	. . > 
-	ld a,(variable.ch_add)		;14dd	3a d9 5c 	: . \ 
+	ld a,(trdos_variable.ch_add)		;14dd	3a d9 5c 	: . \ 
 	ld (hl),a			;14e0	77 	w 
 	pop de			;14e1	d1 	. 
 	pop hl			;14e2	e1 	. 
@@ -4041,19 +4048,19 @@ sub_14e4h:
 	push hl			;14e4	e5 	. 
 	push de			;14e5	d5 	. 
 	call sub_3e11h		;14e6	cd 11 3e 	. . > 
-	ld a,(variable.ch_add.high)		;14e9	3a da 5c 	: . \ 
+	ld a,(trdos_variable.ch_add.high)		;14e9	3a da 5c 	: . \ 
 	ld (hl),a			;14ec	77 	w 
 	pop de			;14ed	d1 	. 
 	pop hl			;14ee	e1 	. 
 	ret			;14ef	c9 	. 
 sub_14f0h:
 	xor a			;14f0	af 	. 
-	ld (variable.entered_line_3_first_chars.1),a		;14f1	32 21 5d 	2 ! ] 
+	ld (trdos_variable.entered_line_3_first_chars.1),a		;14f1	32 21 5d 	2 ! ] 
 	call read_system_track		;14f4	cd 05 04 	. . . 
 	call sub_3e11h		;14f7	cd 11 3e 	. . > 
-	ld (variable.ch_add.high),a		;14fa	32 da 5c 	2 . \ 
-	ld a,(05e08h)		;14fd	3a 08 5e 	: . ^ 
-	ld (variable.file_start.high),a		;1500	32 e7 5c 	2 . \ 
+	ld (trdos_variable.ch_add.high),a		;14fa	32 da 5c 	2 . \ 
+	ld a,(trdos_sector_buffer.disk_type)		;14fd	3a 08 5e 	: . ^ 
+	ld (trdos_variable.file_start.high),a		;1500	32 e7 5c 	2 . \ 
 	ld hl,l0280h		;1503	21 80 02 	! . . 
 	cp 019h		;1506	fe 19 	. . 
 	jr z,l151fh		;1508	28 15 	( . 
@@ -4067,8 +4074,8 @@ sub_14f0h:
 	jr z,l151fh		;151a	28 03 	( . 
 	jp error.wrong_drive_letter		;151c	c3 1a 1d 	. . . 
 l151fh:
-	ld (variable.filename),hl		;151f	22 dd 5c 	" . \ 
-	ld bc,(variable.filename.2)		;1522	ed 4b df 5c 	. K . \ 
+	ld (trdos_variable.filename),hl		;151f	22 dd 5c 	" . \ 
+	ld bc,(trdos_variable.filename.2)		;1522	ed 4b df 5c 	. K . \ 
 	sbc hl,bc		;1526	ed 42 	. B 
 	jp c,error.no_space		;1528	da 45 1c 	. E . 
 	ret			;152b	c9 	. 
@@ -4085,11 +4092,11 @@ l153eh:
 	jr nz,l153eh		;1543	20 f9 	  . 
 	call cls_lower		;1545	cd 9f 1d 	. . . 
 	ld a,0ffh		;1548	3e ff 	> . 
-	ld (variable.entered_line_3_first_chars.1),a		;154a	32 21 5d 	2 ! ] 
+	ld (trdos_variable.entered_line_3_first_chars.1),a		;154a	32 21 5d 	2 ! ] 
 	call read_system_track		;154d	cd 05 04 	. . . 
 	call sub_3e11h		;1550	cd 11 3e 	. . > 
-	ld (variable.ch_add),a		;1553	32 d9 5c 	2 . \ 
-	ld a,(05e08h)		;1556	3a 08 5e 	: . ^ 
+	ld (trdos_variable.ch_add),a		;1553	32 d9 5c 	2 . \ 
+	ld a,(trdos_sector_buffer.disk_type)		;1556	3a 08 5e 	: . ^ 
 	cp 019h		;1559	fe 19 	. . 
 	ld hl,l0280h		;155b	21 80 02 	! . . 
 	jr z,l1575h		;155e	28 15 	( . 
@@ -4103,36 +4110,36 @@ l153eh:
 	jr z,l1575h		;1570	28 03 	( . 
 	jp error.wrong_drive_letter		;1572	c3 1a 1d 	. . . 
 l1575h:
-	ld bc,(05e0ah)		;1575	ed 4b 0a 5e 	. K . ^ 
+	ld bc,(trdos_sector_buffer.free_sectors)		;1575	ed 4b 0a 5e 	. K . ^ 
 	sbc hl,bc		;1579	ed 42 	. B 
-	ld (variable.file_type),hl		;157b	22 e5 5c 	" . \ 
-	ld (variable.filename.2),hl		;157e	22 df 5c 	" . \ 
+	ld (trdos_variable.file_type),hl		;157b	22 e5 5c 	" . \ 
+	ld (trdos_variable.filename.2),hl		;157e	22 df 5c 	" . \ 
 	ld hl,l0000h		;1581	21 00 00 	! . . 
-	ld (variable.filename.4),hl		;1584	22 e1 5c 	" . \ 
-	ld (variable.filename.6),hl		;1587	22 e3 5c 	" . \ 
+	ld (trdos_variable.filename.4),hl		;1584	22 e1 5c 	" . \ 
+	ld (trdos_variable.filename.6),hl		;1587	22 e3 5c 	" . \ 
 	call sub_15b8h		;158a	cd b8 15 	. . . 
 	call read_system_track		;158d	cd 05 04 	. . . 
-	ld a,(variable.file_start.high)		;1590	3a e7 5c 	: . \ 
-	ld (05e08h),a		;1593	32 08 5e 	2 . ^ 
-	ld hl,(variable.filename)		;1596	2a dd 5c 	* . \ 
-	ld bc,(variable.filename.2)		;1599	ed 4b df 5c 	. K . \ 
+	ld a,(trdos_variable.file_start.high)		;1590	3a e7 5c 	: . \ 
+	ld (trdos_sector_buffer.disk_type),a		;1593	32 08 5e 	2 . ^ 
+	ld hl,(trdos_variable.filename)		;1596	2a dd 5c 	* . \ 
+	ld bc,(trdos_variable.filename.2)		;1599	ed 4b df 5c 	. K . \ 
 	sbc hl,bc		;159d	ed 42 	. B 
-	ld (05e0ah),hl		;159f	22 0a 5e 	" . ^ 
+	ld (trdos_sector_buffer.free_sectors),hl		;159f	22 0a 5e 	" . ^ 
 	call sub_14e4h		;15a2	cd e4 14 	. . . 
 	ld de,l0009h		;15a5	11 09 00 	. . . 
-	ld (variable.current_sector),de		;15a8	ed 53 f4 5c 	. S . \ 
+	ld (trdos_variable.current_sector),de		;15a8	ed 53 f4 5c 	. S . \ 
 	call sub_1e43h		;15ac	cd 43 1e 	. C . 
 l15afh:
 	jp print_OK_and_exit_DOS		;15af	c3 e1 03 	. . . 
 sub_15b2h:
-	ld hl,(variable.file_type)		;15b2	2a e5 5c 	* . \ 
+	ld hl,(trdos_variable.file_type)		;15b2	2a e5 5c 	* . \ 
 	ld a,h			;15b5	7c 	| 
 	or l			;15b6	b5 	. 
 	ret			;15b7	c9 	. 
 sub_15b8h:
 	call sub_15b2h		;15b8	cd b2 15 	. . . 
 	ret z			;15bb	c8 	. 
-	ld a,(variable.entered_line_3_first_chars.1)		;15bc	3a 21 5d 	: ! ] 
+	ld a,(trdos_variable.entered_line_3_first_chars.1)		;15bc	3a 21 5d 	: ! ] 
 	or a			;15bf	b7 	. 
 	jr nz,l15dbh		;15c0	20 19 	  . 
 	call cls		;15c2	cd 97 1d 	. . . 
@@ -4150,26 +4157,26 @@ l15dbh:
 	ret z			;15de	c8 	. 
 	push bc			;15df	c5 	. 
 	push hl			;15e0	e5 	. 
-	ld hl,variable.move_command_blocks		;15e1	21 23 5d 	! # ] 
+	ld hl,trdos_variable.move_command_blocks		;15e1	21 23 5d 	! # ] 
 	ld c,(hl)			;15e4	4e 	N 
 	ld b,000h		;15e5	06 00 	. . 
 	pop hl			;15e7	e1 	. 
 	sbc hl,bc		;15e8	ed 42 	. B 
 	pop bc			;15ea	c1 	. 
 	jp nc,l1644h		;15eb	d2 44 16 	. D . 
-	ld bc,(variable.file_type)		;15ee	ed 4b e5 5c 	. K . \ 
+	ld bc,(trdos_variable.file_type)		;15ee	ed 4b e5 5c 	. K . \ 
 	ld hl,l0000h		;15f2	21 00 00 	! . . 
-	ld (variable.file_type),hl		;15f5	22 e5 5c 	" . \ 
+	ld (trdos_variable.file_type),hl		;15f5	22 e5 5c 	" . \ 
 l15f8h:
 	push bc			;15f8	c5 	. 
-	ld hl,(variable.stack_sp_copy)		;15f9	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;15f9	2a cf 5c 	* . \ 
 	push hl			;15fc	e5 	. 
 	call sub_14d8h		;15fd	cd d8 14 	. . . 
-	ld de,(variable.filename.4)		;1600	ed 5b e1 5c 	. [ . \ 
+	ld de,(trdos_variable.filename.4)		;1600	ed 5b e1 5c 	. [ . \ 
 	ld b,c			;1604	41 	A 
 	call read_sectors		;1605	cd 3d 1e 	. = . 
-	ld hl,(variable.current_sector)		;1608	2a f4 5c 	* . \ 
-	ld (variable.filename.4),hl		;160b	22 e1 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;1608	2a f4 5c 	* . \ 
+	ld (trdos_variable.filename.4),hl		;160b	22 e1 5c 	" . \ 
 	call cls		;160e	cd 97 1d 	. . . 
 	ld hl,message.backup_disk		;1611	21 79 27 	! y ' 
 	call print_message_at_HL		;1614	cd 07 27 	. . ' 
@@ -4180,22 +4187,22 @@ l161dh:
 	cp 059h		;1620	fe 59 	. Y 
 	jr nz,l161dh		;1622	20 f9 	  . 
 	call cls_lower		;1624	cd 9f 1d 	. . . 
-	ld a,(variable.entered_line_3_first_chars.1)		;1627	3a 21 5d 	: ! ] 
+	ld a,(trdos_variable.entered_line_3_first_chars.1)		;1627	3a 21 5d 	: ! ] 
 	or a			;162a	b7 	. 
 	call nz,sub_14f0h		;162b	c4 f0 14 	. . . 
 	pop hl			;162e	e1 	. 
 	pop bc			;162f	c1 	. 
-	ld de,(variable.filename.6)		;1630	ed 5b e3 5c 	. [ . \ 
+	ld de,(trdos_variable.filename.6)		;1630	ed 5b e3 5c 	. [ . \ 
 	ld b,c			;1634	41 	A 
 	call sub_14e4h		;1635	cd e4 14 	. . . 
 	call write_sectors		;1638	cd 4d 1e 	. M . 
-	ld hl,(variable.current_sector)		;163b	2a f4 5c 	* . \ 
-	ld (variable.filename.6),hl		;163e	22 e3 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;163b	2a f4 5c 	* . \ 
+	ld (trdos_variable.filename.6),hl		;163e	22 e3 5c 	" . \ 
 	jp sub_15b8h		;1641	c3 b8 15 	. . . 
 l1644h:
-	ld (variable.file_type),hl		;1644	22 e5 5c 	" . \ 
+	ld (trdos_variable.file_type),hl		;1644	22 e5 5c 	" . \ 
 	push hl			;1647	e5 	. 
-	ld hl,variable.move_command_blocks		;1648	21 23 5d 	! # ] 
+	ld hl,trdos_variable.move_command_blocks		;1648	21 23 5d 	! # ] 
 	ld c,(hl)			;164b	4e 	N 
 	ld b,000h		;164c	06 00 	. . 
 	pop hl			;164e	e1 	. 
@@ -4203,7 +4210,7 @@ l1644h:
 	jp l15f8h		;1650	c3 f8 15 	. . . 
 sub_1653h:
 	call sub_165dh		;1653	cd 5d 16 	. ] . 
-	ld a,(variable.filename)		;1656	3a dd 5c 	: . \ 
+	ld a,(trdos_variable.filename)		;1656	3a dd 5c 	: . \ 
 	cp 001h		;1659	fe 01 	. . 
 	ret			;165b	c9 	. 
 read_file_descriptor:
@@ -4224,10 +4231,10 @@ sub_166bh:
 	jr l165eh		;166d	18 ef 	. . 
 sub_166fh:
 	ld a,0ffh		;166f	3e ff 	> . 
-	ld (variable.command_mode),a		;1671	32 0e 5d 	2 . ] 
+	ld (trdos_variable.command_mode),a		;1671	32 0e 5d 	2 . ] 
 	call sub_1680h		;1674	cd 80 16 	. . . 
 	ld hl,(sys_worksp)		;1677	2a 61 5c 	* a \ 
-	ld (variable.stack_sp_copy),hl		;167a	22 cf 5c 	" . \ 
+	ld (trdos_variable.stack_sp_copy),hl		;167a	22 cf 5c 	" . \ 
 	jp bc_spaces		;167d	c3 23 1e 	. # . 
 sub_1680h:
 	rst 20h			;1680	e7 	. 
@@ -4240,37 +4247,37 @@ sub_1680h:
 	ld a,011h		;168d	3e 11 	> . 
 l168fh:
 	dec a			;168f	3d 	= 
-	ld (variable.move_command_blocks),a		;1690	32 23 5d 	2 # ] 
+	ld (trdos_variable.move_command_blocks),a		;1690	32 23 5d 	2 # ] 
 	ld b,a			;1693	47 	G 
 	ld c,000h		;1694	0e 00 	. . 
 	ret			;1696	c9 	. 
 sub_1697h:
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1697	22 d7 5c 	" . \ 
-	ld (variable.file_size),hl		;169a	22 db 5c 	" . \ 
-	ld de,(variable.file_length_in_sectors)		;169d	ed 5b ea 5c 	. [ . \ 
-	ld hl,(variable.ch_add)		;16a1	2a d9 5c 	* . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1697	22 d7 5c 	" . \ 
+	ld (trdos_variable.file_size),hl		;169a	22 db 5c 	" . \ 
+	ld de,(trdos_variable.file_length_in_sectors)		;169d	ed 5b ea 5c 	. [ . \ 
+	ld hl,(trdos_variable.ch_add)		;16a1	2a d9 5c 	* . \ 
 	ld d,000h		;16a4	16 00 	. . 
 	add hl,de			;16a6	19 	. 
-	ld (variable.ch_add),hl		;16a7	22 d9 5c 	" . \ 
+	ld (trdos_variable.ch_add),hl		;16a7	22 d9 5c 	" . \ 
 	ret			;16aa	c9 	. 
 cli_command.move:
 	call pop_hl_if_checking_syntax		;16ab	cd 75 1d 	. u . 
 	call sub_166fh		;16ae	cd 6f 16 	. o . 
 	call read_system_track		;16b1	cd 05 04 	. . . 
-	ld a,(05e19h)		;16b4	3a 19 5e 	: . ^ 
+	ld a,(trdos_sector_buffer.deleted_files)		;16b4	3a 19 5e 	: . ^ 
 	or a			;16b7	b7 	. 
 	jp z,print_OK_and_exit_DOS		;16b8	ca e1 03 	. . . 
 	ld hl,l0000h		;16bb	21 00 00 	! . . 
-	ld (variable.ch_add),hl		;16be	22 d9 5c 	" . \ 
+	ld (trdos_variable.ch_add),hl		;16be	22 d9 5c 	" . \ 
 	ld c,0ffh		;16c1	0e ff 	. . 
 l16c3h:
 	inc c			;16c3	0c 	. 
 	call sub_1653h		;16c4	cd 53 16 	. S . 
 	jr nz,l16c3h		;16c7	20 fa 	  . 
 	ld a,c			;16c9	79 	y 
-	ld (variable.move_command_deleted_files),a		;16ca	32 d4 5c 	2 . \ 
-	ld hl,(variable.file_first_sector)		;16cd	2a eb 5c 	* . \ 
-	ld (variable.move_command_first_sector),hl		;16d0	22 d5 5c 	" . \ 
+	ld (trdos_variable.move_command_deleted_files),a		;16ca	32 d4 5c 	2 . \ 
+	ld hl,(trdos_variable.file_first_sector)		;16cd	2a eb 5c 	* . \ 
+	ld (trdos_variable.move_command_first_sector),hl		;16d0	22 d5 5c 	" . \ 
 	call sub_1697h		;16d3	cd 97 16 	. . . 
 l16d6h:
 	inc c			;16d6	0c 	. 
@@ -4278,7 +4285,7 @@ l16d6h:
 	jr z,l16d6h		;16da	28 fa 	( . 
 	cp 000h		;16dc	fe 00 	. . 
 	jp nz,l1710h		;16de	c2 10 17 	. . . 
-	ld a,(variable.move_command_deleted_files)		;16e1	3a d4 5c 	: . \ 
+	ld a,(trdos_variable.move_command_deleted_files)		;16e1	3a d4 5c 	: . \ 
 	ld c,a			;16e4	4f 	O 
 l16e5h:
 	inc c			;16e5	0c 	. 
@@ -4286,7 +4293,7 @@ l16e5h:
 	cp 000h		;16e9	fe 00 	. . 
 	jr z,l176ch		;16eb	28 7f 	(  
 	xor a			;16ed	af 	. 
-	ld (variable.filename),a		;16ee	32 dd 5c 	2 . \ 
+	ld (trdos_variable.filename),a		;16ee	32 dd 5c 	2 . \ 
 	call l1e40h		;16f1	cd 40 1e 	. @ . 
 	call sub_1697h		;16f4	cd 97 16 	. . . 
 	jr l16e5h		;16f7	18 ec 	. . 
@@ -4317,106 +4324,106 @@ not_used_16F9_start:
 	defb 0ffh		;170e	ff 	. 
 	defb 0ffh		;170f	ff 	. 
 l1710h:
-	ld a,(variable.file_length_in_sectors)		;1710	3a ea 5c 	: . \ 
-	ld (variable.unknown_23763),a		;1713	32 d3 5c 	2 . \ 
-	ld (variable.basic_program_autostart),a		;1716	32 d1 5c 	2 . \ 
-	ld hl,(variable.file_first_sector)		;1719	2a eb 5c 	* . \ 
-	ld (variable.move_command_first_sector),hl		;171c	22 d5 5c 	" . \ 
+	ld a,(trdos_variable.file_length_in_sectors)		;1710	3a ea 5c 	: . \ 
+	ld (trdos_variable.unknown_23763),a		;1713	32 d3 5c 	2 . \ 
+	ld (trdos_variable.basic_program_autostart),a		;1716	32 d1 5c 	2 . \ 
+	ld hl,(trdos_variable.file_first_sector)		;1719	2a eb 5c 	* . \ 
+	ld (trdos_variable.move_command_first_sector),hl		;171c	22 d5 5c 	" . \ 
 	push bc			;171f	c5 	. 
 	call sub_17a5h		;1720	cd a5 17 	. . . 
 	pop bc			;1723	c1 	. 
-	ld hl,(variable.current_sector)		;1724	2a f4 5c 	* . \ 
-	ld (variable.move_command_first_sector),hl		;1727	22 d5 5c 	" . \ 
-	ld (variable.file_first_sector),hl		;172a	22 eb 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;1724	2a f4 5c 	* . \ 
+	ld (trdos_variable.move_command_first_sector),hl		;1727	22 d5 5c 	" . \ 
+	ld (trdos_variable.file_first_sector),hl		;172a	22 eb 5c 	" . \ 
 	xor a			;172d	af 	. 
-	ld (variable.file_length_in_sectors),a		;172e	32 ea 5c 	2 . \ 
-	ld a,(variable.filename)		;1731	3a dd 5c 	: . \ 
+	ld (trdos_variable.file_length_in_sectors),a		;172e	32 ea 5c 	2 . \ 
+	ld a,(trdos_variable.filename)		;1731	3a dd 5c 	: . \ 
 	push af			;1734	f5 	. 
 	ld a,001h		;1735	3e 01 	> . 
-	ld (variable.filename),a		;1737	32 dd 5c 	2 . \ 
+	ld (trdos_variable.filename),a		;1737	32 dd 5c 	2 . \ 
 	call l1e40h		;173a	cd 40 1e 	. @ . 
 	pop af			;173d	f1 	. 
-	ld (variable.filename),a		;173e	32 dd 5c 	2 . \ 
-	ld a,(variable.move_command_deleted_files)		;1741	3a d4 5c 	: . \ 
+	ld (trdos_variable.filename),a		;173e	32 dd 5c 	2 . \ 
+	ld a,(trdos_variable.move_command_deleted_files)		;1741	3a d4 5c 	: . \ 
 	ld c,a			;1744	4f 	O 
-	ld hl,(variable.file_size)		;1745	2a db 5c 	* . \ 
-	ld (variable.file_first_sector),hl		;1748	22 eb 5c 	" . \ 
-	ld a,(variable.basic_program_autostart)		;174b	3a d1 5c 	: . \ 
-	ld (variable.file_length_in_sectors),a		;174e	32 ea 5c 	2 . \ 
+	ld hl,(trdos_variable.file_size)		;1745	2a db 5c 	* . \ 
+	ld (trdos_variable.file_first_sector),hl		;1748	22 eb 5c 	" . \ 
+	ld a,(trdos_variable.basic_program_autostart)		;174b	3a d1 5c 	: . \ 
+	ld (trdos_variable.file_length_in_sectors),a		;174e	32 ea 5c 	2 . \ 
 	call l1e40h		;1751	cd 40 1e 	. @ . 
-	ld a,(variable.move_command_deleted_files)		;1754	3a d4 5c 	: . \ 
+	ld a,(trdos_variable.move_command_deleted_files)		;1754	3a d4 5c 	: . \ 
 	inc a			;1757	3c 	< 
 	ld c,a			;1758	4f 	O 
 	call sub_165dh		;1759	cd 5d 16 	. ] . 
-	ld hl,(variable.move_command_first_sector)		;175c	2a d5 5c 	* . \ 
-	ld (variable.file_first_sector),hl		;175f	22 eb 5c 	" . \ 
+	ld hl,(trdos_variable.move_command_first_sector)		;175c	2a d5 5c 	* . \ 
+	ld (trdos_variable.file_first_sector),hl		;175f	22 eb 5c 	" . \ 
 	call l1e40h		;1762	cd 40 1e 	. @ . 
-	ld a,(variable.move_command_deleted_files)		;1765	3a d4 5c 	: . \ 
+	ld a,(trdos_variable.move_command_deleted_files)		;1765	3a d4 5c 	: . \ 
 	ld c,a			;1768	4f 	O 
 	jp l16c3h		;1769	c3 c3 16 	. . . 
 l176ch:
-	ld hl,(variable.stack_sp_copy)		;176c	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;176c	2a cf 5c 	* . \ 
 	ld bc,message_interface_1_start		;176f	01 00 10 	. . . 
 	call reclaim_2		;1772	cd 2e 1e 	. . . 
 	call sub_03fdh		;1775	cd fd 03 	. . . 
-	ld hl,(05e0ah)		;1778	2a 0a 5e 	* . ^ 
-	ld de,(variable.ch_add)		;177b	ed 5b d9 5c 	. [ . \ 
+	ld hl,(trdos_sector_buffer.free_sectors)		;1778	2a 0a 5e 	* . ^ 
+	ld de,(trdos_variable.ch_add)		;177b	ed 5b d9 5c 	. [ . \ 
 	add hl,de			;177f	19 	. 
-	ld (05e0ah),hl		;1780	22 0a 5e 	" . ^ 
-	ld a,(05e09h)		;1783	3a 09 5e 	: . ^ 
-	ld hl,05e19h		;1786	21 19 5e 	! . ^ 
+	ld (trdos_sector_buffer.free_sectors),hl		;1780	22 0a 5e 	" . ^ 
+	ld a,(trdos_sector_buffer.files)		;1783	3a 09 5e 	: . ^ 
+	ld hl,trdos_sector_buffer.deleted_files		;1786	21 19 5e 	! . ^ 
 	sub (hl)			;1789	96 	. 
-	ld (05e09h),a		;178a	32 09 5e 	2 . ^ 
+	ld (trdos_sector_buffer.files),a		;178a	32 09 5e 	2 . ^ 
 	ld (hl),000h		;178d	36 00 	6 . 
-	ld hl,(variable.move_command_first_sector)		;178f	2a d5 5c 	* . \ 
-	ld (05e06h),hl		;1792	22 06 5e 	" . ^ 
+	ld hl,(trdos_variable.move_command_first_sector)		;178f	2a d5 5c 	* . \ 
+	ld (trdos_sector_buffer.next_free_sector),hl		;1792	22 06 5e 	" . ^ 
 	push af			;1795	f5 	. 
 	call sub_1e43h		;1796	cd 43 1e 	. C . 
 	pop af			;1799	f1 	. 
 	ld c,a			;179a	4f 	O 
 	call sub_165dh		;179b	cd 5d 16 	. ] . 
 	xor a			;179e	af 	. 
-	ld (variable.filename),a		;179f	32 dd 5c 	2 . \ 
+	ld (trdos_variable.filename),a		;179f	32 dd 5c 	2 . \ 
 	jp l0569h		;17a2	c3 69 05 	. i . 
 sub_17a5h:
-	ld a,(variable.unknown_23763)		;17a5	3a d3 5c 	: . \ 
+	ld a,(trdos_variable.unknown_23763)		;17a5	3a d3 5c 	: . \ 
 	or a			;17a8	b7 	. 
 	ret z			;17a9	c8 	. 
 	push hl			;17aa	e5 	. 
-	ld hl,variable.move_command_blocks		;17ab	21 23 5d 	! # ] 
+	ld hl,trdos_variable.move_command_blocks		;17ab	21 23 5d 	! # ] 
 	sub (hl)			;17ae	96 	. 
 	pop hl			;17af	e1 	. 
 	jr nc,l17ddh		;17b0	30 2b 	0 + 
-	ld a,(variable.unknown_23763)		;17b2	3a d3 5c 	: . \ 
+	ld a,(trdos_variable.unknown_23763)		;17b2	3a d3 5c 	: . \ 
 	ld b,a			;17b5	47 	G 
 	xor a			;17b6	af 	. 
-	ld (variable.unknown_23763),a		;17b7	32 d3 5c 	2 . \ 
+	ld (trdos_variable.unknown_23763),a		;17b7	32 d3 5c 	2 . \ 
 l17bah:
 	push bc			;17ba	c5 	. 
-	ld hl,(variable.stack_sp_copy)		;17bb	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;17bb	2a cf 5c 	* . \ 
 	push hl			;17be	e5 	. 
-	ld de,(variable.move_command_first_sector)		;17bf	ed 5b d5 5c 	. [ . \ 
+	ld de,(trdos_variable.move_command_first_sector)		;17bf	ed 5b d5 5c 	. [ . \ 
 	call read_sectors		;17c3	cd 3d 1e 	. = . 
-	ld hl,(variable.current_sector)		;17c6	2a f4 5c 	* . \ 
-	ld (variable.move_command_first_sector),hl		;17c9	22 d5 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;17c6	2a f4 5c 	* . \ 
+	ld (trdos_variable.move_command_first_sector),hl		;17c9	22 d5 5c 	" . \ 
 	pop hl			;17cc	e1 	. 
 	pop bc			;17cd	c1 	. 
-	ld de,(variable.start_file_parameter_or_number_of_tracks)		;17ce	ed 5b d7 5c 	. [ . \ 
+	ld de,(trdos_variable.start_file_parameter_or_number_of_tracks)		;17ce	ed 5b d7 5c 	. [ . \ 
 	call write_sectors		;17d2	cd 4d 1e 	. M . 
-	ld hl,(variable.current_sector)		;17d5	2a f4 5c 	* . \ 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;17d8	22 d7 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;17d5	2a f4 5c 	* . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;17d8	22 d7 5c 	" . \ 
 	jr sub_17a5h		;17db	18 c8 	. . 
 l17ddh:
-	ld (variable.unknown_23763),a		;17dd	32 d3 5c 	2 . \ 
+	ld (trdos_variable.unknown_23763),a		;17dd	32 d3 5c 	2 . \ 
 	push hl			;17e0	e5 	. 
-	ld hl,variable.move_command_blocks		;17e1	21 23 5d 	! # ] 
+	ld hl,trdos_variable.move_command_blocks		;17e1	21 23 5d 	! # ] 
 	ld b,(hl)			;17e4	46 	F 
 	pop hl			;17e5	e1 	. 
 	xor a			;17e6	af 	. 
 	jr l17bah		;17e7	18 d1 	. . 
 sub_17e9h:
 	push af			;17e9	f5 	. 
-	ld hl,variable.cat_current_sector		;17ea	21 cc 5c 	! . \ 
+	ld hl,trdos_variable.cat_current_sector		;17ea	21 cc 5c 	! . \ 
 	ld (hl),000h		;17ed	36 00 	6 . 
 	ld a,c			;17ef	79 	y 
 l17f0h:
@@ -4432,7 +4439,7 @@ l17f7h:
 	pop bc			;17fe	c1 	. 
 	pop af			;17ff	f1 	. 
 	call sub_1ca4h		;1800	cd a4 1c 	. . . 
-	ld de,variable.filename		;1803	11 dd 5c 	. . \ 
+	ld de,trdos_variable.filename		;1803	11 dd 5c 	. . \ 
 	ld bc,rst_10		;1806	01 10 00 	. . . 
 	or a			;1809	b7 	. 
 	jr z,l180dh		;180a	28 01 	( . 
@@ -4442,18 +4449,18 @@ l180dh:
 	ret			;180f	c9 	. 
 cli_command.verify:
 	ld a,0ffh		;1810	3e ff 	> . 
-	ld (variable.cat_drive_or_read_verify_flag),a		;1812	32 f9 5c 	2 . \ 
+	ld (trdos_variable.cat_drive_or_read_verify_flag),a		;1812	32 f9 5c 	2 . \ 
 cli_command.gosub:
 	call sub_1852h		;1815	cd 52 18 	. R . 
 l1818h:
 	call sub_1836h		;1818	cd 36 18 	. 6 . 
 	call pop_hl_if_checking_syntax		;181b	cd 75 1d 	. u . 
 	ld a,0ffh		;181e	3e ff 	> . 
-	ld (variable.error_code_msb),a		;1820	32 10 5d 	2 . ] 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;1823	3a f9 5c 	: . \ 
+	ld (trdos_variable.error_code_msb),a		;1820	32 10 5d 	2 . ] 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;1823	3a f9 5c 	: . \ 
 	cp 0ffh		;1826	fe ff 	. . 
 	jp z,print_OK_and_exit_DOS		;1828	ca e1 03 	. . . 
-	ld a,(variable.file_type)		;182b	3a e5 5c 	: . \ 
+	ld a,(trdos_variable.file_type)		;182b	3a e5 5c 	: . \ 
 	cp 042h		;182e	fe 42 	. B 
 	jp z,l012ah		;1830	ca 2a 01 	. * . 
 	jp print_OK_and_exit_DOS		;1833	c3 e1 03 	. . . 
@@ -4469,11 +4476,11 @@ sub_1842h:
 	cp 00dh		;1847	fe 0d 	. . 
 	ret z			;1849	c8 	. 
 	ld a,001h		;184a	3e 01 	> . 
-	ld (variable.move_command_first_track),a		;184c	32 d6 5c 	2 . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;184c	32 d6 5c 	2 . \ 
 	call sub_1debh		;184f	cd eb 1d 	. . . 
 sub_1852h:
 	xor a			;1852	af 	. 
-	ld (variable.error_code_msb),a		;1853	32 10 5d 	2 . ] 
+	ld (trdos_variable.error_code_msb),a		;1853	32 10 5d 	2 . ] 
 	ret			;1856	c9 	. 
 sub_1857h:
 	call sub_102eh		;1857	cd 2e 10 	. . . 
@@ -4485,12 +4492,12 @@ sub_1857h:
 	ld (sys_ch_add),hl		;1863	22 5d 5c 	" ] \ 
 l1866h:
 	call sub_1debh		;1866	cd eb 1d 	. . . 
-	ld hl,(variable.ch_add)		;1869	2a d9 5c 	* . \ 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;186c	22 d7 5c 	" . \ 
-	ld hl,(variable.file_size)		;186f	2a db 5c 	* . \ 
-	ld (variable.ch_add),hl		;1872	22 d9 5c 	" . \ 
+	ld hl,(trdos_variable.ch_add)		;1869	2a d9 5c 	* . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;186c	22 d7 5c 	" . \ 
+	ld hl,(trdos_variable.file_size)		;186f	2a db 5c 	* . \ 
+	ld (trdos_variable.ch_add),hl		;1872	22 d9 5c 	" . \ 
 	xor a			;1875	af 	. 
-	ld (variable.move_command_first_track),a		;1876	32 d6 5c 	2 . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;1876	32 d6 5c 	2 . \ 
 	ret			;1879	c9 	. 
 sub_187ah:
 	call z_if_next_command_line_char_is_carriage_return		;187a	cd 2b 04 	. + . 
@@ -4514,23 +4521,23 @@ sub_18a4h:
 	call sub_165dh		;18a7	cd 5d 16 	. ] . 
 	ret			;18aa	c9 	. 
 sub_18abh:
-	ld a,(variable.move_command_first_track)		;18ab	3a d6 5c 	: . \ 
+	ld a,(trdos_variable.bad_sectors_or_move_command_first_track)		;18ab	3a d6 5c 	: . \ 
 	or a			;18ae	b7 	. 
-	ld hl,(variable.file_start)		;18af	2a e6 5c 	* . \ 
+	ld hl,(trdos_variable.file_start)		;18af	2a e6 5c 	* . \ 
 	jr z,l18b7h		;18b2	28 03 	( . 
-	ld hl,(variable.ch_add)		;18b4	2a d9 5c 	* . \ 
+	ld hl,(trdos_variable.ch_add)		;18b4	2a d9 5c 	* . \ 
 l18b7h:
-	ld de,(variable.file_first_sector)		;18b7	ed 5b eb 5c 	. [ . \ 
+	ld de,(trdos_variable.file_first_sector)		;18b7	ed 5b eb 5c 	. [ . \ 
 	cp 003h		;18bb	fe 03 	. . 
-	ld a,(variable.file_length_in_sectors)		;18bd	3a ea 5c 	: . \ 
+	ld a,(trdos_variable.file_length_in_sectors)		;18bd	3a ea 5c 	: . \ 
 	push de			;18c0	d5 	. 
-	ld de,(variable.file_length_in_bytes)		;18c1	ed 5b e8 5c 	. [ . \ 
+	ld de,(trdos_variable.file_length_in_bytes)		;18c1	ed 5b e8 5c 	. [ . \ 
 	jr nz,l18cbh		;18c5	20 04 	  . 
-	ld de,(variable.file_size)		;18c7	ed 5b db 5c 	. [ . \ 
+	ld de,(trdos_variable.file_size)		;18c7	ed 5b db 5c 	. [ . \ 
 l18cbh:
 	ld b,a			;18cb	47 	G 
-	ld (variable.file_size),de		;18cc	ed 53 db 5c 	. S . \ 
-	ld a,(variable.file_type)		;18d0	3a e5 5c 	: . \ 
+	ld (trdos_variable.file_size),de		;18cc	ed 53 db 5c 	. S . \ 
+	ld a,(trdos_variable.file_type)		;18d0	3a e5 5c 	: . \ 
 	cp 043h		;18d3	fe 43 	. C 
 	ld a,b			;18d5	78 	x 
 	jr nz,l18fdh		;18d6	20 25 	  % 
@@ -4541,15 +4548,15 @@ l18cbh:
 	cp d			;18dd	ba 	. 
 	ld a,b			;18de	78 	x 
 	jr z,l18f6h		;18df	28 15 	( . 
-	ld a,(variable.move_command_first_track)		;18e1	3a d6 5c 	: . \ 
+	ld a,(trdos_variable.bad_sectors_or_move_command_first_track)		;18e1	3a d6 5c 	: . \ 
 	cp 003h		;18e4	fe 03 	. . 
 	ld a,b			;18e6	78 	x 
 	jr z,l18f6h		;18e7	28 0d 	( . 
 	xor a			;18e9	af 	. 
-	ld (variable.move_command_first_track),a		;18ea	32 d6 5c 	2 . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;18ea	32 d6 5c 	2 . \ 
 	ld d,b			;18ed	50 	P 
 	ld e,000h		;18ee	1e 00 	. . 
-	ld (variable.file_size),de		;18f0	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.file_size),de		;18f0	ed 53 db 5c 	. S . \ 
 	jr l18f9h		;18f4	18 03 	. . 
 l18f6h:
 	call sub_191bh		;18f6	cd 1b 19 	. . . 
@@ -4558,7 +4565,7 @@ l18f9h:
 	call sub_1each		;18fa	cd ac 1e 	. . . 
 l18fdh:
 	ld b,a			;18fd	47 	G 
-	ld a,(variable.file_type)		;18fe	3a e5 5c 	: . \ 
+	ld a,(trdos_variable.file_type)		;18fe	3a e5 5c 	: . \ 
 	cp 043h		;1901	fe 43 	. C 
 	pop de			;1903	d1 	. 
 	ret z			;1904	c8 	. 
@@ -4570,13 +4577,13 @@ l18fdh:
 	cp 044h		;190d	fe 44 	. D 
 	call z,sub_1a4ch		;190f	cc 4c 1a 	. L . 
 	call sub_191bh		;1912	cd 1b 19 	. . . 
-	ld a,(variable.file_size.high)		;1915	3a dc 5c 	: . \ 
+	ld a,(trdos_variable.file_size.high)		;1915	3a dc 5c 	: . \ 
 	ld b,a			;1918	47 	G 
 	pop de			;1919	d1 	. 
 	ret			;191a	c9 	. 
 sub_191bh:
 	ld a,003h		;191b	3e 03 	> . 
-	ld (variable.move_command_first_track),a		;191d	32 d6 5c 	2 . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;191d	32 d6 5c 	2 . \ 
 	ret			;1920	c9 	. 
 l1921h:
 	call sub_0572h		;1921	cd 72 05 	. r . 
@@ -4592,7 +4599,7 @@ l192dh:
 	jr z,l1937h		;1932	28 03 	( . 
 	jp write_sectors		;1934	c3 4d 1e 	. M . 
 l1937h:
-	ld a,(variable.move_command_first_track)		;1937	3a d6 5c 	: . \ 
+	ld a,(trdos_variable.bad_sectors_or_move_command_first_track)		;1937	3a d6 5c 	: . \ 
 	cp 003h		;193a	fe 03 	. . 
 	call z,sub_1946h		;193c	cc 46 19 	. F . 
 	ld hl,(sys_e_line)		;193f	2a 59 5c 	* Y \ 
@@ -4600,39 +4607,39 @@ l1937h:
 	ld (hl),080h		;1943	36 80 	6 . 
 	ret			;1945	c9 	. 
 sub_1946h:
-	ld a,(variable.cat_drive_or_read_verify_flag)		;1946	3a f9 5c 	: . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;1946	3a f9 5c 	: . \ 
 	cp 0ffh		;1949	fe ff 	. . 
 	jp nz,l2fdeh		;194b	c2 de 2f 	. . / 
-	ld a,(variable.file_size)		;194e	3a db 5c 	: . \ 
+	ld a,(trdos_variable.file_size)		;194e	3a db 5c 	: . \ 
 	or a			;1951	b7 	. 
 	ret z			;1952	c8 	. 
 	ld c,a			;1953	4f 	O 
 	ld b,001h		;1954	06 01 	. . 
-	ld de,(variable.current_sector)		;1956	ed 5b f4 5c 	. [ . \ 
+	ld de,(trdos_variable.current_sector)		;1956	ed 5b f4 5c 	. [ . \ 
 	jr l196ah		;195a	18 0e 	. . 
 sub_195ch:
-	ld a,(variable.cat_drive_or_read_verify_flag)		;195c	3a f9 5c 	: . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;195c	3a f9 5c 	: . \ 
 	cp 0ffh		;195f	fe ff 	. . 
 	jp nz,read_sectors		;1961	c2 3d 1e 	. = . 
-	ld (variable.current_sector),de		;1964	ed 53 f4 5c 	. S . \ 
+	ld (trdos_variable.current_sector),de		;1964	ed 53 f4 5c 	. S . \ 
 	ld c,000h		;1968	0e 00 	. . 
 l196ah:
 	ld a,b			;196a	78 	x 
 	or a			;196b	b7 	. 
 	ret z			;196c	c8 	. 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;196d	22 d7 5c 	" . \ 
-	ld (variable.ch_add),de		;1970	ed 53 d9 5c 	. S . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;196d	22 d7 5c 	" . \ 
+	ld (trdos_variable.ch_add),de		;1970	ed 53 d9 5c 	. S . \ 
 l1974h:
 	push bc			;1974	c5 	. 
 	ld b,001h		;1975	06 01 	. . 
-	ld de,(variable.ch_add)		;1977	ed 5b d9 5c 	. [ . \ 
-	ld hl,variable.tmp_buffer_address		;197b	21 25 5d 	! % ] 
+	ld de,(trdos_variable.ch_add)		;1977	ed 5b d9 5c 	. [ . \ 
+	ld hl,trdos_variable.tmp_buffer_address		;197b	21 25 5d 	! % ] 
 	call read_sectors		;197e	cd 3d 1e 	. = . 
-	ld hl,(variable.current_sector)		;1981	2a f4 5c 	* . \ 
-	ld (variable.ch_add),hl		;1984	22 d9 5c 	" . \ 
+	ld hl,(trdos_variable.current_sector)		;1981	2a f4 5c 	* . \ 
+	ld (trdos_variable.ch_add),hl		;1984	22 d9 5c 	" . \ 
 	pop bc			;1987	c1 	. 
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;1988	2a d7 5c 	* . \ 
-	ld de,variable.tmp_buffer_address		;198b	11 25 5d 	. % ] 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;1988	2a d7 5c 	* . \ 
+	ld de,trdos_variable.tmp_buffer_address		;198b	11 25 5d 	. % ] 
 l198eh:
 	ld a,(de)			;198e	1a 	. 
 	cp (hl)			;198f	be 	. 
@@ -4641,7 +4648,7 @@ l198eh:
 	inc de			;1993	13 	. 
 	dec c			;1994	0d 	. 
 	jr nz,l198eh		;1995	20 f7 	  . 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1997	22 d7 5c 	" . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1997	22 d7 5c 	" . \ 
 	djnz l1974h		;199a	10 d8 	. . 
 	ret			;199c	c9 	. 
 l199dh:
@@ -4654,18 +4661,18 @@ cli_command.peek:
 cli_command.poke:
 	ld a,0eeh		;19a9	3e ee 	> . 
 l19abh:
-	ld (variable.error_code_msb),a		;19ab	32 10 5d 	2 . ] 
+	ld (trdos_variable.error_code_msb),a		;19ab	32 10 5d 	2 . ] 
 	jp l1818h		;19ae	c3 18 18 	. . . 
 cli_command.merge:
 	ld a,0ffh		;19b1	3e ff 	> . 
-	ld (variable.unknown_23839),a		;19b3	32 1f 5d 	2 . ] 
+	ld (trdos_variable.unknown_23839),a		;19b3	32 1f 5d 	2 . ] 
 	call sub_187ah		;19b6	cd 7a 18 	. z . 
 	call pop_hl_if_checking_syntax		;19b9	cd 75 1d 	. u . 
-	ld a,(variable.file_type)		;19bc	3a e5 5c 	: . \ 
+	ld a,(trdos_variable.file_type)		;19bc	3a e5 5c 	: . \ 
 	cp 042h		;19bf	fe 42 	. B 
 	jp nz,error.wrong_drive_letter		;19c1	c2 1a 1d 	. . . 
-	ld bc,(variable.file_start)		;19c4	ed 4b e6 5c 	. K . \ 
-	ld (variable.file_size),bc		;19c8	ed 43 db 5c 	. C . \ 
+	ld bc,(trdos_variable.file_start)		;19c4	ed 4b e6 5c 	. K . \ 
+	ld (trdos_variable.file_size),bc		;19c8	ed 43 db 5c 	. C . \ 
 	push bc			;19cc	c5 	. 
 	inc bc			;19cd	03 	. 
 	rst 20h			;19ce	e7 	. 
@@ -4674,9 +4681,9 @@ cli_command.merge:
 	defw 0eb80h		;19d2	80 eb 	. . 
 	pop de			;19d4	d1 	. 
 	push hl			;19d5	e5 	. 
-	ld de,(variable.file_first_sector)		;19d6	ed 5b eb 5c 	. [ . \ 
+	ld de,(trdos_variable.file_first_sector)		;19d6	ed 5b eb 5c 	. [ . \ 
 	call sub_191bh		;19da	cd 1b 19 	. . . 
-	ld a,(variable.file_size.high)		;19dd	3a dc 5c 	: . \ 
+	ld a,(trdos_variable.file_size.high)		;19dd	3a dc 5c 	: . \ 
 	ld b,a			;19e0	47 	G 
 	call sub_1852h		;19e1	cd 52 18 	. R . 
 	call l1921h		;19e4	cd 21 19 	. ! . 
@@ -4705,19 +4712,19 @@ sub_1a01h:
 	push hl			;1a09	e5 	. 
 	push de			;1a0a	d5 	. 
 	sbc hl,de		;1a0b	ed 52 	. R 
-	ld de,(variable.file_start)		;1a0d	ed 5b e6 5c 	. [ . \ 
+	ld de,(trdos_variable.file_start)		;1a0d	ed 5b e6 5c 	. [ . \ 
 	push de			;1a11	d5 	. 
 	push hl			;1a12	e5 	. 
 	ld hl,l0000h		;1a13	21 00 00 	! . . 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;1a16	3a f9 5c 	: . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;1a16	3a f9 5c 	: . \ 
 	cp 0ffh		;1a19	fe ff 	. . 
 	jr z,l1a20h		;1a1b	28 03 	( . 
 	ld hl,l0004h+1		;1a1d	21 05 00 	! . . 
 l1a20h:
 	add hl,de			;1a20	19 	. 
-	ld (variable.file_size),hl		;1a21	22 db 5c 	" . \ 
+	ld (trdos_variable.file_size),hl		;1a21	22 db 5c 	" . \ 
 	pop hl			;1a24	e1 	. 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;1a25	3a f9 5c 	: . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;1a25	3a f9 5c 	: . \ 
 	cp 0ffh		;1a28	fe ff 	. . 
 	jr nz,l1a31h		;1a2a	20 05 	  . 
 	pop de			;1a2c	d1 	. 
@@ -4735,31 +4742,31 @@ l1a31h:
 	pop bc			;1a3b	c1 	. 
 	call make_room		;1a3c	cd 32 1e 	. 2 . 
 	inc hl			;1a3f	23 	# 
-	ld bc,(variable.file_length_in_bytes)		;1a40	ed 4b e8 5c 	. K . \ 
+	ld bc,(trdos_variable.file_length_in_bytes)		;1a40	ed 4b e8 5c 	. K . \ 
 	add hl,bc			;1a44	09 	. 
 	ld (sys_vars),hl		;1a45	22 4b 5c 	" K \ 
 l1a48h:
 	ld hl,(sys_prog)		;1a48	2a 53 5c 	* S \ 
 	ret			;1a4b	c9 	. 
 sub_1a4ch:
-	ld de,(variable.file_length_in_bytes)		;1a4c	ed 5b e8 5c 	. [ . \ 
-	ld (variable.file_size),de		;1a50	ed 53 db 5c 	. S . \ 
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;1a54	2a d7 5c 	* . \ 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;1a57	3a f9 5c 	: . \ 
+	ld de,(trdos_variable.file_length_in_bytes)		;1a4c	ed 5b e8 5c 	. [ . \ 
+	ld (trdos_variable.file_size),de		;1a50	ed 53 db 5c 	. S . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;1a54	2a d7 5c 	* . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;1a57	3a f9 5c 	: . \ 
 	cp 0ffh		;1a5a	fe ff 	. . 
 	ret z			;1a5c	c8 	. 
-	ld hl,(variable.ch_add)		;1a5d	2a d9 5c 	* . \ 
+	ld hl,(trdos_variable.ch_add)		;1a5d	2a d9 5c 	* . \ 
 	push hl			;1a60	e5 	. 
 	call sub_19f2h		;1a61	cd f2 19 	. . . 
 	pop hl			;1a64	e1 	. 
 	ld a,h			;1a65	7c 	| 
 	or l			;1a66	b5 	. 
 	jr z,l1a79h		;1a67	28 10 	( . 
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;1a69	2a d7 5c 	* . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;1a69	2a d7 5c 	* . \ 
 	dec hl			;1a6c	2b 	+ 
 	dec hl			;1a6d	2b 	+ 
 	dec hl			;1a6e	2b 	+ 
-	ld bc,(variable.ch_add)		;1a6f	ed 4b d9 5c 	. K . \ 
+	ld bc,(trdos_variable.ch_add)		;1a6f	ed 4b d9 5c 	. K . \ 
 	inc bc			;1a73	03 	. 
 	inc bc			;1a74	03 	. 
 	inc bc			;1a75	03 	. 
@@ -4767,14 +4774,14 @@ sub_1a4ch:
 l1a79h:
 	ld hl,(sys_e_line)		;1a79	2a 59 5c 	* Y \ 
 	dec hl			;1a7c	2b 	+ 
-	ld bc,(variable.file_length_in_bytes)		;1a7d	ed 4b e8 5c 	. K . \ 
+	ld bc,(trdos_variable.file_length_in_bytes)		;1a7d	ed 4b e8 5c 	. K . \ 
 	push bc			;1a81	c5 	. 
 	inc bc			;1a82	03 	. 
 	inc bc			;1a83	03 	. 
 	inc bc			;1a84	03 	. 
 	call make_room		;1a85	cd 32 1e 	. 2 . 
 	inc hl			;1a88	23 	# 
-	ld a,(variable.basic_program_autostart.high)		;1a89	3a d2 5c 	: . \ 
+	ld a,(trdos_variable.basic_program_autostart.high)		;1a89	3a d2 5c 	: . \ 
 	ld (hl),a			;1a8c	77 	w 
 	inc hl			;1a8d	23 	# 
 	pop de			;1a8e	d1 	. 
@@ -4784,7 +4791,7 @@ l1a79h:
 	inc hl			;1a92	23 	# 
 	ret			;1a93	c9 	. 
 sub_1a94h:
-	ld a,(variable.ch_add)		;1a94	3a d9 5c 	: . \ 
+	ld a,(trdos_variable.ch_add)		;1a94	3a d9 5c 	: . \ 
 	ld c,b			;1a97	48 	H 
 	ld b,a			;1a98	47 	G 
 	ld a,c			;1a99	79 	y 
@@ -4806,7 +4813,7 @@ l1aaeh:
 	djnz l1aa7h		;1aae	10 f7 	. . 
 l1ab0h:
 	ld b,001h		;1ab0	06 01 	. . 
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;1ab2	2a d7 5c 	* . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;1ab2	2a d7 5c 	* . \ 
 	ret			;1ab5	c9 	. 
 l1ab6h:
 	ld hl,message.cr.rec_overflow		;1ab6	21 ed 29 	! . ) 
@@ -4817,14 +4824,14 @@ sub_1abeh:
 	jp z,error.file_exists		;1ac1	ca 50 1c 	. P . 
 sub_1ac4h:
 	call sub_03fdh		;1ac4	cd fd 03 	. . . 
-	ld a,(05e09h)		;1ac7	3a 09 5e 	: . ^ 
+	ld a,(trdos_sector_buffer.files)		;1ac7	3a 09 5e 	: . ^ 
 	cp 080h		;1aca	fe 80 	. . 
 	jp z,error.directory_full		;1acc	ca 23 27 	. # ' 
 	ret			;1acf	c9 	. 
 cli_command.save:
 	call sub_1852h		;1ad0	cd 52 18 	. R . 
 	ld hl,l0000h		;1ad3	21 00 00 	! . . 
-	ld (variable.basic_program_autostart),hl		;1ad6	22 d1 5c 	" . \ 
+	ld (trdos_variable.basic_program_autostart),hl		;1ad6	22 d1 5c 	" . \ 
 	call parse_expression		;1ad9	cd df 1d 	. . . 
 	call get_char		;1adc	cd 8c 1d 	. . . 
 	cp 0afh		;1adf	fe af 	. . 
@@ -4833,23 +4840,23 @@ cli_command.save:
 	jr nz,l1af8h		;1ae5	20 11 	  . 
 	call sub_1e0bh		;1ae7	cd 0b 1e 	. . . 
 	call pop_hl_if_checking_syntax		;1aea	cd 75 1d 	. u . 
-	ld hl,(variable.file_size)		;1aed	2a db 5c 	* . \ 
-	ld (variable.basic_program_autostart),hl		;1af0	22 d1 5c 	" . \ 
-	ld hl,variable.file_type		;1af3	21 e5 5c 	! . \ 
+	ld hl,(trdos_variable.file_size)		;1aed	2a db 5c 	* . \ 
+	ld (trdos_variable.basic_program_autostart),hl		;1af0	22 d1 5c 	" . \ 
+	ld hl,trdos_variable.file_type		;1af3	21 e5 5c 	! . \ 
 	jr l1b1fh		;1af6	18 27 	. ' 
 l1af8h:
 	cp 0aah		;1af8	fe aa 	. . 
 	jr nz,l1b0dh		;1afa	20 11 	  . 
 	ld hl,04000h		;1afc	21 00 40 	! . @ 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1aff	22 d7 5c 	" . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1aff	22 d7 5c 	" . \ 
 	ld hl,01b00h		;1b02	21 00 1b 	! . . 
-	ld (variable.ch_add),hl		;1b05	22 d9 5c 	" . \ 
-	ld (variable.file_size),hl		;1b08	22 db 5c 	" . \ 
+	ld (trdos_variable.ch_add),hl		;1b05	22 d9 5c 	" . \ 
+	ld (trdos_variable.file_size),hl		;1b08	22 db 5c 	" . \ 
 	jr l1b48h		;1b0b	18 3b 	. ; 
 l1b0dh:
 	call pop_hl_if_checking_syntax		;1b0d	cd 75 1d 	. u . 
 	call get_char		;1b10	cd 8c 1d 	. . . 
-	ld hl,variable.file_type		;1b13	21 e5 5c 	! . \ 
+	ld hl,trdos_variable.file_type		;1b13	21 e5 5c 	! . \ 
 	cp 0e4h		;1b16	fe e4 	. . 
 	jr z,l1b2ch		;1b18	28 12 	( . 
 	cp 00dh		;1b1a	fe 0d 	. . 
@@ -4869,23 +4876,23 @@ l1b2ch:
 	jp c,error.wrong_drive_letter		;1b36	da 1a 1d 	. . . 
 l1b39h:
 	call sub_1de5h		;1b39	cd e5 1d 	. . . 
-	ld hl,(variable.ch_add)		;1b3c	2a d9 5c 	* . \ 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1b3f	22 d7 5c 	" . \ 
-	ld hl,(variable.file_size)		;1b42	2a db 5c 	* . \ 
-	ld (variable.ch_add),hl		;1b45	22 d9 5c 	" . \ 
+	ld hl,(trdos_variable.ch_add)		;1b3c	2a d9 5c 	* . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1b3f	22 d7 5c 	" . \ 
+	ld hl,(trdos_variable.file_size)		;1b42	2a db 5c 	* . \ 
+	ld (trdos_variable.ch_add),hl		;1b45	22 d9 5c 	" . \ 
 l1b48h:
 	call pop_hl_if_checking_syntax		;1b48	cd 75 1d 	. u . 
 	ld a,043h		;1b4b	3e 43 	> C 
-	ld (variable.file_type),a		;1b4d	32 e5 5c 	2 . \ 
+	ld (trdos_variable.file_type),a		;1b4d	32 e5 5c 	2 . \ 
 	call sub_1abeh		;1b50	cd be 1a 	. . . 
 l1b53h:
 	call sub_1b59h		;1b53	cd 59 1b 	. Y . 
 	jp l0569h		;1b56	c3 69 05 	. i . 
 sub_1b59h:
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;1b59	2a d7 5c 	* . \ 
-	ld (variable.file_start),hl		;1b5c	22 e6 5c 	" . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;1b59	2a d7 5c 	* . \ 
+	ld (trdos_variable.file_start),hl		;1b5c	22 e6 5c 	" . \ 
 	ex de,hl			;1b5f	eb 	. 
-	ld hl,(variable.ch_add)		;1b60	2a d9 5c 	* . \ 
+	ld hl,(trdos_variable.ch_add)		;1b60	2a d9 5c 	* . \ 
 	ld a,l			;1b63	7d 	} 
 	or h			;1b64	b4 	. 
 	jp z,error.wrong_drive_letter		;1b65	ca 1a 1d 	. . . 
@@ -4895,46 +4902,46 @@ sub_1b59h:
 	inc h			;1b6c	24 	$ 
 l1b6dh:
 	ld a,h			;1b6d	7c 	| 
-	ld (variable.file_length_in_sectors),a		;1b6e	32 ea 5c 	2 . \ 
+	ld (trdos_variable.file_length_in_sectors),a		;1b6e	32 ea 5c 	2 . \ 
 	ld e,a			;1b71	5f 	_ 
 	ld d,000h		;1b72	16 00 	. . 
-	ld hl,(05e0ah)		;1b74	2a 0a 5e 	* . ^ 
+	ld hl,(trdos_sector_buffer.free_sectors)		;1b74	2a 0a 5e 	* . ^ 
 	sbc hl,de		;1b77	ed 52 	. R 
 	jp c,error.no_space		;1b79	da 45 1c 	. E . 
 	push hl			;1b7c	e5 	. 
 	ld hl,(sys_e_line)		;1b7d	2a 59 5c 	* Y \ 
 	ld (hl),0aah		;1b80	36 aa 	6 . 
 	inc hl			;1b82	23 	# 
-	ld de,(variable.basic_program_autostart)		;1b83	ed 5b d1 5c 	. [ . \ 
+	ld de,(trdos_variable.basic_program_autostart)		;1b83	ed 5b d1 5c 	. [ . \ 
 	ld (hl),e			;1b87	73 	s 
 	inc hl			;1b88	23 	# 
 	ld (hl),d			;1b89	72 	r 
-	ld hl,(variable.file_size)		;1b8a	2a db 5c 	* . \ 
-	ld (variable.file_length_in_bytes),hl		;1b8d	22 e8 5c 	" . \ 
-	ld hl,(05e06h)		;1b90	2a 06 5e 	* . ^ 
-	ld (variable.file_first_sector),hl		;1b93	22 eb 5c 	" . \ 
+	ld hl,(trdos_variable.file_size)		;1b8a	2a db 5c 	* . \ 
+	ld (trdos_variable.file_length_in_bytes),hl		;1b8d	22 e8 5c 	" . \ 
+	ld hl,(trdos_sector_buffer.next_free_sector)		;1b90	2a 06 5e 	* . ^ 
+	ld (trdos_variable.file_first_sector),hl		;1b93	22 eb 5c 	" . \ 
 	ex de,hl			;1b96	eb 	. 
-	ld hl,(variable.file_start)		;1b97	2a e6 5c 	* . \ 
-	ld a,(variable.file_length_in_sectors)		;1b9a	3a ea 5c 	: . \ 
+	ld hl,(trdos_variable.file_start)		;1b97	2a e6 5c 	* . \ 
+	ld a,(trdos_variable.file_length_in_sectors)		;1b9a	3a ea 5c 	: . \ 
 	ld b,a			;1b9d	47 	G 
 	call write_sectors		;1b9e	cd 4d 1e 	. M . 
-	ld hl,(variable.current_sector)		;1ba1	2a f4 5c 	* . \ 
+	ld hl,(trdos_variable.current_sector)		;1ba1	2a f4 5c 	* . \ 
 	push hl			;1ba4	e5 	. 
 	call sub_03fdh		;1ba5	cd fd 03 	. . . 
 	pop hl			;1ba8	e1 	. 
-	ld (05e06h),hl		;1ba9	22 06 5e 	" . ^ 
+	ld (trdos_sector_buffer.next_free_sector),hl		;1ba9	22 06 5e 	" . ^ 
 	pop hl			;1bac	e1 	. 
-	ld (05e0ah),hl		;1bad	22 0a 5e 	" . ^ 
-	ld hl,05e09h		;1bb0	21 09 5e 	! . ^ 
+	ld (trdos_sector_buffer.free_sectors),hl		;1bad	22 0a 5e 	" . ^ 
+	ld hl,trdos_sector_buffer.files		;1bb0	21 09 5e 	! . ^ 
 	ld a,(hl)			;1bb3	7e 	~ 
-	ld (variable.find_command_found_file),a		;1bb4	32 1e 5d 	2 . ] 
+	ld (trdos_variable.find_command_found_file),a		;1bb4	32 1e 5d 	2 . ] 
 	inc (hl)			;1bb7	34 	4 
 	push hl			;1bb8	e5 	. 
 	call sub_1e43h		;1bb9	cd 43 1e 	. C . 
 	pop hl			;1bbc	e1 	. 
 	ld c,(hl)			;1bbd	4e 	N 
 	dec c			;1bbe	0d 	. 
-	ld a,(variable.file_type)		;1bbf	3a e5 5c 	: . \ 
+	ld a,(trdos_variable.file_type)		;1bbf	3a e5 5c 	: . \ 
 	cp 042h		;1bc2	fe 42 	. B 
 	call z,sub_1bc8h		;1bc4	cc c8 1b 	. . . 
 	ret			;1bc7	c9 	. 
@@ -4943,31 +4950,31 @@ sub_1bc8h:
 	ld de,(sys_prog)		;1bcb	ed 5b 53 5c 	. [ S \ 
 	scf			;1bcf	37 	7 
 	sbc hl,de		;1bd0	ed 52 	. R 
-	ld (variable.file_start),hl		;1bd2	22 e6 5c 	" . \ 
+	ld (trdos_variable.file_start),hl		;1bd2	22 e6 5c 	" . \ 
 	ld hl,(sys_vars)		;1bd5	2a 4b 5c 	* K \ 
 	sbc hl,de		;1bd8	ed 52 	. R 
-	ld (variable.file_length_in_bytes),hl		;1bda	22 e8 5c 	" . \ 
+	ld (trdos_variable.file_length_in_bytes),hl		;1bda	22 e8 5c 	" . \ 
 	ret			;1bdd	c9 	. 
 sub_1bdeh:
 	ld hl,(sys_vars)		;1bde	2a 4b 5c 	* K \ 
 	ld de,(sys_prog)		;1be1	ed 5b 53 5c 	. [ S \ 
 	sbc hl,de		;1be5	ed 52 	. R 
-	ld (variable.file_size),hl		;1be7	22 db 5c 	" . \ 
+	ld (trdos_variable.file_size),hl		;1be7	22 db 5c 	" . \ 
 	ld hl,(sys_prog)		;1bea	2a 53 5c 	* S \ 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1bed	22 d7 5c 	" . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1bed	22 d7 5c 	" . \ 
 	ld hl,(sys_e_line)		;1bf0	2a 59 5c 	* Y \ 
 	inc hl			;1bf3	23 	# 
 	inc hl			;1bf4	23 	# 
 	inc hl			;1bf5	23 	# 
 	sbc hl,de		;1bf6	ed 52 	. R 
-	ld (variable.ch_add),hl		;1bf8	22 d9 5c 	" . \ 
+	ld (trdos_variable.ch_add),hl		;1bf8	22 d9 5c 	" . \ 
 	ret			;1bfb	c9 	. 
 sub_1bfch:
 	call sub_1c1bh		;1bfc	cd 1b 1c 	. . . 
 	ret nc			;1bff	d0 	. 
 	ld hl,l0000h		;1c00	21 00 00 	! . . 
-	ld (variable.ch_add),hl		;1c03	22 d9 5c 	" . \ 
-	ld a,(variable.cat_drive_or_read_verify_flag)		;1c06	3a f9 5c 	: . \ 
+	ld (trdos_variable.ch_add),hl		;1c03	22 d9 5c 	" . \ 
+	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;1c06	3a f9 5c 	: . \ 
 	cp 0ffh		;1c09	fe ff 	. . 
 	ret nz			;1c0b	c0 	. 
 	jp l1c13h		;1c0c	c3 13 1c 	. . . 
@@ -4983,7 +4990,7 @@ sub_1c1bh:
 	call look_vars		;1c1e	cd 9b 1d 	. . . 
 	set 7,c		;1c21	cb f9 	. . 
 	ld a,c			;1c23	79 	y 
-	ld (variable.basic_program_autostart.high),a		;1c24	32 d2 5c 	2 . \ 
+	ld (trdos_variable.basic_program_autostart.high),a		;1c24	32 d2 5c 	2 . \ 
 	jr nc,l1c2bh		;1c27	30 02 	0 . 
 l1c29h:
 	scf			;1c29	37 	7 
@@ -4995,9 +5002,9 @@ l1c2bh:
 	inc hl			;1c2f	23 	# 
 	ld d,(hl)			;1c30	56 	V 
 	inc hl			;1c31	23 	# 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1c32	22 d7 5c 	" . \ 
-	ld (variable.file_size),de		;1c35	ed 53 db 5c 	. S . \ 
-	ld (variable.ch_add),de		;1c39	ed 53 d9 5c 	. S . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1c32	22 d7 5c 	" . \ 
+	ld (trdos_variable.file_size),de		;1c35	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.ch_add),de		;1c39	ed 53 d9 5c 	. S . \ 
 	call next_char		;1c3d	cd 2a 1e 	. * . 
 	cp 029h		;1c40	fe 29 	. ) 
 	jr nz,l1c2bh		;1c42	20 e7 	  . 
@@ -5013,7 +5020,7 @@ error.file_exists:
 	ld a,002h		;1c53	3e 02 	> . 
 	jr print_error_number_A_whose_message_is_at_HL_and_exit_DOS		;1c55	18 f3 	. . 
 sub_1c57h:
-	ld hl,variable.filename		;1c57	21 dd 5c 	! . \ 
+	ld hl,trdos_variable.filename		;1c57	21 dd 5c 	! . \ 
 	ld b,008h		;1c5a	06 08 	. . 
 l1c5ch:
 	ld (hl),020h		;1c5c	36 20 	6   
@@ -5032,7 +5039,7 @@ l1c73h:
 	ld a,(hl)			;1c73	7e 	~ 
 	cp 020h		;1c74	fe 20 	.   
 	jp c,error.wrong_drive_letter		;1c76	da 1a 1d 	. . . 
-	ld de,variable.filename		;1c79	11 dd 5c 	. . \ 
+	ld de,trdos_variable.filename		;1c79	11 dd 5c 	. . \ 
 	push bc			;1c7c	c5 	. 
 	ldir		;1c7d	ed b0 	. . 
 	pop bc			;1c7f	c1 	. 
@@ -5057,7 +5064,7 @@ sub_1c81h:
 	ret			;1c97	c9 	. 
 l1c98h:
 	dec hl			;1c98	2b 	+ 
-	ld a,(variable.default_drive)		;1c99	3a 19 5d 	: . ] 
+	ld a,(trdos_variable.default_drive)		;1c99	3a 19 5d 	: . ] 
 	push bc			;1c9c	c5 	. 
 	push hl			;1c9d	e5 	. 
 	call init_disk_drive_in_A_register		;1c9e	cd cb 3d 	. . = 
@@ -5071,7 +5078,7 @@ sub_1ca4h:
 	add hl,hl			;1ca8	29 	) 
 	add hl,hl			;1ca9	29 	) 
 	add hl,hl			;1caa	29 	) 
-	ld bc,variable.tmp_buffer_address		;1cab	01 25 5d 	. % ] 
+	ld bc,trdos_variable.tmp_buffer_address		;1cab	01 25 5d 	. % ] 
 	add hl,bc			;1cae	09 	. 
 	ret			;1caf	c9 	. 
 sub_1cb0h:
@@ -5093,8 +5100,8 @@ l1cbah:
 	ld c,000h		;1cc9	0e 00 	. . 
 	jr l1cbah		;1ccb	18 ed 	. . 
 l1ccdh:
-	ld de,variable.filename		;1ccd	11 dd 5c 	. . \ 
-	ld a,(variable.find_command_symbols)		;1cd0	3a 06 5d 	: . ] 
+	ld de,trdos_variable.filename		;1ccd	11 dd 5c 	. . \ 
+	ld a,(trdos_variable.find_command_symbols)		;1cd0	3a 06 5d 	: . ] 
 	ld b,a			;1cd3	47 	G 
 	xor a			;1cd4	af 	. 
 	cp (hl)			;1cd5	be 	. 
@@ -5114,12 +5121,12 @@ l1ce7h:
 	ld a,080h		;1ce7	3e 80 	> . 
 	sub b			;1ce9	90 	. 
 	ld c,a			;1cea	4f 	O 
-	ld (variable.find_command_found_file),a		;1ceb	32 1e 5d 	2 . ] 
+	ld (trdos_variable.find_command_found_file),a		;1ceb	32 1e 5d 	2 . ] 
 	xor a			;1cee	af 	. 
 	ret z			;1cef	c8 	. 
 find_file:
 	call sub_1cb3h		;1cf0	cd b3 1c 	. . . 
-	ld hl,variable.error_code		;1cf3	21 0f 5d 	! . ] 
+	ld hl,trdos_variable.error_code		;1cf3	21 0f 5d 	! . ] 
 	ld (hl),c			;1cf6	71 	q 
 	ret z			;1cf7	c8 	. 
 	ld (hl),0ffh		;1cf8	36 ff 	6 . 
@@ -5129,7 +5136,7 @@ cli_command.return:
 	call sub_20e5h		;1cfe	cd e5 20 	. .   
 	res 3,(iy+001h)		;1d01	fd cb 01 9e 	. . . . 
 	call sub_0232h		;1d05	cd 32 02 	. 2 . 
-	ld sp,(variable.sp_copy)		;1d08	ed 7b 1c 5d 	. { . ] 
+	ld sp,(trdos_variable.sp_copy)		;1d08	ed 7b 1c 5d 	. { . ] 
 	ld hl,(sys_err_sp)		;1d0c	2a 3d 5c 	* = \ 
 	dec hl			;1d0f	2b 	+ 
 	ld a,012h		;1d10	3e 12 	> . 
@@ -5168,14 +5175,14 @@ cli_command.run:
 	call sub_1852h		;1d4d	cd 52 18 	. R . 
 	call sub_1836h		;1d50	cd 36 18 	. 6 . 
 	call pop_hl_if_checking_syntax		;1d53	cd 75 1d 	. u . 
-	ld hl,(variable.file_start)		;1d56	2a e6 5c 	* . \ 
-	ld a,(variable.file_type)		;1d59	3a e5 5c 	: . \ 
+	ld hl,(trdos_variable.file_start)		;1d56	2a e6 5c 	* . \ 
+	ld a,(trdos_variable.file_type)		;1d59	3a e5 5c 	: . \ 
 	cp 042h		;1d5c	fe 42 	. B 
 	jp z,l012ah		;1d5e	ca 2a 01 	. * . 
 	push hl			;1d61	e5 	. 
 	ret			;1d62	c9 	. 
 sub_1d63h:
-	ld hl,variable.command_mode		;1d63	21 0e 5d 	! . ] 
+	ld hl,trdos_variable.command_mode		;1d63	21 0e 5d 	! . ] 
 	ld a,(hl)			;1d66	7e 	~ 
 	cp 0ffh		;1d67	fe ff 	. . 
 	ld (hl),000h		;1d69	36 00 	6 . 
@@ -5255,7 +5262,7 @@ expt_1num:
 	defw 01c82h		;1dc2	82 1c 	. . 
 	ret			;1dc4	c9 	. 
 point_interpreter_to_command_line:
-	ld hl,(variable.command_line_address)		;1dc5	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;1dc5	2a 11 5d 	* . ] 
 	inc hl			;1dc8	23 	# 
 	ld (sys_ch_add),hl		;1dc9	22 5d 5c 	" ] \ 
 	ret			;1dcc	c9 	. 
@@ -5279,8 +5286,8 @@ sub_1debh:
 	call sub_1d7bh		;1deb	cd 7b 1d 	. { . 
 	jr z,l1dfbh		;1dee	28 0b 	( . 
 	call find_int2		;1df0	cd b9 1d 	. . . 
-	ld (variable.ch_add),bc		;1df3	ed 43 d9 5c 	. C . \ 
-	ld (variable.file_size),bc		;1df7	ed 43 db 5c 	. C . \ 
+	ld (trdos_variable.ch_add),bc		;1df3	ed 43 d9 5c 	. C . \ 
+	ld (trdos_variable.file_size),bc		;1df7	ed 43 db 5c 	. C . \ 
 l1dfbh:
 	call get_char		;1dfb	cd 8c 1d 	. . . 
 	cp 02ch		;1dfe	fe 2c 	. , 
@@ -5293,12 +5300,12 @@ sub_1e0bh:
 	call sub_1d7bh		;1e0b	cd 7b 1d 	. { . 
 	ret z			;1e0e	c8 	. 
 	call find_int2		;1e0f	cd b9 1d 	. . . 
-	ld (variable.file_size),bc		;1e12	ed 43 db 5c 	. C . \ 
+	ld (trdos_variable.file_size),bc		;1e12	ed 43 db 5c 	. C . \ 
 	ld a,003h		;1e16	3e 03 	> . 
-	ld (variable.move_command_first_track),a		;1e18	32 d6 5c 	2 . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;1e18	32 d6 5c 	2 . \ 
 	ret			;1e1b	c9 	. 
 remove_fp:
-	ld hl,(variable.command_line_address)		;1e1c	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;1e1c	2a 11 5d 	* . ] 
 	rst 20h			;1e1f	e7 	. 
 	defw 011a7h		;1e20	a7 11 	. . 
 	ret			;1e22	c9 	. 
@@ -5330,10 +5337,10 @@ read_sectors:
 l1e40h:
 	call sub_166bh		;1e40	cd 6b 16 	. k . 
 sub_1e43h:
-	ld de,(variable.current_sector)		;1e43	ed 5b f4 5c 	. [ . \ 
+	ld de,(trdos_variable.current_sector)		;1e43	ed 5b f4 5c 	. [ . \ 
 	dec de			;1e47	1b 	. 
 	ld b,001h		;1e48	06 01 	. . 
-	ld hl,variable.tmp_buffer_address		;1e4a	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;1e4a	21 25 5d 	! % ] 
 write_sectors:
 	push hl			;1e4d	e5 	. 
 	push de			;1e4e	d5 	. 
@@ -5350,9 +5357,9 @@ l1e60h:
 sub_1e62h:
 	ld a,0ffh		;1e62	3e ff 	> . 
 l1e64h:
-	ld (variable.sector_reading_or_writting),a		;1e64	32 ce 5c 	2 . \ 
+	ld (trdos_variable.sector_rw_flag),a		;1e64	32 ce 5c 	2 . \ 
 l1e67h:
-	ld (variable.current_sector),de		;1e67	ed 53 f4 5c 	. S . \ 
+	ld (trdos_variable.current_sector),de		;1e67	ed 53 f4 5c 	. S . \ 
 	push bc			;1e6b	c5 	. 
 	push hl			;1e6c	e5 	. 
 	call sub_1e36h		;1e6d	cd 36 1e 	. 6 . 
@@ -5365,11 +5372,11 @@ l1e75h:
 	push bc			;1e75	c5 	. 
 	push hl			;1e76	e5 	. 
 	call define_buffer_address		;1e77	cd 06 3f 	. . ? 
-	ld a,(variable.current_sector)		;1e7a	3a f4 5c 	: . \ 
+	ld a,(trdos_variable.current_sector)		;1e7a	3a f4 5c 	: . \ 
 	call set_sector_number		;1e7d	cd 02 3f 	. . ? 
-	ld a,(variable.current_track)		;1e80	3a f5 5c 	: . \ 
+	ld a,(trdos_variable.current_track)		;1e80	3a f5 5c 	: . \ 
 	call seek_track		;1e83	cd 63 3e 	. c > 
-	ld a,(variable.sector_reading_or_writting)		;1e86	3a ce 5c 	: . \ 
+	ld a,(trdos_variable.sector_rw_flag)		;1e86	3a ce 5c 	: . \ 
 	or a			;1e89	b7 	. 
 	push af			;1e8a	f5 	. 
 	call z,sub_3f0eh		;1e8b	cc 0e 3f 	. . ? 
@@ -5380,12 +5387,12 @@ l1e75h:
 	add hl,de			;1e96	19 	. 
 	push hl			;1e97	e5 	. 
 	ld a,010h		;1e98	3e 10 	> . 
-	ld hl,variable.current_sector		;1e9a	21 f4 5c 	! . \ 
+	ld hl,trdos_variable.current_sector		;1e9a	21 f4 5c 	! . \ 
 	inc (hl)			;1e9d	34 	4 
 	cp (hl)			;1e9e	be 	. 
 	jr nz,l1ea7h		;1e9f	20 06 	  . 
 	ld (hl),000h		;1ea1	36 00 	6 . 
-	ld hl,variable.current_track		;1ea3	21 f5 5c 	! . \ 
+	ld hl,trdos_variable.current_track		;1ea3	21 f5 5c 	! . \ 
 	inc (hl)			;1ea6	34 	4 
 l1ea7h:
 	pop hl			;1ea7	e1 	. 
@@ -5407,14 +5414,14 @@ sub_1each:
 	ret			;1ebb	c9 	. 
 sub_1ebch:
 	xor a			;1ebc	af 	. 
-	ld (variable.move_command_first_track),a		;1ebd	32 d6 5c 	2 . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;1ebd	32 d6 5c 	2 . \ 
 	scf			;1ec0	37 	7 
 	ret			;1ec1	c9 	. 
 cli_command.format:
 	ld hl,0ffffh		;1ec2	21 ff ff 	! . . 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1ec5	22 d7 5c 	" . \ 
-	ld (variable.ch_add),hl		;1ec8	22 d9 5c 	" . \ 
-	ld (variable.basic_program_autostart),hl		;1ecb	22 d1 5c 	" . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1ec5	22 d7 5c 	" . \ 
+	ld (trdos_variable.ch_add),hl		;1ec8	22 d9 5c 	" . \ 
+	ld (trdos_variable.basic_program_autostart),hl		;1ecb	22 d1 5c 	" . \ 
 	call z_if_next_command_line_char_is_carriage_return		;1ece	cd 2b 04 	. + . 
 	jp z,error.wrong_drive_letter		;1ed1	ca 1a 1d 	. . . 
 	call parse_expression		;1ed4	cd df 1d 	. . . 
@@ -5426,7 +5433,7 @@ cli_command.format:
 	jr z,l1ee8h		;1ee4	28 02 	( . 
 	ld a,050h		;1ee6	3e 50 	> P 
 l1ee8h:
-	ld (variable.start_file_parameter_or_number_of_tracks),a		;1ee8	32 d7 5c 	2 . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),a		;1ee8	32 d7 5c 	2 . \ 
 	call init_interface		;1eeb	cd 98 3d 	. . = 
 	call select_top_side		;1eee	cd f6 1f 	. . . 
 	call sub_3ea0h		;1ef1	cd a0 3e 	. . > 
@@ -5435,7 +5442,7 @@ l1ee8h:
 	call select_bottom_side		;1ef9	cd eb 1f 	. . . 
 	ld e,000h		;1efc	1e 00 	. . 
 	call sub_1ffdh		;1efe	cd fd 1f 	. . . 
-	ld a,(variable.filename)		;1f01	3a dd 5c 	: . \ 
+	ld a,(trdos_variable.filename)		;1f01	3a dd 5c 	: . \ 
 	cp 024h		;1f04	fe 24 	. $ 
 	jr z,l1f1bh		;1f06	28 13 	( . 
 	call select_top_side		;1f08	cd f6 1f 	. . . 
@@ -5445,16 +5452,16 @@ l1ee8h:
 	cp 001h		;1f12	fe 01 	. . 
 	jr nz,l1f1bh		;1f14	20 05 	  . 
 	ld a,080h		;1f16	3e 80 	> . 
-	ld (variable.ch_add.high),a		;1f18	32 da 5c 	2 . \ 
+	ld (trdos_variable.ch_add.high),a		;1f18	32 da 5c 	2 . \ 
 l1f1bh:
 	call sub_20bdh		;1f1b	cd bd 20 	. .   
-	ld hl,variable.tmp_buffer_address		;1f1e	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;1f1e	21 25 5d 	! % ] 
 	ld (hl),000h		;1f21	36 00 	6 . 
-	ld de,variable.k_channel.output		;1f23	11 26 5d 	. & ] 
+	ld de,trdos_variable.k_channel.output		;1f23	11 26 5d 	. & ] 
 	ld bc,000ffh		;1f26	01 ff 00 	. . . 
 	ldir		;1f29	ed b0 	. . 
-	ld bc,variable.start_file_parameter_or_number_of_tracks		;1f2b	01 d7 5c 	. . \ 
-	ld de,variable.ch_add.high		;1f2e	11 da 5c 	. . \ 
+	ld bc,trdos_variable.start_file_parameter_or_number_of_tracks		;1f2b	01 d7 5c 	. . \ 
+	ld de,trdos_variable.ch_add.high		;1f2e	11 da 5c 	. . \ 
 	ld a,(bc)			;1f31	0a 	. 
 	cp 050h		;1f32	fe 50 	. P 
 	jr z,l1f49h		;1f34	28 13 	( . 
@@ -5477,37 +5484,37 @@ l1f49h:
 	ld a,016h		;1f50	3e 16 	> . 
 	ld hl,l09f0h		;1f52	21 f0 09 	! . . 
 l1f55h:
-	ld (05e08h),a		;1f55	32 08 5e 	2 . ^ 
-	ld (05e0ah),hl		;1f58	22 0a 5e 	" . ^ 
+	ld (trdos_sector_buffer.disk_type),a		;1f55	32 08 5e 	2 . ^ 
+	ld (trdos_sector_buffer.free_sectors),hl		;1f58	22 0a 5e 	" . ^ 
 	ld a,001h		;1f5b	3e 01 	> . 
-	ld (05e07h),a		;1f5d	32 07 5e 	2 . ^ 
+	ld (trdos_sector_buffer.next_free_track),a		;1f5d	32 07 5e 	2 . ^ 
 	ld a,010h		;1f60	3e 10 	> . 
-	ld (05e0ch),a		;1f62	32 0c 5e 	2 . ^ 
+	ld (trdos_sector_buffer.sectors_per_track),a		;1f62	32 0c 5e 	2 . ^ 
 	ld hl,05e0fh		;1f65	21 0f 5e 	! . ^ 
 	ld de,05e10h		;1f68	11 10 5e 	. . ^ 
 	ld bc,l0008h		;1f6b	01 08 00 	. . . 
 	ld (hl),020h		;1f6e	36 20 	6   
 	ldir		;1f70	ed b0 	. . 
-	ld hl,variable.filename		;1f72	21 dd 5c 	! . \ 
-	ld de,05e1ah		;1f75	11 1a 5e 	. . ^ 
+	ld hl,trdos_variable.filename		;1f72	21 dd 5c 	! . \ 
+	ld de,trdos_sector_buffer.disc_title		;1f75	11 1a 5e 	. . ^ 
 	ld bc,l0008h		;1f78	01 08 00 	. . . 
 	ldir		;1f7b	ed b0 	. . 
 	call select_bottom_side		;1f7d	cd eb 1f 	. . . 
 	ld b,001h		;1f80	06 01 	. . 
 	ld de,l0008h		;1f82	11 08 00 	. . . 
-	ld hl,variable.tmp_buffer_address		;1f85	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;1f85	21 25 5d 	! % ] 
 	call sub_1e62h		;1f88	cd 62 1e 	. b . 
-	ld a,(variable.move_command_first_track)		;1f8b	3a d6 5c 	: . \ 
+	ld a,(trdos_variable.bad_sectors_or_move_command_first_track)		;1f8b	3a d6 5c 	: . \ 
 	push af			;1f8e	f5 	. 
 	xor a			;1f8f	af 	. 
-	ld (variable.file_type),a		;1f90	32 e5 5c 	2 . \ 
-	ld hl,(05e0ah)		;1f93	2a 0a 5e 	* . ^ 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;1f96	22 d7 5c 	" . \ 
-	ld hl,variable.filename		;1f99	21 dd 5c 	! . \ 
+	ld (trdos_variable.file_type),a		;1f90	32 e5 5c 	2 . \ 
+	ld hl,(trdos_sector_buffer.free_sectors)		;1f93	2a 0a 5e 	* . ^ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1f96	22 d7 5c 	" . \ 
+	ld hl,trdos_variable.filename		;1f99	21 dd 5c 	! . \ 
 	rst 18h			;1f9c	df 	. 
 	ld a,00dh		;1f9d	3e 0d 	> . 
 	rst 10h			;1f9f	d7 	. 
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;1fa0	2a d7 5c 	* . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;1fa0	2a d7 5c 	* . \ 
 	pop af			;1fa3	f1 	. 
 	push hl			;1fa4	e5 	. 
 	ld d,000h		;1fa5	16 00 	. . 
@@ -5521,28 +5528,35 @@ l1f55h:
 	pop bc			;1fb2	c1 	. 
 	call sub_1da9h		;1fb3	cd a9 1d 	. . . 
 	jp exit_dos		;1fb6	c3 d3 01 	. . . 
-l1fb9h:
-	ld bc,l0209h		;1fb9	01 09 02 	. . . 
-	ld a,(bc)			;1fbc	0a 	. 
-	inc bc			;1fbd	03 	. 
-	dec bc			;1fbe	0b 	. 
-	inc b			;1fbf	04 	. 
-	inc c			;1fc0	0c 	. 
-	dec b			;1fc1	05 	. 
-	dec c			;1fc2	0d 	. 
-	ld b,00eh		;1fc3	06 0e 	. . 
-	rlca			;1fc5	07 	. 
-	rrca			;1fc6	0f 	. 
-	ex af,af'			;1fc7	08 	. 
-	djnz $+3		;1fc8	10 01 	. . 
+
+; BLOCK 'unknown_table_1FB9' (start 0x1fb9 end 0x1fca)
+unknown_table_1FB9_start:
+	defb 001h		;1fb9	01 	. 
+l1fbah:
+	defb 009h		;1fba	09 	. 
+	defb 002h		;1fbb	02 	. 
+	defb 00ah		;1fbc	0a 	. 
+	defb 003h		;1fbd	03 	. 
+	defb 00bh		;1fbe	0b 	. 
+	defb 004h		;1fbf	04 	. 
+	defb 00ch		;1fc0	0c 	. 
+	defb 005h		;1fc1	05 	. 
+	defb 00dh		;1fc2	0d 	. 
+	defb 006h		;1fc3	06 	. 
+	defb 00eh		;1fc4	0e 	. 
+	defb 007h		;1fc5	07 	. 
+	defb 00fh		;1fc6	0f 	. 
+	defb 008h		;1fc7	08 	. 
+	defb 010h		;1fc8	10 	. 
+	defb 001h		;1fc9	01 	. 
 sub_1fcah:
 	call point_HL_to_step_rate_of_temporary_drive		;1fca	cd 08 3e 	. . > 
 	or 011h		;1fcd	f6 11 	. . 
 	ld b,a			;1fcf	47 	G 
 	ld a,032h		;1fd0	3e 32 	> 2 
-	call sub_3e44h		;1fd2	cd 44 3e 	. D > 
+	call vg93_command_in_B_with_data_in_A		;1fd2	cd 44 3e 	. D > 
 	ld a,002h		;1fd5	3e 02 	> . 
-	call sub_3e44h		;1fd7	cd 44 3e 	. D > 
+	call vg93_command_in_B_with_data_in_A		;1fd7	cd 44 3e 	. D > 
 	call sub_3dfdh		;1fda	cd fd 3d 	. . = 
 	in a,(01fh)		;1fdd	db 1f 	. . 
 	and 004h		;1fdf	e6 04 	. . 
@@ -5550,17 +5564,17 @@ sub_1fcah:
 	jr z,l1fe7h		;1fe3	28 02 	( . 
 	ld a,028h		;1fe5	3e 28 	> ( 
 l1fe7h:
-	ld (variable.start_file_parameter_or_number_of_tracks),a		;1fe7	32 d7 5c 	2 . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),a		;1fe7	32 d7 5c 	2 . \ 
 	ret			;1fea	c9 	. 
 select_bottom_side:
-	ld a,(variable.system_register)		;1feb	3a 16 5d 	: . ] 
+	ld a,(trdos_variable.system_register)		;1feb	3a 16 5d 	: . ] 
 	or 03ch		;1fee	f6 3c 	. < 
 l1ff0h:
-	ld (variable.system_register),a		;1ff0	32 16 5d 	2 . ] 
+	ld (trdos_variable.system_register),a		;1ff0	32 16 5d 	2 . ] 
 	out (0ffh),a		;1ff3	d3 ff 	. . 
 	ret			;1ff5	c9 	. 
 select_top_side:
-	ld a,(variable.system_register)		;1ff6	3a 16 5d 	: . ] 
+	ld a,(trdos_variable.system_register)		;1ff6	3a 16 5d 	: . ] 
 	and 06fh		;1ff9	e6 6f 	. o 
 	jr l1ff0h		;1ffb	18 f3 	. . 
 sub_1ffdh:
@@ -5568,7 +5582,7 @@ sub_1ffdh:
 	ld a,0f4h		;1ffe	3e f4 	> . 
 l2000h:
 	out (01fh),a		;2000	d3 1f 	. . 
-	ld hl,l1fb9h		;2002	21 b9 1f 	! . . 
+	ld hl,unknown_table_1FB9_start		;2002	21 b9 1f 	! . . 
 	ld c,07fh		;2005	0e 7f 	.  
 l2007h:
 	ld b,00ah		;2007	06 0a 	. . 
@@ -5624,13 +5638,13 @@ l2076h:
 	and 040h		;2078	e6 40 	. @ 
 	jp nz,l3f39h		;207a	c2 39 3f 	. 9 ? 
 sub_207dh:
-	ld a,(variable.start_file_parameter.high)		;207d	3a d8 5c 	: . \ 
+	ld a,(trdos_variable.start_file_parameter.high)		;207d	3a d8 5c 	: . \ 
 	or a			;2080	b7 	. 
 	ret nz			;2081	c0 	. 
 	ld c,07fh		;2082	0e 7f 	.  
 	ld a,e			;2084	7b 	{ 
 	out (03fh),a		;2085	d3 3f 	. ? 
-	ld hl,l1fb9h+1		;2087	21 ba 1f 	! . . 
+	ld hl,l1fbah		;2087	21 ba 1f 	! . . 
 l208ah:
 	ld b,003h		;208a	06 03 	. . 
 	ld a,(hl)			;208c	7e 	~ 
@@ -5647,7 +5661,7 @@ l2090h:
 	pop bc			;209d	c1 	. 
 	jr z,l20a6h		;209e	28 06 	( . 
 	djnz l2090h		;20a0	10 ee 	. . 
-	ld hl,variable.move_command_first_track		;20a2	21 d6 5c 	! . \ 
+	ld hl,trdos_variable.bad_sectors_or_move_command_first_track		;20a2	21 d6 5c 	! . \ 
 	inc (hl)			;20a5	34 	4 
 l20a6h:
 	pop hl			;20a6	e1 	. 
@@ -5668,7 +5682,7 @@ sub_20b1h:
 	djnz sub_20b1h		;20ba	10 f5 	. . 
 	ret			;20bc	c9 	. 
 sub_20bdh:
-	ld hl,variable.start_file_parameter_or_number_of_tracks		;20bd	21 d7 5c 	! . \ 
+	ld hl,trdos_variable.start_file_parameter_or_number_of_tracks		;20bd	21 d7 5c 	! . \ 
 	ld b,(hl)			;20c0	46 	F 
 	xor a			;20c1	af 	. 
 	inc hl			;20c2	23 	# 
@@ -5679,10 +5693,10 @@ l20c6h:
 	inc e			;20c7	1c 	. 
 	ld a,e			;20c8	7b 	{ 
 	ld b,01bh		;20c9	06 1b 	. . 
-	call sub_3e44h		;20cb	cd 44 3e 	. D > 
+	call vg93_command_in_B_with_data_in_A		;20cb	cd 44 3e 	. D > 
 	call select_bottom_side		;20ce	cd eb 1f 	. . . 
 	call sub_1ffdh		;20d1	cd fd 1f 	. . . 
-	ld a,(variable.ch_add.high)		;20d4	3a da 5c 	: . \ 
+	ld a,(trdos_variable.ch_add.high)		;20d4	3a da 5c 	: . \ 
 	cp 080h		;20d7	fe 80 	. . 
 	jr nz,l20e1h		;20d9	20 06 	  . 
 	call select_top_side		;20db	cd f6 1f 	. . . 
@@ -5693,25 +5707,25 @@ l20e1h:
 	ret			;20e4	c9 	. 
 sub_20e5h:
 	push af			;20e5	f5 	. 
-	ld a,(variable.two_files_drive)		;20e6	3a f8 5c 	: . \ 
+	ld a,(trdos_variable.two_files_drive)		;20e6	3a f8 5c 	: . \ 
 	cp 0ffh		;20e9	fe ff 	. . 
 	jr z,l211ch		;20eb	28 2f 	( / 
 	pop af			;20ed	f1 	. 
 	call sub_2970h		;20ee	cd 70 29 	. p ) 
 sub_20f1h:
 	push af			;20f1	f5 	. 
-	ld a,(variable.interface_1_zone)		;20f2	3a b6 5c 	: . \ 
+	ld a,(trdos_variable.interface_1_zone)		;20f2	3a b6 5c 	: . \ 
 	cp 0f4h		;20f5	fe f4 	. . 
 	jr z,l211ch		;20f7	28 23 	( # 
 	xor a			;20f9	af 	. 
-	ld hl,variable.interface_1_flag		;20fa	21 18 5d 	! . ] 
+	ld hl,trdos_variable.interface_1_flag		;20fa	21 18 5d 	! . ] 
 	or (hl)			;20fd	b6 	. 
 	ld (hl),0ffh		;20fe	36 ff 	6 . 
 	jr z,l211ch		;2100	28 1a 	( . 
-	ld a,(variable.buffer_flag)		;2102	3a 0c 5d 	: . ] 
+	ld a,(trdos_variable.buffer_flag)		;2102	3a 0c 5d 	: . ] 
 	or a			;2105	b7 	. 
-	ld hl,variable.unknown_23747		;2106	21 c3 5c 	! . \ 
-	ld de,variable.r_channel.input.high		;2109	11 33 5d 	. 3 ] 
+	ld hl,trdos_variable.unknown_23747		;2106	21 c3 5c 	! . \ 
+	ld de,trdos_variable.r_channel.input.high		;2109	11 33 5d 	. 3 ] 
 	jr nz,l2111h		;210c	20 03 	  . 
 	ld de,05e34h		;210e	11 34 5e 	. 4 ^ 
 l2111h:
@@ -5737,11 +5751,11 @@ sub_211eh:
 	ret			;2129	c9 	. 
 sub_212ah:
 	ld de,(sys_e_line)		;212a	ed 5b 59 5c 	. [ Y \ 
-	ld hl,variable.entered_line_3_first_chars		;212e	21 20 5d 	!   ] 
+	ld hl,trdos_variable.entered_line_3_first_chars		;212e	21 20 5d 	!   ] 
 	call sub_02b0h		;2131	cd b0 02 	. . . 
 	ret			;2134	c9 	. 
 sub_2135h:
-	ld a,(variable.error_code)		;2135	3a 0f 5d 	: . ] 
+	ld a,(trdos_variable.error_code)		;2135	3a 0f 5d 	: . ] 
 	or a			;2138	b7 	. 
 	push af			;2139	f5 	. 
 	call nz,sub_212ah		;213a	c4 2a 21 	. * ! 
@@ -5749,7 +5763,7 @@ sub_2135h:
 	call z,sub_211eh		;213e	cc 1e 21 	. . ! 
 	ld hl,(sys_e_line)		;2141	2a 59 5c 	* Y \ 
 	call sub_3d80h		;2144	cd 80 3d 	. . = 
-	ld a,(variable.default_drive)		;2147	3a 19 5d 	: . ] 
+	ld a,(trdos_variable.default_drive)		;2147	3a 19 5d 	: . ] 
 	add a,041h		;214a	c6 41 	. A 
 	rst 10h			;214c	d7 	. 
 	ld a,03eh		;214d	3e 3e 	> > 
@@ -5762,21 +5776,21 @@ sub_2158h:
 	call get_char		;215b	cd 8c 1d 	. . . 
 	cp 02ch		;215e	fe 2c 	. , 
 	jp nz,error.wrong_drive_letter		;2160	c2 1a 1d 	. . . 
-	ld hl,(variable.file_size)		;2163	2a db 5c 	* . \ 
-	ld (variable.ch_add),hl		;2166	22 d9 5c 	" . \ 
+	ld hl,(trdos_variable.file_size)		;2163	2a db 5c 	* . \ 
+	ld (trdos_variable.ch_add),hl		;2166	22 d9 5c 	" . \ 
 	call sub_1e0bh		;2169	cd 0b 1e 	. . . 
 	call pop_hl_if_checking_syntax		;216c	cd 75 1d 	. u . 
-	ld hl,(variable.file_size)		;216f	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.file_size)		;216f	2a db 5c 	* . \ 
 	ld a,h			;2172	7c 	| 
 	or a			;2173	b7 	. 
 	jp nz,error.wrong_drive_letter		;2174	c2 1a 1d 	. . . 
 	inc hl			;2177	23 	# 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;2178	22 d7 5c 	" . \ 
-	ld hl,(variable.ch_add)		;217b	2a d9 5c 	* . \ 
-	ld (variable.file_size),hl		;217e	22 db 5c 	" . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;2178	22 d7 5c 	" . \ 
+	ld hl,(trdos_variable.ch_add)		;217b	2a d9 5c 	* . \ 
+	ld (trdos_variable.file_size),hl		;217e	22 db 5c 	" . \ 
 	ret			;2181	c9 	. 
 cli_command.open_channel:
-	ld hl,(variable.command_line_address)		;2182	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;2182	2a 11 5d 	* . ] 
 	ld (sys_ch_add),hl		;2185	22 5d 5c 	" ] \ 
 	call sub_1e0bh		;2188	cd 0b 1e 	. . . 
 	call sub_1dd0h		;218b	cd d0 1d 	. . . 
@@ -5798,12 +5812,12 @@ l219ah:
 	cp 057h		;21a9	fe 57 	. W 
 	jp nz,error.wrong_drive_letter		;21ab	c2 1a 1d 	. . . 
 l21aeh:
-	ld (variable.data_file_mode),a		;21ae	32 09 5d 	2 . ] 
+	ld (trdos_variable.data_file_mode),a		;21ae	32 09 5d 	2 . ] 
 	call pop_hl_if_checking_syntax		;21b1	cd 75 1d 	. u . 
 	ld a,023h		;21b4	3e 23 	> # 
-	ld (variable.file_type),a		;21b6	32 e5 5c 	2 . \ 
+	ld (trdos_variable.file_type),a		;21b6	32 e5 5c 	2 . \ 
 	ld a,000h		;21b9	3e 00 	> . 
-	ld (variable.file_start),a		;21bb	32 e6 5c 	2 . \ 
+	ld (trdos_variable.file_start),a		;21bb	32 e6 5c 	2 . \ 
 	call sub_21dbh		;21be	cd db 21 	. . ! 
 	push af			;21c1	f5 	. 
 	call sub_220fh		;21c2	cd 0f 22 	. . " 
@@ -5812,28 +5826,28 @@ l21aeh:
 	call nz,sub_2288h		;21c7	c4 88 22 	. . " 
 	pop af			;21ca	f1 	. 
 	call sub_2242h		;21cb	cd 42 22 	. B " 
-	ld hl,(variable.command_line_address)		;21ce	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;21ce	2a 11 5d 	* . ] 
 	ld bc,l0124h		;21d1	01 24 01 	. $ . 
 	add hl,bc			;21d4	09 	. 
-	ld (variable.command_line_address),hl		;21d5	22 11 5d 	" . ] 
+	ld (trdos_variable.command_line_address),hl		;21d5	22 11 5d 	" . ] 
 	jp exit_dos		;21d8	c3 d3 01 	. . . 
 sub_21dbh:
 	ld a,00ah		;21db	3e 0a 	> . 
-	ld (variable.find_command_symbols),a		;21dd	32 06 5d 	2 . ] 
+	ld (trdos_variable.find_command_symbols),a		;21dd	32 06 5d 	2 . ] 
 	call sub_1cb0h		;21e0	cd b0 1c 	. . . 
 	push af			;21e3	f5 	. 
 	call read_system_track		;21e4	cd 05 04 	. . . 
 	pop af			;21e7	f1 	. 
 	jr nz,l2206h		;21e8	20 1c 	  . 
-	ld a,(variable.data_file_mode)		;21ea	3a 09 5d 	: . ] 
+	ld a,(trdos_variable.data_file_mode)		;21ea	3a 09 5d 	: . ] 
 	cp 052h		;21ed	fe 52 	. R 
 	jr z,l2201h		;21ef	28 10 	( . 
 l21f1h:
-	ld hl,variable.file_start		;21f1	21 e6 5c 	! . \ 
+	ld hl,trdos_variable.file_start		;21f1	21 e6 5c 	! . \ 
 	inc (hl)			;21f4	34 	4 
 	call sub_1cb3h		;21f5	cd b3 1c 	. . . 
 	jr z,l21f1h		;21f8	28 f7 	( . 
-	ld hl,variable.file_start		;21fa	21 e6 5c 	! . \ 
+	ld hl,trdos_variable.file_start		;21fa	21 e6 5c 	! . \ 
 	dec (hl)			;21fd	35 	5 
 	call sub_1cb3h		;21fe	cd b3 1c 	. . . 
 l2201h:
@@ -5841,12 +5855,12 @@ l2201h:
 	xor a			;2204	af 	. 
 	ret			;2205	c9 	. 
 l2206h:
-	ld a,(variable.data_file_mode)		;2206	3a 09 5d 	: . ] 
+	ld a,(trdos_variable.data_file_mode)		;2206	3a 09 5d 	: . ] 
 	cp 052h		;2209	fe 52 	. R 
 	ret nz			;220b	c0 	. 
 	jp print_no_files_error_and_exit_DOS		;220c	c3 d9 03 	. . . 
 sub_220fh:
-	ld a,(variable.file_size)		;220f	3a db 5c 	: . \ 
+	ld a,(trdos_variable.file_size)		;220f	3a db 5c 	: . \ 
 	rst 20h			;2212	e7 	. 
 	defw 01727h		;2213	27 17 	' . 
 	ld a,b			;2215	78 	x 
@@ -5868,7 +5882,7 @@ sub_222fh:
 	push hl			;222f	e5 	. 
 	ld c,020h		;2230	0e 20 	.   
 	rst 28h			;2232	ef 	. 
-	ld a,(variable.start_file_parameter_or_number_of_tracks)		;2233	3a d7 5c 	: . \ 
+	ld a,(trdos_variable.start_file_parameter_or_number_of_tracks)		;2233	3a d7 5c 	: . \ 
 	ld (hl),a			;2236	77 	w 
 	inc hl			;2237	23 	# 
 	xor a			;2238	af 	. 
@@ -5892,11 +5906,11 @@ sub_2242h:
 	inc hl			;2252	23 	# 
 	ld (hl),d			;2253	72 	r 
 	call sub_22b2h		;2254	cd b2 22 	. . " 
-	ld a,(variable.data_file_mode)		;2257	3a 09 5d 	: . ] 
+	ld a,(trdos_variable.data_file_mode)		;2257	3a 09 5d 	: . ] 
 	cp 0a5h		;225a	fe a5 	. . 
 	call z,sub_222fh		;225c	cc 2f 22 	. / " 
 	jr z,l226bh		;225f	28 0a 	( . 
-	ld a,(variable.data_file_mode)		;2261	3a 09 5d 	: . ] 
+	ld a,(trdos_variable.data_file_mode)		;2261	3a 09 5d 	: . ] 
 	cp 052h		;2264	fe 52 	. R 
 	ld a,0ffh		;2266	3e ff 	> . 
 	jr nz,l226bh		;2268	20 01 	  . 
@@ -5922,21 +5936,21 @@ l2270h:
 	call z,read_sectors		;2284	cc 3d 1e 	. = . 
 	ret			;2287	c9 	. 
 sub_2288h:
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;2288	2a d7 5c 	* . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;2288	2a d7 5c 	* . \ 
 	push hl			;228b	e5 	. 
 	ld hl,l2000h		;228c	21 00 20 	! .   
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;228f	22 d7 5c 	" . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;228f	22 d7 5c 	" . \ 
 	call sub_229ah		;2292	cd 9a 22 	. . " 
 	pop hl			;2295	e1 	. 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;2296	22 d7 5c 	" . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;2296	22 d7 5c 	" . \ 
 	ret			;2299	c9 	. 
 sub_229ah:
 	ld hl,message_interface_1_start		;229a	21 00 10 	! . . 
-	ld (variable.ch_add),hl		;229d	22 d9 5c 	" . \ 
+	ld (trdos_variable.ch_add),hl		;229d	22 d9 5c 	" . \ 
 	call sub_1ac4h		;22a0	cd c4 1a 	. . . 
 	call sub_1b59h		;22a3	cd 59 1b 	. Y . 
 	ld hl,l0000h		;22a6	21 00 00 	! . . 
-	ld (variable.file_length_in_bytes),hl		;22a9	22 e8 5c 	" . \ 
+	ld (trdos_variable.file_length_in_bytes),hl		;22a9	22 e8 5c 	" . \ 
 	call sub_166bh		;22ac	cd 6b 16 	. k . 
 	jp sub_1e43h		;22af	c3 43 1e 	. C . 
 sub_22b2h:
@@ -5974,23 +5988,23 @@ l22c4h:
 	inc hl			;22e1	23 	# 
 	ld (hl),001h		;22e2	36 01 	6 . 
 	inc hl			;22e4	23 	# 
-	ld a,(variable.temporary_drive)		;22e5	3a f6 5c 	: . \ 
+	ld a,(trdos_variable.current_temporary_drive)		;22e5	3a f6 5c 	: . \ 
 	ld (hl),a			;22e8	77 	w 
 	inc hl			;22e9	23 	# 
-	ld a,(variable.find_command_found_file)		;22ea	3a 1e 5d 	: . ] 
+	ld a,(trdos_variable.find_command_found_file)		;22ea	3a 1e 5d 	: . ] 
 	ld (hl),a			;22ed	77 	w 
 	inc hl			;22ee	23 	# 
-	ld a,(variable.data_file_mode)		;22ef	3a 09 5d 	: . ] 
+	ld a,(trdos_variable.data_file_mode)		;22ef	3a 09 5d 	: . ] 
 	cp 052h		;22f2	fe 52 	. R 
 	ld (hl),000h		;22f4	36 00 	6 . 
 	jr z,l22fch		;22f6	28 04 	( . 
-	ld a,(variable.file_length_in_bytes)		;22f8	3a e8 5c 	: . \ 
+	ld a,(trdos_variable.file_length_in_bytes)		;22f8	3a e8 5c 	: . \ 
 	ld (hl),a			;22fb	77 	w 
 l22fch:
 	inc hl			;22fc	23 	# 
 	ld (hl),b			;22fd	70 	p 
 	jr z,l2304h		;22fe	28 04 	( . 
-	ld a,(variable.file_length_in_bytes.high)		;2300	3a e9 5c 	: . \ 
+	ld a,(trdos_variable.file_length_in_bytes.high)		;2300	3a e9 5c 	: . \ 
 	ld (hl),a			;2303	77 	w 
 l2304h:
 	inc hl			;2304	23 	# 
@@ -6000,7 +6014,7 @@ l2304h:
 	ld de,rst_10		;2308	11 10 00 	. . . 
 	add hl,de			;230b	19 	. 
 	ex de,hl			;230c	eb 	. 
-	ld hl,variable.filename		;230d	21 dd 5c 	! . \ 
+	ld hl,trdos_variable.filename		;230d	21 dd 5c 	! . \ 
 	ld bc,rst_10		;2310	01 10 00 	. . . 
 	ldir		;2313	ed b0 	. . 
 	pop hl			;2315	e1 	. 
@@ -6067,24 +6081,24 @@ sub_2367h:
 	ret			;236f	c9 	. 
 sub_2370h:
 	call sub_2367h		;2370	cd 67 23 	. g # 
-	ld (variable.start_file_parameter_or_number_of_tracks),de		;2373	ed 53 d7 5c 	. S . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),de		;2373	ed 53 d7 5c 	. S . \ 
 	jr l2381h		;2377	18 08 	. . 
 l2379h:
 	call sub_2367h		;2379	cd 67 23 	. g # 
 	inc e			;237c	1c 	. 
-	ld (variable.start_file_parameter_or_number_of_tracks),de		;237d	ed 53 d7 5c 	. S . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),de		;237d	ed 53 d7 5c 	. S . \ 
 l2381h:
 	call sub_229ah		;2381	cd 9a 22 	. . " 
 	call sub_2970h		;2384	cd 70 29 	. p ) 
 	ld c,010h		;2387	0e 10 	. . 
 	rst 28h			;2389	ef 	. 
 	ex de,hl			;238a	eb 	. 
-	ld hl,variable.filename		;238b	21 dd 5c 	! . \ 
+	ld hl,trdos_variable.filename		;238b	21 dd 5c 	! . \ 
 	ld bc,rst_10		;238e	01 10 00 	. . . 
 	ldir		;2391	ed b0 	. . 
 	ld c,00ch		;2393	0e 0c 	. . 
 	rst 28h			;2395	ef 	. 
-	ld a,(variable.find_command_found_file)		;2396	3a 1e 5d 	: . ] 
+	ld a,(trdos_variable.find_command_found_file)		;2396	3a 1e 5d 	: . ] 
 	ld (hl),a			;2399	77 	w 
 	ret			;239a	c9 	. 
 sub_239bh:
@@ -6129,7 +6143,7 @@ sub_23cfh:
 	inc (hl)			;23d4	34 	4 
 	ld c,010h		;23d5	0e 10 	. . 
 	rst 28h			;23d7	ef 	. 
-	ld de,variable.filename		;23d8	11 dd 5c 	. . \ 
+	ld de,trdos_variable.filename		;23d8	11 dd 5c 	. . \ 
 	ld bc,rst_10		;23db	01 10 00 	. . . 
 	ldir		;23de	ed b0 	. . 
 	call sub_1cb3h		;23e0	cd b3 1c 	. . . 
@@ -6139,12 +6153,12 @@ sub_23e4h:
 	ld c,010h		;23e7	0e 10 	. . 
 	rst 28h			;23e9	ef 	. 
 	ex de,hl			;23ea	eb 	. 
-	ld hl,variable.filename		;23eb	21 dd 5c 	! . \ 
+	ld hl,trdos_variable.filename		;23eb	21 dd 5c 	! . \ 
 	ld bc,rst_10		;23ee	01 10 00 	. . . 
 	ldir		;23f1	ed b0 	. . 
 	ld c,00ch		;23f3	0e 0c 	. . 
 	rst 28h			;23f5	ef 	. 
-	ld a,(variable.find_command_found_file)		;23f6	3a 1e 5d 	: . ] 
+	ld a,(trdos_variable.find_command_found_file)		;23f6	3a 1e 5d 	: . ] 
 	ld (hl),a			;23f9	77 	w 
 	xor a			;23fa	af 	. 
 	ret			;23fb	c9 	. 
@@ -6203,14 +6217,14 @@ sub_2443h:
 	ld a,(hl)			;2446	7e 	~ 
 	jp init_disk_drive_in_A_register		;2447	c3 cb 3d 	. . = 
 l244ah:
-	ld hl,variable.0xc9		;244a	21 c2 5c 	! . \ 
+	ld hl,trdos_variable.0xc9		;244a	21 c2 5c 	! . \ 
 	push hl			;244d	e5 	. 
 	ld hl,sub_20f1h		;244e	21 f1 20 	! .   
 	push hl			;2451	e5 	. 
 	push af			;2452	f5 	. 
 	call sub_20f1h		;2453	cd f1 20 	. .   
 	ld a,00ah		;2456	3e 0a 	> . 
-	ld (variable.find_command_symbols),a		;2458	32 06 5d 	2 . ] 
+	ld (trdos_variable.find_command_symbols),a		;2458	32 06 5d 	2 . ] 
 	pop af			;245b	f1 	. 
 	call sub_24a2h		;245c	cd a2 24 	. . $ 
 	push af			;245f	f5 	. 
@@ -6235,7 +6249,7 @@ sub_246eh:
 	add hl,bc			;247f	09 	. 
 	cp (hl)			;2480	be 	. 
 	ret nz			;2481	c0 	. 
-	ld hl,variable.interface_1_zone		;2482	21 b6 5c 	! . \ 
+	ld hl,trdos_variable.interface_1_zone		;2482	21 b6 5c 	! . \ 
 	ld a,(hl)			;2485	7e 	~ 
 	cp 0f4h		;2486	fe f4 	. . 
 	jr z,l2492h		;2488	28 08 	( . 
@@ -6284,7 +6298,7 @@ l24c2h:
 	ld c,(hl)			;24c2	4e 	N 
 	ld a,d			;24c3	7a 	z 
 	ex de,hl			;24c4	eb 	. 
-	ld hl,(variable.stack_sp_copy)		;24c5	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;24c5	2a cf 5c 	* . \ 
 	add hl,bc			;24c8	09 	. 
 	cp 006h		;24c9	fe 06 	. . 
 	ld (hl),a			;24cb	77 	w 
@@ -6328,21 +6342,21 @@ l24f2h:
 	ret			;24f7	c9 	. 
 sub_24f8h:
 	ld hl,(sys_worksp)		;24f8	2a 61 5c 	* a \ 
-	ld (variable.stack_sp_copy),hl		;24fb	22 cf 5c 	" . \ 
+	ld (trdos_variable.stack_sp_copy),hl		;24fb	22 cf 5c 	" . \ 
 	ld bc,rst_10		;24fe	01 10 00 	. . . 
 	jp bc_spaces		;2501	c3 23 1e 	. # . 
 sub_2504h:
 	ld (hl),00dh		;2504	36 0d 	6 . 
 	ld hl,(sys_ch_add)		;2506	2a 5d 5c 	* ] \ 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;2509	22 d7 5c 	" . \ 
-	ld hl,(variable.stack_sp_copy)		;250c	2a cf 5c 	* . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;2509	22 d7 5c 	" . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;250c	2a cf 5c 	* . \ 
 	ld (sys_ch_add),hl		;250f	22 5d 5c 	" ] \ 
 	ld hl,sys_flags		;2512	21 3b 5c 	! ; \ 
 	res 7,(hl)		;2515	cb be 	. . 
 	call expt_1num		;2517	cd c1 1d 	. . . 
 	ld hl,sys_flags		;251a	21 3b 5c 	! ; \ 
 	set 7,(hl)		;251d	cb fe 	. . 
-	ld hl,(variable.stack_sp_copy)		;251f	2a cf 5c 	* . \ 
+	ld hl,(trdos_variable.stack_sp_copy)		;251f	2a cf 5c 	* . \ 
 	ld (sys_ch_add),hl		;2522	22 5d 5c 	" ] \ 
 	call expt_1num		;2525	cd c1 1d 	. . . 
 	call find_int2		;2528	cd b9 1d 	. . . 
@@ -6353,24 +6367,24 @@ sub_2504h:
 	ld b,(hl)			;2530	46 	F 
 	xor a			;2531	af 	. 
 	ld hl,l0000h		;2532	21 00 00 	! . . 
-	ld (variable.file_size),hl		;2535	22 db 5c 	" . \ 
+	ld (trdos_variable.file_size),hl		;2535	22 db 5c 	" . \ 
 l2538h:
 	add hl,de			;2538	19 	. 
 	jr nc,l2544h		;2539	30 09 	0 . 
 	push hl			;253b	e5 	. 
-	ld hl,(variable.file_size)		;253c	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.file_size)		;253c	2a db 5c 	* . \ 
 	inc hl			;253f	23 	# 
-	ld (variable.file_size),hl		;2540	22 db 5c 	" . \ 
+	ld (trdos_variable.file_size),hl		;2540	22 db 5c 	" . \ 
 	pop hl			;2543	e1 	. 
 l2544h:
 	djnz l2538h		;2544	10 f2 	. . 
-	ld (variable.ch_add),hl		;2546	22 d9 5c 	" . \ 
-	ld a,(variable.file_size)		;2549	3a db 5c 	: . \ 
-	ld hl,variable.ch_add.high		;254c	21 da 5c 	! . \ 
+	ld (trdos_variable.ch_add),hl		;2546	22 d9 5c 	" . \ 
+	ld a,(trdos_variable.file_size)		;2549	3a db 5c 	: . \ 
+	ld hl,trdos_variable.ch_add.high		;254c	21 da 5c 	! . \ 
 	rrd		;254f	ed 67 	. g 
 	and 00fh		;2551	e6 0f 	. . 
-	ld (variable.file_size),a		;2553	32 db 5c 	2 . \ 
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;2556	2a d7 5c 	* . \ 
+	ld (trdos_variable.file_size),a		;2553	32 db 5c 	2 . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;2556	2a d7 5c 	* . \ 
 	ld (sys_ch_add),hl		;2559	22 5d 5c 	" ] \ 
 	call sub_2568h		;255c	cd 68 25 	. h % 
 	ld c,021h		;255f	0e 21 	. ! 
@@ -6383,30 +6397,30 @@ l2544h:
 sub_2568h:
 	ld c,019h		;2568	0e 19 	. . 
 	rst 28h			;256a	ef 	. 
-	ld a,(variable.ch_add.high)		;256b	3a da 5c 	: . \ 
+	ld a,(trdos_variable.ch_add.high)		;256b	3a da 5c 	: . \ 
 	cp (hl)			;256e	be 	. 
 	jp nz,l2584h		;256f	c2 84 25 	. . % 
 	ld c,00eh		;2572	0e 0e 	. . 
 	rst 28h			;2574	ef 	. 
-	ld a,(variable.file_size)		;2575	3a db 5c 	: . \ 
+	ld a,(trdos_variable.file_size)		;2575	3a db 5c 	: . \ 
 	cp (hl)			;2578	be 	. 
 	jp nz,l25a7h		;2579	c2 a7 25 	. . % 
 l257ch:
 	ld c,00dh		;257c	0e 0d 	. . 
 	rst 28h			;257e	ef 	. 
-	ld a,(variable.ch_add)		;257f	3a d9 5c 	: . \ 
+	ld a,(trdos_variable.ch_add)		;257f	3a d9 5c 	: . \ 
 	ld (hl),a			;2582	77 	w 
 	ret			;2583	c9 	. 
 l2584h:
 	call sub_25cah		;2584	cd ca 25 	. . % 
 	call nz,sub_25c3h		;2587	c4 c3 25 	. . % 
-	ld a,(variable.ch_add.high)		;258a	3a da 5c 	: . \ 
+	ld a,(trdos_variable.ch_add.high)		;258a	3a da 5c 	: . \ 
 	ld c,019h		;258d	0e 19 	. . 
 	rst 28h			;258f	ef 	. 
 	ld (hl),a			;2590	77 	w 
 	ld c,010h		;2591	0e 10 	. . 
 	rst 28h			;2593	ef 	. 
-	ld de,variable.filename		;2594	11 dd 5c 	. . \ 
+	ld de,trdos_variable.filename		;2594	11 dd 5c 	. . \ 
 	ld bc,rst_10		;2597	01 10 00 	. . . 
 	ldir		;259a	ed b0 	. . 
 	call sub_1cb3h		;259c	cd b3 1c 	. . . 
@@ -6417,7 +6431,7 @@ l25a7h:
 	call sub_25cah		;25a7	cd ca 25 	. . % 
 	call nz,sub_25c3h		;25aa	c4 c3 25 	. . % 
 l25adh:
-	ld a,(variable.file_size)		;25ad	3a db 5c 	: . \ 
+	ld a,(trdos_variable.file_size)		;25ad	3a db 5c 	: . \ 
 	ld c,00eh		;25b0	0e 0e 	. . 
 	rst 28h			;25b2	ef 	. 
 	ld (hl),a			;25b3	77 	w 
@@ -6426,7 +6440,7 @@ l25adh:
 	call sub_2418h		;25b8	cd 18 24 	. . $ 
 	pop hl			;25bb	e1 	. 
 	dec hl			;25bc	2b 	+ 
-	ld a,(variable.ch_add)		;25bd	3a d9 5c 	: . \ 
+	ld a,(trdos_variable.ch_add)		;25bd	3a d9 5c 	: . \ 
 	ld (hl),a			;25c0	77 	w 
 	jr l257ch		;25c1	18 b9 	. . 
 sub_25c3h:
@@ -6441,18 +6455,18 @@ sub_25cah:
 	ld (hl),000h		;25cf	36 00 	6 . 
 	ret			;25d1	c9 	. 
 l25d2h:
-	ld hl,(variable.ch_add.high)		;25d2	2a da 5c 	* . \ 
+	ld hl,(trdos_variable.ch_add.high)		;25d2	2a da 5c 	* . \ 
 	ld h,020h		;25d5	26 20 	&   
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;25d7	22 d7 5c 	" . \ 
-	ld hl,(variable.ch_add)		;25da	2a d9 5c 	* . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;25d7	22 d7 5c 	" . \ 
+	ld hl,(trdos_variable.ch_add)		;25da	2a d9 5c 	* . \ 
 	push hl			;25dd	e5 	. 
-	ld hl,(variable.file_size)		;25de	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.file_size)		;25de	2a db 5c 	* . \ 
 	push hl			;25e1	e5 	. 
 	call l2381h		;25e2	cd 81 23 	. . # 
 	pop hl			;25e5	e1 	. 
-	ld (variable.file_size),hl		;25e6	22 db 5c 	" . \ 
+	ld (trdos_variable.file_size),hl		;25e6	22 db 5c 	" . \ 
 	pop hl			;25e9	e1 	. 
-	ld (variable.ch_add),hl		;25ea	22 d9 5c 	" . \ 
+	ld (trdos_variable.ch_add),hl		;25ea	22 d9 5c 	" . \ 
 	jr l25adh		;25ed	18 be 	. . 
 l25efh:
 	call sub_20f1h		;25ef	cd f1 20 	. .   
@@ -6474,7 +6488,7 @@ l260fh:
 	call sub_262bh		;260f	cd 2b 26 	. + & 
 	jr c,l261dh		;2612	38 09 	8 . 
 l2614h:
-	ld hl,variable.0xc9		;2614	21 c2 5c 	! . \ 
+	ld hl,trdos_variable.0xc9		;2614	21 c2 5c 	! . \ 
 	push hl			;2617	e5 	. 
 	ld hl,sub_20e5h		;2618	21 e5 20 	! .   
 	push hl			;261b	e5 	. 
@@ -6490,7 +6504,7 @@ l2626h:
 	jr l2614h		;2629	18 e9 	. . 
 sub_262bh:
 	ld a,00ah		;262b	3e 0a 	> . 
-	ld (variable.find_command_symbols),a		;262d	32 06 5d 	2 . ] 
+	ld (trdos_variable.find_command_symbols),a		;262d	32 06 5d 	2 . ] 
 	call sub_2650h		;2630	cd 50 26 	. P & 
 	jr z,l2642h		;2633	28 0d 	( . 
 	cp 07fh		;2635	fe 7f 	.  
@@ -6516,11 +6530,11 @@ sub_2650h:
 	or a			;2654	b7 	. 
 	ret			;2655	c9 	. 
 cli_command.close_channel:
-	ld hl,(variable.command_line_address)		;2656	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;2656	2a 11 5d 	* . ] 
 	ld (sys_ch_add),hl		;2659	22 5d 5c 	" ] \ 
 	call sub_1e0bh		;265c	cd 0b 1e 	. . . 
 	call pop_hl_if_checking_syntax		;265f	cd 75 1d 	. u . 
-	ld a,(variable.file_size)		;2662	3a db 5c 	: . \ 
+	ld a,(trdos_variable.file_size)		;2662	3a db 5c 	: . \ 
 	rst 20h			;2665	e7 	. 
 	defw 01727h		;2666	27 17 	' . 
 	ld a,b			;2668	78 	x 
@@ -6537,20 +6551,20 @@ cli_command.close_channel:
 	ld (hl),000h		;267b	36 00 	6 . 
 	inc hl			;267d	23 	# 
 	ld (hl),000h		;267e	36 00 	6 . 
-	ld (variable.ch_add),bc		;2680	ed 43 d9 5c 	. C . \ 
+	ld (trdos_variable.ch_add),bc		;2680	ed 43 d9 5c 	. C . \ 
 	ld hl,(sys_chans)		;2684	2a 4f 5c 	* O \ 
 	add hl,bc			;2687	09 	. 
 	dec hl			;2688	2b 	+ 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;2689	22 d7 5c 	" . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;2689	22 d7 5c 	" . \ 
 	call sub_26ceh		;268c	cd ce 26 	. . & 
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;268f	2a d7 5c 	* . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;268f	2a d7 5c 	* . \ 
 	ld bc,l0124h		;2692	01 24 01 	. $ . 
 	call reclaim_2		;2695	cd 2e 1e 	. . . 
 	ld hl,sys_strms		;2698	21 10 5c 	! . \ 
 	ld b,010h		;269b	06 10 	. . 
 l269dh:
 	push bc			;269d	c5 	. 
-	ld bc,(variable.ch_add)		;269e	ed 4b d9 5c 	. K . \ 
+	ld bc,(trdos_variable.ch_add)		;269e	ed 4b d9 5c 	. K . \ 
 	ld e,(hl)			;26a2	5e 	^ 
 	inc hl			;26a3	23 	# 
 	ld d,(hl)			;26a4	56 	V 
@@ -6576,10 +6590,10 @@ l26bch:
 	inc hl			;26bc	23 	# 
 	pop bc			;26bd	c1 	. 
 	djnz l269dh		;26be	10 dd 	. . 
-	ld hl,(variable.command_line_address)		;26c0	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;26c0	2a 11 5d 	* . ] 
 	ld bc,l0124h		;26c3	01 24 01 	. $ . 
 	sbc hl,bc		;26c6	ed 42 	. B 
-	ld (variable.command_line_address),hl		;26c8	22 11 5d 	" . ] 
+	ld (trdos_variable.command_line_address),hl		;26c8	22 11 5d 	" . ] 
 	jp exit_dos		;26cb	c3 d3 01 	. . . 
 sub_26ceh:
 	ld bc,l000fh		;26ce	01 0f 00 	. . . 
@@ -6587,7 +6601,7 @@ sub_26ceh:
 	ld a,(hl)			;26d2	7e 	~ 
 	or a			;26d3	b7 	. 
 	ret z			;26d4	c8 	. 
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;26d5	2a d7 5c 	* . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;26d5	2a d7 5c 	* . \ 
 	ld (sys_curchl),hl		;26d8	22 51 5c 	" Q \ 
 	call sub_26e1h		;26db	cd e1 26 	. . & 
 	jp sub_23fch		;26de	c3 fc 23 	. . # 
@@ -6604,7 +6618,7 @@ sub_26e1h:
 	ld (hl),d			;26ee	72 	r 
 	ld c,010h		;26ef	0e 10 	. . 
 	rst 28h			;26f1	ef 	. 
-	ld de,variable.filename		;26f2	11 dd 5c 	. . \ 
+	ld de,trdos_variable.filename		;26f2	11 dd 5c 	. . \ 
 	ld bc,rst_10		;26f5	01 10 00 	. . . 
 	ldir		;26f8	ed b0 	. . 
 	call sub_2443h		;26fa	cd 43 24 	. C $ 
@@ -6652,26 +6666,26 @@ set_sys_err_nr:
 	jr set_sys_err_nr		;2737	18 f8 	. . 
 test_track:
 	xor a			;2739	af 	. 
-	ld (variable.start_file_parameter.high),a		;273a	32 d8 5c 	2 . \ 
-	ld (variable.move_command_first_track),a		;273d	32 d6 5c 	2 . \ 
+	ld (trdos_variable.start_file_parameter.high),a		;273a	32 d8 5c 	2 . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;273d	32 d6 5c 	2 . \ 
 	in a,(01fh)		;2740	db 1f 	. . 
-	ld (variable.disk_drive_ready),a		;2742	32 cd 5c 	2 . \ 
+	ld (trdos_variable.disk_drive_ready),a		;2742	32 cd 5c 	2 . \ 
 	ld e,d			;2745	5a 	Z 
 	push de			;2746	d5 	. 
 	ld a,e			;2747	7b 	{ 
 	out (07fh),a		;2748	d3 7f 	.  
 	ld a,018h		;274a	3e 18 	> . 
 	call l3d9ah		;274c	cd 9a 3d 	. . = 
-	ld a,(variable.disk_drive_ready)		;274f	3a cd 5c 	: . \ 
+	ld a,(trdos_variable.disk_drive_ready)		;274f	3a cd 5c 	: . \ 
 	and 080h		;2752	e6 80 	. . 
 	call nz,sub_3ea0h		;2754	c4 a0 3e 	. . > 
 	pop de			;2757	d1 	. 
 	call sub_207dh		;2758	cd 7d 20 	. }   
-	ld a,(variable.move_command_first_track)		;275b	3a d6 5c 	: . \ 
+	ld a,(trdos_variable.bad_sectors_or_move_command_first_track)		;275b	3a d6 5c 	: . \ 
 	or a			;275e	b7 	. 
 	ret z			;275f	c8 	. 
 	ld a,007h		;2760	3e 07 	> . 
-	ld (variable.error_code),a		;2762	32 0f 5d 	2 . ] 
+	ld (trdos_variable.error_code),a		;2762	32 0f 5d 	2 . ] 
 	ret			;2765	c9 	. 
 message.ok:
 	defb 04fh		;2766	4f 	O 
@@ -6903,19 +6917,19 @@ message.file_exists:
 execute_command_in_C:
 	push af			;283c	f5 	. 
 	push bc			;283d	c5 	. 
-	ld (variable.de_copy),de		;283e	ed 53 04 5d 	. S . ] 
-	ld (variable.hl_copy),hl		;2842	22 02 5d 	" . ] 
+	ld (trdos_variable.de_copy),de		;283e	ed 53 04 5d 	. S . ] 
+	ld (trdos_variable.hl_copy),hl		;2842	22 02 5d 	" . ] 
 	call sub_20f1h		;2845	cd f1 20 	. .   
 	ld a,0ffh		;2848	3e ff 	> . 
-	ld (variable.show_screen_flag),a		;284a	32 15 5d 	2 . ] 
-	ld (variable.unknown_23839),a		;284d	32 1f 5d 	2 . ] 
+	ld (trdos_variable.show_screen_flag),a		;284a	32 15 5d 	2 . ] 
+	ld (trdos_variable.unknown_23839),a		;284d	32 1f 5d 	2 . ] 
 	pop bc			;2850	c1 	. 
 	pop af			;2851	f1 	. 
 	ld hl,finishing_proc_0x0201		;2852	21 01 02 	! . . 
-	ld (variable.internal_address_of_finishing_proc),hl		;2855	22 1a 5d 	" . ] 
+	ld (trdos_variable.internal_address_of_finishing_proc),hl		;2855	22 1a 5d 	" . ] 
 	ld hl,l0000h		;2858	21 00 00 	! . . 
 	add hl,sp			;285b	39 	9 
-	ld (variable.sp_copy),hl		;285c	22 1c 5d 	" . ] 
+	ld (trdos_variable.sp_copy),hl		;285c	22 1c 5d 	" . ] 
 	dec hl			;285f	2b 	+ 
 	dec hl			;2860	2b 	+ 
 	ld sp,hl			;2861	f9 	. 
@@ -6934,8 +6948,8 @@ l2869h:
 	ld hl,exit_dos		;2872	21 d3 01 	! . . 
 	push hl			;2875	e5 	. 
 	push de			;2876	d5 	. 
-	ld hl,(variable.hl_copy)		;2877	2a 02 5d 	* . ] 
-	ld de,(variable.de_copy)		;287a	ed 5b 04 5d 	. [ . ] 
+	ld hl,(trdos_variable.hl_copy)		;2877	2a 02 5d 	* . ] 
+	ld de,(trdos_variable.de_copy)		;287a	ed 5b 04 5d 	. [ . ] 
 	ret			;287e	c9 	. 
 l287fh:
 	cp 0ffh		;287f	fe ff 	. . 
@@ -7010,7 +7024,7 @@ copy_from_hl_to_file_descriptor:
 copy_from_file_descriptor_to_HL:
 	ld a,0ffh		;28e3	3e ff 	> . 
 l28e5h:
-	ld de,variable.filename		;28e5	11 dd 5c 	. . \ 
+	ld de,trdos_variable.filename		;28e5	11 dd 5c 	. . \ 
 	ld bc,rst_10		;28e8	01 10 00 	. . . 
 	or a			;28eb	b7 	. 
 	jr z,l28efh		;28ec	28 01 	( . 
@@ -7023,17 +7037,17 @@ save_basic_program:
 	call sub_1ac4h		;28f5	cd c4 1a 	. . . 
 	jp l1b27h		;28f8	c3 27 1b 	. ' . 
 save_code_file:
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;28fb	22 d7 5c 	" . \ 
-	ld (variable.ch_add),de		;28fe	ed 53 d9 5c 	. S . \ 
-	ld (variable.file_size),de		;2902	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;28fb	22 d7 5c 	" . \ 
+	ld (trdos_variable.ch_add),de		;28fe	ed 53 d9 5c 	. S . \ 
+	ld (trdos_variable.file_size),de		;2902	ed 53 db 5c 	. S . \ 
 	call read_system_track		;2906	cd 05 04 	. . . 
 	call sub_1ac4h		;2909	cd c4 1a 	. . . 
 	jp l1b53h		;290c	c3 53 1b 	. S . 
 load_or_verify:
 	or a			;290f	b7 	. 
-	ld (variable.move_command_first_track),a		;2910	32 d6 5c 	2 . \ 
-	ld (variable.ch_add),hl		;2913	22 d9 5c 	" . \ 
-	ld (variable.file_size),de		;2916	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;2910	32 d6 5c 	2 . \ 
+	ld (trdos_variable.ch_add),hl		;2913	22 d9 5c 	" . \ 
+	ld (trdos_variable.file_size),de		;2916	ed 53 db 5c 	. S . \ 
 	call sub_1cb3h		;291a	cd b3 1c 	. . . 
 	call sub_18a4h		;291d	cd a4 18 	. . . 
 	call sub_18abh		;2920	cd ab 18 	. . . 
@@ -7067,7 +7081,7 @@ sub_294ah:
 	push de			;294b	d5 	. 
 	push bc			;294c	c5 	. 
 	push af			;294d	f5 	. 
-	ld hl,variable.buffer_flag		;294e	21 0c 5d 	! . ] 
+	ld hl,trdos_variable.buffer_flag		;294e	21 0c 5d 	! . ] 
 	ld a,(hl)			;2951	7e 	~ 
 	or a			;2952	b7 	. 
 	jr z,l2992h		;2953	28 3d 	( = 
@@ -7078,9 +7092,9 @@ sub_294ah:
 	pop bc			;295d	c1 	. 
 	pop hl			;295e	e1 	. 
 	ld (hl),000h		;295f	36 00 	6 . 
-	ld hl,variable.tmp_buffer_address		;2961	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;2961	21 25 5d 	! % ] 
 	call make_room		;2964	cd 32 1e 	. 2 . 
-	ld hl,(variable.command_line_address)		;2967	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;2967	2a 11 5d 	* . ] 
 	ld bc,l0100h+1		;296a	01 01 01 	. . . 
 	add hl,bc			;296d	09 	. 
 	jr l298fh		;296e	18 1f 	. . 
@@ -7089,20 +7103,20 @@ sub_2970h:
 	push de			;2971	d5 	. 
 	push bc			;2972	c5 	. 
 	push af			;2973	f5 	. 
-	ld hl,variable.buffer_flag		;2974	21 0c 5d 	! . ] 
+	ld hl,trdos_variable.buffer_flag		;2974	21 0c 5d 	! . ] 
 	ld a,(hl)			;2977	7e 	~ 
 	or a			;2978	b7 	. 
 	jr nz,l2992h		;2979	20 17 	  . 
 	ld (hl),0ffh		;297b	36 ff 	6 . 
-	ld hl,variable.tmp_buffer_address		;297d	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;297d	21 25 5d 	! % ] 
 	ld bc,l0100h+1		;2980	01 01 01 	. . . 
 	call reclaim_2		;2983	cd 2e 1e 	. . . 
 	or a			;2986	b7 	. 
 	ld bc,l0100h+1		;2987	01 01 01 	. . . 
-	ld hl,(variable.command_line_address)		;298a	2a 11 5d 	* . ] 
+	ld hl,(trdos_variable.command_line_address)		;298a	2a 11 5d 	* . ] 
 	sbc hl,bc		;298d	ed 42 	. B 
 l298fh:
-	ld (variable.command_line_address),hl		;298f	22 11 5d 	" . ] 
+	ld (trdos_variable.command_line_address),hl		;298f	22 11 5d 	" . ] 
 l2992h:
 	pop af			;2992	f1 	. 
 	pop bc			;2993	c1 	. 
@@ -7112,12 +7126,12 @@ l2992h:
 cli_command.4:
 	xor a			;2997	af 	. 
 set_number_of_tracks:
-	ld (variable.start_file_parameter_or_number_of_tracks),a		;2998	32 d7 5c 	2 . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),a		;2998	32 d7 5c 	2 . \ 
 	call pop_hl_if_checking_syntax		;299b	cd 75 1d 	. u . 
 	call z_if_next_command_line_char_is_carriage_return		;299e	cd 2b 04 	. + . 
 	jp z,error.wrong_drive_letter		;29a1	ca 1a 1d 	. . . 
 	call sub_3e11h		;29a4	cd 11 3e 	. . > 
-	ld a,(variable.start_file_parameter_or_number_of_tracks)		;29a7	3a d7 5c 	: . \ 
+	ld a,(trdos_variable.start_file_parameter_or_number_of_tracks)		;29a7	3a d7 5c 	: . \ 
 	ld (hl),a			;29aa	77 	w 
 	jp print_OK_and_exit_DOS		;29ab	c3 e1 03 	. . . 
 cli_command.8:
@@ -7286,7 +7300,7 @@ l2a4bh:
 	ld a,010h		;2a51	3e 10 	> . 
 	out (c),a		;2a53	ed 79 	. y 
 	ret			;2a55	c9 	. 
-l2a56h:
+magic_button_nmi_request:
 	push af			;2a56	f5 	. 
 	push bc			;2a57	c5 	. 
 	push de			;2a58	d5 	. 
@@ -7423,7 +7437,7 @@ l2b3fh:
 	push hl			;2b4b	e5 	. 
 	ld hl,l2b58h		;2b4c	21 58 2b 	! X + 
 	push hl			;2b4f	e5 	. 
-	ld hl,entry.call_pushed_address		;2b50	21 2f 3d 	! / = 
+	ld hl,trdos_entry.call_pushed_address		;2b50	21 2f 3d 	! / = 
 	push hl			;2b53	e5 	. 
 	di			;2b54	f3 	. 
 	jp 04080h		;2b55	c3 80 40 	. . @ 
@@ -7735,9 +7749,9 @@ l2d7bh:
 	jr nz,l2d7bh		;2d8f	20 ea 	  . 
 	halt			;2d91	76 	v 
 read_all_file_sectors:
-	ld hl,(variable.file_start)		;2d92	2a e6 5c 	* . \ 
-	ld de,(variable.file_first_sector)		;2d95	ed 5b eb 5c 	. [ . \ 
-	ld a,(variable.file_length_in_sectors)		;2d99	3a ea 5c 	: . \ 
+	ld hl,(trdos_variable.file_start)		;2d92	2a e6 5c 	* . \ 
+	ld de,(trdos_variable.file_first_sector)		;2d95	ed 5b eb 5c 	. [ . \ 
+	ld a,(trdos_variable.file_length_in_sectors)		;2d99	3a ea 5c 	: . \ 
 	ld b,a			;2d9c	47 	G 
 	call read_sectors		;2d9d	cd 3d 1e 	. = . 
 	ret			;2da0	c9 	. 
@@ -7753,7 +7767,7 @@ cli_command.go_to:
 	call read_system_track		;2db6	cd 05 04 	. . . 
 	call sub_1cb3h		;2db9	cd b3 1c 	. . . 
 	jp nz,print_no_files_error_and_exit_DOS		;2dbc	c2 d9 03 	. . . 
-	ld hl,variable.filename		;2dbf	21 dd 5c 	! . \ 
+	ld hl,trdos_variable.filename		;2dbf	21 dd 5c 	! . \ 
 	ld bc,(04020h)		;2dc2	ed 4b 20 40 	. K   @ 
 	add hl,bc			;2dc6	09 	. 
 	ld (hl),038h		;2dc7	36 38 	6 8 
@@ -7780,7 +7794,7 @@ l2de3h:
 	out (c),a		;2dec	ed 79 	. y 
 	pop af			;2dee	f1 	. 
 	add a,030h		;2def	c6 30 	. 0 
-	ld hl,variable.filename		;2df1	21 dd 5c 	! . \ 
+	ld hl,trdos_variable.filename		;2df1	21 dd 5c 	! . \ 
 	ld bc,(04020h)		;2df4	ed 4b 20 40 	. K   @ 
 	add hl,bc			;2df8	09 	. 
 	ld (hl),a			;2df9	77 	w 
@@ -7792,7 +7806,7 @@ l2e05h:
 	pop bc			;2e05	c1 	. 
 	djnz l2de3h		;2e06	10 db 	. . 
 	ld a,020h		;2e08	3e 20 	>   
-	ld hl,variable.filename		;2e0a	21 dd 5c 	! . \ 
+	ld hl,trdos_variable.filename		;2e0a	21 dd 5c 	! . \ 
 	ld bc,(04020h)		;2e0d	ed 4b 20 40 	. K   @ 
 	add hl,bc			;2e11	09 	. 
 	ld (hl),a			;2e12	77 	w 
@@ -7814,7 +7828,7 @@ l2e33h:
 	jp nz,print_no_files_error_and_exit_DOS		;2e33	c2 d9 03 	. . . 
 	call sub_165dh		;2e36	cd 5d 16 	. ] . 
 l2e39h:
-	ld a,(variable.filename)		;2e39	3a dd 5c 	: . \ 
+	ld a,(trdos_variable.filename)		;2e39	3a dd 5c 	: . \ 
 	cp 024h		;2e3c	fe 24 	. $ 
 	di			;2e3e	f3 	. 
 	jr nz,l2e43h		;2e3f	20 02 	  . 
@@ -7823,11 +7837,11 @@ l2e43h:
 	ld sp,040f0h		;2e43	31 f0 40 	1 . @ 
 	call sub_3e11h		;2e46	cd 11 3e 	. . > 
 	ld (04010h),a		;2e49	32 10 40 	2 . @ 
-	ld a,(variable.system_register)		;2e4c	3a 16 5d 	: . ] 
+	ld a,(trdos_variable.system_register)		;2e4c	3a 16 5d 	: . ] 
 	ld (04011h),a		;2e4f	32 11 40 	2 . @ 
-	ld hl,(variable.file_start)		;2e52	2a e6 5c 	* . \ 
+	ld hl,(trdos_variable.file_start)		;2e52	2a e6 5c 	* . \ 
 	push hl			;2e55	e5 	. 
-	ld de,(variable.file_first_sector)		;2e56	ed 5b eb 5c 	. [ . \ 
+	ld de,(trdos_variable.file_first_sector)		;2e56	ed 5b eb 5c 	. [ . \ 
 	push de			;2e5a	d5 	. 
 	inc e			;2e5b	1c 	. 
 	ld a,e			;2e5c	7b 	{ 
@@ -8001,47 +8015,47 @@ sub_2f65h:
 	ld a,008h		;2f65	3e 08 	> . 
 	jr l2f57h		;2f67	18 ee 	. . 
 l2f69h:
-	ld hl,(variable.sp_copy)		;2f69	2a 1c 5d 	* . ] 
+	ld hl,(trdos_variable.sp_copy)		;2f69	2a 1c 5d 	* . ] 
 	dec hl			;2f6c	2b 	+ 
 	dec hl			;2f6d	2b 	+ 
 	ld sp,hl			;2f6e	f9 	. 
 	jp l1d2fh		;2f6f	c3 2f 1d 	. / . 
 call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:
-	ld (variable.hl_copy),hl		;2f72	22 02 5d 	" . ] 
-	ld (variable.de_copy),de		;2f75	ed 53 04 5d 	. S . ] 
+	ld (trdos_variable.hl_copy),hl		;2f72	22 02 5d 	" . ] 
+	ld (trdos_variable.de_copy),de		;2f75	ed 53 04 5d 	. S . ] 
 	pop hl			;2f79	e1 	. 
 	ld e,(hl)			;2f7a	5e 	^ 
 	inc hl			;2f7b	23 	# 
 	ld d,(hl)			;2f7c	56 	V 
 	inc hl			;2f7d	23 	# 
 	push hl			;2f7e	e5 	. 
-	ld hl,entry.call_pushed_address		;2f7f	21 2f 3d 	! / = 
+	ld hl,trdos_entry.call_pushed_address		;2f7f	21 2f 3d 	! / = 
 	push hl			;2f82	e5 	. 
 	push de			;2f83	d5 	. 
-	ld hl,variable.0xc9		;2f84	21 c2 5c 	! . \ 
+	ld hl,trdos_variable.0xc9		;2f84	21 c2 5c 	! . \ 
 	push hl			;2f87	e5 	. 
-	ld hl,(variable.hl_copy)		;2f88	2a 02 5d 	* . ] 
-	ld de,(variable.de_copy)		;2f8b	ed 5b 04 5d 	. [ . ] 
+	ld hl,(trdos_variable.hl_copy)		;2f88	2a 02 5d 	* . ] 
+	ld de,(trdos_variable.de_copy)		;2f8b	ed 5b 04 5d 	. [ . ] 
 	ret			;2f8f	c9 	. 
 init_main_variables:
 	ld hl,0ffffh		;2f90	21 ff ff 	! . . 
-	ld (variable.a_drive_step_rate),hl		;2f93	22 fa 5c 	" . \ 
-	ld (variable.c_drive_step_rate),hl		;2f96	22 fc 5c 	" . \ 
-	ld (variable.drive_a_mode),hl		;2f99	22 c8 5c 	" . \ 
-	ld (variable.drive_c_mode),hl		;2f9c	22 ca 5c 	" . \ 
+	ld (trdos_variable.drive_a_step_rate),hl		;2f93	22 fa 5c 	" . \ 
+	ld (trdos_variable.drive_c_step_rate),hl		;2f96	22 fc 5c 	" . \ 
+	ld (trdos_variable.drive_a_mode),hl		;2f99	22 c8 5c 	" . \ 
+	ld (trdos_variable.drive_c_mode),hl		;2f9c	22 ca 5c 	" . \ 
 	xor a			;2f9f	af 	. 
-	ld (variable.show_title_flag),a		;2fa0	32 17 5d 	2 . ] 
-	ld (variable.default_drive),a		;2fa3	32 19 5d 	2 . ] 
-	ld (variable.interface_1_flag),a		;2fa6	32 18 5d 	2 . ] 
-	ld (variable.error_code),a		;2fa9	32 0f 5d 	2 . ] 
-	ld (variable.unknown_23839),a		;2fac	32 1f 5d 	2 . ] 
+	ld (trdos_variable.show_title_flag),a		;2fa0	32 17 5d 	2 . ] 
+	ld (trdos_variable.default_drive),a		;2fa3	32 19 5d 	2 . ] 
+	ld (trdos_variable.interface_1_flag),a		;2fa6	32 18 5d 	2 . ] 
+	ld (trdos_variable.error_code),a		;2fa9	32 0f 5d 	2 . ] 
+	ld (trdos_variable.unknown_23839),a		;2fac	32 1f 5d 	2 . ] 
 	ld a,0ffh		;2faf	3e ff 	> . 
 	out (0ffh),a		;2fb1	d3 ff 	. . 
 	ld (sys_err_nr),a		;2fb3	32 3a 5c 	2 : \ 
-	ld (variable.system_register),a		;2fb6	32 16 5d 	2 . ] 
-	ld (variable.buffer_flag),a		;2fb9	32 0c 5d 	2 . ] 
+	ld (trdos_variable.system_register),a		;2fb6	32 16 5d 	2 . ] 
+	ld (trdos_variable.buffer_flag),a		;2fb9	32 0c 5d 	2 . ] 
 	ld a,0c9h		;2fbc	3e c9 	> . 
-	ld (variable.0xc9),a		;2fbe	32 c2 5c 	2 . \ 
+	ld (trdos_variable.0xc9),a		;2fbe	32 c2 5c 	2 . \ 
 	ld a,0d0h		;2fc1	3e d0 	> . 
 	out (01fh),a		;2fc3	d3 1f 	. . 
 	ret			;2fc5	c9 	. 
@@ -8056,18 +8070,18 @@ l2fc6h:
 	jr l2fc6h		;2fd4	18 f0 	. . 
 sub_2fd6h:
 	ld b,001h		;2fd6	06 01 	. . 
-	ld hl,variable.tmp_buffer_address		;2fd8	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;2fd8	21 25 5d 	! % ] 
 	jp l1e67h		;2fdb	c3 67 1e 	. g . 
 l2fdeh:
 	push hl			;2fde	e5 	. 
-	ld de,(variable.current_sector)		;2fdf	ed 5b f4 5c 	. [ . \ 
+	ld de,(trdos_variable.current_sector)		;2fdf	ed 5b f4 5c 	. [ . \ 
 	call sub_2fd6h		;2fe3	cd d6 2f 	. . / 
-	ld a,(variable.file_size)		;2fe6	3a db 5c 	: . \ 
+	ld a,(trdos_variable.file_size)		;2fe6	3a db 5c 	: . \ 
 	pop de			;2fe9	d1 	. 
 	or a			;2fea	b7 	. 
 	ret z			;2feb	c8 	. 
 	ld c,a			;2fec	4f 	O 
-	ld hl,variable.tmp_buffer_address		;2fed	21 25 5d 	! % ] 
+	ld hl,trdos_variable.tmp_buffer_address		;2fed	21 25 5d 	! % ] 
 	defb 0edh,0b0h,0c9h		;2ff0	ed b0 c9 	. . . 
 
 ; BLOCK 'token_commands_table' (start 0x2ff3 end 0x3008)
@@ -8119,21 +8133,21 @@ token_commands_addresses_table_start:
 	defw cli_command.verify		;3030	10 18 	. . 
 sub_3032h:
 	ld hl,(sys_e_line)		;3032	2a 59 5c 	* Y \ 
-	ld (variable.command_line_address),hl		;3035	22 11 5d 	" . ] 
-	ld (variable.ch_add),hl		;3038	22 d9 5c 	" . \ 
+	ld (trdos_variable.command_line_address),hl		;3035	22 11 5d 	" . ] 
+	ld (trdos_variable.ch_add),hl		;3038	22 d9 5c 	" . \ 
 	ld a,0ffh		;303b	3e ff 	> . 
-	ld (variable.move_command_first_track),a		;303d	32 d6 5c 	2 . \ 
-	ld hl,variable.file_size		;3040	21 db 5c 	! . \ 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;3043	22 d7 5c 	" . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;303d	32 d6 5c 	2 . \ 
+	ld hl,trdos_variable.file_size		;3040	21 db 5c 	! . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;3043	22 d7 5c 	" . \ 
 	jr l3057h		;3046	18 0f 	. . 
 sub_3048h:
-	ld (variable.command_line_address),hl		;3048	22 11 5d 	" . ] 
-	ld (variable.ch_add),hl		;304b	22 d9 5c 	" . \ 
+	ld (trdos_variable.command_line_address),hl		;3048	22 11 5d 	" . ] 
+	ld (trdos_variable.ch_add),hl		;304b	22 d9 5c 	" . \ 
 	call sub_30e1h		;304e	cd e1 30 	. . 0 
 	ret nz			;3051	c0 	. 
 	inc hl			;3052	23 	# 
 	inc hl			;3053	23 	# 
-	ld (variable.start_file_parameter_or_number_of_tracks),hl		;3054	22 d7 5c 	" . \ 
+	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;3054	22 d7 5c 	" . \ 
 l3057h:
 	call sub_30a9h		;3057	cd a9 30 	. . 0 
 	jr nz,l3087h		;305a	20 2b 	  + 
@@ -8143,7 +8157,7 @@ l3057h:
 	ld hl,unknown_table_31C8_start		;3060	21 c8 31 	! . 1 
 	add hl,bc			;3063	09 	. 
 	ld a,(hl)			;3064	7e 	~ 
-	ld hl,(variable.ch_add)		;3065	2a d9 5c 	* . \ 
+	ld hl,(trdos_variable.ch_add)		;3065	2a d9 5c 	* . \ 
 	ld (hl),a			;3068	77 	w 
 	inc hl			;3069	23 	# 
 	ex de,hl			;306a	eb 	. 
@@ -8153,10 +8167,10 @@ l3057h:
 	rst 20h			;306f	e7 	. 
 	defw 019e8h		;3070	e8 19 	. . 
 	pop bc			;3072	c1 	. 
-	ld a,(variable.move_command_first_track)		;3073	3a d6 5c 	: . \ 
+	ld a,(trdos_variable.bad_sectors_or_move_command_first_track)		;3073	3a d6 5c 	: . \ 
 	or a			;3076	b7 	. 
 	jr nz,l3087h		;3077	20 0e 	  . 
-	ld hl,(variable.start_file_parameter_or_number_of_tracks)		;3079	2a d7 5c 	* . \ 
+	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;3079	2a d7 5c 	* . \ 
 	ld e,(hl)			;307c	5e 	^ 
 	inc hl			;307d	23 	# 
 	ld d,(hl)			;307e	56 	V 
@@ -8168,12 +8182,12 @@ l3057h:
 	dec hl			;3085	2b 	+ 
 	ld (hl),e			;3086	73 	s 
 l3087h:
-	ld hl,(variable.ch_add)		;3087	2a d9 5c 	* . \ 
+	ld hl,(trdos_variable.ch_add)		;3087	2a d9 5c 	* . \ 
 	ld a,(hl)			;308a	7e 	~ 
 	cp 00dh		;308b	fe 0d 	. . 
 	ret z			;308d	c8 	. 
 	inc hl			;308e	23 	# 
-	ld (variable.ch_add),hl		;308f	22 d9 5c 	" . \ 
+	ld (trdos_variable.ch_add),hl		;308f	22 d9 5c 	" . \ 
 	ld a,(hl)			;3092	7e 	~ 
 	cp 00dh		;3093	fe 0d 	. . 
 	ret z			;3095	c8 	. 
@@ -8187,10 +8201,10 @@ l309ah:
 	cp 022h		;309f	fe 22 	. " 
 	jr nz,l309ah		;30a1	20 f7 	  . 
 	inc hl			;30a3	23 	# 
-	ld (variable.ch_add),hl		;30a4	22 d9 5c 	" . \ 
+	ld (trdos_variable.ch_add),hl		;30a4	22 d9 5c 	" . \ 
 	jr l3057h		;30a7	18 ae 	. . 
 sub_30a9h:
-	ld hl,(variable.ch_add)		;30a9	2a d9 5c 	* . \ 
+	ld hl,(trdos_variable.ch_add)		;30a9	2a d9 5c 	* . \ 
 	ld de,tokens_start		;30ac	11 fd 30 	. . 0 
 	ld c,000h		;30af	0e 00 	. . 
 l30b1h:
@@ -8218,7 +8232,7 @@ l30c8h:
 	ret z			;30cc	c8 	. 
 l30cdh:
 	inc c			;30cd	0c 	. 
-	ld hl,(variable.ch_add)		;30ce	2a d9 5c 	* . \ 
+	ld hl,(trdos_variable.ch_add)		;30ce	2a d9 5c 	* . \ 
 	inc de			;30d1	13 	. 
 	ld a,(de)			;30d2	1a 	. 
 	cp 0ffh		;30d3	fe ff 	. . 
@@ -8239,7 +8253,7 @@ sub_30e1h:
 	or l			;30e7	b5 	. 
 	jr z,l30f4h		;30e8	28 0a 	( . 
 	xor a			;30ea	af 	. 
-	ld (variable.move_command_first_track),a		;30eb	32 d6 5c 	2 . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;30eb	32 d6 5c 	2 . \ 
 	dec hl			;30ee	2b 	+ 
 	dec hl			;30ef	2b 	+ 
 	rst 20h			;30f0	e7 	. 
@@ -8247,7 +8261,7 @@ sub_30e1h:
 	ret			;30f3	c9 	. 
 l30f4h:
 	ld a,0ffh		;30f4	3e ff 	> . 
-	ld (variable.move_command_first_track),a		;30f6	32 d6 5c 	2 . \ 
+	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;30f6	32 d6 5c 	2 . \ 
 	ld hl,(sys_e_line)		;30f9	2a 59 5c 	* Y \ 
 	ret			;30fc	c9 	. 
 
@@ -8508,7 +8522,7 @@ unknown_table_31C8_start:
 sub_31f3h:
 	ld hl,(sys_chans)		;31f3	2a 4f 5c 	* O \ 
 	or a			;31f6	b7 	. 
-	ld bc,variable.tmp_buffer_address		;31f7	01 25 5d 	. % ] 
+	ld bc,trdos_variable.tmp_buffer_address		;31f7	01 25 5d 	. % ] 
 
 ; BLOCK 'code_31FA_XXX_FIXME' (start 0x31fa end 0x31fd)
 code_31FA_XXX_FIXME_start:
@@ -11079,7 +11093,7 @@ not_used_31FD_start:
 	defb 0ffh		;3bfd	ff 	. 
 	defb 0ffh		;3bfe	ff 	. 
 	defb 0ffh		;3bff	ff 	. 
-l3c00h:
+zx_spectrum_font_char_0:
 	defb 0ffh		;3c00	ff 	. 
 	defb 018h		;3c01	18 	. 
 	defb 003h		;3c02	03 	. 
@@ -11334,10 +11348,10 @@ l3cfah:
 	jp sub_20f1h		;3cfa	c3 f1 20 	. .   
 jp_execute_command_in_C:
 	jp execute_command_in_C		;3cfd	c3 3c 28 	. < ( 
-entry.enter_trdos_from_basic:
+trdos_entry.enter_trdos_from_basic:
 	nop			;3d00	00 	. 
 	jr enter_trdos_from_basic		;3d01	18 2e 	. . 
-entry.interpret_rem_command_in_basic:
+trdos_entry.interpret_rem_command:
 	nop			;3d03	00 	. 
 	jr interpret_rem_command_in_basic		;3d04	18 14 	. . 
 l3d06h:
@@ -11350,7 +11364,7 @@ l3d0eh:
 	jr l3d0ah		;3d0e	18 fa 	. . 
 	nop			;3d10	00 	. 
 	jr l3cfah		;3d11	18 e7 	. . 
-entry.execute_command_in_C:
+trdos_entry.execute_command_in_c:
 	nop			;3d13	00 	. 
 	jr jp_execute_command_in_C		;3d14	18 e7 	. . 
 l3d16h:
@@ -11365,11 +11379,11 @@ entry.init_dos:
 	nop			;3d24	00 	. 
 	nop			;3d25	00 	. 
 	call c,sub_3d4ch		;3d26	dc 4c 3d 	. L = 
-	ld hl,variable.0xc9		;3d29	21 c2 5c 	! . \ 
+	ld hl,trdos_variable.0xc9		;3d29	21 c2 5c 	! . \ 
 	ret			;3d2c	c9 	. 
 	nop			;3d2d	00 	. 
 	nop			;3d2e	00 	. 
-entry.call_pushed_address:
+trdos_entry.call_pushed_address:
 	nop			;3d2f	00 	. 
 	ret			;3d30	c9 	. 
 enter_trdos_from_basic:
@@ -11387,7 +11401,7 @@ l3d38h:
 l3d44h:
 	rst 8			;3d44	cf 	. 
 	ld sp,0013eh		;3d45	31 3e 01 	1 > . 
-	ld (variable.file_2_length_in_bytes),a		;3d48	32 ef 5c 	2 . \ 
+	ld (trdos_variable.file_2_length_in_bytes),a		;3d48	32 ef 5c 	2 . \ 
 	ret			;3d4b	c9 	. 
 sub_3d4ch:
 	xor a			;3d4c	af 	. 
@@ -11399,13 +11413,13 @@ sub_3d4ch:
 	ldir		;3d5a	ed b0 	. . 
 	ld hl,l3d67h		;3d5c	21 67 3d 	! g = 
 	push hl			;3d5f	e5 	. 
-	ld hl,entry.call_pushed_address		;3d60	21 2f 3d 	! / = 
+	ld hl,trdos_entry.call_pushed_address		;3d60	21 2f 3d 	! / = 
 	push hl			;3d63	e5 	. 
 	jp sys_membot		;3d64	c3 92 5c 	. . \ 
 l3d67h:
 	ld hl,init_main_variables		;3d67	21 90 2f 	! . / 
 	push hl			;3d6a	e5 	. 
-	ld hl,entry.call_pushed_address		;3d6b	21 2f 3d 	! / = 
+	ld hl,trdos_entry.call_pushed_address		;3d6b	21 2f 3d 	! / = 
 	push hl			;3d6e	e5 	. 
 	ld hl,sub_1653h+2		;3d6f	21 55 16 	! U . 
 	push hl			;3d72	e5 	. 
@@ -11467,12 +11481,12 @@ l3dbah:
 	ld a,e			;3dc1	7b 	{ 
 	or d			;3dc2	b2 	. 
 	jr nz,l3dbah		;3dc3	20 f5 	  . 
-	jp report_tape_loading_error_and_force_no_disk_error		;3dc5	c3 e7 3e 	. . > 
+	jp report_tape_loading_error_and_issue_no_disk_error		;3dc5	c3 e7 3e 	. . > 
 init_default_disk_drive:
-	ld a,(variable.default_drive)		;3dc8	3a 19 5d 	: . ] 
+	ld a,(trdos_variable.default_drive)		;3dc8	3a 19 5d 	: . ] 
 init_disk_drive_in_A_register:
-	ld (variable.temporary_drive),a		;3dcb	32 f6 5c 	2 . \ 
-	ld hl,variable.system_register		;3dce	21 16 5d 	! . ] 
+	ld (trdos_variable.current_temporary_drive),a		;3dcb	32 f6 5c 	2 . \ 
+	ld hl,trdos_variable.system_register		;3dce	21 16 5d 	! . ] 
 	ld c,a			;3dd1	4f 	O 
 	ld a,03ch		;3dd2	3e 3c 	> < 
 	or c			;3dd4	b1 	. 
@@ -11508,14 +11522,14 @@ l3e01h:
 	jr nz,sub_3dffh		;3e05	20 f8 	  . 
 	ret			;3e07	c9 	. 
 point_HL_to_step_rate_of_temporary_drive:
-	ld de,variable.a_drive_step_rate		;3e08	11 fa 5c 	. . \ 
+	ld de,trdos_variable.drive_a_step_rate		;3e08	11 fa 5c 	. . \ 
 l3e0bh:
-	ld hl,(variable.temporary_drive)		;3e0b	2a f6 5c 	* . \ 
+	ld hl,(trdos_variable.current_temporary_drive)		;3e0b	2a f6 5c 	* . \ 
 	add hl,de			;3e0e	19 	. 
 	ld a,(hl)			;3e0f	7e 	~ 
 	ret			;3e10	c9 	. 
 sub_3e11h:
-	ld de,variable.drive_a_mode		;3e11	11 c8 5c 	. . \ 
+	ld de,trdos_variable.drive_a_mode		;3e11	11 c8 5c 	. . \ 
 	jr l3e0bh		;3e14	18 f5 	. . 
 calculate_step_rate_of_temporary_drive:
 	call point_HL_to_step_rate_of_temporary_drive		;3e16	cd 08 3e 	. . > 
@@ -11527,15 +11541,15 @@ try_B_as_step_rate_of_temporary_drive:
 	call l3d9ah		;3e20	cd 9a 3d 	. . = 
 	ld a,020h		;3e23	3e 20 	>   
 	ld b,00bh		;3e25	06 0b 	. . 
-	call sub_3e44h		;3e27	cd 44 3e 	. D > 
+	call vg93_command_in_B_with_data_in_A		;3e27	cd 44 3e 	. D > 
 	ld b,(hl)			;3e2a	46 	F 
 	ld a,001h		;3e2b	3e 01 	> . 
-	call sub_3e44h		;3e2d	cd 44 3e 	. D > 
+	call vg93_command_in_B_with_data_in_A		;3e2d	cd 44 3e 	. D > 
 	in a,(01fh)		;3e30	db 1f 	. . 
 	and 004h		;3e32	e6 04 	. . 
 	jr nz,next_try_of_step_rate_of_temporary_drive		;3e34	20 09 	  . 
 	xor a			;3e36	af 	. 
-	call sub_3e44h		;3e37	cd 44 3e 	. D > 
+	call vg93_command_in_B_with_data_in_A		;3e37	cd 44 3e 	. D > 
 	in a,(01fh)		;3e3a	db 1f 	. . 
 	and 004h		;3e3c	e6 04 	. . 
 	ret nz			;3e3e	c0 	. 
@@ -11544,7 +11558,7 @@ next_try_of_step_rate_of_temporary_drive:
 	dec c			;3e40	0d 	. 
 	ret z			;3e41	c8 	. 
 	jr try_B_as_step_rate_of_temporary_drive		;3e42	18 d9 	. . 
-sub_3e44h:
+vg93_command_in_B_with_data_in_A:
 	out (07fh),a		;3e44	d3 7f 	.  
 	ld a,b			;3e46	78 	x 
 	or 018h		;3e47	f6 18 	. . 
@@ -11599,11 +11613,11 @@ l3e83h:
 	pop bc			;3e93	c1 	. 
 	ld a,c			;3e94	79 	y 
 	out (03fh),a		;3e95	d3 3f 	. ? 
-	ld a,(variable.disk_drive_ready)		;3e97	3a cd 5c 	: . \ 
+	ld a,(trdos_variable.disk_drive_ready)		;3e97	3a cd 5c 	: . \ 
 	or a			;3e9a	b7 	. 
 	ret z			;3e9b	c8 	. 
 	xor a			;3e9c	af 	. 
-	ld (variable.disk_drive_ready),a		;3e9d	32 cd 5c 	2 . \ 
+	ld (trdos_variable.disk_drive_ready),a		;3e9d	32 cd 5c 	2 . \ 
 sub_3ea0h:
 	ld b,003h		;3ea0	06 03 	. . 
 l3ea2h:
@@ -11624,10 +11638,10 @@ sub_3eb2h:
 sub_3eb5h:
 	in a,(01fh)		;3eb5	db 1f 	. . 
 	and 080h		;3eb7	e6 80 	. . 
-	ld (variable.disk_drive_ready),a		;3eb9	32 cd 5c 	2 . \ 
+	ld (trdos_variable.disk_drive_ready),a		;3eb9	32 cd 5c 	2 . \ 
 	in a,(03fh)		;3ebc	db 3f 	. ? 
 	ld h,a			;3ebe	67 	g 
-	call sub_3e44h		;3ebf	cd 44 3e 	. D > 
+	call vg93_command_in_B_with_data_in_A		;3ebf	cd 44 3e 	. D > 
 	ld c,07fh		;3ec2	0e 7f 	.  
 	ld d,001h		;3ec4	16 01 	. . 
 	di			;3ec6	f3 	. 
@@ -11648,13 +11662,13 @@ l3eceh:
 	ei			;3edc	fb 	. 
 	ld a,0d0h		;3edd	3e d0 	> . 
 	out (01fh),a		;3edf	d3 1f 	. . 
-	ld a,(variable.basic_program_autostart)		;3ee1	3a d1 5c 	: . \ 
+	ld a,(trdos_variable.basic_program_autostart)		;3ee1	3a d1 5c 	: . \ 
 	cp 0ffh		;3ee4	fe ff 	. . 
 	ret z			;3ee6	c8 	. 
-report_tape_loading_error_and_force_no_disk_error:
+report_tape_loading_error_and_issue_no_disk_error:
 	call set_sys_err_nr_to_tape_loading_error		;3ee7	cd 2b 27 	. + ' 
 	ld a,0ffh		;3eea	3e ff 	> . 
-	ld (variable.show_title_flag),a		;3eec	32 17 5d 	2 . ] 
+	ld (trdos_variable.show_title_flag),a		;3eec	32 17 5d 	2 . ] 
 	jp error.no_disk		;3eef	c3 1b 27 	. . ' 
 l3ef2h:
 	pop bc			;3ef2	c1 	. 
@@ -11669,10 +11683,10 @@ l3ef5h:
 	in a,(07fh)		;3efe	db 7f 	.  
 	jr l3ef5h		;3f00	18 f3 	. . 
 set_sector_number:
-	ld (variable.sector),a		;3f02	32 ff 5c 	2 . \ 
+	ld (trdos_variable.sector),a		;3f02	32 ff 5c 	2 . \ 
 	ret			;3f05	c9 	. 
 define_buffer_address:
-	ld (variable.buffer),hl		;3f06	22 00 5d 	" . ] 
+	ld (trdos_variable.buffer),hl		;3f06	22 00 5d 	" . ] 
 	ret			;3f09	c9 	. 
 sub_3f0ah:
 	ld a,0a0h		;3f0a	3e a0 	> . 
@@ -11680,18 +11694,18 @@ sub_3f0ah:
 sub_3f0eh:
 	ld a,080h		;3f0e	3e 80 	> . 
 l3f10h:
-	ld (variable.last_fdc_command),a		;3f10	32 fe 5c 	2 . \ 
+	ld (trdos_variable.last_fdc_command),a		;3f10	32 fe 5c 	2 . \ 
 l3f13h:
 	ld d,00ah		;3f13	16 0a 	. . 
 l3f15h:
 	push de			;3f15	d5 	. 
 	di			;3f16	f3 	. 
-	ld a,(variable.sector)		;3f17	3a ff 5c 	: . \ 
+	ld a,(trdos_variable.sector)		;3f17	3a ff 5c 	: . \ 
 	inc a			;3f1a	3c 	< 
 	out (05fh),a		;3f1b	d3 5f 	. _ 
-	ld hl,(variable.buffer)		;3f1d	2a 00 5d 	* . ] 
+	ld hl,(trdos_variable.buffer)		;3f1d	2a 00 5d 	* . ] 
 	ld c,07fh		;3f20	0e 7f 	.  
-	ld a,(variable.last_fdc_command)		;3f22	3a fe 5c 	: . \ 
+	ld a,(trdos_variable.last_fdc_command)		;3f22	3a fe 5c 	: . \ 
 	out (01fh),a		;3f25	d3 1f 	. . 
 	cp 0a0h		;3f27	fe a0 	. . 
 	push af			;3f29	f5 	. 
@@ -11720,7 +11734,7 @@ l3f4bh:
 	out (01fh),a		;3f4d	d3 1f 	. . 
 	ld a,b			;3f4f	78 	x 
 	and 001h		;3f50	e6 01 	. . 
-	jp nz,report_tape_loading_error_and_force_no_disk_error		;3f52	c2 e7 3e 	. . > 
+	jp nz,report_tape_loading_error_and_issue_no_disk_error		;3f52	c2 e7 3e 	. . > 
 	in a,(03fh)		;3f55	db 3f 	. ? 
 	or a			;3f57	b7 	. 
 	jr nz,l3f5fh		;3f58	20 05 	  . 
@@ -11752,10 +11766,10 @@ ignore_retry_or_abort:
 	jr nz,ignore_retry_or_abort		;3f87	20 f2 	  . 
 	call set_sys_err_nr_to_tape_loading_error		;3f89	cd 2b 27 	. + ' 
 	ld a,007h		;3f8c	3e 07 	> . 
-	ld (variable.error_code),a		;3f8e	32 0f 5d 	2 . ] 
+	ld (trdos_variable.error_code),a		;3f8e	32 0f 5d 	2 . ] 
 	jp exit_dos		;3f91	c3 d3 01 	. . . 
 l3f94h:
-	ld a,(variable.current_track)		;3f94	3a f5 5c 	: . \ 
+	ld a,(trdos_variable.current_track)		;3f94	3a f5 5c 	: . \ 
 	call seek_track		;3f97	cd 63 3e 	. c > 
 	call sub_3ea0h		;3f9a	cd a0 3e 	. . > 
 	jp l3f13h		;3f9d	c3 13 3f 	. . ? 
@@ -11769,7 +11783,7 @@ l3fa0h:
 	inc (hl)			;3fac	34 	4 
 l3fadh:
 	call init_interface		;3fad	cd 98 3d 	. . = 
-	ld a,(variable.current_track)		;3fb0	3a f5 5c 	: . \ 
+	ld a,(trdos_variable.current_track)		;3fb0	3a f5 5c 	: . \ 
 	call seek_track		;3fb3	cd 63 3e 	. c > 
 	pop de			;3fb6	d1 	. 
 	jp l3f15h		;3fb7	c3 15 3f 	. . ? 

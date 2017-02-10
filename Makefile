@@ -6,7 +6,7 @@
 # TR-DOS disassembled
 # http://programandala.net/
 
-# Last modified 201610011544
+# Last modified 201702102225
 
 ################################################################
 # Requirements
@@ -50,7 +50,10 @@ clean:
 .PHONY: back
 back: trdos.reassembled.rom
 
-trdos.raw.z80s: trdos.symbols.input.z80s trdos.blocks.txt
+trdos.raw.z80s: \
+	trdos.symbols.input.z80s \
+	trdos.blocks.txt \
+	inc/*.z80s
 	z80dasm \
 	  --origin=0x0000 \
 	  --address \
@@ -76,7 +79,11 @@ trdos.reassembled.rom: trdos.z80s
 #
 # 2016-08-19: Add after-processing with Vim.
 #
-# 2016-08-20: Add assembling of the disassembled source, as a check.
+# 2016-08-20: Add assembling of the disassembled source, as a
+# check.
 #
-# 2016-10-01: Add `diff` check to the reassembled ROM; formerly a manual check
-# was done with VBinDiff.
+# 2016-10-01: Add `diff` check to the reassembled ROM; formerly
+# a manual check was done with VBinDiff.
+#
+# 2017-02-10: Add the generic symbols files as prerequisites of
+# the raw disassembly.

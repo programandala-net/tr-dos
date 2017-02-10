@@ -3,118 +3,10 @@
 ; This file is part of TR-DOS disassembled
 ; By Marcos Cruz (programandala.net), 2016, 2017
 
-; Last modified 201702052112
+; Last modified 201702102306
 
 include "inc/zx_spectrum_system_variables.z80s"
-
-; Entry points
-
-entry.enter_trdos_from_basic:                               equ 15616 ; $3D00
-entry.interpret_rem_command_in_basic:                       equ 15619 ; $3D03
-entry.execute_command_in_C:                                 equ 15635 ; $3D13
-entry.init_dos:                                             equ 15649 ; $3D21
-entry.call_pushed_address:                                  equ 15663 ; $3D2F
-
-; Variables
-
-variable.interface_1_zone:                                  equ 23734
-variable.0xc9:                                              equ 23746
-variable.unknown_23747:                                     equ 23747
-variable.drive_a_mode:                                      equ 23752
-variable.drive_b_mode:                                      equ 23753
-variable.drive_c_mode:                                      equ 23754
-variable.drive_d_mode:                                      equ 23755
-variable.cat_current_sector:                                equ 23756
-variable.disk_drive_ready:                                  equ 23757
-variable.sector_reading_or_writting:                        equ 23758
-variable.stack_sp_copy:                                     equ 23759
-variable.basic_program_autostart:                           equ 23761
-variable.basic_program_autostart.high:                      equ 23762
-variable.unknown_23763:                                     equ 23763
-variable.move_command_deleted_files:                        equ 23764
-variable.move_command_first_sector:                         equ 23765
-variable.move_command_first_track:                          equ 23766
-variable.start_file_parameter_or_number_of_tracks:          equ 23767
-variable.start_file_parameter:                              equ 23767
-variable.start_file_parameter.high:                         equ 23768
-variable.ch_add:                                            equ 23769
-variable.ch_add.high:                                       equ 23770
-variable.file_size:                                         equ 23771
-variable.file_size.high:                                    equ 23772
-variable.filename:                                          equ 23773
-variable.filename.1:                                        equ 23774
-variable.filename.2:                                        equ 23775
-variable.filename.3:                                        equ 23776
-variable.filename.4:                                        equ 23777
-variable.filename.5:                                        equ 23778
-variable.filename.6:                                        equ 23779
-variable.filename.7:                                        equ 23780
-variable.file_type:                                         equ 23781
-variable.file_start:                                        equ 23782
-variable.file_start.high:                                   equ 23783
-variable.file_length_in_bytes:                              equ 23784
-variable.file_length_in_bytes.high:                         equ 23785
-variable.file_length_in_sectors:                            equ 23786
-variable.file_first_sector:                                 equ 23787
-variable.file_first_track:                                  equ 23788
-variable.c_file_start_or_b_file_size:                       equ 23789
-variable.file_2_length_in_bytes:                            equ 23791
-variable.file_2_length_in_sectors:                          equ 23793
-variable.file_2_first_sector:                               equ 23794
-variable.file_2_first_track:                                equ 23795
-variable.current_sector:                                    equ 23796
-variable.current_track:                                     equ 23797
-variable.temporary_drive:                                   equ 23798
-variable.cleared:                                           equ 23799
-variable.two_files_drive:                                   equ 23800
-variable.cat_drive_or_read_verify_flag:                     equ 23801
-variable.a_drive_step_rate:                                 equ 23802
-variable.b_drive_step_rate:                                 equ 23803
-variable.c_drive_step_rate:                                 equ 23804
-variable.d_drive_step_rate:                                 equ 23805
-variable.last_fdc_command:                                  equ 23806
-variable.sector:                                            equ 23807
-variable.buffer:                                            equ 23808
-variable.hl_copy:                                           equ 23810
-variable.de_copy:                                           equ 23812
-variable.find_command_symbols:                              equ 23814
-variable.deleted_files:                                     equ 23815
-variable.filename_first_char:                               equ 23816
-variable.data_file_mode:                                    equ 23817
-variable.buffer_flag:                                       equ 23820
-variable.file_number_for_copying:                           equ 23821
-variable.command_mode:                                      equ 23822
-variable.error_code:                                        equ 23823
-variable.error_code_msb:                                    equ 23824
-variable.command_line_address:                              equ 23825
-variable.err_sp_copy:                                       equ 23827
-variable.show_screen_flag:                                  equ 23829
-variable.system_register:                                   equ 23830
-variable.show_title_flag:                                   equ 23831
-variable.interface_1_flag:                                  equ 23832
-variable.default_drive:                                     equ 23833
-variable.internal_address_of_finishing_proc:                equ 23834
-variable.sp_copy:                                           equ 23836
-variable.find_command_found_file:                           equ 23838
-variable.unknown_23839:                                     equ 23839
-variable.entered_line_3_first_chars:                        equ 23840
-variable.entered_line_3_first_chars.1:                      equ 23841
-variable.entered_line_3_first_chars.2:                      equ 23842
-variable.move_command_blocks:                               equ 23843
-variable.tmp_buffer_address:                                equ 23845
-variable.k_channel.output:                                  equ 23846
-variable.k_channel.input:                                   equ 23848
-variable.k_channel.id:                                      equ 23850
-variable.s_channel.output:                                  equ 23851
-variable.s_channel.input:                                   equ 23853
-variable.s_channel.id:                                      equ 23855
-variable.r_channel.output:                                  equ 23856
-variable.r_channel.input:                                   equ 23858
-variable.r_channel.input.high:                              equ 23859
-variable.r_channel.id:                                      equ 23860
-variable.p_channel.output:                                  equ 23861
-variable.p_channel.input:                                   equ 23863
-variable.p_channel.id:                                      equ 23865
+include "inc/zx_spectrum_trdos_addresses.z80s"
 
 ; Entry points to routines of the main ROM
 ; (with the names used in the main ROM)
@@ -166,6 +58,7 @@ print_message_at_HL:                                        equ 0x2707
 set_sys_err_nr_to_tape_loading_error:                       equ 0x272B
 execute_command_in_C:                                       equ 0x283C
 set_number_of_tracks:                                       equ 0x2998
+magic_button_nmi_request:                                   equ 0x2A56
 read_all_file_sectors:                                      equ 0x2D92
 call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:  equ 0x2F72
 init_main_variables:                                        equ 0x2F90
@@ -177,8 +70,8 @@ init_default_disk_drive:                                    equ 0x3DC8
 point_HL_to_step_rate_of_temporary_drive:                   equ 0x3E08
 calculate_step_rate_of_temporary_drive:                     equ 0x3E16
 try_B_as_step_rate_of_temporary_drive:                      equ 0x3E1D
+vg93_command_in_B_with_data_in_A:                           equ 0x3E44
 report_tape_loading_error_and_issue_no_disk_error:          equ 0x3EE7
-
 
 ; Secondary addresses (e.g. loops or jumps in a subroutine)
 
@@ -299,3 +192,7 @@ cli_command.verify:                                         equ 0x1810
 
 cli_command.copy_s:                                         equ 0x1360
 cli_command.copy_b:                                         equ 0x152C
+
+; Other
+
+zx_spectrum_font_char_0:                                    equ 0x3C00

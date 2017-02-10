@@ -1,6 +1,6 @@
 = TR-DOS _Disassembled_
 :author: Marcos Cruz (programandala.net)
-:revdate: 2017-02-05
+:revdate: 2017-02-10
 
 // This file is written in AsciDoc/Asciidoctor format
 // (see <http://asciidoctor.org>).
@@ -21,7 +21,8 @@ GitHub]).
 │   ├── zx_spectrum_char_codes.z80s
 │   ├── zx_spectrum_rom_routines.z80s
 │   ├── zx_spectrum_system_variables.z80s
-│   └── zx_spectrum_trdos.z80s
+│   ├── zx_spectrum_trdos_addresses.z80s
+│   └── zx_spectrum_trdos_codes.z80s
 ├── Makefile
 ├── README.adoc                            = This file
 ├── TO-DO.adoc                             = To-Do list

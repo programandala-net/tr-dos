@@ -1,11 +1,23 @@
 = To-do list of TR-DOS disassembled
 :author: Marcos Cruz (programandala.net)
-:revdate: 2016-09-15
+:revdate: 2017-02-10
 
 // This file is part of TR-DOS disassembled
 // By Marcos Cruz (programandala.net), 2016
 
-// Last modified 20160915
+// Last modified: 201702100213
+
+.2017-02-10:
+
+Variable `variable.move_command_first_track` is used also to store the
+input flag of `load_or_verify` (command $0E):
+
+....
+        A=#00 - take address and length from disk catalogue;
+        A=#03 - take address in HL length in DE;
+        A=#FF - take address in HL but length taken from disk catalogue;
+....
+ 
 
 .2016-09-02:
 
