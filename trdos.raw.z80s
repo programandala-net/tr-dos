@@ -140,7 +140,7 @@ l000dh:
 l000fh:
 	nop			;000f	00 	. 
 rst_10:
-	jp print_character_in_A		;0010	c3 82 3d 	. . = 
+	jp print_character_A		;0010	c3 82 3d 	. . = 
 l0013h:
 	ld i,a		;0013	ed 47 	. G 
 l0015h:
@@ -331,7 +331,7 @@ l0166h:
 	ret			;016b	c9 	. 
 do_interpret_rem_command_in_basic:
 	call sub_20f1h		;016c	cd f1 20 	. .   
-	call sub_294ah		;016f	cd 4a 29 	. J ) 
+	call allocate_the_sector_buffer		;016f	cd 4a 29 	. J ) 
 	ld a,0ffh		;0172	3e ff 	> . 
 	ld (trdos_variable.show_screen_flag),a		;0174	32 15 5d 	2 . ] 
 	xor a			;0177	af 	. 
@@ -569,7 +569,7 @@ l0320h:
 	cp (hl)			;032a	be 	. 
 	jr nz,l0320h		;032b	20 f3 	  . 
 	cp 0feh		;032d	fe fe 	. . 
-	call nz,sub_294ah		;032f	c4 4a 29 	. J ) 
+	call nz,allocate_the_sector_buffer		;032f	c4 4a 29 	. J ) 
 	ld a,009h		;0332	3e 09 	> . 
 	ld (trdos_variable.find_command_symbols),a		;0334	32 06 5d 	2 . ] 
 	xor a			;0337	af 	. 
@@ -676,7 +676,7 @@ trdos_title_start:
 	defb 038h		;03aa	38 	8 
 	defb 000h		;03ab	00 	. 
 l03ach:
-	call sub_03fdh		;03ac	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;03ac	cd fd 03 	. . . 
 	call sub_3d80h		;03af	cd 80 3d 	. . = 
 	call sub_3d80h		;03b2	cd 80 3d 	. . = 
 l03b5h:
@@ -711,27 +711,27 @@ print_OK_and_exit_DOS:
 sub_03e8h:
 	xor a			;03e8	af 	. 
 	ld (trdos_variable.cat_current_sector),a		;03e9	32 cc 5c 	2 . \ 
-sub_03ech:
+read_current_cat_sector_into_tmp_buffer:
 	ld de,(trdos_variable.cat_current_sector)		;03ec	ed 5b cc 5c 	. [ . \ 
 	ld d,000h		;03f0	16 00 	. . 
-l03f2h:
-	call sub_294ah		;03f2	cd 4a 29 	. J ) 
+read_sector_DE_into_tmp_buffer:
+	call allocate_the_sector_buffer		;03f2	cd 4a 29 	. J ) 
 	ld hl,trdos_variable.tmp_buffer_address		;03f5	21 25 5d 	! % ] 
 	ld b,001h		;03f8	06 01 	. . 
 	jp read_sectors		;03fa	c3 3d 1e 	. = . 
-sub_03fdh:
-	call sub_294ah		;03fd	cd 4a 29 	. J ) 
+read_sector_8_of_track_0:
+	call allocate_the_sector_buffer		;03fd	cd 4a 29 	. J ) 
 	ld de,l0008h		;0400	11 08 00 	. . . 
-	jr l03f2h		;0403	18 ed 	. . 
+	jr read_sector_DE_into_tmp_buffer		;0403	18 ed 	. . 
 read_system_track:
-	call sub_03fdh		;0405	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;0405	cd fd 03 	. . . 
 	ld a,(trdos_sector_buffer.sectors_per_track)		;0408	3a 0c 5e 	: . ^ 
 	cp 010h		;040b	fe 10 	. . 
-	jr z,l0415h		;040d	28 06 	( . 
+	jr z,sectors_per_track_are_correct_so_disk_is_recognized		;040d	28 06 	( . 
 	ld hl,message.cr.disc_error		;040f	21 e2 29 	! . ) 
 	rst 18h			;0412	df 	. 
 	jr jp_exit_dos		;0413	18 ab 	. . 
-l0415h:
+sectors_per_track_are_correct_so_disk_is_recognized:
 	call sub_3e11h		;0415	cd 11 3e 	. . > 
 	res 0,(hl)		;0418	cb 86 	. . 
 	res 1,(hl)		;041a	cb 8e 	. . 
@@ -876,7 +876,7 @@ sub_050ch:
 l0517h:
 	ld hl,trdos_variable.cat_current_sector		;0517	21 cc 5c 	! . \ 
 	inc (hl)			;051a	34 	4 
-	call sub_03ech		;051b	cd ec 03 	. . . 
+	call read_current_cat_sector_into_tmp_buffer		;051b	cd ec 03 	. . . 
 	pop bc			;051e	c1 	. 
 	pop hl			;051f	e1 	. 
 	ld hl,trdos_variable.tmp_buffer_address		;0520	21 25 5d 	! % ] 
@@ -904,7 +904,7 @@ cli_command.new:
 	ld (trdos_variable.two_files_drive),a		;0549	32 f8 5c 	2 . \ 
 	jp nz,print_no_files_error_and_exit_DOS		;054c	c2 d9 03 	. . . 
 	push bc			;054f	c5 	. 
-	call sub_165dh		;0550	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;0550	cd 5d 16 	. ] . 
 	call sub_1cb0h		;0553	cd b0 1c 	. . . 
 	push af			;0556	f5 	. 
 	ld a,(trdos_variable.two_files_drive)		;0557	3a f8 5c 	: . \ 
@@ -916,7 +916,7 @@ cli_command.new:
 	jp z,error.file_exists		;0565	ca 50 1c 	. P . 
 	pop bc			;0568	c1 	. 
 l0569h:
-	call sub_166bh		;0569	cd 6b 16 	. k . 
+	call write_file_descriptor_C		;0569	cd 6b 16 	. k . 
 	call sub_1e43h		;056c	cd 43 1e 	. C . 
 	jp print_OK_and_exit_DOS		;056f	c3 e1 03 	. . . 
 sub_0572h:
@@ -933,9 +933,9 @@ sub_0581h:
 	call cls		;0582	cd 97 1d 	. . . 
 	ld a,(trdos_variable.current_temporary_drive)		;0585	3a f6 5c 	: . \ 
 	add a,041h		;0588	c6 41 	. A 
-	call print_character_in_A		;058a	cd 82 3d 	. . = 
+	call print_character_A		;058a	cd 82 3d 	. . = 
 	ld a,03ah		;058d	3e 3a 	> : 
-	call print_character_in_A		;058f	cd 82 3d 	. . = 
+	call print_character_A		;058f	cd 82 3d 	. . = 
 	ld hl,trdos_variable.filename		;0592	21 dd 5c 	! . \ 
 	call sub_2938h		;0595	cd 38 29 	. 8 ) 
 	ld hl,message.file_exists		;0598	21 20 28 	!   ( 
@@ -991,7 +991,7 @@ l05f4h:
 	inc a			;0600	3c 	< 
 	ld (trdos_variable.file_number_for_copying),a		;0601	32 0d 5d 	2 . ] 
 	ld c,a			;0604	4f 	O 
-	call sub_165dh		;0605	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;0605	cd 5d 16 	. ] . 
 	ld a,(trdos_variable.filename)		;0608	3a dd 5c 	: . \ 
 	cp 000h		;060b	fe 00 	. . 
 	jp z,print_OK_and_exit_DOS		;060d	ca e1 03 	. . . 
@@ -1014,7 +1014,7 @@ l0634h:
 	call sub_1e43h		;0637	cd 43 1e 	. C . 
 	jr l05f4h		;063a	18 b8 	. . 
 sub_063ch:
-	call sub_03fdh		;063c	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;063c	cd fd 03 	. . . 
 	ld a,(trdos_sector_buffer.files)		;063f	3a 09 5e 	: . ^ 
 	cp 080h		;0642	fe 80 	. . 
 	jp z,error.no_space		;0644	ca 45 1c 	. E . 
@@ -1047,7 +1047,7 @@ sub_063ch:
 	ld (trdos_variable.current_sector),de		;0684	ed 53 f4 5c 	. S . \ 
 	call sub_1e43h		;0688	cd 43 1e 	. C . 
 	pop bc			;068b	c1 	. 
-	call sub_166bh		;068c	cd 6b 16 	. k . 
+	call write_file_descriptor_C		;068c	cd 6b 16 	. k . 
 	ret			;068f	c9 	. 
 cli_command.copy:
 	ld hl,(trdos_variable.command_line_address)		;0690	2a 11 5d 	* . ] 
@@ -1066,7 +1066,7 @@ cli_command.copy:
 	ld a,(trdos_variable.current_temporary_drive)		;06b0	3a f6 5c 	: . \ 
 	ld (trdos_variable.two_files_drive),a		;06b3	32 f8 5c 	2 . \ 
 	jp nz,l05cbh		;06b6	c2 cb 05 	. . . 
-	call sub_165dh		;06b9	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;06b9	cd 5d 16 	. ] . 
 	ld hl,trdos_variable.file_start		;06bc	21 e6 5c 	! . \ 
 	ld de,trdos_variable.c_file_start_or_b_file_size		;06bf	11 ed 5c 	. . \ 
 	ld bc,00007h		;06c2	01 07 00 	. . . 
@@ -1103,7 +1103,7 @@ l06f3h:
 	call init_disk_drive_in_A_register		;070d	cd cb 3d 	. . = 
 	call sub_05b4h		;0710	cd b4 05 	. . . 
 	jp nz,print_OK_and_exit_DOS		;0713	c2 e1 03 	. . . 
-	call sub_165dh		;0716	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;0716	cd 5d 16 	. ] . 
 	ld hl,trdos_variable.file_start		;0719	21 e6 5c 	! . \ 
 	ld de,trdos_variable.c_file_start_or_b_file_size		;071c	11 ed 5c 	. . \ 
 	ld bc,00007h		;071f	01 07 00 	. . . 
@@ -1175,7 +1175,7 @@ l07a0h:
 	ld hl,trdos_variable.deleted_files		;07a7	21 07 5d 	! . ] 
 	inc (hl)			;07aa	34 	4 
 	push bc			;07ab	c5 	. 
-	call sub_03fdh		;07ac	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;07ac	cd fd 03 	. . . 
 	ld a,(trdos_sector_buffer.files)		;07af	3a 09 5e 	: . ^ 
 	pop bc			;07b2	c1 	. 
 	inc c			;07b3	0c 	. 
@@ -1194,7 +1194,7 @@ l07c3h:
 	call sub_1e43h		;07c4	cd 43 1e 	. C . 
 	pop bc			;07c7	c1 	. 
 	dec c			;07c8	0d 	. 
-	call sub_165dh		;07c9	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;07c9	cd 5d 16 	. ] . 
 	pop af			;07cc	f1 	. 
 	jp z,l07d2h		;07cd	ca d2 07 	. . . 
 	ld a,001h		;07d0	3e 01 	> . 
@@ -1209,7 +1209,7 @@ l07d2h:
 	call sub_1cb3h		;07e2	cd b3 1c 	. . . 
 	jr l07a0h		;07e5	18 b9 	. . 
 l07e7h:
-	call sub_03fdh		;07e7	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;07e7	cd fd 03 	. . . 
 	ld hl,(trdos_variable.file_first_sector)		;07ea	2a eb 5c 	* . \ 
 	ld (trdos_sector_buffer.next_free_sector),hl		;07ed	22 06 5e 	" . ^ 
 	ld de,(trdos_variable.file_length_in_sectors)		;07f0	ed 5b ea 5c 	. [ . \ 
@@ -3589,7 +3589,7 @@ l1161h:
 	jr l1161h		;1166	18 f9 	. . 
 l1168h:
 	add a,030h		;1168	c6 30 	. 0 
-	call print_character_in_A_preserving_DEHL		;116a	cd a8 11 	. . . 
+	call print_character_A_preserving_DEHL		;116a	cd a8 11 	. . . 
 	add hl,de			;116d	19 	. 
 	xor a			;116e	af 	. 
 	ld de,sub_03e8h		;116f	11 e8 03 	. . . 
@@ -3600,7 +3600,7 @@ l1172h:
 	jr l1172h		;1177	18 f9 	. . 
 l1179h:
 	add a,030h		;1179	c6 30 	. 0 
-	call print_character_in_A_preserving_DEHL		;117b	cd a8 11 	. . . 
+	call print_character_A_preserving_DEHL		;117b	cd a8 11 	. . . 
 	add hl,de			;117e	19 	. 
 	xor a			;117f	af 	. 
 	ld de,l0064h		;1180	11 64 00 	. d . 
@@ -3611,7 +3611,7 @@ l1183h:
 	jr l1183h		;1188	18 f9 	. . 
 l118ah:
 	add a,030h		;118a	c6 30 	. 0 
-	call print_character_in_A_preserving_DEHL		;118c	cd a8 11 	. . . 
+	call print_character_A_preserving_DEHL		;118c	cd a8 11 	. . . 
 	add hl,de			;118f	19 	. 
 	xor a			;1190	af 	. 
 	ld de,l0009h+1		;1191	11 0a 00 	. . . 
@@ -3622,16 +3622,16 @@ l1194h:
 	jr l1194h		;1199	18 f9 	. . 
 l119bh:
 	add a,030h		;119b	c6 30 	. 0 
-	call print_character_in_A_preserving_DEHL		;119d	cd a8 11 	. . . 
+	call print_character_A_preserving_DEHL		;119d	cd a8 11 	. . . 
 	add hl,de			;11a0	19 	. 
 	ld a,l			;11a1	7d 	} 
 	add a,030h		;11a2	c6 30 	. 0 
-	call print_character_in_A_preserving_DEHL		;11a4	cd a8 11 	. . . 
+	call print_character_A_preserving_DEHL		;11a4	cd a8 11 	. . . 
 	ret			;11a7	c9 	. 
-print_character_in_A_preserving_DEHL:
+print_character_A_preserving_DEHL:
 	push hl			;11a8	e5 	. 
 	push de			;11a9	d5 	. 
-	call print_character_in_A		;11aa	cd 82 3d 	. . = 
+	call print_character_A		;11aa	cd 82 3d 	. . = 
 	pop de			;11ad	d1 	. 
 	pop hl			;11ae	e1 	. 
 	ret			;11af	c9 	. 
@@ -3711,7 +3711,7 @@ l123eh:
 	rst 18h			;124e	df 	. 
 	ld a,(trdos_variable.current_temporary_drive)		;124f	3a f6 5c 	: . \ 
 	add a,041h		;1252	c6 41 	. A 
-	call print_character_in_A		;1254	cd 82 3d 	. . = 
+	call print_character_A		;1254	cd 82 3d 	. . = 
 	call sub_3d80h		;1257	cd 80 3d 	. . = 
 	ld hl,(trdos_variable.stack_sp_copy)		;125a	2a cf 5c 	* . \ 
 	ld bc,l0001h+2		;125d	01 03 00 	. . . 
@@ -3801,7 +3801,7 @@ l12d9h:
 	ex de,hl			;12eb	eb 	. 
 	call sub_115dh		;12ec	cd 5d 11 	. ] . 
 	ld a,020h		;12ef	3e 20 	>   
-	call print_character_in_A		;12f1	cd 82 3d 	. . = 
+	call print_character_A		;12f1	cd 82 3d 	. . = 
 	pop hl			;12f4	e1 	. 
 	inc hl			;12f5	23 	# 
 	ld e,(hl)			;12f6	5e 	^ 
@@ -3870,7 +3870,7 @@ l1335h:
 	ret z			;1354	c8 	. 
 	push bc			;1355	c5 	. 
 	ld a,020h		;1356	3e 20 	>   
-	call print_character_in_A		;1358	cd 82 3d 	. . = 
+	call print_character_A		;1358	cd 82 3d 	. . = 
 	pop bc			;135b	c1 	. 
 	call sub_1da9h		;135c	cd a9 1d 	. . . 
 	ret			;135f	c9 	. 
@@ -3911,7 +3911,7 @@ l13a5h:
 	call sub_13b7h		;13b2	cd b7 13 	. . . 
 	jr l1393h		;13b5	18 dc 	. . 
 sub_13b7h:
-	call sub_165dh		;13b7	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;13b7	cd 5d 16 	. ] . 
 	ld hl,trdos_variable.file_start		;13ba	21 e6 5c 	! . \ 
 	ld de,trdos_variable.c_file_start_or_b_file_size		;13bd	11 ed 5c 	. . \ 
 	ld bc,00007h		;13c0	01 07 00 	. . . 
@@ -3938,7 +3938,7 @@ sub_13b7h:
 	ld (trdos_variable.current_sector),de		;13f4	ed 53 f4 5c 	. S . \ 
 	call sub_1e43h		;13f8	cd 43 1e 	. C . 
 	pop bc			;13fb	c1 	. 
-	call sub_166bh		;13fc	cd 6b 16 	. k . 
+	call write_file_descriptor_C		;13fc	cd 6b 16 	. k . 
 	call sub_1e43h		;13ff	cd 43 1e 	. C . 
 	ret			;1402	c9 	. 
 sub_1403h:
@@ -3949,7 +3949,7 @@ sub_1403h:
 	ld (trdos_variable.ch_add.high),a		;140d	32 da 5c 	2 . \ 
 	call sub_1cb3h		;1410	cd b3 1c 	. . . 
 	jp z,error.file_exists		;1413	ca 50 1c 	. P . 
-	call sub_03fdh		;1416	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;1416	cd fd 03 	. . . 
 	ld a,(trdos_sector_buffer.files)		;1419	3a 09 5e 	: . ^ 
 	cp 080h		;141c	fe 80 	. . 
 	jp z,error.directory_full		;141e	ca 23 27 	. # ' 
@@ -3957,7 +3957,7 @@ sub_1403h:
 	ld de,trdos_variable.file_start		;1424	11 e6 5c 	. . \ 
 	ld bc,00007h		;1427	01 07 00 	. . . 
 	ldir		;142a	ed b0 	. . 
-	call sub_03fdh		;142c	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;142c	cd fd 03 	. . . 
 	ld a,(trdos_variable.error_code_msb)		;142f	3a 10 5d 	: . ] 
 	ld (trdos_variable.file_length_in_sectors),a		;1432	32 ea 5c 	2 . \ 
 	ld de,(trdos_variable.file_length_in_sectors)		;1435	ed 5b ea 5c 	. [ . \ 
@@ -4210,26 +4210,26 @@ l1644h:
 	xor a			;164f	af 	. 
 	jp l15f8h		;1650	c3 f8 15 	. . . 
 sub_1653h:
-	call sub_165dh		;1653	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;1653	cd 5d 16 	. ] . 
 	ld a,(trdos_variable.filename)		;1656	3a dd 5c 	: . \ 
 	cp 001h		;1659	fe 01 	. . 
 	ret			;165b	c9 	. 
 read_file_descriptor:
 	ld c,a			;165c	4f 	O 
-sub_165dh:
+read_file_descriptor_C:
 	xor a			;165d	af 	. 
-l165eh:
+transfer_file_descriptor_C:
 	push bc			;165e	c5 	. 
 	call sub_17e9h		;165f	cd e9 17 	. . . 
 	pop bc			;1662	c1 	. 
 	ret			;1663	c9 	. 
 write_file_descriptor:
 	ld c,a			;1664	4f 	O 
-	call sub_166bh		;1665	cd 6b 16 	. k . 
+	call write_file_descriptor_C		;1665	cd 6b 16 	. k . 
 	jp sub_1e43h		;1668	c3 43 1e 	. C . 
-sub_166bh:
+write_file_descriptor_C:
 	ld a,0ffh		;166b	3e ff 	> . 
-	jr l165eh		;166d	18 ef 	. . 
+	jr transfer_file_descriptor_C		;166d	18 ef 	. . 
 sub_166fh:
 	ld a,0ffh		;166f	3e ff 	> . 
 	ld (trdos_variable.command_mode),a		;1671	32 0e 5d 	2 . ] 
@@ -4355,7 +4355,7 @@ l1710h:
 	ld a,(trdos_variable.move_command_deleted_files)		;1754	3a d4 5c 	: . \ 
 	inc a			;1757	3c 	< 
 	ld c,a			;1758	4f 	O 
-	call sub_165dh		;1759	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;1759	cd 5d 16 	. ] . 
 	ld hl,(trdos_variable.move_command_first_sector)		;175c	2a d5 5c 	* . \ 
 	ld (trdos_variable.file_first_sector),hl		;175f	22 eb 5c 	" . \ 
 	call l1e40h		;1762	cd 40 1e 	. @ . 
@@ -4366,7 +4366,7 @@ l176ch:
 	ld hl,(trdos_variable.stack_sp_copy)		;176c	2a cf 5c 	* . \ 
 	ld bc,message_interface_1_start		;176f	01 00 10 	. . . 
 	call reclaim_2		;1772	cd 2e 1e 	. . . 
-	call sub_03fdh		;1775	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;1775	cd fd 03 	. . . 
 	ld hl,(trdos_sector_buffer.free_sectors)		;1778	2a 0a 5e 	* . ^ 
 	ld de,(trdos_variable.ch_add)		;177b	ed 5b d9 5c 	. [ . \ 
 	add hl,de			;177f	19 	. 
@@ -4382,7 +4382,7 @@ l176ch:
 	call sub_1e43h		;1796	cd 43 1e 	. C . 
 	pop af			;1799	f1 	. 
 	ld c,a			;179a	4f 	O 
-	call sub_165dh		;179b	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;179b	cd 5d 16 	. ] . 
 	xor a			;179e	af 	. 
 	ld (trdos_variable.filename),a		;179f	32 dd 5c 	2 . \ 
 	jp l0569h		;17a2	c3 69 05 	. i . 
@@ -4436,10 +4436,10 @@ l17f7h:
 	add a,010h		;17f7	c6 10 	. . 
 	ld c,a			;17f9	4f 	O 
 	push bc			;17fa	c5 	. 
-	call sub_03ech		;17fb	cd ec 03 	. . . 
+	call read_current_cat_sector_into_tmp_buffer		;17fb	cd ec 03 	. . . 
 	pop bc			;17fe	c1 	. 
 	pop af			;17ff	f1 	. 
-	call sub_1ca4h		;1800	cd a4 1c 	. . . 
+	call convert_dir_entry_C_to_its_address_HL_in_sector_buffer		;1800	cd a4 1c 	. . . 
 	ld de,trdos_variable.filename		;1803	11 dd 5c 	. . \ 
 	ld bc,rst_10		;1806	01 10 00 	. . . 
 	or a			;1809	b7 	. 
@@ -4519,7 +4519,7 @@ sub_187ah:
 	call sub_292fh		;18a1	cd 2f 29 	. / ) 
 sub_18a4h:
 	jp nz,print_no_files_error_and_exit_DOS		;18a4	c2 d9 03 	. . . 
-	call sub_165dh		;18a7	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;18a7	cd 5d 16 	. ] . 
 	ret			;18aa	c9 	. 
 sub_18abh:
 	ld a,(trdos_variable.bad_sectors_or_move_command_first_track)		;18ab	3a d6 5c 	: . \ 
@@ -4824,7 +4824,7 @@ sub_1abeh:
 	call sub_292fh		;1abe	cd 2f 29 	. / ) 
 	jp z,error.file_exists		;1ac1	ca 50 1c 	. P . 
 sub_1ac4h:
-	call sub_03fdh		;1ac4	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;1ac4	cd fd 03 	. . . 
 	ld a,(trdos_sector_buffer.files)		;1ac7	3a 09 5e 	: . ^ 
 	cp 080h		;1aca	fe 80 	. . 
 	jp z,error.directory_full		;1acc	ca 23 27 	. # ' 
@@ -4928,7 +4928,7 @@ l1b6dh:
 	call write_sectors		;1b9e	cd 4d 1e 	. M . 
 	ld hl,(trdos_variable.current_sector)		;1ba1	2a f4 5c 	* . \ 
 	push hl			;1ba4	e5 	. 
-	call sub_03fdh		;1ba5	cd fd 03 	. . . 
+	call read_sector_8_of_track_0		;1ba5	cd fd 03 	. . . 
 	pop hl			;1ba8	e1 	. 
 	ld (trdos_sector_buffer.next_free_sector),hl		;1ba9	22 06 5e 	" . ^ 
 	pop hl			;1bac	e1 	. 
@@ -5072,7 +5072,7 @@ l1c98h:
 	pop hl			;1ca1	e1 	. 
 	pop bc			;1ca2	c1 	. 
 	ret			;1ca3	c9 	. 
-sub_1ca4h:
+convert_dir_entry_C_to_its_address_HL_in_sector_buffer:
 	ld l,c			;1ca4	69 	i 
 	ld h,000h		;1ca5	26 00 	& . 
 	add hl,hl			;1ca7	29 	) 
@@ -5090,7 +5090,7 @@ sub_1cb3h:
 	ld c,000h		;1cb8	0e 00 	. . 
 l1cbah:
 	push bc			;1cba	c5 	. 
-	call sub_1ca4h		;1cbb	cd a4 1c 	. . . 
+	call convert_dir_entry_C_to_its_address_HL_in_sector_buffer		;1cbb	cd a4 1c 	. . . 
 	call sub_050ch		;1cbe	cd 0c 05 	. . . 
 	pop bc			;1cc1	c1 	. 
 	push bc			;1cc2	c5 	. 
@@ -5334,9 +5334,9 @@ sub_1e36h:
 	ret			;1e3c	c9 	. 
 read_sectors:
 	xor a			;1e3d	af 	. 
-	jr l1e64h		;1e3e	18 24 	. $ 
+	jr transfer_B_sectors_first_sector_DE_address_HL		;1e3e	18 24 	. $ 
 l1e40h:
-	call sub_166bh		;1e40	cd 6b 16 	. k . 
+	call write_file_descriptor_C		;1e40	cd 6b 16 	. k . 
 sub_1e43h:
 	ld de,(trdos_variable.current_sector)		;1e43	ed 5b f4 5c 	. [ . \ 
 	dec de			;1e47	1b 	. 
@@ -5355,9 +5355,10 @@ write_sectors:
 l1e60h:
 	pop de			;1e60	d1 	. 
 	pop hl			;1e61	e1 	. 
-sub_1e62h:
+write_B_sectors_to_sector_DE_from_address_HL:
 	ld a,0ffh		;1e62	3e ff 	> . 
-l1e64h:
+transfer_B_sectors_first_sector_DE_address_HL:
+transfer_sectors:
 	ld (trdos_variable.sector_rw_flag),a		;1e64	32 ce 5c 	2 . \ 
 l1e67h:
 	ld (trdos_variable.current_sector),de		;1e67	ed 53 f4 5c 	. S . \ 
@@ -5504,7 +5505,7 @@ l1f55h:
 	ld b,001h		;1f80	06 01 	. . 
 	ld de,l0008h		;1f82	11 08 00 	. . . 
 	ld hl,trdos_variable.tmp_buffer_address		;1f85	21 25 5d 	! % ] 
-	call sub_1e62h		;1f88	cd 62 1e 	. b . 
+	call write_B_sectors_to_sector_DE_from_address_HL		;1f88	cd 62 1e 	. b . 
 	ld a,(trdos_variable.bad_sectors_or_move_command_first_track)		;1f8b	3a d6 5c 	: . \ 
 	push af			;1f8e	f5 	. 
 	xor a			;1f8f	af 	. 
@@ -5555,9 +5556,9 @@ sub_1fcah:
 	or 011h		;1fcd	f6 11 	. . 
 	ld b,a			;1fcf	47 	G 
 	ld a,032h		;1fd0	3e 32 	> 2 
-	call vg93_command_in_B_with_data_in_A		;1fd2	cd 44 3e 	. D > 
+	call vg93_command_B_with_data_A		;1fd2	cd 44 3e 	. D > 
 	ld a,002h		;1fd5	3e 02 	> . 
-	call vg93_command_in_B_with_data_in_A		;1fd7	cd 44 3e 	. D > 
+	call vg93_command_B_with_data_A		;1fd7	cd 44 3e 	. D > 
 	call sub_3dfdh		;1fda	cd fd 3d 	. . = 
 	in a,(01fh)		;1fdd	db 1f 	. . 
 	and 004h		;1fdf	e6 04 	. . 
@@ -5694,7 +5695,7 @@ l20c6h:
 	inc e			;20c7	1c 	. 
 	ld a,e			;20c8	7b 	{ 
 	ld b,01bh		;20c9	06 1b 	. . 
-	call vg93_command_in_B_with_data_in_A		;20cb	cd 44 3e 	. D > 
+	call vg93_command_B_with_data_A		;20cb	cd 44 3e 	. D > 
 	call select_bottom_side		;20ce	cd eb 1f 	. . . 
 	call sub_1ffdh		;20d1	cd fd 1f 	. . . 
 	ld a,(trdos_variable.ch_add.high)		;20d4	3a da 5c 	: . \ 
@@ -5852,7 +5853,7 @@ l21f1h:
 	dec (hl)			;21fd	35 	5 
 	call sub_1cb3h		;21fe	cd b3 1c 	. . . 
 l2201h:
-	call sub_165dh		;2201	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;2201	cd 5d 16 	. ] . 
 	xor a			;2204	af 	. 
 	ret			;2205	c9 	. 
 l2206h:
@@ -5952,7 +5953,7 @@ sub_229ah:
 	call sub_1b59h		;22a3	cd 59 1b 	. Y . 
 	ld hl,l0000h		;22a6	21 00 00 	! . . 
 	ld (trdos_variable.file_length_in_bytes),hl		;22a9	22 e8 5c 	" . \ 
-	call sub_166bh		;22ac	cd 6b 16 	. k . 
+	call write_file_descriptor_C		;22ac	cd 6b 16 	. k . 
 	jp sub_1e43h		;22af	c3 43 1e 	. C . 
 sub_22b2h:
 	ld hl,(sys_prog)		;22b2	2a 53 5c 	* S \ 
@@ -6150,7 +6151,7 @@ sub_23cfh:
 	call sub_1cb3h		;23e0	cd b3 1c 	. . . 
 	ret nz			;23e3	c0 	. 
 sub_23e4h:
-	call sub_165dh		;23e4	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;23e4	cd 5d 16 	. ] . 
 	ld c,010h		;23e7	0e 10 	. . 
 	rst 28h			;23e9	ef 	. 
 	ex de,hl			;23ea	eb 	. 
@@ -6626,7 +6627,7 @@ sub_26e1h:
 	ld c,00ch		;26fd	0e 0c 	. . 
 	rst 28h			;26ff	ef 	. 
 	ld c,(hl)			;2700	4e 	N 
-	call sub_166bh		;2701	cd 6b 16 	. k . 
+	call write_file_descriptor_C		;2701	cd 6b 16 	. k . 
 	jp sub_1e43h		;2704	c3 43 1e 	. C . 
 print_message_at_HL:
 	ld a,(hl)			;2707	7e 	~ 
@@ -6915,7 +6916,7 @@ message.file_exists:
 	defb 02fh		;2839	2f 	/ 
 	defb 04eh		;283a	4e 	N 
 	defb 0a9h		;283b	a9 	. 
-execute_command_in_C:
+execute_command_C:
 	push af			;283c	f5 	. 
 	push bc			;283d	c5 	. 
 	ld (trdos_variable.de_copy),de		;283e	ed 53 04 5d 	. S . ] 
@@ -7077,7 +7078,7 @@ l293bh:
 	rst 10h			;2947	d7 	. 
 	pop bc			;2948	c1 	. 
 	ret			;2949	c9 	. 
-sub_294ah:
+allocate_the_sector_buffer:
 	push hl			;294a	e5 	. 
 	push de			;294b	d5 	. 
 	push bc			;294c	c5 	. 
@@ -7085,7 +7086,7 @@ sub_294ah:
 	ld hl,trdos_variable.buffer_flag		;294e	21 0c 5d 	! . ] 
 	ld a,(hl)			;2951	7e 	~ 
 	or a			;2952	b7 	. 
-	jr z,l2992h		;2953	28 3d 	( = 
+	jr z,allocate_the_sector_buffer.exit		;2953	28 3d 	( = 
 	push hl			;2955	e5 	. 
 	ld bc,l0100h+1		;2956	01 01 01 	. . . 
 	push bc			;2959	c5 	. 
@@ -7107,7 +7108,7 @@ sub_2970h:
 	ld hl,trdos_variable.buffer_flag		;2974	21 0c 5d 	! . ] 
 	ld a,(hl)			;2977	7e 	~ 
 	or a			;2978	b7 	. 
-	jr nz,l2992h		;2979	20 17 	  . 
+	jr nz,allocate_the_sector_buffer.exit		;2979	20 17 	  . 
 	ld (hl),0ffh		;297b	36 ff 	6 . 
 	ld hl,trdos_variable.tmp_buffer_address		;297d	21 25 5d 	! % ] 
 	ld bc,l0100h+1		;2980	01 01 01 	. . . 
@@ -7118,7 +7119,7 @@ sub_2970h:
 	sbc hl,bc		;298d	ed 42 	. B 
 l298fh:
 	ld (trdos_variable.command_line_address),hl		;298f	22 11 5d 	" . ] 
-l2992h:
+allocate_the_sector_buffer.exit:
 	pop af			;2992	f1 	. 
 	pop bc			;2993	c1 	. 
 	pop de			;2994	d1 	. 
@@ -7781,7 +7782,7 @@ l2dd2h:
 	call sub_1cb3h		;2dd2	cd b3 1c 	. . . 
 	jp l2e33h		;2dd5	c3 33 2e 	. 3 . 
 l2dd8h:
-	call sub_165dh		;2dd8	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;2dd8	cd 5d 16 	. ] . 
 	call read_all_file_sectors		;2ddb	cd 92 2d 	. . - 
 	ld sp,040ffh		;2dde	31 ff 40 	1 . @ 
 	ld b,008h		;2de1	06 08 	. . 
@@ -7801,7 +7802,7 @@ l2de3h:
 	ld (hl),a			;2df9	77 	w 
 	call sub_1cb3h		;2dfa	cd b3 1c 	. . . 
 	jr nz,l2e05h		;2dfd	20 06 	  . 
-	call sub_165dh		;2dff	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;2dff	cd 5d 16 	. ] . 
 	call read_all_file_sectors		;2e02	cd 92 2d 	. . - 
 l2e05h:
 	pop bc			;2e05	c1 	. 
@@ -7812,7 +7813,7 @@ l2e05h:
 	add hl,bc			;2e11	09 	. 
 	ld (hl),a			;2e12	77 	w 
 	call sub_1cb3h		;2e13	cd b3 1c 	. . . 
-	call sub_165dh		;2e16	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;2e16	cd 5d 16 	. ] . 
 	push bc			;2e19	c5 	. 
 	push af			;2e1a	f5 	. 
 	ld bc,07ffdh		;2e1b	01 fd 7f 	. .  
@@ -7827,7 +7828,7 @@ l2e05h:
 	call sub_292fh		;2e30	cd 2f 29 	. / ) 
 l2e33h:
 	jp nz,print_no_files_error_and_exit_DOS		;2e33	c2 d9 03 	. . . 
-	call sub_165dh		;2e36	cd 5d 16 	. ] . 
+	call read_file_descriptor_C		;2e36	cd 5d 16 	. ] . 
 l2e39h:
 	ld a,(trdos_variable.filename)		;2e39	3a dd 5c 	: . \ 
 	cp 024h		;2e3c	fe 24 	. $ 
@@ -11347,8 +11348,8 @@ zx_spectrum_font_char_0:
 	defb 0ffh		;3cf9	ff 	. 
 l3cfah:
 	jp sub_20f1h		;3cfa	c3 f1 20 	. .   
-jp_execute_command_in_C:
-	jp execute_command_in_C		;3cfd	c3 3c 28 	. < ( 
+jp_execute_command_C:
+	jp execute_command_C		;3cfd	c3 3c 28 	. < ( 
 trdos_entry.enter_trdos_from_basic:
 	nop			;3d00	00 	. 
 	jr enter_trdos_from_basic		;3d01	18 2e 	. . 
@@ -11367,7 +11368,7 @@ l3d0eh:
 	jr l3cfah		;3d11	18 e7 	. . 
 trdos_entry.execute_command_in_c:
 	nop			;3d13	00 	. 
-	jr jp_execute_command_in_C		;3d14	18 e7 	. . 
+	jr jp_execute_command_C		;3d14	18 e7 	. . 
 l3d16h:
 	nop			;3d16	00 	. 
 	jp l2f69h		;3d17	c3 69 2f 	. i / 
@@ -11432,7 +11433,7 @@ l3d67h:
 	ret			;3d7f	c9 	. 
 sub_3d80h:
 	ld a,00dh		;3d80	3e 0d 	> . 
-print_character_in_A:
+print_character_A:
 	push hl			;3d82	e5 	. 
 	push bc			;3d83	c5 	. 
 	push de			;3d84	d5 	. 
@@ -11542,15 +11543,15 @@ try_B_as_step_rate_of_temporary_drive:
 	call l3d9ah		;3e20	cd 9a 3d 	. . = 
 	ld a,020h		;3e23	3e 20 	>   
 	ld b,00bh		;3e25	06 0b 	. . 
-	call vg93_command_in_B_with_data_in_A		;3e27	cd 44 3e 	. D > 
+	call vg93_command_B_with_data_A		;3e27	cd 44 3e 	. D > 
 	ld b,(hl)			;3e2a	46 	F 
 	ld a,001h		;3e2b	3e 01 	> . 
-	call vg93_command_in_B_with_data_in_A		;3e2d	cd 44 3e 	. D > 
+	call vg93_command_B_with_data_A		;3e2d	cd 44 3e 	. D > 
 	in a,(01fh)		;3e30	db 1f 	. . 
 	and 004h		;3e32	e6 04 	. . 
 	jr nz,next_try_of_step_rate_of_temporary_drive		;3e34	20 09 	  . 
 	xor a			;3e36	af 	. 
-	call vg93_command_in_B_with_data_in_A		;3e37	cd 44 3e 	. D > 
+	call vg93_command_B_with_data_A		;3e37	cd 44 3e 	. D > 
 	in a,(01fh)		;3e3a	db 1f 	. . 
 	and 004h		;3e3c	e6 04 	. . 
 	ret nz			;3e3e	c0 	. 
@@ -11559,7 +11560,7 @@ next_try_of_step_rate_of_temporary_drive:
 	dec c			;3e40	0d 	. 
 	ret z			;3e41	c8 	. 
 	jr try_B_as_step_rate_of_temporary_drive		;3e42	18 d9 	. . 
-vg93_command_in_B_with_data_in_A:
+vg93_command_B_with_data_A:
 	out (07fh),a		;3e44	d3 7f 	.  
 	ld a,b			;3e46	78 	x 
 	or 018h		;3e47	f6 18 	. . 
@@ -11642,7 +11643,7 @@ sub_3eb5h:
 	ld (trdos_variable.disk_drive_ready),a		;3eb9	32 cd 5c 	2 . \ 
 	in a,(03fh)		;3ebc	db 3f 	. ? 
 	ld h,a			;3ebe	67 	g 
-	call vg93_command_in_B_with_data_in_A		;3ebf	cd 44 3e 	. D > 
+	call vg93_command_B_with_data_A		;3ebf	cd 44 3e 	. D > 
 	ld c,07fh		;3ec2	0e 7f 	.  
 	ld d,001h		;3ec4	16 01 	. . 
 	di			;3ec6	f3 	. 

@@ -390,16 +390,16 @@ sub_03e8h:	equ 0x03e8
 ; 0x116f	(immediate value)
 ; 0x04b0	(call destination)
 
-sub_03ech:	equ 0x03ec
+read_current_cat_sector_into_tmp_buffer:	equ 0x03ec
 ; Used at following locations:
 ; 0x17fb	(call destination)
 ; 0x051b	(call destination)
 
-l03f2h:	equ 0x03f2
+read_sector_DE_into_tmp_buffer:	equ 0x03f2
 ; Used at following locations:
 ; 0x0403	(jr destination)
 
-sub_03fdh:	equ 0x03fd
+read_sector_8_of_track_0:	equ 0x03fd
 ; Used at following locations:
 ; 0x1ba5	(call destination)
 ; 0x1ac4	(call destination)
@@ -437,7 +437,7 @@ read_system_track:	equ 0x0405
 ; 0x0561	(call destination)
 ; 0x0473	(call destination)
 
-l0415h:	equ 0x0415
+sectors_per_track_are_correct_so_disk_is_recognized:	equ 0x0415
 ; Used at following locations:
 ; 0x040d	(jr destination)
 
@@ -806,7 +806,7 @@ l119bh:	equ 0x119b
 ; Used at following locations:
 ; 0x1196	(jr destination)
 
-print_character_in_A_preserving_DEHL:	equ 0x11a8
+print_character_A_preserving_DEHL:	equ 0x11a8
 ; Used at following locations:
 ; 0x11a4	(call destination)
 ; 0x119d	(call destination)
@@ -1018,7 +1018,7 @@ read_file_descriptor:	equ 0x165c
 ; Used at following locations:
 ; 0x28a5	(defw directive)
 
-sub_165dh:	equ 0x165d
+read_file_descriptor_C:	equ 0x165d
 ; Used at following locations:
 ; 0x2e36	(call destination)
 ; 0x2e16	(call destination)
@@ -1037,7 +1037,7 @@ sub_165dh:	equ 0x165d
 ; 0x0605	(call destination)
 ; 0x0550	(call destination)
 
-l165eh:	equ 0x165e
+transfer_file_descriptor_C:	equ 0x165e
 ; Used at following locations:
 ; 0x166d	(jr destination)
 
@@ -1045,7 +1045,7 @@ write_file_descriptor:	equ 0x1664
 ; Used at following locations:
 ; 0x28a8	(defw directive)
 
-sub_166bh:	equ 0x166b
+write_file_descriptor_C:	equ 0x166b
 ; Used at following locations:
 ; 0x2701	(call destination)
 ; 0x22ac	(call destination)
@@ -1464,7 +1464,7 @@ l1c98h:	equ 0x1c98
 ; Used at following locations:
 ; 0x1c85	(jr destination)
 
-sub_1ca4h:	equ 0x1ca4
+convert_dir_entry_C_to_its_address_HL_in_sector_buffer:	equ 0x1ca4
 ; Used at following locations:
 ; 0x1cbb	(call destination)
 ; 0x1800	(call destination)
@@ -1892,13 +1892,16 @@ l1e60h:	equ 0x1e60
 ; 0x1e58	(jr destination)
 ; 0x1e54	(jr destination)
 
-sub_1e62h:	equ 0x1e62
+write_B_sectors_to_sector_DE_from_address_HL:	equ 0x1e62
 ; Used at following locations:
 ; 0x1f88	(call destination)
 
-l1e64h:	equ 0x1e64
+transfer_B_sectors_first_sector_DE_address_HL:	equ 0x1e64
 ; Used at following locations:
 ; 0x1e3e	(jr destination)
+
+transfer_sectors:	equ 0x1e64
+; Used at following locations:
 
 l1e67h:	equ 0x1e67
 ; Used at following locations:
@@ -2583,7 +2586,7 @@ message.file_exists:	equ 0x2820
 ; Used at following locations:
 ; 0x0598	(immediate value)
 
-execute_command_in_C:	equ 0x283c
+execute_command_C:	equ 0x283c
 ; Used at following locations:
 ; 0x3cfd	(jp destination)
 
@@ -2656,7 +2659,7 @@ l293bh:	equ 0x293b
 ; Used at following locations:
 ; 0x293e	(djnz destination)
 
-sub_294ah:	equ 0x294a
+allocate_the_sector_buffer:	equ 0x294a
 ; Used at following locations:
 ; 0x03fd	(call destination)
 ; 0x03f2	(call destination)
@@ -2673,7 +2676,7 @@ l298fh:	equ 0x298f
 ; Used at following locations:
 ; 0x296e	(jr destination)
 
-l2992h:	equ 0x2992
+allocate_the_sector_buffer.exit:	equ 0x2992
 ; Used at following locations:
 ; 0x2979	(jr destination)
 ; 0x2953	(jr destination)
@@ -3156,7 +3159,7 @@ l3cfah:	equ 0x3cfa
 ; Used at following locations:
 ; 0x3d11	(jr destination)
 
-jp_execute_command_in_C:	equ 0x3cfd
+jp_execute_command_C:	equ 0x3cfd
 ; Used at following locations:
 ; 0x3d14	(jr destination)
 
@@ -3214,7 +3217,7 @@ sub_3d80h:	equ 0x3d80
 ; 0x03b2	(call destination)
 ; 0x03af	(call destination)
 
-print_character_in_A:	equ 0x3d82
+print_character_A:	equ 0x3d82
 ; Used at following locations:
 ; 0x1358	(call destination)
 ; 0x12f1	(call destination)
@@ -3347,7 +3350,7 @@ next_try_of_step_rate_of_temporary_drive:	equ 0x3e3f
 ; Used at following locations:
 ; 0x3e34	(jr destination)
 
-vg93_command_in_B_with_data_in_A:	equ 0x3e44
+vg93_command_B_with_data_A:	equ 0x3e44
 ; Used at following locations:
 ; 0x3ebf	(call destination)
 ; 0x3e37	(call destination)

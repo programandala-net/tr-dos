@@ -3,7 +3,7 @@
 ; This file is part of TR-DOS Disassembled
 ; By Marcos Cruz (programandala.net), 2016, 2017
 
-; Last modified 201702121827
+; Last modified 201702130035
 
 include "inc/zx_spectrum_system_variables.z80s"
 include "inc/zx_spectrum_trdos_addresses.z80s"
@@ -42,43 +42,56 @@ jp_exit_dos:                                                equ 0x03C0
 print_error_number_A_whose_message_is_at_HL:                equ 0x03C3
 print_no_files_error_and_exit_DOS:                          equ 0x03D9
 print_OK_and_exit_DOS:                                      equ 0x03E1
+read_current_cat_sector_into_tmp_buffer:                    equ 0x03EC
+read_sector_DE_into_tmp_buffer:                             equ 0x03F2
+read_sector_8_of_track_0:                                   equ 0x03FD
 z_if_next_command_line_char_is_carriage_return:             equ 0x042B
 check_drive_letter_and_convert_to_number:                   equ 0x0524
 set_file_type_stored_in_B:                                  equ 0x104D
 get_uppercase_pressed_key:                                  equ 0x1052
 color_the_trdos_title:                                      equ 0x1063
-print_character_in_A_preserving_DEHL:                       equ 0x11A8
+print_character_A_preserving_DEHL:                          equ 0x11A8
+read_file_descriptor_C:                                     equ 0x165D
+transfer_file_descriptor_C:                                 equ 0x165E
+write_file_descriptor_C:                                    equ 0x166B
 print_error_number_A_whose_message_is_at_HL_and_exit_DOS:   equ 0x1C4A
+convert_dir_entry_C_to_its_address_HL_in_sector_buffer:     equ 0x1CA4
 z_if_checking_syntax:                                       equ 0x1D70
 pop_hl_if_checking_syntax:                                  equ 0x1D75
 open_channel_0:                                             equ 0x1D83
 open_channel_2:                                             equ 0x1D88
 point_interpreter_to_command_line:                          equ 0x1DC5
 parse_expression:                                           equ 0x1DDF
+write_B_sectors_to_sector_DE_from_address_HL:               equ 0x1E62
+transfer_B_sectors_first_sector_DE_address_HL:              equ 0x1E64
 jp_print_error_number_A_whose_message_is_at_HL:             equ 0x2225
 print_message_at_HL:                                        equ 0x2707
 set_sys_err_nr_to_tape_loading_error:                       equ 0x272B
-execute_command_in_C:                                       equ 0x283C
+execute_command_C:                                          equ 0x283C
+allocate_the_sector_buffer:                                 equ 0x294A
 set_number_of_tracks:                                       equ 0x2998
 magic_button_nmi_request:                                   equ 0x2A56
 read_all_file_sectors:                                      equ 0x2D92
 call_zx_spectrum_rom_routine_stored_at_the_address_on_tos:  equ 0x2F72
 init_main_variables:                                        equ 0x2F90
-jp_execute_command_in_C:                                    equ 0x3CFD
+jp_execute_command_C:                                       equ 0x3CFD
 interpret_rem_command_in_basic:                             equ 0x3D1A
 enter_trdos_from_basic:                                     equ 0x3D31
-print_character_in_A:                                       equ 0x3D82
+print_character_A:                                          equ 0x3D82
 init_default_disk_drive:                                    equ 0x3DC8
 point_HL_to_step_rate_of_temporary_drive:                   equ 0x3E08
 calculate_step_rate_of_temporary_drive:                     equ 0x3E16
 try_B_as_step_rate_of_temporary_drive:                      equ 0x3E1D
-vg93_command_in_B_with_data_in_A:                           equ 0x3E44
+vg93_command_B_with_data_A:                                 equ 0x3E44
 report_tape_loading_error_and_issue_no_disk_error:          equ 0x3EE7
 
 ; Secondary addresses (e.g. loops or jumps in a subroutine)
 
+sectors_per_track_are_correct_so_disk_is_recognized:        equ 0x0415
 wait_for_key:                                               equ 0x1056
+transfer_sectors:                                           equ 0x1E64
 set_sys_err_nr:                                             equ 0x2731
+allocate_the_sector_buffer.exit:                            equ 0x2992
 break_key_not_pressedt:                                     equ 0x3DA5
 next_try_of_step_rate_of_temporary_drive:                   equ 0x3E3F
 ignore_retry_or_abort:                                      equ 0x3F7B
