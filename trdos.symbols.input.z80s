@@ -1,9 +1,9 @@
 ; trdos.symbols.input.z80s
 ;
-; This file is part of TR-DOS disassembled
+; This file is part of TR-DOS Disassembled
 ; By Marcos Cruz (programandala.net), 2016, 2017
 
-; Last modified 201702102306
+; Last modified 201702121827
 
 include "inc/zx_spectrum_system_variables.z80s"
 include "inc/zx_spectrum_trdos_addresses.z80s"
@@ -46,6 +46,8 @@ z_if_next_command_line_char_is_carriage_return:             equ 0x042B
 check_drive_letter_and_convert_to_number:                   equ 0x0524
 set_file_type_stored_in_B:                                  equ 0x104D
 get_uppercase_pressed_key:                                  equ 0x1052
+color_the_trdos_title:                                      equ 0x1063
+print_character_in_A_preserving_DEHL:                       equ 0x11A8
 print_error_number_A_whose_message_is_at_HL_and_exit_DOS:   equ 0x1C4A
 z_if_checking_syntax:                                       equ 0x1D70
 pop_hl_if_checking_syntax:                                  equ 0x1D75

@@ -1,7 +1,7 @@
 ; trdos.z80s
 
-; This file is part of TR-DOS disassembled
-; By Marcos Cruz (programandala.net), 2016
+; This file is part of TR-DOS Disassembled
+; By Marcos Cruz (programandala.net), 2016, 2017
 
   org 0x0000
 
@@ -923,7 +923,7 @@ sub_0581h:
   ld a,(trdos_variable.current_temporary_drive)
   add a,"A" ; first drive letter
   call print_character_in_A
-  ld a,0x3A
+  ld a,":"
   call print_character_in_A
   ld hl,trdos_variable.filename
   call sub_2938h
@@ -3326,6 +3326,7 @@ wait_for_key:
   defw rom_k_test
   jr nc,wait_for_key
   dec d
+color_the_trdos_title:
   ld e,a
   rst 0x20
   defw rom_k_decode
@@ -3574,8 +3575,8 @@ l1161h:
   inc a
   jr l1161h
 l1168h:
-  add a,0x30
-  call sub_11a8h
+  add a,"0"
+  call print_character_in_A_preserving_DEHL
   add hl,de
   xor a
   ld de,1000
@@ -3585,8 +3586,8 @@ l1172h:
   inc a
   jr l1172h
 l1179h:
-  add a,0x30
-  call sub_11a8h
+  add a,"0"
+  call print_character_in_A_preserving_DEHL
   add hl,de
   xor a
   ld de,0x0064
@@ -3596,8 +3597,8 @@ l1183h:
   inc a
   jr l1183h
 l118ah:
-  add a,0x30
-  call sub_11a8h
+  add a,"0"
+  call print_character_in_A_preserving_DEHL
   add hl,de
   xor a
   ld de,0x0009+1
@@ -3607,14 +3608,14 @@ l1194h:
   inc a
   jr l1194h
 l119bh:
-  add a,0x30
-  call sub_11a8h
+  add a,"0"
+  call print_character_in_A_preserving_DEHL
   add hl,de
   ld a,l
-  add a,0x30
-  call sub_11a8h
+  add a,"0"
+  call print_character_in_A_preserving_DEHL
   ret
-sub_11a8h:
+print_character_in_A_preserving_DEHL:
   push hl
   push de
   call print_character_in_A
@@ -3786,7 +3787,7 @@ l12d9h:
   push hl
   ex de,hl
   call sub_115dh
-  ld a,0x20
+  ld a," "
   call print_character_in_A
   pop hl
   inc hl
@@ -3855,7 +3856,7 @@ l1335h:
   or c
   ret z
   push bc
-  ld a,0x20
+  ld a," "
   call print_character_in_A
   pop bc
   call sub_1da9h

@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016, 2017
 
-" Last modified 201702102201
+" Last modified 201702121807
 
 " ==============================================================
 " History
@@ -37,6 +37,8 @@
 " 2017-02-10: Remove the new label `zx_spectrum_font_char_0`
 " from the result.  It must be referenced in code, but it
 " belongs to the main ROM.
+"
+" 2017-02-12: Add more character substitutions.
 
 " ==============================================================
 
@@ -49,7 +51,7 @@ endfunction
 function! ChangeHeader()
   call Report('Changing the header...')
   silent :1,2delete
-  call append(0,['; trdos.z80s','','; This file is part of TR-DOS disassembled','; By Marcos Cruz (programandala.net), 2016'])
+  call append(0,['; trdos.z80s','','; This file is part of TR-DOS Disassembled','; By Marcos Cruz (programandala.net), 2016, 2017'])
 endfunction
 
 function! AddInclude()
@@ -298,6 +300,8 @@ function! ClearCharacters()
   silent substitute@023h.\+$@'#' ; channel?@
   call search(';044c')
   silent substitute@00dh.\+$@char.carriage_return@
+  call search(';058d')
+  silent substitute@03ah.\+$@":"@
   call search(';05a1')
   silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';0697')
@@ -308,8 +312,22 @@ function! ClearCharacters()
   silent substitute@0afh.\+$@token.code ; `CODE`?@
   call search(';103f')
   silent substitute@0e4h.\+$@token.data ; `DATA`?@
+  call search(';1168')
+  silent substitute@030h.\+$@"0"@
+  call search(';1179')
+  silent substitute@030h.\+$@"0"@
+  call search(';118a')
+  silent substitute@030h.\+$@"0"@
+  call search(';119b')
+  silent substitute@030h.\+$@"0"@
+  call search(';11a2')
+  silent substitute@030h.\+$@"0"@
   call search(';11e7')
   silent substitute@00dh.\+$@char.carriage_return@
+  call search(';12ef')
+  silent substitute@020h.\+$@" "@
+  call search(';1356')
+  silent substitute@020h.\+$@" "@
   call search(';1378')
   silent substitute@059h.\+$@"Y" ; Yes?@
   call search(';13a8')

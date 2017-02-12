@@ -5,7 +5,10 @@
 :period: .
 :char94: ^
 
-// Last modified: 201702120142
+// This file is part of TR-DOS Disassembled
+// By Marcos Cruz (programandala.net), 2016, 2017
+
+// Last modified: 201702121831
 
 // This file is written in AsciDoc/Asciidoctor format
 // (see <http://asciidoctor.org>).

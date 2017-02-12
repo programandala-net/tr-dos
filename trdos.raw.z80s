@@ -3339,6 +3339,7 @@ wait_for_key:
 	defw 0031eh		;105e	1e 03 	. . 
 	jr nc,wait_for_key		;1060	30 f4 	0 . 
 	dec d			;1062	15 	. 
+color_the_trdos_title:
 	ld e,a			;1063	5f 	_ 
 	rst 20h			;1064	e7 	. 
 	defw 00333h		;1065	33 03 	3 . 
@@ -3588,7 +3589,7 @@ l1161h:
 	jr l1161h		;1166	18 f9 	. . 
 l1168h:
 	add a,030h		;1168	c6 30 	. 0 
-	call sub_11a8h		;116a	cd a8 11 	. . . 
+	call print_character_in_A_preserving_DEHL		;116a	cd a8 11 	. . . 
 	add hl,de			;116d	19 	. 
 	xor a			;116e	af 	. 
 	ld de,sub_03e8h		;116f	11 e8 03 	. . . 
@@ -3599,7 +3600,7 @@ l1172h:
 	jr l1172h		;1177	18 f9 	. . 
 l1179h:
 	add a,030h		;1179	c6 30 	. 0 
-	call sub_11a8h		;117b	cd a8 11 	. . . 
+	call print_character_in_A_preserving_DEHL		;117b	cd a8 11 	. . . 
 	add hl,de			;117e	19 	. 
 	xor a			;117f	af 	. 
 	ld de,l0064h		;1180	11 64 00 	. d . 
@@ -3610,7 +3611,7 @@ l1183h:
 	jr l1183h		;1188	18 f9 	. . 
 l118ah:
 	add a,030h		;118a	c6 30 	. 0 
-	call sub_11a8h		;118c	cd a8 11 	. . . 
+	call print_character_in_A_preserving_DEHL		;118c	cd a8 11 	. . . 
 	add hl,de			;118f	19 	. 
 	xor a			;1190	af 	. 
 	ld de,l0009h+1		;1191	11 0a 00 	. . . 
@@ -3621,13 +3622,13 @@ l1194h:
 	jr l1194h		;1199	18 f9 	. . 
 l119bh:
 	add a,030h		;119b	c6 30 	. 0 
-	call sub_11a8h		;119d	cd a8 11 	. . . 
+	call print_character_in_A_preserving_DEHL		;119d	cd a8 11 	. . . 
 	add hl,de			;11a0	19 	. 
 	ld a,l			;11a1	7d 	} 
 	add a,030h		;11a2	c6 30 	. 0 
-	call sub_11a8h		;11a4	cd a8 11 	. . . 
+	call print_character_in_A_preserving_DEHL		;11a4	cd a8 11 	. . . 
 	ret			;11a7	c9 	. 
-sub_11a8h:
+print_character_in_A_preserving_DEHL:
 	push hl			;11a8	e5 	. 
 	push de			;11a9	d5 	. 
 	call print_character_in_A		;11aa	cd 82 3d 	. . = 

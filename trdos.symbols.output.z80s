@@ -702,6 +702,9 @@ wait_for_key:	equ 0x1056
 ; 0x1060	(jr destination)
 ; 0x105b	(jr destination)
 
+color_the_trdos_title:	equ 0x1063
+; Used at following locations:
+
 sub_106eh:	equ 0x106e
 ; Used at following locations:
 ; 0x0263	(call destination)
@@ -803,7 +806,7 @@ l119bh:	equ 0x119b
 ; Used at following locations:
 ; 0x1196	(jr destination)
 
-sub_11a8h:	equ 0x11a8
+print_character_in_A_preserving_DEHL:	equ 0x11a8
 ; Used at following locations:
 ; 0x11a4	(call destination)
 ; 0x119d	(call destination)
