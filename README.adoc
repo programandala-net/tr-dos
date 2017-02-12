@@ -1,6 +1,11 @@
 = TR-DOS _Disassembled_
 :author: Marcos Cruz (programandala.net)
-:revdate: 2017-02-10
+:revdate: 2017-02-12
+
+:period: .
+:char94: ^
+
+// Last modified: 201702120142
 
 // This file is written in AsciDoc/Asciidoctor format
 // (see <http://asciidoctor.org>).
@@ -63,23 +68,48 @@ is optional:
 
 == Bibliography
 
-Documentation used for this project, listed in no particular order:
+Documentation used for this project, listed in order of publication:
 
-- http://vtrdos.ru[Virtual TR-DOS]
-- _TR-DOS для профессионалов и любителей_ (TR-DOS for professionals
-  and amateurs), by Yu Pomortsev, Moscow, 1994.  PDF version by Deny
-  (Denisenko DA), 2007. It can be downloaded from
-  http://vtrdos.ru[Virtual TR-DOS].
+- _Technology Research Beta 128 Disk Interface — User Manual_, 1986.
+  http://www.worldofspectrum.org/documentation.html#manuals,
+  http://www.worldofspectrum.org/pub/sinclair/hardware-info/Beta128DiskInterface_Manual.txt.
+
+- _TR-DOS для профессионалов и любителей_ (_TR-DOS for professionals
+  and amateurs_), by Yu Pomortsev, 1994. PDF version by Deny
+  (Denisenko DA), 2007. http://vtrdos.ru,
+  http://trd.speccy.cz/book/TRDOSUA.ZIP.
+
 - _Описание и полный дизассемблер ПЗУ TR-DOS 5.04T_ (Description and
-  full disassembly of TR-DOS 5.04T), by Павел Федин (Paul Fedin), 1996.
-  It can be downloaded from http://vtrdos.ru[Virtual TR-DOS].
-- http://ramsoft.bbk.org.omegahg.com/tech/tr-info.zip
-- http://www.worldofspectrum.org/pub/sinclair/hardware-info/TR-DOS_Programming.txt[TR-DOS
-  Programming]
-- http://www.worldofspectrum.org/pub/sinclair/hardware-info/TR-DOS_Variables.txt[TR-DOS
-  Variables]
-- http://www.worldofspectrum.org/pub/sinclair/hardware-info/Beta128DiskInterface_Manual.txt[Beta
-  128 Disk Interface Manual]
+  full disassembly of TR-DOS 5.04T), by Павел Федин (Paul Fedin),
+  1996{period}  http://vtrdos.ru,
+  http://trd.speccy.cz/book/TRDISASM.ZIP.
+
+- _TR-DOS System Functions_, by Igor Yudincev, 1997-06-01.
+  http://ramsoft.bbk.org.omegahg.com/tech/tr-info.zip.
+
+- _Work in TR-DOS from command line and from BASIC_, by Igor Yudincev,
+  1997-06-27.  http://ramsoft.bbk.org.omegahg.com/tech/tr-info.zip.
+
+- _TR-DOS disk specs_, anonymous, 1997-09-28.
+  http://ramsoft.bbk.org.omegahg.com/tech/tr-info.zip.
+
+- _Russian Most Popular Spectrum Models (combined) FAQ and TECH INFO_,
+  by Potapov Vsevolod Viktorovich, 1997-10-25.
+  http://www.worldofspectrum.org/rusfaq/
+
+- TR-DOS v5.xx - programmer's manual_, by Andrew MOA and Mac
+  Buster{char94}Extreme, 1990 (English translation, 1999),
+  http://www.worldofspectrum.org/documentation.html#manuals,
+  http://www.worldofspectrum.org/pub/sinclair/hardware-info/TR-DOS_Programming.txt.
+
+- _TR-DOS v5.xx variables in Beta 128 Disk interface_, by Mac
+  Buster{char94}Extreme, 2000.
+  http://www.worldofspectrum.org/documentation.html#manuals,
+  http://www.worldofspectrum.org/pub/sinclair/hardware-info/TR-DOS_Variables.txt.
+
+Websites that were used:
+
+- http://vtrdos.ru
 - http://tr-dos.ru
 
 == History
