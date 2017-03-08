@@ -470,7 +470,7 @@ l046ah:	equ 0x046a
 ; 0x044e	(jr destination)
 ; 0x043d	(jr destination)
 
-l0479h:	equ 0x0479
+print_catalogue_to_stream_A:	equ 0x0479
 ; Used at following locations:
 ; 0x28dd	(jp destination)
 
@@ -537,13 +537,13 @@ l0569h:	equ 0x0569
 ; 0x1b56	(jp destination)
 ; 0x17a2	(jp destination)
 
-sub_0572h:	equ 0x0572
+check_error_code_msb:	equ 0x0572
 ; Used at following locations:
 ; 0x1921	(call destination)
 ; 0x1894	(call destination)
 ; 0x1883	(call destination)
 
-l0577h:	equ 0x0577
+check_deleted_files_and_exit_DOS:	equ 0x0577
 ; Used at following locations:
 ; 0x079a	(jp destination)
 
@@ -2151,7 +2151,7 @@ l2206h:	equ 0x2206
 ; Used at following locations:
 ; 0x21e8	(jr destination)
 
-sub_220fh:	equ 0x220f
+open_stream_in_variable_stream_or_file_size:	equ 0x220f
 ; Used at following locations:
 ; 0x2243	(call destination)
 ; 0x21c2	(call destination)

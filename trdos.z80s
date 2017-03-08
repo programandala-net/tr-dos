@@ -63,7 +63,7 @@ trdos_variable.start_file_parameter_or_number_of_tracks:  equ 0x5cd7
 trdos_variable.start_file_parameter.high: equ 0x5cd8
 trdos_variable.ch_add:  equ 0x5cd9
 trdos_variable.ch_add.high: equ 0x5cda
-trdos_variable.file_size: equ 0x5cdb
+trdos_variable.stream_or_file_size: equ 0x5cdb
 trdos_variable.file_size.high:  equ 0x5cdc
 trdos_variable.filename:  equ 0x5cdd
 trdos_variable.filename.2:  equ 0x5cdf
@@ -743,7 +743,7 @@ z_if_next_command_line_char_is_carriage_return:
 cli_command.cat:
   call z_if_next_command_line_char_is_carriage_return
   ld bc,0x0001+1
-  ld (trdos_variable.file_size),bc
+  ld (trdos_variable.stream_or_file_size),bc
   jr z,l046ah
   cp '#' ; channel?
   jr nz,l045dh
@@ -769,8 +769,8 @@ l046ah:
   ld a,(trdos_variable.current_temporary_drive)
   ld (trdos_variable.cat_drive_or_read_verify_flag),a
   call read_system_track
-  ld a,(trdos_variable.file_size)
-l0479h:
+  ld a,(trdos_variable.stream_or_file_size)
+print_catalogue_to_stream_A:
   cp 0x02
   push af
   call z,cls
@@ -908,11 +908,11 @@ l0569h:
   call write_file_descriptor_C
   call sub_1e43h
   jp print_OK_and_exit_DOS
-sub_0572h:
+check_error_code_msb:
   ld a,(trdos_variable.error_code_msb)
   or a
   ret
-l0577h:
+check_deleted_files_and_exit_DOS:
   ld a,(trdos_variable.deleted_files)
   or a
   jp z,print_no_files_error_and_exit_DOS
@@ -1155,7 +1155,7 @@ cli_command.erase:
   ld (trdos_variable.deleted_files),a
   call sub_292fh
   call l07a0h
-  jp nz,l0577h
+  jp nz,check_deleted_files_and_exit_DOS
   jp print_OK_and_exit_DOS
 l07a0h:
   ld a,(trdos_variable.filename)
@@ -3642,7 +3642,7 @@ l11b0h:
 cli_command.list:
   call z_if_next_command_line_char_is_carriage_return
   ld bc,0x0001+1
-  ld (trdos_variable.file_size),bc
+  ld (trdos_variable.stream_or_file_size),bc
   jr z,l1205h
   cp 0x23
   jr nz,l11f8h
@@ -3668,7 +3668,7 @@ l1205h:
   ld a,(trdos_variable.current_temporary_drive)
   ld (trdos_variable.cat_drive_or_read_verify_flag),a
   call read_system_track
-  ld a,(trdos_variable.file_size)
+  ld a,(trdos_variable.stream_or_file_size)
   cp 0x02
   push af
   call z,cls
@@ -4241,7 +4241,7 @@ l168fh:
   ret
 sub_1697h:
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
-  ld (trdos_variable.file_size),hl
+  ld (trdos_variable.stream_or_file_size),hl
   ld de,(trdos_variable.file_length_in_sectors)
   ld hl,(trdos_variable.ch_add)
   ld d,0x00
@@ -4334,7 +4334,7 @@ l1710h:
   ld (trdos_variable.filename),a
   ld a,(trdos_variable.move_command_deleted_files)
   ld c,a
-  ld hl,(trdos_variable.file_size)
+  ld hl,(trdos_variable.stream_or_file_size)
   ld (trdos_variable.file_first_sector),hl
   ld a,(trdos_variable.basic_program_autostart)
   ld (trdos_variable.file_length_in_sectors),a
@@ -4482,7 +4482,7 @@ l1866h:
   call sub_1debh
   ld hl,(trdos_variable.ch_add)
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
-  ld hl,(trdos_variable.file_size)
+  ld hl,(trdos_variable.stream_or_file_size)
   ld (trdos_variable.ch_add),hl
   xor a
   ld (trdos_variable.bad_sectors_or_move_command_first_track),a
@@ -4491,14 +4491,14 @@ sub_187ah:
   call z_if_next_command_line_char_is_carriage_return
   jp z,l027bh
   call parse_expression
-  call sub_0572h
+  call check_error_code_msb
   call nz,sub_1857h
   call get_char
   cp token.code ; `CODE`?
   call z,sub_1842h
   cp token.data ; `DATA`?
   push af
-  call sub_0572h
+  call check_error_code_msb
   call z,sub_102eh
   pop af
   call z,sub_1bfch
@@ -4521,10 +4521,10 @@ l18b7h:
   push de
   ld de,(trdos_variable.file_length_in_bytes)
   jr nz,l18cbh
-  ld de,(trdos_variable.file_size)
+  ld de,(trdos_variable.stream_or_file_size)
 l18cbh:
   ld b,a
-  ld (trdos_variable.file_size),de
+  ld (trdos_variable.stream_or_file_size),de
   ld a,(trdos_variable.file_type)
   cp "C" ; code file type?
   ld a,b
@@ -4544,7 +4544,7 @@ l18cbh:
   ld (trdos_variable.bad_sectors_or_move_command_first_track),a
   ld d,b
   ld e,0x00
-  ld (trdos_variable.file_size),de
+  ld (trdos_variable.stream_or_file_size),de
   jr l18f9h
 l18f6h:
   call sub_191bh
@@ -4574,7 +4574,7 @@ sub_191bh:
   ld (trdos_variable.bad_sectors_or_move_command_first_track),a
   ret
 l1921h:
-  call sub_0572h
+  call check_error_code_msb
   jr z,l192dh
   push af
   call sub_1a94h
@@ -4598,7 +4598,7 @@ sub_1946h:
   ld a,(trdos_variable.cat_drive_or_read_verify_flag)
   cp 0xFF
   jp nz,l2fdeh
-  ld a,(trdos_variable.file_size)
+  ld a,(trdos_variable.stream_or_file_size)
   or a
   ret z
   ld c,a
@@ -4660,7 +4660,7 @@ cli_command.merge:
   cp "B" ; BASIC file type?
   jp nz,error.wrong_drive_letter
   ld bc,(trdos_variable.file_start)
-  ld (trdos_variable.file_size),bc
+  ld (trdos_variable.stream_or_file_size),bc
   push bc
   inc bc
   rst 0x20
@@ -4710,7 +4710,7 @@ sub_1a01h:
   ld hl,0x0004+1
 l1a20h:
   add hl,de
-  ld (trdos_variable.file_size),hl
+  ld (trdos_variable.stream_or_file_size),hl
   pop hl
   ld a,(trdos_variable.cat_drive_or_read_verify_flag)
   cp 0xFF
@@ -4738,7 +4738,7 @@ l1a48h:
   ret
 sub_1a4ch:
   ld de,(trdos_variable.file_length_in_bytes)
-  ld (trdos_variable.file_size),de
+  ld (trdos_variable.stream_or_file_size),de
   ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)
   ld a,(trdos_variable.cat_drive_or_read_verify_flag)
   cp 0xFF
@@ -4828,7 +4828,7 @@ cli_command.save:
   jr nz,l1af8h
   call sub_1e0bh
   call pop_hl_if_checking_syntax
-  ld hl,(trdos_variable.file_size)
+  ld hl,(trdos_variable.stream_or_file_size)
   ld (trdos_variable.basic_program_autostart),hl
   ld hl,trdos_variable.file_type
   jr l1b1fh
@@ -4839,7 +4839,7 @@ l1af8h:
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
   ld hl,0x1B00
   ld (trdos_variable.ch_add),hl
-  ld (trdos_variable.file_size),hl
+  ld (trdos_variable.stream_or_file_size),hl
   jr l1b48h
 l1b0dh:
   call pop_hl_if_checking_syntax
@@ -4866,7 +4866,7 @@ l1b39h:
   call sub_1de5h
   ld hl,(trdos_variable.ch_add)
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
-  ld hl,(trdos_variable.file_size)
+  ld hl,(trdos_variable.stream_or_file_size)
   ld (trdos_variable.ch_add),hl
 l1b48h:
   call pop_hl_if_checking_syntax
@@ -4904,7 +4904,7 @@ l1b6dh:
   ld (hl),e
   inc hl
   ld (hl),d
-  ld hl,(trdos_variable.file_size)
+  ld hl,(trdos_variable.stream_or_file_size)
   ld (trdos_variable.file_length_in_bytes),hl
   ld hl,(trdos_sector_buffer.next_free_sector)
   ld (trdos_variable.file_first_sector),hl
@@ -4947,7 +4947,7 @@ sub_1bdeh:
   ld hl,(sys_vars)
   ld de,(sys_prog)
   sbc hl,de
-  ld (trdos_variable.file_size),hl
+  ld (trdos_variable.stream_or_file_size),hl
   ld hl,(sys_prog)
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
   ld hl,(sys_e_line)
@@ -4991,7 +4991,7 @@ l1c2bh:
   ld d,(hl)
   inc hl
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
-  ld (trdos_variable.file_size),de
+  ld (trdos_variable.stream_or_file_size),de
   ld (trdos_variable.ch_add),de
   call next_char
   cp 0x29
@@ -5275,7 +5275,7 @@ sub_1debh:
   jr z,l1dfbh
   call find_int2
   ld (trdos_variable.ch_add),bc
-  ld (trdos_variable.file_size),bc
+  ld (trdos_variable.stream_or_file_size),bc
 l1dfbh:
   call get_char
   cp ","
@@ -5288,7 +5288,7 @@ sub_1e0bh:
   call sub_1d7bh
   ret z
   call find_int2
-  ld (trdos_variable.file_size),bc
+  ld (trdos_variable.stream_or_file_size),bc
   ld a,0x03
   ld (trdos_variable.bad_sectors_or_move_command_first_track),a
   ret
@@ -5764,18 +5764,18 @@ sub_2158h:
   call get_char
   cp ","
   jp nz,error.wrong_drive_letter
-  ld hl,(trdos_variable.file_size)
+  ld hl,(trdos_variable.stream_or_file_size)
   ld (trdos_variable.ch_add),hl
   call sub_1e0bh
   call pop_hl_if_checking_syntax
-  ld hl,(trdos_variable.file_size)
+  ld hl,(trdos_variable.stream_or_file_size)
   ld a,h
   or a
   jp nz,error.wrong_drive_letter
   inc hl
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
   ld hl,(trdos_variable.ch_add)
-  ld (trdos_variable.file_size),hl
+  ld (trdos_variable.stream_or_file_size),hl
   ret
 cli_command.open_channel:
   ld hl,(trdos_variable.command_line_address)
@@ -5808,7 +5808,7 @@ l21aeh:
   ld (trdos_variable.file_start),a
   call sub_21dbh
   push af
-  call sub_220fh
+  call open_stream_in_variable_stream_or_file_size
   pop af
   push af
   call nz,sub_2288h
@@ -5847,8 +5847,8 @@ l2206h:
   cp "R" ; sequential access data file type read mode?
   ret nz
   jp print_no_files_error_and_exit_DOS
-sub_220fh:
-  ld a,(trdos_variable.file_size)
+open_stream_in_variable_stream_or_file_size:
+  ld a,(trdos_variable.stream_or_file_size)
   rst 0x20
   defw rom_str_data1
   ld a,b
@@ -5884,7 +5884,7 @@ sub_222fh:
   ret
 sub_2242h:
   push af
-  call sub_220fh
+  call open_stream_in_variable_stream_or_file_size
   ex de,hl
   ld hl,(sys_prog)
   ld bc,(sys_chans)
@@ -6355,23 +6355,23 @@ sub_2504h:
   ld b,(hl)
   xor a
   ld hl,0x0000
-  ld (trdos_variable.file_size),hl
+  ld (trdos_variable.stream_or_file_size),hl
 l2538h:
   add hl,de
   jr nc,l2544h
   push hl
-  ld hl,(trdos_variable.file_size)
+  ld hl,(trdos_variable.stream_or_file_size)
   inc hl
-  ld (trdos_variable.file_size),hl
+  ld (trdos_variable.stream_or_file_size),hl
   pop hl
 l2544h:
   djnz l2538h
   ld (trdos_variable.ch_add),hl
-  ld a,(trdos_variable.file_size)
+  ld a,(trdos_variable.stream_or_file_size)
   ld hl,trdos_variable.ch_add.high
   rrd
   and 0x0F
-  ld (trdos_variable.file_size),a
+  ld (trdos_variable.stream_or_file_size),a
   ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)
   ld (sys_ch_add),hl
   call sub_2568h
@@ -6390,7 +6390,7 @@ sub_2568h:
   jp nz,l2584h
   ld c,0x0E
   rst 0x28
-  ld a,(trdos_variable.file_size)
+  ld a,(trdos_variable.stream_or_file_size)
   cp (hl)
   jp nz,l25a7h
 l257ch:
@@ -6419,7 +6419,7 @@ l25a7h:
   call sub_25cah
   call nz,sub_25c3h
 l25adh:
-  ld a,(trdos_variable.file_size)
+  ld a,(trdos_variable.stream_or_file_size)
   ld c,0x0E
   rst 0x28
   ld (hl),a
@@ -6448,11 +6448,11 @@ l25d2h:
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
   ld hl,(trdos_variable.ch_add)
   push hl
-  ld hl,(trdos_variable.file_size)
+  ld hl,(trdos_variable.stream_or_file_size)
   push hl
   call l2381h
   pop hl
-  ld (trdos_variable.file_size),hl
+  ld (trdos_variable.stream_or_file_size),hl
   pop hl
   ld (trdos_variable.ch_add),hl
   jr l25adh
@@ -6522,7 +6522,7 @@ cli_command.close_channel:
   ld (sys_ch_add),hl
   call sub_1e0bh
   call pop_hl_if_checking_syntax
-  ld a,(trdos_variable.file_size)
+  ld a,(trdos_variable.stream_or_file_size)
   rst 0x20
   defw rom_str_data1
   ld a,b
@@ -7004,7 +7004,7 @@ print_catalogue:
   push af
   call read_system_track
   pop af
-  jp l0479h
+  jp print_catalogue_to_stream_A
 copy_from_hl_to_file_descriptor:
   xor a
   jr l28e5h
@@ -7026,7 +7026,7 @@ save_basic_program:
 save_code_file:
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
   ld (trdos_variable.ch_add),de
-  ld (trdos_variable.file_size),de
+  ld (trdos_variable.stream_or_file_size),de
   call read_system_track
   call sub_1ac4h
   jp l1b53h
@@ -7034,7 +7034,7 @@ load_or_verify:
   or a
   ld (trdos_variable.bad_sectors_or_move_command_first_track),a
   ld (trdos_variable.ch_add),hl
-  ld (trdos_variable.file_size),de
+  ld (trdos_variable.stream_or_file_size),de
   call sub_1cb3h
   call sub_18a4h
   call sub_18abh
@@ -8063,7 +8063,7 @@ l2fdeh:
   push hl
   ld de,(trdos_variable.current_sector)
   call sub_2fd6h
-  ld a,(trdos_variable.file_size)
+  ld a,(trdos_variable.stream_or_file_size)
   pop de
   or a
   ret z
@@ -8124,7 +8124,7 @@ sub_3032h:
   ld (trdos_variable.ch_add),hl
   ld a,0xFF
   ld (trdos_variable.bad_sectors_or_move_command_first_track),a
-  ld hl,trdos_variable.file_size
+  ld hl,trdos_variable.stream_or_file_size
   ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl
   jr l3057h
 sub_3048h:

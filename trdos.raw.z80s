@@ -57,7 +57,7 @@ trdos_variable.start_file_parameter_or_number_of_tracks:	equ 0x5cd7
 trdos_variable.start_file_parameter.high:	equ 0x5cd8
 trdos_variable.ch_add:	equ 0x5cd9
 trdos_variable.ch_add.high:	equ 0x5cda
-trdos_variable.file_size:	equ 0x5cdb
+trdos_variable.stream_or_file_size:	equ 0x5cdb
 trdos_variable.file_size.high:	equ 0x5cdc
 trdos_variable.filename:	equ 0x5cdd
 trdos_variable.filename.2:	equ 0x5cdf
@@ -753,7 +753,7 @@ z_if_next_command_line_char_is_carriage_return:
 cli_command.cat:
 	call z_if_next_command_line_char_is_carriage_return		;0433	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;0436	01 02 00 	. . . 
-	ld (trdos_variable.file_size),bc		;0439	ed 43 db 5c 	. C . \ 
+	ld (trdos_variable.stream_or_file_size),bc		;0439	ed 43 db 5c 	. C . \ 
 	jr z,l046ah		;043d	28 2b 	( + 
 	cp 023h		;043f	fe 23 	. # 
 	jr nz,l045dh		;0441	20 1a 	  . 
@@ -779,8 +779,8 @@ l046ah:
 	ld a,(trdos_variable.current_temporary_drive)		;046d	3a f6 5c 	: . \ 
 	ld (trdos_variable.cat_drive_or_read_verify_flag),a		;0470	32 f9 5c 	2 . \ 
 	call read_system_track		;0473	cd 05 04 	. . . 
-	ld a,(trdos_variable.file_size)		;0476	3a db 5c 	: . \ 
-l0479h:
+	ld a,(trdos_variable.stream_or_file_size)		;0476	3a db 5c 	: . \ 
+print_catalogue_to_stream_A:
 	cp 002h		;0479	fe 02 	. . 
 	push af			;047b	f5 	. 
 	call z,cls		;047c	cc 97 1d 	. . . 
@@ -919,11 +919,11 @@ l0569h:
 	call write_file_descriptor_C		;0569	cd 6b 16 	. k . 
 	call sub_1e43h		;056c	cd 43 1e 	. C . 
 	jp print_OK_and_exit_DOS		;056f	c3 e1 03 	. . . 
-sub_0572h:
+check_error_code_msb:
 	ld a,(trdos_variable.error_code_msb)		;0572	3a 10 5d 	: . ] 
 	or a			;0575	b7 	. 
 	ret			;0576	c9 	. 
-l0577h:
+check_deleted_files_and_exit_DOS:
 	ld a,(trdos_variable.deleted_files)		;0577	3a 07 5d 	: . ] 
 	or a			;057a	b7 	. 
 	jp z,print_no_files_error_and_exit_DOS		;057b	ca d9 03 	. . . 
@@ -1166,7 +1166,7 @@ cli_command.erase:
 	ld (trdos_variable.deleted_files),a		;0791	32 07 5d 	2 . ] 
 	call sub_292fh		;0794	cd 2f 29 	. / ) 
 	call l07a0h		;0797	cd a0 07 	. . . 
-	jp nz,l0577h		;079a	c2 77 05 	. w . 
+	jp nz,check_deleted_files_and_exit_DOS		;079a	c2 77 05 	. w . 
 	jp print_OK_and_exit_DOS		;079d	c3 e1 03 	. . . 
 l07a0h:
 	ld a,(trdos_variable.filename)		;07a0	3a dd 5c 	: . \ 
@@ -3655,7 +3655,7 @@ l11b0h:
 cli_command.list:
 	call z_if_next_command_line_char_is_carriage_return		;11ce	cd 2b 04 	. + . 
 	ld bc,l0001h+1		;11d1	01 02 00 	. . . 
-	ld (trdos_variable.file_size),bc		;11d4	ed 43 db 5c 	. C . \ 
+	ld (trdos_variable.stream_or_file_size),bc		;11d4	ed 43 db 5c 	. C . \ 
 	jr z,l1205h		;11d8	28 2b 	( + 
 	cp 023h		;11da	fe 23 	. # 
 	jr nz,l11f8h		;11dc	20 1a 	  . 
@@ -3681,7 +3681,7 @@ l1205h:
 	ld a,(trdos_variable.current_temporary_drive)		;1208	3a f6 5c 	: . \ 
 	ld (trdos_variable.cat_drive_or_read_verify_flag),a		;120b	32 f9 5c 	2 . \ 
 	call read_system_track		;120e	cd 05 04 	. . . 
-	ld a,(trdos_variable.file_size)		;1211	3a db 5c 	: . \ 
+	ld a,(trdos_variable.stream_or_file_size)		;1211	3a db 5c 	: . \ 
 	cp 002h		;1214	fe 02 	. . 
 	push af			;1216	f5 	. 
 	call z,cls		;1217	cc 97 1d 	. . . 
@@ -4254,7 +4254,7 @@ l168fh:
 	ret			;1696	c9 	. 
 sub_1697h:
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1697	22 d7 5c 	" . \ 
-	ld (trdos_variable.file_size),hl		;169a	22 db 5c 	" . \ 
+	ld (trdos_variable.stream_or_file_size),hl		;169a	22 db 5c 	" . \ 
 	ld de,(trdos_variable.file_length_in_sectors)		;169d	ed 5b ea 5c 	. [ . \ 
 	ld hl,(trdos_variable.ch_add)		;16a1	2a d9 5c 	* . \ 
 	ld d,000h		;16a4	16 00 	. . 
@@ -4347,7 +4347,7 @@ l1710h:
 	ld (trdos_variable.filename),a		;173e	32 dd 5c 	2 . \ 
 	ld a,(trdos_variable.move_command_deleted_files)		;1741	3a d4 5c 	: . \ 
 	ld c,a			;1744	4f 	O 
-	ld hl,(trdos_variable.file_size)		;1745	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.stream_or_file_size)		;1745	2a db 5c 	* . \ 
 	ld (trdos_variable.file_first_sector),hl		;1748	22 eb 5c 	" . \ 
 	ld a,(trdos_variable.basic_program_autostart)		;174b	3a d1 5c 	: . \ 
 	ld (trdos_variable.file_length_in_sectors),a		;174e	32 ea 5c 	2 . \ 
@@ -4495,7 +4495,7 @@ l1866h:
 	call sub_1debh		;1866	cd eb 1d 	. . . 
 	ld hl,(trdos_variable.ch_add)		;1869	2a d9 5c 	* . \ 
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;186c	22 d7 5c 	" . \ 
-	ld hl,(trdos_variable.file_size)		;186f	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.stream_or_file_size)		;186f	2a db 5c 	* . \ 
 	ld (trdos_variable.ch_add),hl		;1872	22 d9 5c 	" . \ 
 	xor a			;1875	af 	. 
 	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;1876	32 d6 5c 	2 . \ 
@@ -4504,14 +4504,14 @@ sub_187ah:
 	call z_if_next_command_line_char_is_carriage_return		;187a	cd 2b 04 	. + . 
 	jp z,l027bh		;187d	ca 7b 02 	. { . 
 	call parse_expression		;1880	cd df 1d 	. . . 
-	call sub_0572h		;1883	cd 72 05 	. r . 
+	call check_error_code_msb		;1883	cd 72 05 	. r . 
 	call nz,sub_1857h		;1886	c4 57 18 	. W . 
 	call get_char		;1889	cd 8c 1d 	. . . 
 	cp 0afh		;188c	fe af 	. . 
 	call z,sub_1842h		;188e	cc 42 18 	. B . 
 	cp 0e4h		;1891	fe e4 	. . 
 	push af			;1893	f5 	. 
-	call sub_0572h		;1894	cd 72 05 	. r . 
+	call check_error_code_msb		;1894	cd 72 05 	. r . 
 	call z,sub_102eh		;1897	cc 2e 10 	. . . 
 	pop af			;189a	f1 	. 
 	call z,sub_1bfch		;189b	cc fc 1b 	. . . 
@@ -4534,10 +4534,10 @@ l18b7h:
 	push de			;18c0	d5 	. 
 	ld de,(trdos_variable.file_length_in_bytes)		;18c1	ed 5b e8 5c 	. [ . \ 
 	jr nz,l18cbh		;18c5	20 04 	  . 
-	ld de,(trdos_variable.file_size)		;18c7	ed 5b db 5c 	. [ . \ 
+	ld de,(trdos_variable.stream_or_file_size)		;18c7	ed 5b db 5c 	. [ . \ 
 l18cbh:
 	ld b,a			;18cb	47 	G 
-	ld (trdos_variable.file_size),de		;18cc	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.stream_or_file_size),de		;18cc	ed 53 db 5c 	. S . \ 
 	ld a,(trdos_variable.file_type)		;18d0	3a e5 5c 	: . \ 
 	cp 043h		;18d3	fe 43 	. C 
 	ld a,b			;18d5	78 	x 
@@ -4557,7 +4557,7 @@ l18cbh:
 	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;18ea	32 d6 5c 	2 . \ 
 	ld d,b			;18ed	50 	P 
 	ld e,000h		;18ee	1e 00 	. . 
-	ld (trdos_variable.file_size),de		;18f0	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.stream_or_file_size),de		;18f0	ed 53 db 5c 	. S . \ 
 	jr l18f9h		;18f4	18 03 	. . 
 l18f6h:
 	call sub_191bh		;18f6	cd 1b 19 	. . . 
@@ -4587,7 +4587,7 @@ sub_191bh:
 	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;191d	32 d6 5c 	2 . \ 
 	ret			;1920	c9 	. 
 l1921h:
-	call sub_0572h		;1921	cd 72 05 	. r . 
+	call check_error_code_msb		;1921	cd 72 05 	. r . 
 	jr z,l192dh		;1924	28 07 	( . 
 	push af			;1926	f5 	. 
 	call sub_1a94h		;1927	cd 94 1a 	. . . 
@@ -4611,7 +4611,7 @@ sub_1946h:
 	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;1946	3a f9 5c 	: . \ 
 	cp 0ffh		;1949	fe ff 	. . 
 	jp nz,l2fdeh		;194b	c2 de 2f 	. . / 
-	ld a,(trdos_variable.file_size)		;194e	3a db 5c 	: . \ 
+	ld a,(trdos_variable.stream_or_file_size)		;194e	3a db 5c 	: . \ 
 	or a			;1951	b7 	. 
 	ret z			;1952	c8 	. 
 	ld c,a			;1953	4f 	O 
@@ -4673,7 +4673,7 @@ cli_command.merge:
 	cp 042h		;19bf	fe 42 	. B 
 	jp nz,error.wrong_drive_letter		;19c1	c2 1a 1d 	. . . 
 	ld bc,(trdos_variable.file_start)		;19c4	ed 4b e6 5c 	. K . \ 
-	ld (trdos_variable.file_size),bc		;19c8	ed 43 db 5c 	. C . \ 
+	ld (trdos_variable.stream_or_file_size),bc		;19c8	ed 43 db 5c 	. C . \ 
 	push bc			;19cc	c5 	. 
 	inc bc			;19cd	03 	. 
 	rst 20h			;19ce	e7 	. 
@@ -4723,7 +4723,7 @@ sub_1a01h:
 	ld hl,l0004h+1		;1a1d	21 05 00 	! . . 
 l1a20h:
 	add hl,de			;1a20	19 	. 
-	ld (trdos_variable.file_size),hl		;1a21	22 db 5c 	" . \ 
+	ld (trdos_variable.stream_or_file_size),hl		;1a21	22 db 5c 	" . \ 
 	pop hl			;1a24	e1 	. 
 	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;1a25	3a f9 5c 	: . \ 
 	cp 0ffh		;1a28	fe ff 	. . 
@@ -4751,7 +4751,7 @@ l1a48h:
 	ret			;1a4b	c9 	. 
 sub_1a4ch:
 	ld de,(trdos_variable.file_length_in_bytes)		;1a4c	ed 5b e8 5c 	. [ . \ 
-	ld (trdos_variable.file_size),de		;1a50	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.stream_or_file_size),de		;1a50	ed 53 db 5c 	. S . \ 
 	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;1a54	2a d7 5c 	* . \ 
 	ld a,(trdos_variable.cat_drive_or_read_verify_flag)		;1a57	3a f9 5c 	: . \ 
 	cp 0ffh		;1a5a	fe ff 	. . 
@@ -4841,7 +4841,7 @@ cli_command.save:
 	jr nz,l1af8h		;1ae5	20 11 	  . 
 	call sub_1e0bh		;1ae7	cd 0b 1e 	. . . 
 	call pop_hl_if_checking_syntax		;1aea	cd 75 1d 	. u . 
-	ld hl,(trdos_variable.file_size)		;1aed	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.stream_or_file_size)		;1aed	2a db 5c 	* . \ 
 	ld (trdos_variable.basic_program_autostart),hl		;1af0	22 d1 5c 	" . \ 
 	ld hl,trdos_variable.file_type		;1af3	21 e5 5c 	! . \ 
 	jr l1b1fh		;1af6	18 27 	. ' 
@@ -4852,7 +4852,7 @@ l1af8h:
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1aff	22 d7 5c 	" . \ 
 	ld hl,01b00h		;1b02	21 00 1b 	! . . 
 	ld (trdos_variable.ch_add),hl		;1b05	22 d9 5c 	" . \ 
-	ld (trdos_variable.file_size),hl		;1b08	22 db 5c 	" . \ 
+	ld (trdos_variable.stream_or_file_size),hl		;1b08	22 db 5c 	" . \ 
 	jr l1b48h		;1b0b	18 3b 	. ; 
 l1b0dh:
 	call pop_hl_if_checking_syntax		;1b0d	cd 75 1d 	. u . 
@@ -4879,7 +4879,7 @@ l1b39h:
 	call sub_1de5h		;1b39	cd e5 1d 	. . . 
 	ld hl,(trdos_variable.ch_add)		;1b3c	2a d9 5c 	* . \ 
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1b3f	22 d7 5c 	" . \ 
-	ld hl,(trdos_variable.file_size)		;1b42	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.stream_or_file_size)		;1b42	2a db 5c 	* . \ 
 	ld (trdos_variable.ch_add),hl		;1b45	22 d9 5c 	" . \ 
 l1b48h:
 	call pop_hl_if_checking_syntax		;1b48	cd 75 1d 	. u . 
@@ -4917,7 +4917,7 @@ l1b6dh:
 	ld (hl),e			;1b87	73 	s 
 	inc hl			;1b88	23 	# 
 	ld (hl),d			;1b89	72 	r 
-	ld hl,(trdos_variable.file_size)		;1b8a	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.stream_or_file_size)		;1b8a	2a db 5c 	* . \ 
 	ld (trdos_variable.file_length_in_bytes),hl		;1b8d	22 e8 5c 	" . \ 
 	ld hl,(trdos_sector_buffer.next_free_sector)		;1b90	2a 06 5e 	* . ^ 
 	ld (trdos_variable.file_first_sector),hl		;1b93	22 eb 5c 	" . \ 
@@ -4960,7 +4960,7 @@ sub_1bdeh:
 	ld hl,(sys_vars)		;1bde	2a 4b 5c 	* K \ 
 	ld de,(sys_prog)		;1be1	ed 5b 53 5c 	. [ S \ 
 	sbc hl,de		;1be5	ed 52 	. R 
-	ld (trdos_variable.file_size),hl		;1be7	22 db 5c 	" . \ 
+	ld (trdos_variable.stream_or_file_size),hl		;1be7	22 db 5c 	" . \ 
 	ld hl,(sys_prog)		;1bea	2a 53 5c 	* S \ 
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1bed	22 d7 5c 	" . \ 
 	ld hl,(sys_e_line)		;1bf0	2a 59 5c 	* Y \ 
@@ -5004,7 +5004,7 @@ l1c2bh:
 	ld d,(hl)			;1c30	56 	V 
 	inc hl			;1c31	23 	# 
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;1c32	22 d7 5c 	" . \ 
-	ld (trdos_variable.file_size),de		;1c35	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.stream_or_file_size),de		;1c35	ed 53 db 5c 	. S . \ 
 	ld (trdos_variable.ch_add),de		;1c39	ed 53 d9 5c 	. S . \ 
 	call next_char		;1c3d	cd 2a 1e 	. * . 
 	cp 029h		;1c40	fe 29 	. ) 
@@ -5288,7 +5288,7 @@ sub_1debh:
 	jr z,l1dfbh		;1dee	28 0b 	( . 
 	call find_int2		;1df0	cd b9 1d 	. . . 
 	ld (trdos_variable.ch_add),bc		;1df3	ed 43 d9 5c 	. C . \ 
-	ld (trdos_variable.file_size),bc		;1df7	ed 43 db 5c 	. C . \ 
+	ld (trdos_variable.stream_or_file_size),bc		;1df7	ed 43 db 5c 	. C . \ 
 l1dfbh:
 	call get_char		;1dfb	cd 8c 1d 	. . . 
 	cp 02ch		;1dfe	fe 2c 	. , 
@@ -5301,7 +5301,7 @@ sub_1e0bh:
 	call sub_1d7bh		;1e0b	cd 7b 1d 	. { . 
 	ret z			;1e0e	c8 	. 
 	call find_int2		;1e0f	cd b9 1d 	. . . 
-	ld (trdos_variable.file_size),bc		;1e12	ed 43 db 5c 	. C . \ 
+	ld (trdos_variable.stream_or_file_size),bc		;1e12	ed 43 db 5c 	. C . \ 
 	ld a,003h		;1e16	3e 03 	> . 
 	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;1e18	32 d6 5c 	2 . \ 
 	ret			;1e1b	c9 	. 
@@ -5778,18 +5778,18 @@ sub_2158h:
 	call get_char		;215b	cd 8c 1d 	. . . 
 	cp 02ch		;215e	fe 2c 	. , 
 	jp nz,error.wrong_drive_letter		;2160	c2 1a 1d 	. . . 
-	ld hl,(trdos_variable.file_size)		;2163	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.stream_or_file_size)		;2163	2a db 5c 	* . \ 
 	ld (trdos_variable.ch_add),hl		;2166	22 d9 5c 	" . \ 
 	call sub_1e0bh		;2169	cd 0b 1e 	. . . 
 	call pop_hl_if_checking_syntax		;216c	cd 75 1d 	. u . 
-	ld hl,(trdos_variable.file_size)		;216f	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.stream_or_file_size)		;216f	2a db 5c 	* . \ 
 	ld a,h			;2172	7c 	| 
 	or a			;2173	b7 	. 
 	jp nz,error.wrong_drive_letter		;2174	c2 1a 1d 	. . . 
 	inc hl			;2177	23 	# 
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;2178	22 d7 5c 	" . \ 
 	ld hl,(trdos_variable.ch_add)		;217b	2a d9 5c 	* . \ 
-	ld (trdos_variable.file_size),hl		;217e	22 db 5c 	" . \ 
+	ld (trdos_variable.stream_or_file_size),hl		;217e	22 db 5c 	" . \ 
 	ret			;2181	c9 	. 
 cli_command.open_channel:
 	ld hl,(trdos_variable.command_line_address)		;2182	2a 11 5d 	* . ] 
@@ -5822,7 +5822,7 @@ l21aeh:
 	ld (trdos_variable.file_start),a		;21bb	32 e6 5c 	2 . \ 
 	call sub_21dbh		;21be	cd db 21 	. . ! 
 	push af			;21c1	f5 	. 
-	call sub_220fh		;21c2	cd 0f 22 	. . " 
+	call open_stream_in_variable_stream_or_file_size		;21c2	cd 0f 22 	. . " 
 	pop af			;21c5	f1 	. 
 	push af			;21c6	f5 	. 
 	call nz,sub_2288h		;21c7	c4 88 22 	. . " 
@@ -5861,8 +5861,8 @@ l2206h:
 	cp 052h		;2209	fe 52 	. R 
 	ret nz			;220b	c0 	. 
 	jp print_no_files_error_and_exit_DOS		;220c	c3 d9 03 	. . . 
-sub_220fh:
-	ld a,(trdos_variable.file_size)		;220f	3a db 5c 	: . \ 
+open_stream_in_variable_stream_or_file_size:
+	ld a,(trdos_variable.stream_or_file_size)		;220f	3a db 5c 	: . \ 
 	rst 20h			;2212	e7 	. 
 	defw 01727h		;2213	27 17 	' . 
 	ld a,b			;2215	78 	x 
@@ -5898,7 +5898,7 @@ sub_222fh:
 	ret			;2241	c9 	. 
 sub_2242h:
 	push af			;2242	f5 	. 
-	call sub_220fh		;2243	cd 0f 22 	. . " 
+	call open_stream_in_variable_stream_or_file_size		;2243	cd 0f 22 	. . " 
 	ex de,hl			;2246	eb 	. 
 	ld hl,(sys_prog)		;2247	2a 53 5c 	* S \ 
 	ld bc,(sys_chans)		;224a	ed 4b 4f 5c 	. K O \ 
@@ -6369,23 +6369,23 @@ sub_2504h:
 	ld b,(hl)			;2530	46 	F 
 	xor a			;2531	af 	. 
 	ld hl,l0000h		;2532	21 00 00 	! . . 
-	ld (trdos_variable.file_size),hl		;2535	22 db 5c 	" . \ 
+	ld (trdos_variable.stream_or_file_size),hl		;2535	22 db 5c 	" . \ 
 l2538h:
 	add hl,de			;2538	19 	. 
 	jr nc,l2544h		;2539	30 09 	0 . 
 	push hl			;253b	e5 	. 
-	ld hl,(trdos_variable.file_size)		;253c	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.stream_or_file_size)		;253c	2a db 5c 	* . \ 
 	inc hl			;253f	23 	# 
-	ld (trdos_variable.file_size),hl		;2540	22 db 5c 	" . \ 
+	ld (trdos_variable.stream_or_file_size),hl		;2540	22 db 5c 	" . \ 
 	pop hl			;2543	e1 	. 
 l2544h:
 	djnz l2538h		;2544	10 f2 	. . 
 	ld (trdos_variable.ch_add),hl		;2546	22 d9 5c 	" . \ 
-	ld a,(trdos_variable.file_size)		;2549	3a db 5c 	: . \ 
+	ld a,(trdos_variable.stream_or_file_size)		;2549	3a db 5c 	: . \ 
 	ld hl,trdos_variable.ch_add.high		;254c	21 da 5c 	! . \ 
 	rrd		;254f	ed 67 	. g 
 	and 00fh		;2551	e6 0f 	. . 
-	ld (trdos_variable.file_size),a		;2553	32 db 5c 	2 . \ 
+	ld (trdos_variable.stream_or_file_size),a		;2553	32 db 5c 	2 . \ 
 	ld hl,(trdos_variable.start_file_parameter_or_number_of_tracks)		;2556	2a d7 5c 	* . \ 
 	ld (sys_ch_add),hl		;2559	22 5d 5c 	" ] \ 
 	call sub_2568h		;255c	cd 68 25 	. h % 
@@ -6404,7 +6404,7 @@ sub_2568h:
 	jp nz,l2584h		;256f	c2 84 25 	. . % 
 	ld c,00eh		;2572	0e 0e 	. . 
 	rst 28h			;2574	ef 	. 
-	ld a,(trdos_variable.file_size)		;2575	3a db 5c 	: . \ 
+	ld a,(trdos_variable.stream_or_file_size)		;2575	3a db 5c 	: . \ 
 	cp (hl)			;2578	be 	. 
 	jp nz,l25a7h		;2579	c2 a7 25 	. . % 
 l257ch:
@@ -6433,7 +6433,7 @@ l25a7h:
 	call sub_25cah		;25a7	cd ca 25 	. . % 
 	call nz,sub_25c3h		;25aa	c4 c3 25 	. . % 
 l25adh:
-	ld a,(trdos_variable.file_size)		;25ad	3a db 5c 	: . \ 
+	ld a,(trdos_variable.stream_or_file_size)		;25ad	3a db 5c 	: . \ 
 	ld c,00eh		;25b0	0e 0e 	. . 
 	rst 28h			;25b2	ef 	. 
 	ld (hl),a			;25b3	77 	w 
@@ -6462,11 +6462,11 @@ l25d2h:
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;25d7	22 d7 5c 	" . \ 
 	ld hl,(trdos_variable.ch_add)		;25da	2a d9 5c 	* . \ 
 	push hl			;25dd	e5 	. 
-	ld hl,(trdos_variable.file_size)		;25de	2a db 5c 	* . \ 
+	ld hl,(trdos_variable.stream_or_file_size)		;25de	2a db 5c 	* . \ 
 	push hl			;25e1	e5 	. 
 	call l2381h		;25e2	cd 81 23 	. . # 
 	pop hl			;25e5	e1 	. 
-	ld (trdos_variable.file_size),hl		;25e6	22 db 5c 	" . \ 
+	ld (trdos_variable.stream_or_file_size),hl		;25e6	22 db 5c 	" . \ 
 	pop hl			;25e9	e1 	. 
 	ld (trdos_variable.ch_add),hl		;25ea	22 d9 5c 	" . \ 
 	jr l25adh		;25ed	18 be 	. . 
@@ -6536,7 +6536,7 @@ cli_command.close_channel:
 	ld (sys_ch_add),hl		;2659	22 5d 5c 	" ] \ 
 	call sub_1e0bh		;265c	cd 0b 1e 	. . . 
 	call pop_hl_if_checking_syntax		;265f	cd 75 1d 	. u . 
-	ld a,(trdos_variable.file_size)		;2662	3a db 5c 	: . \ 
+	ld a,(trdos_variable.stream_or_file_size)		;2662	3a db 5c 	: . \ 
 	rst 20h			;2665	e7 	. 
 	defw 01727h		;2666	27 17 	' . 
 	ld a,b			;2668	78 	x 
@@ -7019,7 +7019,7 @@ print_catalogue:
 	push af			;28d8	f5 	. 
 	call read_system_track		;28d9	cd 05 04 	. . . 
 	pop af			;28dc	f1 	. 
-	jp l0479h		;28dd	c3 79 04 	. y . 
+	jp print_catalogue_to_stream_A		;28dd	c3 79 04 	. y . 
 copy_from_hl_to_file_descriptor:
 	xor a			;28e0	af 	. 
 	jr l28e5h		;28e1	18 02 	. . 
@@ -7041,7 +7041,7 @@ save_basic_program:
 save_code_file:
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;28fb	22 d7 5c 	" . \ 
 	ld (trdos_variable.ch_add),de		;28fe	ed 53 d9 5c 	. S . \ 
-	ld (trdos_variable.file_size),de		;2902	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.stream_or_file_size),de		;2902	ed 53 db 5c 	. S . \ 
 	call read_system_track		;2906	cd 05 04 	. . . 
 	call sub_1ac4h		;2909	cd c4 1a 	. . . 
 	jp l1b53h		;290c	c3 53 1b 	. S . 
@@ -7049,7 +7049,7 @@ load_or_verify:
 	or a			;290f	b7 	. 
 	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;2910	32 d6 5c 	2 . \ 
 	ld (trdos_variable.ch_add),hl		;2913	22 d9 5c 	" . \ 
-	ld (trdos_variable.file_size),de		;2916	ed 53 db 5c 	. S . \ 
+	ld (trdos_variable.stream_or_file_size),de		;2916	ed 53 db 5c 	. S . \ 
 	call sub_1cb3h		;291a	cd b3 1c 	. . . 
 	call sub_18a4h		;291d	cd a4 18 	. . . 
 	call sub_18abh		;2920	cd ab 18 	. . . 
@@ -8078,7 +8078,7 @@ l2fdeh:
 	push hl			;2fde	e5 	. 
 	ld de,(trdos_variable.current_sector)		;2fdf	ed 5b f4 5c 	. [ . \ 
 	call sub_2fd6h		;2fe3	cd d6 2f 	. . / 
-	ld a,(trdos_variable.file_size)		;2fe6	3a db 5c 	: . \ 
+	ld a,(trdos_variable.stream_or_file_size)		;2fe6	3a db 5c 	: . \ 
 	pop de			;2fe9	d1 	. 
 	or a			;2fea	b7 	. 
 	ret z			;2feb	c8 	. 
@@ -8139,7 +8139,7 @@ sub_3032h:
 	ld (trdos_variable.ch_add),hl		;3038	22 d9 5c 	" . \ 
 	ld a,0ffh		;303b	3e ff 	> . 
 	ld (trdos_variable.bad_sectors_or_move_command_first_track),a		;303d	32 d6 5c 	2 . \ 
-	ld hl,trdos_variable.file_size		;3040	21 db 5c 	! . \ 
+	ld hl,trdos_variable.stream_or_file_size		;3040	21 db 5c 	! . \ 
 	ld (trdos_variable.start_file_parameter_or_number_of_tracks),hl		;3043	22 d7 5c 	" . \ 
 	jr l3057h		;3046	18 0f 	. . 
 sub_3048h:
