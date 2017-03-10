@@ -93,7 +93,7 @@ trdos_variable.sector:  equ 0x5cff
 trdos_variable.buffer:  equ 0x5d00
 trdos_variable.hl_copy: equ 0x5d02
 trdos_variable.de_copy: equ 0x5d04
-trdos_variable.find_command_symbols:  equ 0x5d06
+trdos_variable.bytes_compared_by_find_command:  equ 0x5d06
 trdos_variable.deleted_files: equ 0x5d07
 trdos_variable.filename_first_char: equ 0x5d08
 trdos_variable.data_file_mode:  equ 0x5d09
@@ -561,7 +561,7 @@ l0320h:
   cp 0xFE
   call nz,allocate_the_sector_buffer
   ld a,0x09
-  ld (trdos_variable.find_command_symbols),a
+  ld (trdos_variable.bytes_compared_by_find_command),a
   xor a
   ld (trdos_variable.error_code),a
   ld (trdos_variable.bad_sectors_or_move_command_first_track),a
@@ -667,11 +667,11 @@ trdos_title_start:
   defb 0x00
 l03ach:
   call read_sector_8_of_track_0
-  call sub_3d80h
-  call sub_3d80h
+  call print_carriage_return
+  call print_carriage_return
 l03b5h:
   ld bc,(trdos_sector_buffer.free_sectors)
-  call sub_1da9h
+  call print_number_in_BC
   ld hl,message.cr.free
   rst 0x18
 jp_exit_dos:
@@ -698,7 +698,7 @@ print_OK_and_exit_DOS:
   ld hl,message.ok
   xor a
   jp print_error_number_A_whose_message_is_at_HL_and_exit_DOS
-sub_03e8h:
+read_cat_sector_0_into_tmp_buffer:
   xor a
   ld (trdos_variable.cat_current_sector),a
 read_current_cat_sector_into_tmp_buffer:
@@ -744,14 +744,14 @@ cli_command.cat:
   call z_if_next_command_line_char_is_carriage_return
   ld bc,0x0001+1
   ld (trdos_variable.stream_or_file_size),bc
-  jr z,l046ah
+  jr z,print_catalogue_of_current_temporary_drive
   cp '#' ; channel?
   jr nz,l045dh
   ld (sys_ch_add),hl
   call sub_1e0bh
   call get_char
   cp char.carriage_return
-  jr z,l046ah
+  jr z,print_catalogue_of_current_temporary_drive
   cp 0x2C
   jp nz,error.wrong_drive_letter
   call next_char
@@ -763,8 +763,8 @@ l0460h:
   call pop_hl_if_checking_syntax
   call stk_fetch
   ex de,hl
-  call sub_1c81h
-l046ah:
+  call parse_possible_drive_letter_in_filename_at_HL
+print_catalogue_of_current_temporary_drive:
   call pop_hl_if_checking_syntax
   ld a,(trdos_variable.current_temporary_drive)
   ld (trdos_variable.cat_drive_or_read_verify_flag),a
@@ -784,35 +784,35 @@ print_catalogue_to_stream_A:
   rst 0x18
   ld hl,trdos_sector_buffer.disc_title
   rst 0x18
-  call sub_3d80h
+  call print_carriage_return
   ld a,(trdos_sector_buffer.files)
   ld hl,trdos_sector_buffer.deleted_files
   sub (hl)
   push hl
-  call sub_1da3h
+  call print_number_in_A
   ld hl,message.files.cr
   rst 0x18
   pop hl
   ld c,(hl)
-  call sub_1da4h
+  call print_number_in_C
   ld hl,message.del_file
   rst 0x18
-  call sub_03e8h
+  call read_cat_sector_0_into_tmp_buffer
   ld hl,trdos_variable.tmp_buffer_address
-l04b6h:
-  call sub_04f6h
-  call sub_3d80h
+print_catalogue.line:
+  call init_cat_drive
+  call print_carriage_return
   ld a,(trdos_variable.current_temporary_drive)
   add a,"A" ; first drive letter
   rst 0x10
   ld b,0x02
-l04c4h:
-  call sub_04f6h
+print_catalogue.file:
+  call init_cat_drive
   push bc
-  ld a,0x3A
+  ld a,":"
   rst 0x10
   push hl
-  call sub_2938h
+  call print_filename_at_HL
   ld bc,0x000D
   pop hl
   push hl
@@ -833,14 +833,14 @@ l04e3h:
   djnz l04e3h
 l04e8h:
   pop bc
-  call sub_1da9h
+  call print_number_in_BC
   pop hl
   pop bc
   ld de,0x10
   add hl,de
-  djnz l04c4h
-  jr l04b6h
-sub_04f6h:
+  djnz print_catalogue.file
+  jr print_catalogue.line
+init_cat_drive:
   push hl
   push bc
   ld a,(trdos_variable.cat_drive_or_read_verify_flag)
@@ -926,7 +926,7 @@ sub_0581h:
   ld a,":"
   call print_character_A
   ld hl,trdos_variable.filename
-  call sub_2938h
+  call print_filename_at_HL
   ld hl,message.file_exists
   call print_message_at_HL
   call get_uppercase_pressed_key
@@ -950,10 +950,10 @@ sub_05b4h:
   ret
 l05bdh:
   ld a,0x0A
-  ld (trdos_variable.find_command_symbols),a
+  ld (trdos_variable.bytes_compared_by_find_command),a
   call sub_1cb3h
   ld a,0x09
-  ld (trdos_variable.find_command_symbols),a
+  ld (trdos_variable.bytes_compared_by_find_command),a
   ret
 l05cbh:
   ld a,(trdos_variable.filename)
@@ -961,7 +961,7 @@ l05cbh:
   jp nz,print_no_files_error_and_exit_DOS
   call stk_fetch
   ex de,hl
-  call sub_1c81h
+  call parse_possible_drive_letter_in_filename_at_HL
   ld a,(hl)
   cp 0x2A
   jp nz,error.wrong_drive_letter
@@ -1085,7 +1085,7 @@ l06f3h:
   cp "#" ; data file type?
   jp nz,print_OK_and_exit_DOS
   ld a,0x0A
-  ld (trdos_variable.find_command_symbols),a
+  ld (trdos_variable.bytes_compared_by_find_command),a
   ld hl,trdos_variable.file_start
   inc (hl)
   ld a,(trdos_variable.two_files_drive)
@@ -3579,7 +3579,7 @@ l1168h:
   call print_character_A_preserving_DEHL
   add hl,de
   xor a
-  ld de,1000
+  ld de,read_cat_sector_0_into_tmp_buffer
 l1172h:
   sbc hl,de
   jr c,l1179h
@@ -3643,14 +3643,14 @@ cli_command.list:
   call z_if_next_command_line_char_is_carriage_return
   ld bc,0x0001+1
   ld (trdos_variable.stream_or_file_size),bc
-  jr z,l1205h
-  cp 0x23
+  jr z,print_detailed_catalogue_of_current_temporary_drive
+  cp "#" ; stream speficied?
   jr nz,l11f8h
   ld (sys_ch_add),hl
   call sub_1e0bh
   call get_char
   cp char.carriage_return
-  jr z,l1205h
+  jr z,print_detailed_catalogue_of_current_temporary_drive
   cp 0x2C
   jp nz,error.wrong_drive_letter
   call next_char
@@ -3662,8 +3662,8 @@ l11fbh:
   call pop_hl_if_checking_syntax
   call stk_fetch
   ex de,hl
-  call sub_1c81h
-l1205h:
+  call parse_possible_drive_letter_in_filename_at_HL
+print_detailed_catalogue_of_current_temporary_drive:
   call pop_hl_if_checking_syntax
   ld a,(trdos_variable.current_temporary_drive)
   ld (trdos_variable.cat_drive_or_read_verify_flag),a
@@ -3683,10 +3683,10 @@ l1205h:
   ld de,(trdos_variable.stack_sp_copy)
   ld bc,0x20
   ldir
-  call sub_03e8h
+  call read_cat_sector_0_into_tmp_buffer
   ld hl,trdos_variable.tmp_buffer_address
   push hl
-l123eh:
+print_detailed_catalogue.page:
   ld hl,message.title
   push bc
   rst 0x18
@@ -3699,7 +3699,7 @@ l123eh:
   ld a,(trdos_variable.current_temporary_drive)
   add a,"A" ; first drive letter
   call print_character_A
-  call sub_3d80h
+  call print_carriage_return
   ld hl,(trdos_variable.stack_sp_copy)
   ld bc,0x0001+2
   add hl,bc
@@ -3709,7 +3709,7 @@ l123eh:
   add hl,bc
   sub (hl)
   push hl
-  call sub_1da3h
+  call print_number_in_A
   ld hl,message.files
   rst 0x18
   ld hl,(trdos_variable.stack_sp_copy)
@@ -3731,7 +3731,7 @@ l1292h:
   rst 0x18
   pop hl
   ld c,(hl)
-  call sub_1da4h
+  call print_number_in_C
   ld hl,message.del_files
   rst 0x18
   ld hl,message.free_sector
@@ -3742,18 +3742,18 @@ l1292h:
   ld c,(hl)
   inc hl
   ld b,(hl)
-  call sub_1da9h
+  call print_number_in_BC
   ld hl,message.file_name_start_length_line
   rst 0x18
   pop bc
   pop hl
   ld b,0x10
-l12b5h:
+print_detailed_catalogue.file:
   call l11b0h
-  call sub_3d80h
+  call print_carriage_return
   push bc
   push hl
-  call sub_2938h
+  call print_filename_at_HL
   ld bc,0x000D
   pop hl
   push hl
@@ -3769,12 +3769,12 @@ l12d0h:
   cp 0x64
   jr nc,l12d9h
 l12d4h:
-  ld a,0x20
+  ld a," "
   rst 0x10
   djnz l12d4h
 l12d9h:
   pop bc
-  call sub_1da9h
+  call print_number_in_BC
   ld hl,message.tab_0x10_space
   rst 0x18
   pop hl
@@ -3808,11 +3808,11 @@ l1303h:
   pop bc
   ld de,0x10
   add hl,de
-  djnz l12b5h
+  djnz print_detailed_catalogue.file
   push hl
-  call sub_3d80h
-  call sub_3d80h
-  jp l123eh
+  call print_carriage_return
+  call print_carriage_return
+  jp print_detailed_catalogue.page
 sub_131bh:
   ld bc,0x0004+1
   add hl,bc
@@ -3859,7 +3859,7 @@ l1335h:
   ld a," "
   call print_character_A
   pop bc
-  call sub_1da9h
+  call print_number_in_BC
   ret
 cli_command.copy_s:
   call point_interpreter_to_command_line
@@ -3883,7 +3883,7 @@ l1375h:
   jp nz,print_OK_and_exit_DOS
 l1393h:
   ld a,0x0A
-  ld (trdos_variable.find_command_symbols),a
+  ld (trdos_variable.bytes_compared_by_find_command),a
   ld hl,trdos_variable.file_start
   inc (hl)
   call cls
@@ -4196,7 +4196,7 @@ l1644h:
   pop hl
   xor a
   jp l15f8h
-sub_1653h:
+set_z_if_file_descriptor_C_is_a_deleted_file:
   call read_file_descriptor_C
   ld a,(trdos_variable.filename)
   cp 0x01
@@ -4260,7 +4260,7 @@ cli_command.move:
   ld c,0xFF
 l16c3h:
   inc c
-  call sub_1653h
+  call set_z_if_file_descriptor_C_is_a_deleted_file
   jr nz,l16c3h
   ld a,c
   ld (trdos_variable.move_command_deleted_files),a
@@ -4269,7 +4269,7 @@ l16c3h:
   call sub_1697h
 l16d6h:
   inc c
-  call sub_1653h
+  call set_z_if_file_descriptor_C_is_a_deleted_file
   jr z,l16d6h
   cp 0x00
   jp nz,l1710h
@@ -4277,7 +4277,7 @@ l16d6h:
   ld c,a
 l16e5h:
   inc c
-  call sub_1653h
+  call set_z_if_file_descriptor_C_is_a_deleted_file
   cp 0x00
   jr z,l176ch
   xor a
@@ -5016,7 +5016,7 @@ l1c5ch:
   djnz l1c5ch
   call fetch_drive_letter_from_the_calculator_stack
   ex de,hl
-  call sub_1c81h
+  call parse_possible_drive_letter_in_filename_at_HL
   ld a,c
   or a
   jp z,error.wrong_drive_letter
@@ -5032,11 +5032,11 @@ l1c73h:
   ldir
   pop bc
   ret
-sub_1c81h:
+parse_possible_drive_letter_in_filename_at_HL:
   inc hl
   ld a,(hl)
-  cp 0x3A
-  jr nz,l1c98h
+  cp ":"
+  jr nz,no_drive_letter_in_filename_at_HL_so_use_default_drive
   dec hl
   ld a,(hl)
   call check_drive_letter_and_convert_to_number
@@ -5050,7 +5050,7 @@ sub_1c81h:
   inc hl
   inc hl
   ret
-l1c98h:
+no_drive_letter_in_filename_at_HL_so_use_default_drive:
   dec hl
   ld a,(trdos_variable.default_drive)
   push bc
@@ -5072,7 +5072,7 @@ convert_dir_entry_C_to_its_address_HL_in_sector_buffer:
 sub_1cb0h:
   call sub_1c57h
 sub_1cb3h:
-  call sub_03e8h
+  call read_cat_sector_0_into_tmp_buffer
   ld b,0x80
   ld c,0x00
 l1cbah:
@@ -5089,7 +5089,7 @@ l1cbah:
   jr l1cbah
 l1ccdh:
   ld de,trdos_variable.filename
-  ld a,(trdos_variable.find_command_symbols)
+  ld a,(trdos_variable.bytes_compared_by_find_command)
   ld b,a
   xor a
   cp (hl)
@@ -5220,12 +5220,12 @@ cls_lower:
   rst 0x20
   defw rom_cls_lower
   ret
-sub_1da3h:
+print_number_in_A:
   ld c,a
-sub_1da4h:
+print_number_in_C:
   ld b,0x00
-  jp sub_1da9h
-sub_1da9h:
+  jp print_number_in_BC
+print_number_in_BC:
   push bc
   call sub_20f1h
   pop bc
@@ -5511,11 +5511,11 @@ l1f55h:
   sbc hl,de
   ld b,h
   ld c,l
-  call sub_1da9h
+  call print_number_in_BC
   ld a,0x2F
   rst 0x10
   pop bc
-  call sub_1da9h
+  call print_number_in_BC
   jp exit_dos
 
 ; BLOCK 'unknown_table_1FB9' (start 0x1fb9 end 0x1fca)
@@ -5750,7 +5750,7 @@ sub_2135h:
   pop af
   call z,sub_211eh
   ld hl,(sys_e_line)
-  call sub_3d80h
+  call print_carriage_return
   ld a,(trdos_variable.default_drive)
   add a,"A" ; first drive letter
   rst 0x10
@@ -5821,7 +5821,7 @@ l21aeh:
   jp exit_dos
 sub_21dbh:
   ld a,0x0A
-  ld (trdos_variable.find_command_symbols),a
+  ld (trdos_variable.bytes_compared_by_find_command),a
   call sub_1cb0h
   push af
   call read_system_track
@@ -6212,7 +6212,7 @@ l244ah:
   push af
   call sub_20f1h
   ld a,0x0A
-  ld (trdos_variable.find_command_symbols),a
+  ld (trdos_variable.bytes_compared_by_find_command),a
   pop af
   call sub_24a2h
   push af
@@ -6492,7 +6492,7 @@ l2626h:
   jr l2614h
 sub_262bh:
   ld a,0x0A
-  ld (trdos_variable.find_command_symbols),a
+  ld (trdos_variable.bytes_compared_by_find_command),a
   call sub_2650h
   jr z,l2642h
   cp 0x7F
@@ -7047,19 +7047,19 @@ sub_292fh:
   call sub_1c57h
   call read_system_track
   jp sub_1cb3h
-sub_2938h:
+print_filename_at_HL:
   push bc
   ld b,0x08
-l293bh:
+print_filename_letter_at_HL:
   ld a,(hl)
   rst 0x10
   inc hl
-  djnz l293bh
-  ld a,0x3C
+  djnz print_filename_letter_at_HL
+  ld a,"<"
   rst 0x10
   ld a,(hl)
   rst 0x10
-  ld a,0x3E
+  ld a,">"
   rst 0x10
   pop bc
   ret
@@ -11406,7 +11406,7 @@ l3d67h:
   push hl
   ld hl,trdos_entry.call_pushed_address
   push hl
-  ld hl,sub_1653h+2
+  ld hl,set_z_if_file_descriptor_C_is_a_deleted_file+2
   push hl
   ld hl,sys_tstack
   push hl
@@ -11414,7 +11414,7 @@ l3d67h:
   ld hl,sys_p_ramt.high
   ld bc,0x0070
   ret
-sub_3d80h:
+print_carriage_return:
   ld a,0x0D
 print_character_A:
   push hl
@@ -11734,11 +11734,11 @@ l3f5fh:
   ld hl,message.cr.trk
   rst 0x18
   in a,(0x3F)
-  call sub_1da3h
+  call print_number_in_A
   ld hl,message.sec
   rst 0x18
   in a,(0x5F)
-  call sub_1da3h
+  call print_number_in_A
   ld hl,message.cr.retry_abort_ignore
   rst 0x18
 ignore_retry_or_abort:

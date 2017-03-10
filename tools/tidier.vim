@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016, 2017
 
-" Last modified 201702121807
+" Last modified 201703101958
 
 " ==============================================================
 " History
@@ -39,6 +39,10 @@
 " belongs to the main ROM.
 "
 " 2017-02-12: Add more character substitutions.
+"
+" 2017-03-08: Add more character substitutions.
+"
+" 2017-03-09: Add more character substitutions.
 
 " ==============================================================
 
@@ -208,6 +212,8 @@ function! ClearFileTypes()
   silent substitute@023h.\+$@"#" ; file type: data@
   call search(';104b')
   silent substitute@042h.\+$@"B" ; file type: BASIC@
+  call search(';11da')
+  silent substitute@023h.\+$@"#" ; stream speficied?@
   call search(';138e')
   silent substitute@023h.\+$@"#" ; data file type?@
   call search(';182e')
@@ -300,6 +306,8 @@ function! ClearCharacters()
   silent substitute@023h.\+$@'#' ; channel?@
   call search(';044c')
   silent substitute@00dh.\+$@char.carriage_return@
+  call search(';04c8')
+  silent substitute@03ah.\+$@":"@
   call search(';058d')
   silent substitute@03ah.\+$@":"@
   call search(';05a1')
@@ -324,6 +332,8 @@ function! ClearCharacters()
   silent substitute@030h.\+$@"0"@
   call search(';11e7')
   silent substitute@00dh.\+$@char.carriage_return@
+  call search(';12d4')
+  silent substitute@020h.\+$@" "@
   call search(';12ef')
   silent substitute@020h.\+$@" "@
   call search(';1356')
@@ -358,6 +368,8 @@ function! ClearCharacters()
   silent substitute@0e4h.\+$@token.data ; `DATA`?@
   call search(';1b1a')
   silent substitute@00dh.\+$@char.carriage_return@
+  call search(';1c83')
+  silent substitute@03ah.\+$@":"@
   call search(';1de8')
   silent substitute@0afh.\+$@token.code ; `CODE`?@
   call search(';1dfe')
@@ -370,6 +382,10 @@ function! ClearCharacters()
   silent substitute@041h.\+@"A"@
   call search(';261d')
   silent substitute@00dh.\+$@char.carriage_return@
+  call search(';2940')
+  silent substitute@03ch.\+$@"<"@
+  call search(';2945')
+  silent substitute@03eh.\+$@">"@
   call search(';308b')
   silent substitute@00dh.\+$@char.carriage_return@
   call search(';3093')
@@ -422,7 +438,7 @@ function! RestoreLiterals()
   call RestoreLiteral('rst_20','0x20')
   call RestoreLiteral('l0013h','0x0013')
   call RestoreLiteral('l0024h','0x0024')
-  call RestoreLiteral('sub_03e8h','1000')
+"  call RestoreLiteral('sub_03e8h','1000') " XXX OLD?
   call RestoreLiteral('l1e40h','0x1E40')
 
 endfunction

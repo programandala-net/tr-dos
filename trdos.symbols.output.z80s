@@ -383,7 +383,7 @@ print_OK_and_exit_DOS:	equ 0x03e1
 ; 0x057e	(jp destination)
 ; 0x056f	(jp destination)
 
-sub_03e8h:	equ 0x03e8
+read_cat_sector_0_into_tmp_buffer:	equ 0x03e8
 ; Used at following locations:
 ; 0x1cb3	(call destination)
 ; 0x1237	(call destination)
@@ -465,7 +465,7 @@ l0460h:	equ 0x0460
 ; Used at following locations:
 ; 0x045b	(jr destination)
 
-l046ah:	equ 0x046a
+print_catalogue_of_current_temporary_drive:	equ 0x046a
 ; Used at following locations:
 ; 0x044e	(jr destination)
 ; 0x043d	(jr destination)
@@ -474,11 +474,11 @@ print_catalogue_to_stream_A:	equ 0x0479
 ; Used at following locations:
 ; 0x28dd	(jp destination)
 
-l04b6h:	equ 0x04b6
+print_catalogue.line:	equ 0x04b6
 ; Used at following locations:
 ; 0x04f4	(jr destination)
 
-l04c4h:	equ 0x04c4
+print_catalogue.file:	equ 0x04c4
 ; Used at following locations:
 ; 0x04f2	(djnz destination)
 
@@ -494,7 +494,7 @@ l04e8h:	equ 0x04e8
 ; Used at following locations:
 ; 0x04e1	(jr destination)
 
-sub_04f6h:	equ 0x04f6
+init_cat_drive:	equ 0x04f6
 ; Used at following locations:
 ; 0x04c4	(call destination)
 ; 0x04b6	(call destination)
@@ -831,12 +831,12 @@ l11fbh:	equ 0x11fb
 ; Used at following locations:
 ; 0x11f6	(jr destination)
 
-l1205h:	equ 0x1205
+print_detailed_catalogue_of_current_temporary_drive:	equ 0x1205
 ; Used at following locations:
 ; 0x11e9	(jr destination)
 ; 0x11d8	(jr destination)
 
-l123eh:	equ 0x123e
+print_detailed_catalogue.page:	equ 0x123e
 ; Used at following locations:
 ; 0x1318	(jp destination)
 
@@ -850,7 +850,7 @@ l1292h:	equ 0x1292
 ; 0x1286	(jr destination)
 ; 0x127f	(jr destination)
 
-l12b5h:	equ 0x12b5
+print_detailed_catalogue.file:	equ 0x12b5
 ; Used at following locations:
 ; 0x130f	(djnz destination)
 
@@ -1008,7 +1008,7 @@ l1644h:	equ 0x1644
 ; Used at following locations:
 ; 0x15eb	(jp destination)
 
-sub_1653h:	equ 0x1653
+set_z_if_file_descriptor_C_is_a_deleted_file:	equ 0x1653
 ; Used at following locations:
 ; 0x16e6	(call destination)
 ; 0x16d7	(call destination)
@@ -1453,14 +1453,14 @@ l1c73h:	equ 0x1c73
 ; Used at following locations:
 ; 0x1c6f	(jr destination)
 
-sub_1c81h:	equ 0x1c81
+parse_possible_drive_letter_in_filename_at_HL:	equ 0x1c81
 ; Used at following locations:
 ; 0x1c65	(call destination)
 ; 0x1202	(call destination)
 ; 0x05d7	(call destination)
 ; 0x0467	(call destination)
 
-l1c98h:	equ 0x1c98
+no_drive_letter_in_filename_at_HL_so_use_default_drive:	equ 0x1c98
 ; Used at following locations:
 ; 0x1c85	(jr destination)
 
@@ -1690,19 +1690,19 @@ cls_lower:	equ 0x1d9f
 ; 0x137c	(call destination)
 ; 0x02ef	(call destination)
 
-sub_1da3h:	equ 0x1da3
+print_number_in_A:	equ 0x1da3
 ; Used at following locations:
 ; 0x3f74	(call destination)
 ; 0x3f6b	(call destination)
 ; 0x126b	(call destination)
 ; 0x04a0	(call destination)
 
-sub_1da4h:	equ 0x1da4
+print_number_in_C:	equ 0x1da4
 ; Used at following locations:
 ; 0x1295	(call destination)
 ; 0x04a9	(call destination)
 
-sub_1da9h:	equ 0x1da9
+print_number_in_BC:	equ 0x1da9
 ; Used at following locations:
 ; 0x1fb3	(call destination)
 ; 0x1fac	(call destination)
@@ -2649,13 +2649,13 @@ sub_292fh:	equ 0x292f
 ; 0x18a1	(call destination)
 ; 0x0794	(call destination)
 
-sub_2938h:	equ 0x2938
+print_filename_at_HL:	equ 0x2938
 ; Used at following locations:
 ; 0x12bd	(call destination)
 ; 0x0595	(call destination)
 ; 0x04cc	(call destination)
 
-l293bh:	equ 0x293b
+print_filename_letter_at_HL:	equ 0x293b
 ; Used at following locations:
 ; 0x293e	(djnz destination)
 
@@ -3205,7 +3205,7 @@ l3d67h:	equ 0x3d67
 ; Used at following locations:
 ; 0x3d5c	(immediate value)
 
-sub_3d80h:	equ 0x3d80
+print_carriage_return:	equ 0x3d80
 ; Used at following locations:
 ; 0x2144	(call destination)
 ; 0x1315	(call destination)

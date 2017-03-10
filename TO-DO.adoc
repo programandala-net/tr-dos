@@ -5,7 +5,11 @@
 // This file is part of TR-DOS Disassembled
 // By Marcos Cruz (programandala.net), 2016, 2017
 
-// Last modified: 201702121831
+// Last modified: 201703101748
+
+.2017-03-10:
+
+Study the two routines called by `entry.init_dos`.
 
 .2017-02-12:
 
