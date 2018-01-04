@@ -769,7 +769,7 @@ sub_1151h:	equ 0x1151
 ; Used at following locations:
 ; 0x1228	(call destination)
 
-sub_115dh:	equ 0x115d
+print_number_in_HL_right_justified_with_zeroes:	equ 0x115d
 ; Used at following locations:
 ; 0x12fa	(call destination)
 ; 0x12ec	(call destination)
@@ -854,15 +854,15 @@ print_detailed_catalogue.file:	equ 0x12b5
 ; Used at following locations:
 ; 0x130f	(djnz destination)
 
-l12d0h:	equ 0x12d0
+sectors_number_is_smaller_than_10:	equ 0x12d0
 ; Used at following locations:
 ; 0x12cd	(jr destination)
 
-l12d4h:	equ 0x12d4
+print_B_spaces_before_sectors_number:	equ 0x12d4
 ; Used at following locations:
 ; 0x12d7	(djnz destination)
 
-l12d9h:	equ 0x12d9
+print_sectors_number_in_TOS:	equ 0x12d9
 ; Used at following locations:
 ; 0x12d2	(jr destination)
 
@@ -870,7 +870,7 @@ l1303h:	equ 0x1303
 ; Used at following locations:
 ; 0x009b	(immediate value)
 
-sub_131bh:	equ 0x131b
+print_detailed_catalogue.file.basic_program:	equ 0x131b
 ; Used at following locations:
 ; 0x1306	(call destination)
 

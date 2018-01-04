@@ -3566,7 +3566,7 @@ sub_1151h:
   ld (trdos_variable.stack_sp_copy),hl
   ld bc,0x0222
   jp bc_spaces
-sub_115dh:
+print_number_in_HL_right_justified_with_zeroes:
   xor a
   ld de,0x2710
 l1161h:
@@ -3763,16 +3763,16 @@ print_detailed_catalogue.file:
   ld a,c
   ld b,0x02
   cp 0x0A
-  jr c,l12d0h
+  jr c,sectors_number_is_smaller_than_10
   dec b
-l12d0h:
+sectors_number_is_smaller_than_10:
   cp 0x64
-  jr nc,l12d9h
-l12d4h:
+  jr nc,print_sectors_number_in_TOS
+print_B_spaces_before_sectors_number:
   ld a," "
   rst 0x10
-  djnz l12d4h
-l12d9h:
+  djnz print_B_spaces_before_sectors_number
+print_sectors_number_in_TOS:
   pop bc
   call print_number_in_BC
   ld hl,message.tab_0x10_space
@@ -3786,7 +3786,7 @@ l12d9h:
   ld d,(hl)
   push hl
   ex de,hl
-  call sub_115dh
+  call print_number_in_HL_right_justified_with_zeroes
   ld a," "
   call print_character_A
   pop hl
@@ -3795,25 +3795,25 @@ l12d9h:
   inc hl
   ld d,(hl)
   ex de,hl
-  call sub_115dh
+  call print_number_in_HL_right_justified_with_zeroes
   pop hl
   push hl
   ld bc,0x0008
   add hl,bc
 l1303h:
   ld a,(hl)
-  cp 0x42
-  call z,sub_131bh
+  cp "B" ; BASIC program?
+  call z,print_detailed_catalogue.file.basic_program
   pop hl
   pop bc
-  ld de,0x10
-  add hl,de
+  ld de,0x10 ; Length of a file descriptor
+  add hl,de ; Point to the next entry
   djnz print_detailed_catalogue.file
   push hl
   call print_carriage_return
   call print_carriage_return
   jp print_detailed_catalogue.page
-sub_131bh:
+print_detailed_catalogue.file.basic_program:
   ld bc,0x0004+1
   add hl,bc
   ld b,(hl)

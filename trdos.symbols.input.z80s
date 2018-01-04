@@ -3,7 +3,7 @@
 ; This file is part of TR-DOS Disassembled
 ; By Marcos Cruz (programandala.net), 2016, 2017
 
-; Last modified 201703101957
+; Last modified 201703110030
 
 include "inc/zx_spectrum_system_variables.z80s"
 include "inc/zx_spectrum_trdos_addresses.z80s"
@@ -53,6 +53,7 @@ check_error_code_msb:                                       equ 0x0572
 set_file_type_stored_in_B:                                  equ 0x104D
 get_uppercase_pressed_key:                                  equ 0x1052
 color_the_trdos_title:                                      equ 0x1063
+print_number_in_HL_right_justified_with_zeroes:             equ 0x115D
 print_character_A_preserving_DEHL:                          equ 0x11A8
 set_z_if_file_descriptor_C_is_a_deleted_file:               equ 0x1653
 read_file_descriptor_C:                                     equ 0x165D
@@ -108,6 +109,10 @@ wait_for_key:                                               equ 0x1056
 print_detailed_catalogue_of_current_temporary_drive:        equ 0x1205
 print_detailed_catalogue.page:                              equ 0x123E
 print_detailed_catalogue.file:                              equ 0x12B5
+sectors_number_is_smaller_than_10:                          equ 0x12D0
+print_B_spaces_before_sectors_number:                       equ 0x12D4
+print_sectors_number_in_TOS:                                equ 0x12D9
+print_detailed_catalogue.file.basic_program:                equ 0x131B
 no_drive_letter_in_filename_at_HL_so_use_default_drive:     equ 0x1C98
 transfer_sectors:                                           equ 0x1E64
 set_sys_err_nr:                                             equ 0x2731

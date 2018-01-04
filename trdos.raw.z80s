@@ -3579,7 +3579,7 @@ sub_1151h:
 	ld (trdos_variable.stack_sp_copy),hl		;1154	22 cf 5c 	" . \ 
 	ld bc,00222h		;1157	01 22 02 	. " . 
 	jp bc_spaces		;115a	c3 23 1e 	. # . 
-sub_115dh:
+print_number_in_HL_right_justified_with_zeroes:
 	xor a			;115d	af 	. 
 	ld de,l2710h		;115e	11 10 27 	. . ' 
 l1161h:
@@ -3776,16 +3776,16 @@ print_detailed_catalogue.file:
 	ld a,c			;12c8	79 	y 
 	ld b,002h		;12c9	06 02 	. . 
 	cp 00ah		;12cb	fe 0a 	. . 
-	jr c,l12d0h		;12cd	38 01 	8 . 
+	jr c,sectors_number_is_smaller_than_10		;12cd	38 01 	8 . 
 	dec b			;12cf	05 	. 
-l12d0h:
+sectors_number_is_smaller_than_10:
 	cp 064h		;12d0	fe 64 	. d 
-	jr nc,l12d9h		;12d2	30 05 	0 . 
-l12d4h:
+	jr nc,print_sectors_number_in_TOS		;12d2	30 05 	0 . 
+print_B_spaces_before_sectors_number:
 	ld a,020h		;12d4	3e 20 	>   
 	rst 10h			;12d6	d7 	. 
-	djnz l12d4h		;12d7	10 fb 	. . 
-l12d9h:
+	djnz print_B_spaces_before_sectors_number		;12d7	10 fb 	. . 
+print_sectors_number_in_TOS:
 	pop bc			;12d9	c1 	. 
 	call print_number_in_BC		;12da	cd a9 1d 	. . . 
 	ld hl,message.tab_0x10_space		;12dd	21 ca 10 	! . . 
@@ -3799,7 +3799,7 @@ l12d9h:
 	ld d,(hl)			;12e9	56 	V 
 	push hl			;12ea	e5 	. 
 	ex de,hl			;12eb	eb 	. 
-	call sub_115dh		;12ec	cd 5d 11 	. ] . 
+	call print_number_in_HL_right_justified_with_zeroes		;12ec	cd 5d 11 	. ] . 
 	ld a,020h		;12ef	3e 20 	>   
 	call print_character_A		;12f1	cd 82 3d 	. . = 
 	pop hl			;12f4	e1 	. 
@@ -3808,7 +3808,7 @@ l12d9h:
 	inc hl			;12f7	23 	# 
 	ld d,(hl)			;12f8	56 	V 
 	ex de,hl			;12f9	eb 	. 
-	call sub_115dh		;12fa	cd 5d 11 	. ] . 
+	call print_number_in_HL_right_justified_with_zeroes		;12fa	cd 5d 11 	. ] . 
 	pop hl			;12fd	e1 	. 
 	push hl			;12fe	e5 	. 
 	ld bc,l0008h		;12ff	01 08 00 	. . . 
@@ -3816,7 +3816,7 @@ l12d9h:
 l1303h:
 	ld a,(hl)			;1303	7e 	~ 
 	cp 042h		;1304	fe 42 	. B 
-	call z,sub_131bh		;1306	cc 1b 13 	. . . 
+	call z,print_detailed_catalogue.file.basic_program		;1306	cc 1b 13 	. . . 
 	pop hl			;1309	e1 	. 
 	pop bc			;130a	c1 	. 
 	ld de,rst_10		;130b	11 10 00 	. . . 
@@ -3826,7 +3826,7 @@ l1303h:
 	call print_carriage_return		;1312	cd 80 3d 	. . = 
 	call print_carriage_return		;1315	cd 80 3d 	. . = 
 	jp print_detailed_catalogue.page		;1318	c3 3e 12 	. > . 
-sub_131bh:
+print_detailed_catalogue.file.basic_program:
 	ld bc,l0004h+1		;131b	01 05 00 	. . . 
 	add hl,bc			;131e	09 	. 
 	ld b,(hl)			;131f	46 	F 

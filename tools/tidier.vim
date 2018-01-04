@@ -3,7 +3,7 @@
 " This file is part of TR-DOS disassembled
 " By Marcos Cruz (programandala.net), 2016, 2017
 
-" Last modified 201703101958
+" Last modified 201703102215
 
 " ==============================================================
 " History
@@ -265,6 +265,10 @@ function! AddComments()
   call cursor(1,1)
   call search(';0164')
   silent substitute@\s\+;0164.\+$@ ; Error report: "OK"@
+  call search(';130b')
+  silent substitute@\s\+;130b.\+$@ ; Length of a file descriptor@
+  call search(';130e')
+  silent substitute@\s\+;130e.\+$@ ; Point to the next entry@
   call search(';1d20')
   silent substitute@\s\+;1d20.\+$@ ; Error report code: "Nonsense in BASIC"@
   call search(';221b')
@@ -336,6 +340,8 @@ function! ClearCharacters()
   silent substitute@020h.\+$@" "@
   call search(';12ef')
   silent substitute@020h.\+$@" "@
+  call search(';1304')
+  silent substitute@042h.\+$@"B" ; BASIC program?@
   call search(';1356')
   silent substitute@020h.\+$@" "@
   call search(';1378')
