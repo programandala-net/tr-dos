@@ -1900,9 +1900,6 @@ transfer_B_sectors_first_sector_DE_address_HL:	equ 0x1e64
 ; Used at following locations:
 ; 0x1e3e	(jr destination)
 
-transfer_sectors:	equ 0x1e64
-; Used at following locations:
-
 l1e67h:	equ 0x1e67
 ; Used at following locations:
 ; 0x2fdb	(jp destination)

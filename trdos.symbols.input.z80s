@@ -3,7 +3,7 @@
 ; This file is part of TR-DOS Disassembled
 ; By Marcos Cruz (programandala.net), 2016, 2017
 
-; Last modified 201703110030
+; Last modified 201803232226
 
 include "inc/zx_spectrum_system_variables.z80s"
 include "inc/zx_spectrum_trdos_addresses.z80s"
@@ -114,7 +114,6 @@ print_B_spaces_before_sectors_number:                       equ 0x12D4
 print_sectors_number_in_TOS:                                equ 0x12D9
 print_detailed_catalogue.file.basic_program:                equ 0x131B
 no_drive_letter_in_filename_at_HL_so_use_default_drive:     equ 0x1C98
-transfer_sectors:                                           equ 0x1E64
 set_sys_err_nr:                                             equ 0x2731
 print_filename_letter_at_HL:                                equ 0x293B
 allocate_the_sector_buffer.exit:                            equ 0x2992

@@ -5358,7 +5358,6 @@ l1e60h:
 write_B_sectors_to_sector_DE_from_address_HL:
 	ld a,0ffh		;1e62	3e ff 	> . 
 transfer_B_sectors_first_sector_DE_address_HL:
-transfer_sectors:
 	ld (trdos_variable.sector_rw_flag),a		;1e64	32 ce 5c 	2 . \ 
 l1e67h:
 	ld (trdos_variable.current_sector),de		;1e67	ed 53 f4 5c 	. S . \ 
