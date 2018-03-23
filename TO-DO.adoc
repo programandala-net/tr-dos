@@ -1,11 +1,16 @@
 = To-do list of TR-DOS disassembled
 :author: Marcos Cruz (programandala.net)
-:revdate: 2017-02-12
+:revdate: 2018-03-23
 
 // This file is part of TR-DOS Disassembled
-// By Marcos Cruz (programandala.net), 2016, 2017
+// By Marcos Cruz (programandala.net), 2016, 2017, 2018
 
-// Last modified: 201703101748
+// Last modified: 201803232242
+
+.2018-03-23:
+
+Entry `l1e67h` is used to load the last sector of a file to the
+buffer.
 
 .2017-03-10:
 
