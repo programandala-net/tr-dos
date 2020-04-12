@@ -1,6 +1,6 @@
 = TR-DOS _Disassembled_
 :author: Marcos Cruz (programandala.net)
-:revdate: 2017-02-12
+:revdate: 2020-04-12
 
 :period: .
 :char94: ^
@@ -100,7 +100,7 @@ Documentation used for this project, listed in order of publication:
   by Potapov Vsevolod Viktorovich, 1997-10-25.
   http://www.worldofspectrum.org/rusfaq/
 
-- TR-DOS v5.xx - programmer's manual_, by Andrew MOA and Mac
+- _TR-DOS v5.xx - programmer's manual_, by Andrew MOA and Mac
   Buster{char94}Extreme, 1990 (English translation, 1999),
   http://www.worldofspectrum.org/documentation.html#manuals,
   http://www.worldofspectrum.org/pub/sinclair/hardware-info/TR-DOS_Programming.txt.
