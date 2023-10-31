@@ -8,7 +8,7 @@
 // This file is part of TR-DOS Disassembled
 // By Marcos Cruz (programandala.net), 2016, 2017
 
-// Last modified: 20231031T1341+0100
+// Last modified: 20231031T1357+0100
 
 // This file is written in AsciDoc/Asciidoctor format
 // (see <http://asciidoctor.org>).
@@ -112,8 +112,9 @@ Documentation used for this project, listed in order of publication:
 
 Websites that were used:
 
-- https://vtrd.in
-- http://web.archive.org/web/20190104151541/http://tr-dos.ru/
+- http://web.archive.org/web/20171121122226/http://vtrdos.ru:80/[vtrdos.ru]
+  (currently https://vtrd.in[vtrd.in])
+- http://web.archive.org/web/20190104151541/http://tr-dos.ru/[tr-dos.ru]
 
 == History
 
