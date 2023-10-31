@@ -1,6 +1,6 @@
 = TR-DOS _Disassembled_
 :author: Marcos Cruz (programandala.net)
-:revdate: 2020-04-12
+:revdate: 2023-10-31
 
 :period: .
 :char94: ^
@@ -8,7 +8,7 @@
 // This file is part of TR-DOS Disassembled
 // By Marcos Cruz (programandala.net), 2016, 2017
 
-// Last modified: 201702121831
+// Last modified: 20231031T1341+0100
 
 // This file is written in AsciDoc/Asciidoctor format
 // (see <http://asciidoctor.org>).
@@ -79,12 +79,12 @@ Documentation used for this project, listed in order of publication:
 
 - _TR-DOS для профессионалов и любителей_ (_TR-DOS for professionals
   and amateurs_), by Yu Pomortsev, 1994. PDF version by Deny
-  (Denisenko DA), 2007. http://vtrdos.ru,
+  (Denisenko DA), 2007. https://vtrd.in,
   http://trd.speccy.cz/book/TRDOSUA.ZIP.
 
 - _Описание и полный дизассемблер ПЗУ TR-DOS 5.04T_ (Description and
   full disassembly of TR-DOS 5.04T), by Павел Федин (Paul Fedin),
-  1996{period}  http://vtrdos.ru,
+  1996{period}  https://vtrd.in,
   http://trd.speccy.cz/book/TRDISASM.ZIP.
 
 - _TR-DOS System Functions_, by Igor Yudincev, 1997-06-01.
@@ -112,10 +112,9 @@ Documentation used for this project, listed in order of publication:
 
 Websites that were used:
 
-- http://vtrdos.ru
-- http://tr-dos.ru
+- https://vtrd.in
+- http://web.archive.org/web/20190104151541/http://tr-dos.ru/
 
 == History
 
 The project started on 2016-08-14.
-
